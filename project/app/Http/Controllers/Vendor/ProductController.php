@@ -12,6 +12,7 @@ use App\Models\Generalsetting;
 use App\Models\Subcategory;
 use App\Models\Attribute;
 use App\Models\AttributeOption;
+use App\Models\Division;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -123,7 +124,7 @@ class ProductController extends Controller
     //*** GET Request
     public function types()
     {
-        return view('vendor.product.types');
+        return view('vendor.product.types',['divisions'=>Division::all()]);
     }
 
     //*** GET Request
@@ -614,7 +615,9 @@ if (!Product::where('sku',$line[0])->exists()){
              $jsonAttr = json_encode($attrArr);
              $input['attributes'] = $jsonAttr;
            }
-
+            if($request->area_id){
+                $input['area_id']=$request->area_id;
+            }
             // Save Data
                 $data->fill($input)->save();
 

@@ -133,6 +133,35 @@
     </li>
 
     <li>
+        <a href="#menu29" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Areas') }}</a>
+        <ul class="collapse list-unstyled
+        @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division')
+          show
+        @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='district')
+          show
+        @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='subdistrict')
+          show
+          @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='area')
+          show
+        @endif" id="menu29" data-parent="#accordion" >
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
+                    <a href="{{ URL::to('/admin/divisions')}}"><span>Division</span></a>
+                </li>
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='district') active @endif">
+                    <a href="{{ URL::to('/admin/districts')}}"><span>District</span></a>
+                </li>
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='subdistrict') active @endif">
+                    <a href="{{ URL::to('/admin/subdistricts')}}"><span>Subdistrict</span></a>
+                </li>
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='area') active @endif">
+                    <a href="{{ URL::to('/admin/areas')}}"><span>Area</span></a>
+                </li>
+        </ul>
+    </li>
+
+
+
+    <li>
         <a href="{{ route('admin-prod-import') }}"><i class="fas fa-upload"></i>{{ __('Bulk Product Upload') }}</a>
     </li>
 

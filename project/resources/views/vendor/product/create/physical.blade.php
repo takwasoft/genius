@@ -41,7 +41,9 @@
 	                      <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
 	                      <form id="geniusform" action="{{route('vendor-prod-store')}}" method="POST" enctype="multipart/form-data">
 	                        {{csrf_field()}}
-
+							@if(request()->area)
+								<input type="hidden" name="area_id" value="{{request()->area}}">
+							@endif
                         @include('includes.vendor.form-both')
 
 

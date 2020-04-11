@@ -1382,9 +1382,18 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   //custom route 
 
 
+  Route::resource('/admin/areas', 'AreaController');
+
+  Route::resource('/admin/subdistricts', 'SubDistrictController');
+  
+  Route::resource('/admin/districts', 'DistrictController');
+  
+  Route::resource('/admin/divisions', 'DivisionController');
 
 
-
+Route::get('/get-district/{division}','AreaController@getDistrict');
+Route::get('/get-subdistrict/{district}','AreaController@getSubDistrict');
+Route::get('/get-area/{subdistrict}','AreaController@getArea');
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Classes\GeniusMailer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 use Auth;
 use Illuminate\Support\Facades\Input;
 use Validator;
@@ -114,7 +115,8 @@ class UserController extends Controller
         {
             return redirect()->back();
         }
-        return view('user.package.details',compact('user','subs','package'));
+        $divisions=Division::all();
+        return view('user.package.details',compact('user','subs','package','divisions'));
     }
 
     public function vendorrequestsub(Request $request)
