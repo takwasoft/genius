@@ -110,7 +110,7 @@
 							<h4>Deals of the week !!</h4>
 						</div>
 						<div class="card-body">
-							<img src="{{ asset('assets/images/brand/ad4.jpg')}}" alt="" width="100%" />
+							<img  src="{{ asset('assets/images/brand/ad4.jpg')}}"  width="100%" />
 						</div>
 					</div>
 				</div>
@@ -232,7 +232,7 @@
 					<div class="thumbnail">
 						<a href="product-details.html">
 							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
+								<a href="{{URL::to('/item/'.$product->slug)}}"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
 							</div>
 						</a>
 						<h5 class="mt-2">{{$product->name}}</h5>
