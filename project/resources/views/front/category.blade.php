@@ -1,7 +1,46 @@
 @extends('layouts.front')
+@section('styles')
+<style>
+#mg-menu{
+    display:none;
+}
+.wrap-core-nav-list{
+    text-align:left !important;
+}
+   .model-item li {
+        border-top: 1px solid rgba(0, 0, 0, .125);
+        padding: .7rem .80rem;
+    }
+    
+    .model-item li li {
+        border-top: 1px solid rgba(0, 0, 0, .125);
+        padding: .7rem .5rem;
+    }
+    
+    .model-item li:first-child {
+        border-top: none;
+    }
+    
+    .model-item li:last-child {
+        border-bottom: 1px solid rgba(0, 0, 0, .125);
+    }
+    
+    .model-item li a {
+        color: #0074ba;
+    }
+    
+    .model-item li ul li a {
+        color: #0074ba!important;
+    }
+    .item-filter{
+        margin-top: 10px;
+    }
+</style>
+<link rel="stylesheet" href="{{asset('assets/front/css/modify.css')}}">
+@endsection
 @section('content')
 <!-- Breadcrumb Area Start -->
-<div class="breadcrumb-area">
+{{-- <div class="breadcrumb-area">
    <div class="container">
       <div class="row">
          <div class="col-lg-12">
@@ -34,18 +73,222 @@
          </div>
       </div>
    </div>
-</div>
+</div> --}}
 <!-- Breadcrumb Area End -->
 <!-- SubCategori Area Start -->
-<section class="sub-categori">
+<div class="header-section">
+    <div class="top-add mt-3">
+        <div class="container">
+            <center><img src="{{ asset('assets/images/brand/gp.gif')}}"></center>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:78%">
+            <div class="row">
+                <div class="col-md-3">
+                    <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
+                    <div style="display:none" class="list-group list-unstyled categories-list megamenu" id="myDIV">
+                        <ul class="list-group">
+                            <a class="list-group-item active text-light">
+                                <i class="fa fa-bars" aria-hidden="true"></i>Categories
+                            </a>
+                            <li>
+                                <a href="#" class="list-group-item megamenu-caret">
+                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>Clothing</a>
+                            </li>
+                            <li>
+                                <a href="#" class="list-group-item clearfix">
+                                    <span class="float-left"><i class="fa fa-paw" aria-hidden="true"></i>Shoes </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="list-group-item clearfix">
+                                    <span class="float-left"><i class="fa fa-clock-o" aria-hidden="true"></i>Watches </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="list-group-item clearfix">
+                                    <i class="fa fa-paper-plane" aria-hidden="true"></i>Kids and babies</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="list-group-item clearfix">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>Health and beauty</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="list-group-item clearfix">
+                                    <i class="fa fa-envira" aria-hidden="true"></i>House Hold</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="list-group-item clearfix">
+                                    <i class="fa fa-bullhorn" aria-hidden="true"></i>Others</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>
+                </div>
+                <div class="col-md-6">
+                    <form action="">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
+                            <div class="input-group-append">
+                                <input class="btn" type="submit" value="সার্চ" style="color:white;background:rgb(0, 152, 119);">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="sub-categori" style="padding:0px">
    <div class="container">
+    <div class="row">
+        <div class="col-md-3">
+           
+            <div style="display:none" class="list-group list-unstyled categories-list megamenu" id="myDIV">
+                <ul class="list-group">
+                    <a class="list-group-item active text-light">
+                        <i class="fa fa-bars" aria-hidden="true"></i>Categories
+                    </a>
+                    <li>
+                        <a href="#" class="list-group-item megamenu-caret">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>Clothing</a>
+                    </li>
+                    <li>
+                        <a href="#" class="list-group-item clearfix">
+                            <span class="float-left"><i class="fa fa-paw" aria-hidden="true"></i>Shoes </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="list-group-item clearfix">
+                            <span class="float-left"><i class="fa fa-clock-o" aria-hidden="true"></i>Watches </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="list-group-item clearfix">
+                            <i class="fa fa-paper-plane" aria-hidden="true"></i>Kids and babies</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="list-group-item clearfix">
+                            <i class="fa fa-heart" aria-hidden="true"></i>Health and beauty</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="list-group-item clearfix">
+                            <i class="fa fa-envira" aria-hidden="true"></i>House Hold</a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="list-group-item clearfix">
+                            <i class="fa fa-bullhorn" aria-hidden="true"></i>Others</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
       <div class="row">
-         @include('includes.catalog')
-         <div class="col-lg-9 order-first order-lg-last ajax-loader-parent">
+      
+        <div class="col-md-3" style="border-right: 1px solid #d4ded9;">
+            <div class="py-3">
+                <div class="pt-2">পোস্টকারীর প্রকার</div>
+                <div class="pb-3" style="border-bottom: 1px solid #d4ded9;">
+                    <form action="">
+                        <div class="form-check pt-2">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                    সকল 
+                                </label>
+                        </div>
+                        <div class="form-check pt-2">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                                    মেম্বার
+                                </label>
+                        </div>
+                        <div class="form-check pt-2">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+                            <label class="form-check-label" for="exampleRadios3">
+                                অনুমোদিত ডিলার 
+                                </label>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+         <div class="col-md-9 order-first order-lg-last ajax-loader-parent">
             <div class="right-area" id="app">
 
                @include('includes.filter')
                <div class="categori-item-area">
+                    <div class="col-12">
+                            <div class="product-slide1">
+                                <div class="product-item">
+                                    <div class="thumbnail">
+                                        <a href="product-details.html">
+                                            <div class="product-thum-img">
+                                                <a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+                                            </div>
+                                        </a>
+                                        <h4>Lorem Ipsum is simply </h4>
+                                        <div class="price-details clearfix mt-3">
+                                            <div class="price-number float-left">
+                                                <p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+                                            </div>
+                                            <div class="add-cart float-right">
+                                                <h4><a href="preview.html">Add to Cart</a></h4>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <div class="thumbnail">
+                                        <a href="product-details.html">
+                                            <div class="product-thum-img">
+                                                <a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+                                            </div>
+                                        </a>
+                                        <h4>Lorem Ipsum is simply </h4>
+                                        <div class="price-details clearfix mt-3">
+                                            <div class="price-number float-left">
+                                                <p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+                                            </div>
+                                            <div class="add-cart float-right">
+                                                <h4><a href="preview.html">Add to Cart</a></h4>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <div class="thumbnail">
+                                        <a href="product-details.html">
+                                            <div class="product-thum-img">
+                                                <a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+                                            </div>
+                                        </a>
+                                        <h4>Lorem Ipsum is simply </h4>
+                                        <div class="price-details clearfix mt-3">
+                                            <div class="price-number float-left">
+                                                <p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+                                            </div>
+                                            <div class="add-cart float-right">
+                                                <h4><a href="preview.html">Add to Cart</a></h4>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                  <div class="row" id="ajaxContent">
                    @include('includes.product.filtered-products')
                  </div>
@@ -57,12 +300,128 @@
       </div>
    </div>
 </section>
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
+                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
+                        <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
+                        <h6 class="mt-4" style="color: #0074ba">খুলনা-এর সবগুলো</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item">
+                            <ul>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div class="categories-list" style="top: 0%; position: absolute; left: 100%;  width: 90%; margin-left: 5px;">
+                                        <ul style="background-color:#fff;border:none;display:block" class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Dhaka</a></li>
+                                            <li><a href="#" class="text-muted">Ghazipur</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Kishoreganj</a></li>
+                                            <li><a href="#" class=" text-muted">Manikganj</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <div class=" categories-list model-item">
+                            <ul>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 <!-- SubCategori Area End -->
 @endsection
 
 
 @section('scripts')
+<script>
+    function myFunction() {
 
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
 <script>
 
   $(document).ready(function() {

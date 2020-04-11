@@ -2,8 +2,32 @@
 					@foreach ($prods as $key => $prod)
 									<div class="col-lg-4 col-md-4 col-6 remove-padding">
 
-
-										<a href="{{ route('front.product', $prod->slug) }}" class="item">
+										<div class="product-item">
+											<div class="thumbnail">
+												<a href="{{ route('front.product', $prod->slug) }}">
+													<div class="product-thum-img">
+														<a href="{{ route('front.product', $prod->slug) }}"><img  src="{{ $prod->photo ? asset('assets/images/thumbnails/'.$prod->thumbnail):asset('assets/images/noimage.png') }}" alt=""></a>
+													</div>
+												</a>
+												<h4>{{$prod->name}} </h4>
+												<div class="price-details clearfix mt-3">
+													<div class="price-number float-left">
+														<p class="text-left" style="font-size:20px"><strong class="rupees">{{$prod->price}} BDT</strong></p>
+													</div>
+													<div class="add-cart float-right">
+															<span style="background: red;" class="add-to-cart add-to-cart-btn" data-href="{{ route('product.cart.add',$prod->id) }}">
+																	{{ $langg->lang56 }}
+																</span>
+																<!-- <span class="add-to-cart-quick add-to-cart-btn"
+																	data-href="{{ route('product.cart.quickadd',$prod->id) }}">
+																	<i class="icofont-cart"></i> {{ $langg->lang251 }}
+																</span> -->
+													</div>
+													<div class="clear"></div>
+												</div>
+											</div>
+										</div>
+										<!-- <a href="{{ route('front.product', $prod->slug) }}" class="item">
 											<div class="item-img">
 												@if(!empty($prod->features))
 													<div class="sell-area">
@@ -73,7 +97,7 @@
 															@endif
 														</div>
 											</div>
-										</a>
+										</a> -->
 
 									</div>
 				@endforeach

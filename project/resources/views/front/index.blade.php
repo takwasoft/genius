@@ -241,7 +241,9 @@
 								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>
 							</div>
 							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
+								<span style="background: red;" class="add-to-cart add-to-cart-btn" data-href="{{ route('product.cart.add',$product->id) }}">
+																	{{ $langg->lang56 }}
+																</span>
 							</div>
 							<div class="clear"></div>
 						</div>

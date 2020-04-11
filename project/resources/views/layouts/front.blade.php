@@ -270,7 +270,7 @@
 	<div class="mainmenu-area mainmenu-bb">
 		<div class="container">
 			<div class="row align-items-center mainmenu-area-innner">
-				<div class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
+				<div id="mg-menu" class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
 					<!--categorie menu start-->
 					<div class="categories_menu" style="margin-left:15px">
 						<div class="categories_title">
