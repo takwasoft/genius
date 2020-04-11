@@ -156,7 +156,7 @@
                                                     </h5>
                                                 </div>
                                                 <div class="col-lg-8">
-                                                    <select class="form-control" id="area">
+                                                    <select name="area_id" required class="form-control" id="area">
                                                         <option>
                                                             Choose Area
                                                         </option>

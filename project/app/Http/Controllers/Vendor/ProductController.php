@@ -618,6 +618,9 @@ if (!Product::where('sku',$line[0])->exists()){
             if($request->area_id){
                 $input['area_id']=$request->area_id;
             }
+            else{
+                $input['area_id']=$user->area_id;
+            }
             // Save Data
                 $data->fill($input)->save();
 
