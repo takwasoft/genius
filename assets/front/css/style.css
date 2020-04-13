@@ -9176,3 +9176,15 @@ input[type=checkbox]:checked:disabled+label:before {
     background: #ececec;
     padding: 0 7px;
 }
+.add-to-cart, .add-to-cart-btn{
+    background:green !important;
+    padding:5px;
+    color:white;
+}
+.add-cart, .float-right{
+    margin-top:5px;
+}
+.thumbnail h5.mt-2{
+    border-bottom: 1px solid #e8e0e0!important;
+    padding-bottom: 18px!important;
+}

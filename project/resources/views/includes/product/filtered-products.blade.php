@@ -1,5 +1,6 @@
 			@if (count($prods) > 0)
-					@foreach ($prods as $key => $prod)
+				<div class="row">
+						@foreach ($prods as $key => $prod)
 									<div class="col-lg-4 col-md-4 col-6 remove-padding">
 
 										<div class="product-item">
@@ -100,7 +101,9 @@
 										</a> -->
 
 									</div>
+				
 				@endforeach
+				</div>
 				<div class="col-lg-12">
 					<div class="page-center mt-5">
 						{!! $prods->appends(['search' => request()->input('search')])->links() !!}

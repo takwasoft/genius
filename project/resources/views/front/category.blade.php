@@ -265,7 +265,7 @@
                                                 <h4><a href="preview.html">Add to Cart</a></h4>
                                             </div>
                                             <div class="clear"></div>
-                                        </div>
+                                        </div> 
                                     </div>
                                 </div>
                                 <div class="product-item">
@@ -289,7 +289,7 @@
                                 </div>
                             </div>
                         </div>
-                 <div class="row" id="ajaxContent">
+                 <div class="col" id="ajaxContent">
                    @include('includes.product.filtered-products')
                  </div>
                  <div id="ajaxLoader" class="ajax-loader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center rgba(0,0,0,.6);"></div>
