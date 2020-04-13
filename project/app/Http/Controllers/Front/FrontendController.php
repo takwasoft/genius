@@ -10,7 +10,7 @@ use App\Models\Counter;
 use App\Models\Generalsetting;
 use App\Models\Order;
 use App\Models\Product;
-use App\Models\Subscriber;
+use App\Models\Subscriber; 
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -137,7 +137,7 @@ class FrontendController extends Controller
         $top_small_banners = DB::table('banners')->where('type','=','TopSmall')->get();
         $ps = DB::table('pagesettings')->find(1);
         $feature_products =  Product::where('featured','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();
-
+        // dd(Session::get('cart'));
 	    return view('front.index',compact('ps','sliders','top_small_banners','feature_products'));
 	}
     public function product(){

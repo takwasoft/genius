@@ -193,7 +193,7 @@
                   </div>  --}}
 
 
-                  {{--  @if(!empty($productt->size))
+                  {{--  @if(!empty($productt->size)) 
                   <div class="product-size">
                     <p class="title">{{ $langg->lang88 }} :</p>
                     <ul class="siz-list">
@@ -865,38 +865,77 @@ PRODUCT END -->
                         </a>
                     </div>
                     <div class="media-body">
-                        <a href="#"><h4 class="media-heading">tanvir ismail</h4></a>
-                        <p><i class="fa fa-star" aria-hidden="true"></i>
+                        <a href="#"><h4 class="media-heading">{{ $productt->user->shop_name }}
+                        @if($productt->user->checkStatus())
+                  <i style="color:green" class="fas fa-check-circle"></i>
+
+              @endif
+                        </h4>
+                        
+                        </a>
+                        <p>
+                        {{-- <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fas fa-star-half-alt" aria-hidden="true"></i>
                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
                                 &nbsp;(3.9)
-						<small><strong>416 reviews</strong></small>
+						<small><strong>416 reviews</strong></small> --}}
                         </p>
+                        <div class="total-product">
+
+           @if( $productt->user_id  != 0)
+              <p>{{ App\Models\Product::where('user_id','=',$productt->user_id)->get()->count() }}</p>
+          @else
+              <p>{{ App\Models\Product::where('user_id','=',0)->get()->count() }}</p>
+          @endif
+            <span>{{ $langg->lang248 }}</span>
+          </div>
                     </div>
                 </div>
 				<div class="row seller-quick-opt">
 					<div class="col-4 text-center">
-						<a href="#"><i class="fa fa-gift fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
+						<a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}"><i class="fa fa-gift fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
 							<p>Seller Shop</p>
 						</a>
 					</div>
 					<div class="col-4 text-center">
-						<a href="#"><i class="fa fa-comment fa-3x"style="font-size:2.5em" aria-hidden="true"></i>
+          @if(Auth::guard('web')->check())
+					
+
+            <a   href="javascript:;" data-toggle="modal" data-target="#vendorform1"><i class="fa fa-comment fa-3x"style="font-size:2.5em" aria-hidden="true"></i>
 							<p>Chat Seller</p>
 						</a>
+            @else
+	<a    href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fa fa-comment fa-3x"style="font-size:2.5em" aria-hidden="true"></i>
+							<p>Chat Seller</p>
+						</a>
+            @endif
 					</div>
 					<div class="col-4 text-center">
-						<a href="#"><i class="fa fa-user-plus fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
+           @if(Auth::guard('web')->check())
+            @if(
+                        Auth::guard('web')->user()->favorites()->where('vendor_id','=',$productt->user->id)->get()->count() >
+                        0)
+  Followed
+              @else
+	<a data-href="{{ route('user-favorite',['data1' => Auth::guard('web')->user()->id, 'data2' => $productt->user->id]) }}"
+                          href="javascript:;"><i class="fa fa-user-plus fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
 							<p>follow</p>
 						</a>
+              @endif          
+					
+            @else
+        	<a  href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fa fa-user-plus fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
+							<p>follow</p>
+						</a>
+            @endif
 					</div>
 				</div>
 				<hr>
 				
 				<div class="follow-profile-pic">
-				<p>This seller has <span style="color:#2395FD">83 followers</span></p>
+				<p>This seller has <span style="color:#2395FD">{{$productt->user->favorites->count()}} followers</span></p>
 					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
 					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
 					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
