@@ -1340,6 +1340,7 @@ footer hr {
     border-radius: 100px;
     width: 20%;
 }
+
 .seller-quick-opt a {
     text-decoration: none;
     color: #2395FD;
@@ -1923,13 +1924,12 @@ nav button {
 .trending .owl-carousel .owl-controls .owl-nav .owl-next {
     font-size: 14px;
     position: absolute;
-   
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
     text-align: center;
-   width:30px;
-   height:30px;
+    width: 30px;
+    height: 30px;
     line-height: 24px;
     opacity: 1;
     background: #ff5500;
@@ -1950,13 +1950,9 @@ nav button {
     color: #ff5500;
 }
 
-.trending .owl-carousel .owl-controls .owl-nav .owl-prev {
-    
-}
+.trending .owl-carousel .owl-controls .owl-nav .owl-prev {}
 
-.trending .owl-carousel .owl-controls .owl-nav .owl-next {
-   
-}
+.trending .owl-carousel .owl-controls .owl-nav .owl-next {}
 
 
 /*-----------------------------
@@ -4412,11 +4408,9 @@ nav button {
 }
 
 .seller-info {
-    
     text-align: center;
     border-radius: 10px;
     padding-bottom: 20px;
-  
 }
 
 .seller-info .content {
@@ -9155,7 +9149,6 @@ input[type=checkbox]:checked:disabled+label:before {
     padding: 5px 15px!important;
 }
 
-
 .owl-next {
     position: absolute;
     right: -3%;
@@ -9166,4 +9159,20 @@ input[type=checkbox]:checked:disabled+label:before {
     position: absolute;
     left: -3%;
     top: 50%;
+}
+
+.product-slide1 .owl-next {
+    position: absolute;
+    right: 0%;
+    top: 55%;
+    background: #ececec;
+    padding: 0 7px;
+}
+
+.product-slide1 .owl-prev {
+    position: absolute;
+    left: 0%;
+    top: 55%;
+    background: #ececec;
+    padding: 0 7px;
 }
