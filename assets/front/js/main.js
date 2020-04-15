@@ -361,7 +361,7 @@ $(function($) {
         $('.product-slide').owlCarousel({
             loop: true,
             margin: 10,
-            autoplay: true,
+            autoplay: false,
             nav: true,
             navText: [
                 "<i class='fa fa-angle-left fa-2x'></i>",
@@ -390,11 +390,45 @@ $(function($) {
                 0: { items: 1 },
                 448: { items: 2 },
                 768: { items: 3 },
+                1000: { items: 4 },
+                1200: { items: 4 }
+            }
+        })
+        $('.product-slide2').owlCarousel({
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            nav: true,
+            navText: [
+                "<i class='fa fa-angle-left fa-2x'></i>",
+                "<i class='fa fa-angle-right fa-2x'></i>"
+            ],
+            responsive: {
+                0: { items: 1 },
+                448: { items: 2 },
+                768: { items: 3 },
                 1000: { items: 3 },
                 1200: { items: 3 }
             }
         })
 
+        $('.product-slide4').owlCarousel({
+            loop: true,
+            margin: 10,
+            autoplay: true,
+            nav: true,
+            navText: [
+                "<i class='fa fa-angle-left fa-2x'></i>",
+                "<i class='fa fa-angle-right fa-2x'></i>"
+            ],
+            responsive: {
+                0: { items: 1 },
+                448: { items: 1 },
+                768: { items: 1 },
+                1000: { items: 1 },
+                1200: { items: 1 }
+            }
+        })
 
         // trending item  slider
         var $hot_new_slider = $('.hot-and-new-item-slider');

@@ -4981,6 +4981,7 @@ nav button {
 
 .sub-categori .right-area .item-filter .filter-list {
     display: inline-block;
+    margin-right: 10px;
 }
 
 .sub-categori .right-area .item-filter .filter-list li {
@@ -4994,7 +4995,7 @@ nav button {
 }
 
 .sub-categori .right-area .item-filter .filter-list li select {
-    height: 30px;
+    height: 35px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     padding: 0px 15px;
 }
@@ -8264,8 +8265,9 @@ li#example_previous {
     display: inline-block;
     border-radius: 50%;
     margin-right: 7px;
-    -webkit-box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.25);
-    box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.25);
+    /* -webkit-box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 3px 3px 7px 1px rgba(0, 0, 0, 0.25); */
+    border: 1px solid #a09b9b;
     -webkit-transition: all 0.3s ease-in;
     -o-transition: all 0.3s ease-in;
     transition: all 0.3s ease-in;
@@ -8292,7 +8294,7 @@ li#example_previous {
 
 .checkout-area .checkout-process li a.active span,
 .checkout-area .checkout-process li a:hover span {
-    background: #333;
+    background: #0a5641;
 }
 
 .checkout-area .tab-content {
@@ -9161,7 +9163,8 @@ input[type=checkbox]:checked:disabled+label:before {
     top: 50%;
 }
 
-.product-slide1 .owl-next {
+
+/* .product-slide1 .owl-next {
     position: absolute;
     right: 0%;
     top: 55%;
@@ -9175,16 +9178,30 @@ input[type=checkbox]:checked:disabled+label:before {
     top: 55%;
     background: #ececec;
     padding: 0 7px;
+} */
+
+.add-to-cart,
+.add-to-cart-btn {
+    background: #024c0b !important;
+    padding: 7px;
+    color: white;
+    font-size: 15px;
 }
-.add-to-cart, .add-to-cart-btn{
-    background:green !important;
-    padding:5px;
-    color:white;
+
+.add-cart,
+.float-right {
+    margin-top: 5px;
 }
-.add-cart, .float-right{
-    margin-top:5px;
-}
-.thumbnail h5.mt-2{
+
+.thumbnail h5.mt-2 {
     border-bottom: 1px solid #e8e0e0!important;
     padding-bottom: 18px!important;
+}
+
+.checkout-area .checkout-process li a.active {
+    background: #0a5641!important;
+}
+
+.checkout-area .checkout-process li a.active::before {
+    border-left: 20px solid #0a5641!important;
 }

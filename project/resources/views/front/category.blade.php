@@ -84,9 +84,9 @@
     </div>
 
     <div class="mt-4">
-        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:78%">
+        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:85%">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-1 col-md-3" style="padding-left:0px;">
                     <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
                     <div style="display:none" class="list-group list-unstyled categories-list megamenu" id="myDIV">
                         <ul class="list-group">
@@ -129,10 +129,10 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-6 col-sm-5 col-md-4">
                     <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>
                 </div>
-                <div class="col-md-6">
+                <div class="col-12 col-sm-6 col-md-5 pr-4">
                     <form action="">
                         <div class="form-group input-group">
                             <input type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
@@ -147,7 +147,7 @@
     </div>
 </div>
 <section class="sub-categori" style="padding:0px">
-   <div class="container">
+   <div class="container" style="max-width:85%">
     <div class="row">
         <div class="col-md-3">
            
@@ -195,7 +195,7 @@
     </div>
       <div class="row">
       
-        <div class="col-md-3" style="border-right: 1px solid #d4ded9;">
+        <div class="col-md-3" style="border-right: 1px solid #d4ded9;positon:relative">
             <div class="py-3">
                 <div class="pt-2">পোস্টকারীর প্রকার</div>
                 <div class="pb-3" style="border-bottom: 1px solid #d4ded9;">
@@ -222,14 +222,38 @@
                 </div>
 
             </div>
+            <div>
+                <div class="py-2"style="border-bottom: 1px solid #d4ded9;">এখানে প্রাইস পিল্টার হবে</div>
+            </div>
+            <div class="text-center mt-3">
+                <img src="{{ asset('assets/images/brand/sidead.gif')}}" alt="">
+            </div>
+                
         </div>
          <div class="col-md-9 order-first order-lg-last ajax-loader-parent">
             <div class="right-area" id="app">
 
                @include('includes.filter')
-               <div class="categori-item-area">
-                    <div class="col-12">
-                            <div class="product-slide1">
+               <div class="categori-item-area category-slide">
+                    <div class="col" style="padding-left:10px;padding-right:10px;">
+                        <div class="product-slide4 mb-4">
+                            <div class="">
+                                <div class="">
+                                    <img class="" src="{{ asset('assets/images/brand/cropped.jpg')}}" alt="" />
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="">
+                                    <img class="" src="{{ asset('assets/images/brand/cropped1.jpg')}}" alt="" />
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="">
+                                    <img class="" src="{{ asset('assets/images/brand/cropped3.jpg')}}" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                            <div class="product-slide2">
                                 <div class="product-item">
                                     <div class="thumbnail">
                                         <a href="product-details.html">
@@ -237,7 +261,7 @@
                                                 <a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
                                             </div>
                                         </a>
-                                        <h4>Lorem Ipsum is simply </h4>
+                                        <h5>Lorem Ipsum is simply </h5>
                                         <div class="price-details clearfix mt-3">
                                             <div class="price-number float-left">
                                                 <p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
@@ -300,6 +324,7 @@
       </div>
    </div>
 </section>
+
 <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">

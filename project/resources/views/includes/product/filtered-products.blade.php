@@ -1,7 +1,7 @@
 			@if (count($prods) > 0)
 				<div class="row">
 						@foreach ($prods as $key => $prod)
-									<div class="col-lg-4 col-md-4 col-6 remove-padding">
+									<div class="col-lg-4 col-md-4 col-6" style="padding-left:10px;padding-right:10px;">
 
 										<div class="product-item">
 											<div class="thumbnail">
@@ -10,7 +10,7 @@
 														<a href="{{ route('front.product', $prod->slug) }}"><img  src="{{ $prod->photo ? asset('assets/images/thumbnails/'.$prod->thumbnail):asset('assets/images/noimage.png') }}" alt=""></a>
 													</div>
 												</a>
-												<h4>{{$prod->name}} </h4>
+												<h5 class="mt-2">{{$prod->name}} </h5>
 												<div class="price-details clearfix mt-3">
 													<div class="price-number float-left">
 														<p class="text-left" style="font-size:20px"><strong class="rupees">{{$prod->price}} BDT</strong></p>
@@ -104,13 +104,18 @@
 				
 				@endforeach
 				</div>
-				<div class="col-lg-12">
+				<div class="bottom-add mt-3">
+					<div class="container">
+						<center><img src="{{ asset('assets/images/brand/gp.gif')}}"></center>
+					</div>
+				</div>
+				<div class="col-lg-12 pb-4">
 					<div class="page-center mt-5">
 						{!! $prods->appends(['search' => request()->input('search')])->links() !!}
 					</div>
 				</div>
 			@else
-				<div class="col-lg-12">
+				<div class="col-lg-12 pb-4">
 					<div class="page-center">
 						 <h4 class="text-center">{{ $langg->lang60 }}</h4>
 					</div>
