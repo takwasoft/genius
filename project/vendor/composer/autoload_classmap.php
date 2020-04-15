@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Brand' => $baseDir . '/app/Brand.php',
     'App\\Classes\\GeniusMailer' => $baseDir . '/app/Classes/GeniusMailer.php',
     'App\\Classes\\Instamojo' => $baseDir . '/app/Classes/Instamojo.php',
     'App\\Console\\Commands\\CrudGenerator' => $baseDir . '/app/Console/Commands/CrudGenerator.php',
@@ -56,7 +57,10 @@ return array(
     'App\\Http\\Controllers\\Admin\\UserController' => $baseDir . '/app/Http/Controllers/Admin/UserController.php',
     'App\\Http\\Controllers\\Admin\\VendorController' => $baseDir . '/app/Http/Controllers/Admin/VendorController.php',
     'App\\Http\\Controllers\\Admin\\VerificationController' => $baseDir . '/app/Http/Controllers/Admin/VerificationController.php',
+    'App\\Http\\Controllers\\AreaController' => $baseDir . '/app/Http/Controllers/AreaController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Http\\Controllers\\DistrictController' => $baseDir . '/app/Http/Controllers/DistrictController.php',
+    'App\\Http\\Controllers\\DivisionController' => $baseDir . '/app/Http/Controllers/DivisionController.php',
     'App\\Http\\Controllers\\Front\\CartController' => $baseDir . '/app/Http/Controllers/Front/CartController.php',
     'App\\Http\\Controllers\\Front\\CatalogController' => $baseDir . '/app/Http/Controllers/Front/CatalogController.php',
     'App\\Http\\Controllers\\Front\\CheckoutController' => $baseDir . '/app/Http/Controllers/Front/CheckoutController.php',
@@ -71,6 +75,7 @@ return array(
     'App\\Http\\Controllers\\Front\\StripeController' => $baseDir . '/app/Http/Controllers/Front/StripeController.php',
     'App\\Http\\Controllers\\Front\\VendorController' => $baseDir . '/app/Http/Controllers/Front/VendorController.php',
     'App\\Http\\Controllers\\ShotovaghController' => $baseDir . '/app/Http/Controllers/Front/ShotovaghController.php',
+    'App\\Http\\Controllers\\SubDistrictController' => $baseDir . '/app/Http/Controllers/SubDistrictController.php',
     'App\\Http\\Controllers\\User\\ForgotController' => $baseDir . '/app/Http/Controllers/User/ForgotController.php',
     'App\\Http\\Controllers\\User\\InstamojoController' => $baseDir . '/app/Http/Controllers/User/InstamojoController.php',
     'App\\Http\\Controllers\\User\\LoginController' => $baseDir . '/app/Http/Controllers/User/LoginController.php',

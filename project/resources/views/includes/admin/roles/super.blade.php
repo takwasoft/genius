@@ -158,7 +158,19 @@
                 </li>
         </ul>
     </li>
+    <li>
+        <a href="#menu30" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Brands') }}</a>
+        <ul class="collapse list-unstyled
+        @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brand')
+          show
 
+        @endif" id="menu30" data-parent="#accordion" >
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brand') active @endif">
+                    <a href="{{ URL::to('/admin/brands')}}"><span>Brands</span></a>
+                </li>
+            
+        </ul>
+    </li>
 
 
     <li>

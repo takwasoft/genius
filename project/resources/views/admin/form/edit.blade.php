@@ -36,7 +36,7 @@
                         @elseif($field["type"]=="textarea")
                         <div class="form-group">
                             <label for="exampleInputEmail1">{{$field['label']}}</label>
-                            <textarea name="{{$field['name']}}" class="textarea">{{$field['value']}}</textarea>
+                            <textarea name="{{$field['name']}}" class="form-control">{{$field['value']}}</textarea>
 
                         </div>
                         @elseif($field["type"]=="select")

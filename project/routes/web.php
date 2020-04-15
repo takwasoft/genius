@@ -1390,6 +1390,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   
   Route::resource('/admin/divisions', 'DivisionController');
 
+  Route::resource('/admin/brands', 'BrandController');
+
 
 Route::get('/get-district/{division}','AreaController@getDistrict');
 Route::get('/get-subdistrict/{district}','AreaController@getSubDistrict');

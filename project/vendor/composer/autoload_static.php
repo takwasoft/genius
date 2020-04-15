@@ -495,6 +495,7 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
     );
 
     public static $classMap = array (
+        'App\\Brand' => __DIR__ . '/../..' . '/app/Brand.php',
         'App\\Classes\\GeniusMailer' => __DIR__ . '/../..' . '/app/Classes/GeniusMailer.php',
         'App\\Classes\\Instamojo' => __DIR__ . '/../..' . '/app/Classes/Instamojo.php',
         'App\\Console\\Commands\\CrudGenerator' => __DIR__ . '/../..' . '/app/Console/Commands/CrudGenerator.php',
@@ -545,7 +546,10 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
         'App\\Http\\Controllers\\Admin\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserController.php',
         'App\\Http\\Controllers\\Admin\\VendorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/VendorController.php',
         'App\\Http\\Controllers\\Admin\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/VerificationController.php',
+        'App\\Http\\Controllers\\AreaController' => __DIR__ . '/../..' . '/app/Http/Controllers/AreaController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DistrictController' => __DIR__ . '/../..' . '/app/Http/Controllers/DistrictController.php',
+        'App\\Http\\Controllers\\DivisionController' => __DIR__ . '/../..' . '/app/Http/Controllers/DivisionController.php',
         'App\\Http\\Controllers\\Front\\CartController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/CartController.php',
         'App\\Http\\Controllers\\Front\\CatalogController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/CatalogController.php',
         'App\\Http\\Controllers\\Front\\CheckoutController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/CheckoutController.php',
@@ -560,6 +564,7 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
         'App\\Http\\Controllers\\Front\\StripeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/StripeController.php',
         'App\\Http\\Controllers\\Front\\VendorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/VendorController.php',
         'App\\Http\\Controllers\\ShotovaghController' => __DIR__ . '/../..' . '/app/Http/Controllers/Front/ShotovaghController.php',
+        'App\\Http\\Controllers\\SubDistrictController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubDistrictController.php',
         'App\\Http\\Controllers\\User\\ForgotController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/ForgotController.php',
         'App\\Http\\Controllers\\User\\InstamojoController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/InstamojoController.php',
         'App\\Http\\Controllers\\User\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/LoginController.php',
