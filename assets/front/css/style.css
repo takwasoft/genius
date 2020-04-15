@@ -9215,3 +9215,35 @@ input[type=checkbox]:checked:disabled+label:before {
 .checkout-area .checkout-process li a.active::before {
     border-left: 20px solid #0a5641!important;
 }
+
+.vendor-btn:hover{
+    background:#eceaea;
+    transition:.5s;
+}
+
+.vendor-model {
+    border: none !important;
+    padding: 15px 15px !important;
+}
+
+
+.modal-header .close {
+   
+    right: 35px!important;
+    top: 25px!important;
+    background: #fff;
+    opacity: 1!important;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 25px;
+    padding: 0px;
+    border-radius: 50%;
+    font-size: 30px!important;
+    font-weight: 600!important;
+    box-shadow: none!important;
+}
+.vendor-model .close:hover {
+    background-color: #fff!important;
+    color:#000!important;
+}
