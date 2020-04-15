@@ -1247,6 +1247,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
   // CATEGORY SECTION
   Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category');
+  
+  
   Route::get('/category/{slug1}/{slug2}','Front\CatalogController@subcategory')->name('front.subcat');
   Route::get('/category/{slug1}/{slug2}/{slug3}','Front\CatalogController@childcategory')->name('front.childcat');
   Route::get('/categories/','Front\CatalogController@categories')->name('front.categories');
@@ -1391,6 +1393,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::resource('/admin/divisions', 'DivisionController');
 
   Route::resource('/admin/brands', 'BrandController');
+  Route::resource('/admin/brandcategories', 'BrandCategoryController');
+  Route::get('/brand/{x}','Front\CatalogController@brand')->name('front.brand');
 
 
 Route::get('/get-district/{division}','AreaController@getDistrict');

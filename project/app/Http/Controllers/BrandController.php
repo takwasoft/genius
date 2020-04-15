@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\BrandCategory;
 use DataTables;
 use Illuminate\Support\Facades\URL;
 class BrandController extends Controller
@@ -12,11 +13,11 @@ class BrandController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-    }
+    } 
     public function index()
     {
         if (request()->ajax()) {
-            $data = Brand::latest()->get();
+            $data = Brand::latest()->with('brandcategory')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('action', function($row){
@@ -32,6 +33,10 @@ class BrandController extends Controller
 
                              return $btn;
                      })
+                     ->addColumn('week', function($row){
+
+                        return $row->brand_week==1?"<span class='text-light badge bg-success'>Yes</span>":"<span class='text-light badge bg-danger'>No</span>";
+                 })
                         ->rawColumns(['action'])
                         ->escapeColumns([])
                         ->make(true);
@@ -40,11 +45,15 @@ class BrandController extends Controller
                     $thead='<th>ID</th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Brand Of Week</th>
+                    <th>Category</th>
                     <th>Image</th>
                     ';
                     $columns="{data: 'id', name: 'id'},
                     {data: 'name', name: 'name'},
                     {data: 'details', name: 'details'},
+                    {data: 'week', name: 'week'},
+                    {data: 'brandcategory.name', name: 'brandcategory.name'},
                     {data: 'img', name: 'img'}, ";
                     return view('table.data',["columns"=>$columns,"thead"=>$thead,"layout"=>'admin.master','ajax'=>'brands','title'=>'Brand List']);
     }
@@ -53,6 +62,14 @@ class BrandController extends Controller
         $action="admin/brands";
         $name="Brand";
         $fields=[
+            [
+                "name"=>"brand_category_id",
+                "label"=>"Brand Category",
+                "type"=>"select",
+                "required"=>true,
+                "options"=>BrandCategory::all(),
+                "optionlabel"=>"name"
+            ],
             [
                 "name"=>"name",
                 "label"=>"Name",
@@ -70,7 +87,24 @@ class BrandController extends Controller
                 "label"=>"Image",
                 "type"=>"file",
                 "required"=>true
-            ]
+            ],
+            [
+                "name"=>"brand_week",
+                "label"=>"Brand Of Week",
+                "type"=>"select",
+                "required"=>true,
+                "options"=>[
+                    [
+                        "name"=>"Yes",
+                        "id"=>1
+                    ],
+                    [
+                        "name"=>"No",
+                        "id"=>0
+                    ]
+                ],
+                "optionlabel"=>"name",
+            ],
             ];
 
         return view('admin.form.create',["action"=>$action,"name"=>$name,"fields"=>$fields]);
@@ -91,6 +125,15 @@ class BrandController extends Controller
        $action="admin/brands/$brand->id";
        $name="Brand";
        $fields=[
+        [
+            "name"=>"brand_category_id",
+            "label"=>"Brand Category",
+            "type"=>"select",
+            "required"=>true,
+            "options"=>BrandCategory::all(),
+            "optionlabel"=>"name",
+            "value"=>$brand->brand_category_id
+        ],
            [
                "name"=>"name",
                "label"=>"Name",
@@ -101,7 +144,7 @@ class BrandController extends Controller
            [
                "name"=>"details",
                "label"=>"Description",
-               "type"=>"textarea",
+               "type"=>"textarea", 
                "required"=>true,
                "value"=>$brand->details
            ],
@@ -111,6 +154,24 @@ class BrandController extends Controller
                "type"=>"file",
                "required"=>false
            ],
+           [
+            "name"=>"brand_week",
+            "label"=>"Brand Of Week",
+            "type"=>"select",
+            "required"=>true,
+            "value"=>$brand->brand_week,
+            "options"=>[
+                [
+                    "name"=>"Yes",
+                    "id"=>1
+                ],
+                [
+                    "name"=>"No",
+                    "id"=>0
+                ]
+            ],
+            "optionlabel"=>"name",
+        ],
            ];
 
 
@@ -141,10 +202,10 @@ class BrandController extends Controller
     * @param  \App\Division  $var
     * @return \Illuminate\Http\Response
     */
-   public function destroy(Brand  $division)
+   public function destroy(Brand  $brand)
    {
        
-       $division->delete();
+       $brand->delete();
        return redirect('/admin/brands');
    }
 }

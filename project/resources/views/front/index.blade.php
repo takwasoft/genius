@@ -123,71 +123,52 @@
 				<div class="col-md-9 product-tabs">
 					<ul class="nav nav-tabs">
 						<li  class="nav-item"><a class='nav-link active' data-toggle="tab" href="#home">BRANDS OF THE WEEK</a></li>
-						<li class="nav-item"><a class='nav-link' data-toggle="tab" href="#menu1">FASHION BRANDS</a></li>
-						<li class="nav-item"><a class='nav-link' data-toggle="tab" href="#menu3">MOBILE BRANDS</a></li>
+						@foreach($brandCategories as $brandCategory)
+
+						<li class="nav-item"><a class='nav-link' data-toggle="tab" href="#menu{{$brandCategory->id}}">{{$brandCategory->name}}</a></li>
+						@endforeach
+						
 					</ul>
 					<div class="tab-content">
 						<div id="home" class="tab-pane show active">
 	
 	
-							<div class="row text-center pt-3">
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/Samsung_logo.png')}}" alt="" width="80%" />
+							<div class="row text-center ">
+								@foreach($weekBrands as $weekBrand)
+								<div class="col-sm-3 py-4">
+								<a href="{{ route('front.brand',$weekBrand->name) }}">
+								<img src="{{URL::to('/images/'.$weekBrand->image)}}" alt="" width="80%" />
+								</a>
+									
 								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/MSFT_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/Samsung_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/MSFT_logo.png')}}" alt="" width="80%" />
-								</div>
+								@endforeach
+							
+						
+								
 							</div>
 							<!-- End home tab content row 2 -->
 	
-							<div class="row text-center py-5">
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/MSFT_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/Samsung_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/MSFT_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/Samsung_logo.png')}}" alt="" width="80%" />
-								</div>
-							</div>
-							<!-- End home tab content row 3 -->
-	
-							<div class="row text-center pb-3">
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/Samsung_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/MSFT_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/Samsung_logo.png')}}" alt="" width="80%" />
-								</div>
-								<div class="col-sm-3">
-									<img src="{{ asset('assets/images/brand/MSFT_logo.png')}}" alt="" width="80%" />
-								</div>
-							</div>
+			
 							<!-- End home tab content row 4 -->
 						</div>
 						<!-- End home tab content  -->
-	
-						<div id="menu1" class="tab-pane fade">
-							<h4>Same this</h4>
+			@foreach($brandCategories as $brandCategory)
+						<div id="menu{{$brandCategory->id}}" class="tab-pane fade">
+							<div class="row text-center ">
+								@foreach($brandCategory->brands as $brand)
+								<div class="col-sm-3 py-4">
+								<a href="#">
+								<img src="{{URL::to('/images/'.$brand->image)}}" alt="" width="80%" />
+								</a>
+									
+								</div>
+								@endforeach
+							
+						
+								
+							</div>
 						</div>
-						<!-- End fashion tab content  -->
-						<div id="menu3" class="tab-pane fade">
-							<h4>Same this</h4>
-						</div>
-						<!-- End MOBILE tab content  -->
+				@endforeach		
 	
 					</div>
 					<!--- end Tab-content  ------>

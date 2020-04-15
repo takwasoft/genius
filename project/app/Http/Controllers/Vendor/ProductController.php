@@ -12,6 +12,7 @@ use App\Models\Generalsetting;
 use App\Models\Subcategory;
 use App\Models\Attribute;
 use App\Models\AttributeOption;
+use App\Models\Brand;
 use App\Models\Division;
 use Auth;
 use Carbon\Carbon;
@@ -131,8 +132,9 @@ class ProductController extends Controller
     public function createPhysical()
     {
         $cats = Category::all();
+        $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
-        return view('vendor.product.create.physical',compact('cats','sign'));
+        return view('vendor.product.create.physical',compact('cats','sign','brands'));
     }
 
     //*** GET Request
@@ -627,6 +629,7 @@ if (!Product::where('sku',$line[0])->exists()){
             // Set SLug
 
                 $prod = Product::find($data->id);
+                $prod->deal_code="DC".$prod->id.rand(pow(10, 3), pow(10, 4)-1);
                 if($prod->type != 'Physical'){
                     $prod->slug = str_slug($data->name,'-').'-'.strtolower(str_random(3).$data->id.str_random(3));
                 }

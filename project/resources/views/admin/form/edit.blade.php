@@ -48,10 +48,12 @@
                              
                                  name="{{$field['name']}}"  class="form-control" >
                                             @foreach($field["options"] as $option)
-                                               @if($field["value"]==$option['id'])
+                                               
+                                                <option
+                                                @if($field["value"]==$option['id'])
                                         selected
                                 @endif
-                                                <option value="{{$option['id']}}">
+                                                 value="{{$option['id']}}">
                                                     {{$option[$field["optionlabel"]]}}
                                                 </option>
                                             @endforeach

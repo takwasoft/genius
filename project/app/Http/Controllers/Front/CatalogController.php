@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Childcategory;
 use App\Models\Comment;
@@ -43,7 +44,34 @@ class CatalogController extends Controller
     // }
 
     // -------------------------------- CATEGORY SECTION ----------------------------------------
+    public function brand(Request $request,$name)
+    {
+      
+      $brand=Brand::whereName($name)->firstOrFail();
+     
+      $cat = null;
+      $subcat = null;
+      $childcat = null;
+      $minprice = $request->min;
+      $maxprice = $request->max;
+      $sort = $request->sort;
+      $search = $request->search;
 
+
+
+     $prods = (new Collection(Product::filterProducts($brand->products)))->paginate(12);
+
+      $data['prods'] = $prods;
+
+      if($request->ajax()) {
+
+      $data['ajax_check'] = 1;
+
+        return view('includes.product.filtered-products', $data);
+      }
+      return view('front.brand', $data);
+     
+    }
     public function category(Request $request, $slug=null, $slug1=null, $slug2=null)
     {
       $cat = null;

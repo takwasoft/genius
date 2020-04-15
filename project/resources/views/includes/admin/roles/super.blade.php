@@ -15,7 +15,7 @@
             </li>
             <li>
                 <a href="{{route('admin-order-declined')}}"> {{ __('Declined Orders') }}</a>
-            </li>
+            </li> 
 
         </ul>
     </li>
@@ -163,11 +163,16 @@
         <ul class="collapse list-unstyled
         @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brand')
           show
-
+ @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='brandcategories')
+          show
         @endif" id="menu30" data-parent="#accordion" >
+                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brandcategories') active @endif">
+                    <a href="{{ URL::to('/admin/brandcategories')}}"><span>Brand Category</span></a>
+                </li>
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brand') active @endif">
                     <a href="{{ URL::to('/admin/brands')}}"><span>Brands</span></a>
                 </li>
+               
             
         </ul>
     </li>

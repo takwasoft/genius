@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Brand' => $baseDir . '/app/Brand.php',
     'App\\Classes\\GeniusMailer' => $baseDir . '/app/Classes/GeniusMailer.php',
     'App\\Classes\\Instamojo' => $baseDir . '/app/Classes/Instamojo.php',
     'App\\Console\\Commands\\CrudGenerator' => $baseDir . '/app/Console/Commands/CrudGenerator.php',
@@ -58,6 +57,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\VendorController' => $baseDir . '/app/Http/Controllers/Admin/VendorController.php',
     'App\\Http\\Controllers\\Admin\\VerificationController' => $baseDir . '/app/Http/Controllers/Admin/VerificationController.php',
     'App\\Http\\Controllers\\AreaController' => $baseDir . '/app/Http/Controllers/AreaController.php',
+    'App\\Http\\Controllers\\BrandController' => $baseDir . '/app/Http/Controllers/BrandController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DistrictController' => $baseDir . '/app/Http/Controllers/DistrictController.php',
     'App\\Http\\Controllers\\DivisionController' => $baseDir . '/app/Http/Controllers/DivisionController.php',
@@ -124,6 +124,8 @@ return array(
     'App\\Models\\Banner' => $baseDir . '/app/Models/Banner.php',
     'App\\Models\\Blog' => $baseDir . '/app/Models/Blog.php',
     'App\\Models\\BlogCategory' => $baseDir . '/app/Models/BlogCategory.php',
+    'App\\Models\\Brand' => $baseDir . '/app/Models/Brand.php',
+    'App\\Models\\BrandCategory' => $baseDir . '/app/Models/BrandCategory.php',
     'App\\Models\\Cart' => $baseDir . '/app/Models/Cart.php',
     'App\\Models\\Category' => $baseDir . '/app/Models/Category.php',
     'App\\Models\\Childcategory' => $baseDir . '/app/Models/Childcategory.php',

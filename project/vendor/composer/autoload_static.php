@@ -495,7 +495,6 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
     );
 
     public static $classMap = array (
-        'App\\Brand' => __DIR__ . '/../..' . '/app/Brand.php',
         'App\\Classes\\GeniusMailer' => __DIR__ . '/../..' . '/app/Classes/GeniusMailer.php',
         'App\\Classes\\Instamojo' => __DIR__ . '/../..' . '/app/Classes/Instamojo.php',
         'App\\Console\\Commands\\CrudGenerator' => __DIR__ . '/../..' . '/app/Console/Commands/CrudGenerator.php',
@@ -547,6 +546,7 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
         'App\\Http\\Controllers\\Admin\\VendorController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/VendorController.php',
         'App\\Http\\Controllers\\Admin\\VerificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/VerificationController.php',
         'App\\Http\\Controllers\\AreaController' => __DIR__ . '/../..' . '/app/Http/Controllers/AreaController.php',
+        'App\\Http\\Controllers\\BrandController' => __DIR__ . '/../..' . '/app/Http/Controllers/BrandController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DistrictController' => __DIR__ . '/../..' . '/app/Http/Controllers/DistrictController.php',
         'App\\Http\\Controllers\\DivisionController' => __DIR__ . '/../..' . '/app/Http/Controllers/DivisionController.php',
@@ -613,6 +613,8 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
         'App\\Models\\Banner' => __DIR__ . '/../..' . '/app/Models/Banner.php',
         'App\\Models\\Blog' => __DIR__ . '/../..' . '/app/Models/Blog.php',
         'App\\Models\\BlogCategory' => __DIR__ . '/../..' . '/app/Models/BlogCategory.php',
+        'App\\Models\\Brand' => __DIR__ . '/../..' . '/app/Models/Brand.php',
+        'App\\Models\\BrandCategory' => __DIR__ . '/../..' . '/app/Models/BrandCategory.php',
         'App\\Models\\Cart' => __DIR__ . '/../..' . '/app/Models/Cart.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Childcategory' => __DIR__ . '/../..' . '/app/Models/Childcategory.php',

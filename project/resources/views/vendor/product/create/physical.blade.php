@@ -95,7 +95,23 @@
 												</div>
 
 
-						                        </div>
+												</div>
+											
+												<div class="row">
+													<div class="col-lg-4">
+														<div class="left-area">
+																<h4 class="heading">Brand</h4>
+														</div>
+													</div>
+													<div class="col-lg-7">
+															<select  name="brand_id" required="">
+																	<option value="">Select Brand</option>
+                                  @foreach($brands as $brand)
+                                  <option  value="{{ $brand->id }}">{{$brand->name}}</option>
+                                  @endforeach
+                             </select>
+													</div>
+												</div>
 
 												<div class="row">
 													<div class="col-lg-4">

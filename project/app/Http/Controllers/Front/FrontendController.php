@@ -6,6 +6,8 @@ use App\Classes\GeniusMailer;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\Brand;
+use App\Models\BrandCategory;
 use App\Models\Counter;
 use App\Models\Generalsetting;
 use App\Models\Order;
@@ -138,10 +140,12 @@ class FrontendController extends Controller
         $ps = DB::table('pagesettings')->find(1);
         $feature_products =  Product::where('featured','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();
         // dd(Session::get('cart'));
-	    return view('front.index',compact('ps','sliders','top_small_banners','feature_products'));
+        $brandCategories=BrandCategory::where('show_in_home',1)->get();
+        $weekBrands=Brand::where('brand_week',1)->get();
+	    return view('front.index',compact('brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products')); 
 	}
     public function product(){
-       
+    
         return view('front.product1');
     }
     public function extraIndex()
