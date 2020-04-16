@@ -14,7 +14,10 @@
 		<!-- Hero Area Start -->
 		<section class="hero-area">
 			<div class="container">
-				@if($ps->slider == 1)
+				<div class="row">
+					<div class="col-md-3"></div>
+					<div class="col-md-9">
+						@if($ps->slider == 1)
 
 				@if(count($sliders))
 					<div class="hero-area-slider">
@@ -64,6 +67,9 @@
 					<p class="text-light">On Smart Phones</p>
 				</div>
 			</div>
+					</div>
+				</div>
+			
 			</div>
 
 		</section>
@@ -192,6 +198,112 @@
 	</div>
 
 	{{--  brand ad end  --}}
+
+
+	<!-- offer ad -->
+        <section class="slider_bottom_banner mt-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <a href="https://www.google.com/" target="_blank" class="banner-effect">
+                            <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287040feature1.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <a href="https://www.google.com/" target="_blank" class="banner-effect">
+                            <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287047feature2.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <a href="https://www.google.com/" target="_blank" class="banner-effect">
+                            <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287054feature3.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <a href="https://www.google.com/" target="_blank" class="banner-effect">
+                            <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287106feature4.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- offer ad end -->
+
+        <!-- info area -->
+
+        <section class="info-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="info-big-box">
+                            <div class="row">
+                                <div class="col-6 col-xl-3 p-0">
+                                    <div class="info-box">
+                                        <div class="icon">
+                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288944s1.png">
+                                        </div>
+                                        <div class="info">
+                                            <div class="details text-dark">
+                                                <h4 class="title">FREE SHIPPING</h4>
+                                                <p class="text">
+                                                    Free Shipping All Order
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-3 p-0">
+                                    <div class="info-box">
+                                        <div class="icon">
+                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288950s2.png">
+                                        </div>
+                                        <div class="info">
+                                            <div class="details">
+                                                <h4 class="title">PAYMENT METHOD</h4>
+                                                <p class="text">
+                                                    Secure Payment
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-3 p-0">
+                                    <div class="info-box">
+                                        <div class="icon">
+                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288955s3.png">
+                                        </div>
+                                        <div class="info">
+                                            <div class="details">
+                                                <h4 class="title">30 DAY RETURNS</h4>
+                                                <p class="text">
+                                                    30-Day Return Policy
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-3 p-0">
+                                    <div class="info-box">
+                                        <div class="icon">
+                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288959s4.png">
+                                        </div>
+                                        <div class="info">
+                                            <div class="details">
+                                                <h4 class="title">HELP CENTER</h4>
+                                                <p class="text">
+                                                    24/7 Support System
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end info are -->
 
 	{{--  ad  --}}
 	<div class="full-width-ad mt-4">
@@ -396,21 +508,317 @@
 
 		{{--  top ad  --}}
 
-	
-		<div class="half-width-ad">
+		<section class="banner-section">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-6">
-						<img src="{{ asset('assets/images/brand/robi.gif')}}" alt="" width="100%" />
+									<div class="row">
+													<div class="col-lg-6" style="padding:10px">
+								<div class="left">
+									<a class="banner-effect" href="https://www.google.com/" target="_blank">
+										<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889151top2.jpg" alt="">
+									</a>
+								</div>
+							</div>
+													<div class="col-lg-6"  style="padding:10px">
+								<div class="left">
+									<a class="banner-effect" href="" target="_blank">
+										<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889146top1.jpg" alt="">
+									</a>
+								</div>
+							</div>
+											</div>
+							</div>
+		</section>
+		<!-- end top-ad  --->
+
+		{{--  product  --}}
+
+	
+		<div class="container">
+			<div id="top-heading">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<h3>Best Seller</h3>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
+							<p><a href="#">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						</div>
+						<div class="clearfix"></div>
 					</div>
-					<div class="col-md-6">
-						<img src="{{ asset('assets/images/brand/tale.gif')}}" alt="" width="100%" />
+			</div>
+	
+			<div class="">
+				<div class="product-slide">
+	
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
 					</div>
+					<!-- end single product  --->
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
 				</div>
 			</div>
 		</div>
-		<!-- end top-ad  --->
+		<!-- end thum-product section  --->
+	
+	
+		{{--  best product  --}}
+	
+		<div class="container">
+			<div id="top-heading">
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-6">
+							<h3>Related Products</h3>
+						</div>
+						<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
+							<p><a href="#">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+			</div>
+	
+			<div class="">
+				<div class="product-slide">
+	
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+	
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+					<!-- single product  --->
+					<div class="product-item">
+						<div class="thumbnail">
+							<a href="product-details.html">
+								<div class="product-thum-img">
+									<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								</div>
+							</a>
+							<h4>Lorem Ipsum is simply </h4>
+							<div class="price-details clearfix mt-3">
+								<div class="price-number float-left">
+									<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								</div>
+								<div class="add-cart float-right">
+									<h4><a href="preview.html">Add to Cart</a></h4>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</div>
+					<!-- end single product  --->
+				</div>
+			</div>
+		</div>
+		<!-- end thum-product section  --->
 
+
+		{{--  large add  --}}
+		<section class="banner-section">
+			<div class="container">
+									<div class="row">
+													<div class="col-lg-6" style="padding:10px">
+								<div class="left">
+									<a class="banner-effect" href="https://www.google.com/" target="_blank">
+										<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889151top2.jpg" alt="">
+									</a>
+								</div>
+							</div>
+													<div class="col-lg-6"  style="padding:10px">
+								<div class="left">
+									<a class="banner-effect" href="" target="_blank">
+										<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889146top1.jpg" alt="">
+									</a>
+								</div>
+							</div>
+											</div>
+							</div>
+		</section>
+		{{--  end large add  --}}
 		{{--  product  --}}
 
 	

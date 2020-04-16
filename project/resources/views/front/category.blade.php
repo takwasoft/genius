@@ -225,7 +225,7 @@
             <div>
                 <div class="py-2"style="border-bottom: 1px solid #d4ded9;">এখানে প্রাইস পিল্টার হবে</div>
             </div>
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 sticky-top">
                 <img src="{{ asset('assets/images/brand/sidead.gif')}}" alt="">
             </div>
                 

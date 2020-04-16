@@ -1824,7 +1824,7 @@ nav button {
 /* hero Slider dot design End */
 
 .info-area {
-    background: #ff5500;
+    background: #fff!important;
 }
 
 .info-area .info-big-box {
@@ -1874,10 +1874,20 @@ nav button {
     padding-top: 8px;
 }
 
+.info-area .info-big-box {
+    margin-top: 30px;
+    left: 0;
+    padding: 10px 0px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
+    width: 100%;
+    border-radius: 3px;
+}
+
 .info-area .info-box .info .details .title {
     font-size: 16px;
     line-height: 26px;
-    color: #fff;
+    color: #000;
     font-weight: 600;
     margin-bottom: 0px;
 }
@@ -1885,7 +1895,7 @@ nav button {
 .info-area .info-box .info .details .text {
     font-size: 14px;
     margin-bottom: 0px;
-    color: #fff;
+    color: #000;
 }
 
 .info-area .info-box:hover {
