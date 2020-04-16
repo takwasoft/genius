@@ -912,7 +912,7 @@ Route::prefix('user')->group(function() {
 
   // User Profile
   Route::get('/profile', 'User\UserController@profile')->name('user-profile');
-  Route::post('/profile', 'User\UserController@profileupdate')->name('user-profile-update');
+  Route::post('/profile', 'User\UserController@profileupdate')->name('user-profile-update'); 
   // User Profile Ends
 
   // User Forgot

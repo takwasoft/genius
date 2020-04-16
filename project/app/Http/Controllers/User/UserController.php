@@ -38,7 +38,7 @@ class UserController extends Controller
     public function profileupdate(Request $request)
     {
         //--- Validation Section
-
+        
         $rules =
         [
             'photo' => 'mimes:jpeg,jpg,png,svg',

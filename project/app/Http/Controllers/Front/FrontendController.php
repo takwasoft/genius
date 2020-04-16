@@ -8,8 +8,9 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\Brand;
 use App\Models\BrandCategory;
+use App\Models\Category;
 use App\Models\Counter;
-use App\Models\Generalsetting;
+use App\Models\Generalsetting; 
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Subscriber; 
@@ -139,10 +140,11 @@ class FrontendController extends Controller
         $top_small_banners = DB::table('banners')->where('type','=','TopSmall')->get();
         $ps = DB::table('pagesettings')->find(1);
         $feature_products =  Product::where('featured','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();
+        $feature_categories=Category::where('is_featured','=','1')->where('status','=',1)->get();
         // dd(Session::get('cart'));
         $brandCategories=BrandCategory::where('show_in_home',1)->get();
         $weekBrands=Brand::where('brand_week',1)->get();
-	    return view('front.index',compact('brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products')); 
+	    return view('front.index',compact('feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products')); 
 	}
     public function product(){
     

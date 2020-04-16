@@ -37,7 +37,7 @@
                 </ul>
 
 
-              <form class="price-range-block" id="priceForm" action="{{ route('front.vendor', Request::route('category')) }}">
+               <form class="price-range-block" id="priceForm" action="{{ route('front.vendor', Request::route('category')) }}/{{str_replace(' ', '-', $vendor->shop_name)}}">
                   @if (!empty(request()->input('sort')))
                     <input type="hidden" name="sort" value="{{ request()->input('sort') }}" />
                   @endif

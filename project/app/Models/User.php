@@ -102,6 +102,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\FavoriteSeller');
     }
+    public function followers()
+    {
+        return $this->hasMany('App\Models\FavoriteSeller','vendor_id','id');
+    }
   
 
     public function vendororders()

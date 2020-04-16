@@ -1,12 +1,12 @@
 @extends('layouts.front')
 @section('styles')
 <style>
-#mg-menu{
+/* #mg-menu{
     display:none;
-}
-.wrap-core-nav-list{
+} */
+/* .wrap-core-nav-list{
     text-align:left !important;
-}
+} */
    .model-item li {
         border-top: 1px solid rgba(0, 0, 0, .125);
         padding: .7rem .80rem;
@@ -35,6 +35,40 @@
     .item-filter{
         margin-top: 10px;
     }
+    .filter-btn {
+    border: 1px solid #0f78f2;
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #fff;
+    border: 0px;
+    border-radius: 50px;
+    display: block;
+    margin: 0 auto;
+    -webkit-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
+    cursor: pointer;
+    background: #0f78f2;
+
+}
+.price-range-block .livecount {
+    margin-bottom: 30px;
+}
+.price-range-block {
+    text-align: center;
+    margin-top: 34px;
+}
+.price-range-block #slider-range {
+    margin-bottom: 21px;
+}
+.body-area {
+    padding: 20px 15px 30px;
+    display: block;
+}
 </style>
 <link rel="stylesheet" href="{{asset('assets/front/css/modify.css')}}">
 @endsection
@@ -88,92 +122,19 @@
             <div class="row">
                 <div class="col-1 col-md-3" style="padding-left:0px;">
                     <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
-                    
-                    <div style="display:none" class="categories_menu_inner list-group list-unstyled categories-list megamenu" id="myDIV">
-                        
-                       <ul>
-								@php
-								$i=1;
-								@endphp
-								@foreach($categories as $category)
-
-								<li class="{{count($category->subs) > 0 ? 'dropdown_list':''}} {{ $i >= 15 ? 'rx-child' : '' }}">
-								@if(count($category->subs) > 0)
-									<div class="img">
-										<img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
-									</div>
-									<div class="link-area">
-										<span><a href="{{ route('front.category',$category->slug) }}">{{ $category->name }}</a></span>
-										@if(count($category->subs) > 0)
-										<a href="javascript:;">
-											<i class="fa fa-angle-right" aria-hidden="true"></i>
-										</a>
-										@endif
-									</div>
-
-								@else
-									<a href="{{ route('front.category',$category->slug) }}"><img src="{{ asset('assets/images/categories/'.$category->photo) }}"> {{ $category->name }}</a>
-
-								@endif
-									@if(count($category->subs) > 0)
-
-									@php
-									$ck = 0;
-									foreach($category->subs as $subcat) {
-										if(count($subcat->childs) > 0) {
-											$ck = 1;
-											break;
-										}
-									}
-									@endphp
-									<ul class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }}">
-										@foreach($category->subs as $subcat)
-											<li>
-												<a href="{{ route('front.subcat',['slug1' => $subcat->category->slug, 'slug2' => $subcat->slug]) }}">{{$subcat->name}}</a>
-												@if(count($subcat->childs) > 0)
-													<div class="categorie_sub_menu">
-														<ul>
-															@foreach($subcat->childs as $childcat)
-															<li><a href="{{ route('front.childcat',['slug1' => $childcat->subcategory->category->slug, 'slug2' => $childcat->subcategory->slug, 'slug3' => $childcat->slug]) }}">{{$childcat->name}}</a></li>
-															@endforeach
-														</ul>
-													</div>
-												@endif
-											</li>
-										@endforeach
-									</ul>
-
-									@endif
-
-									</li>
-
-									@php
-									$i++;
-									@endphp
-
-									@if($i == 15)
-						                <li>
-						                <a href="{{ route('front.categories') }}"><i class="fas fa-plus"></i> {{ $langg->lang15 }} </a>
-						                </li>
-						                @break
-									@endif
-
-
-									@endforeach
-
-                            </ul>
-                        
-                    </div>
+                  
                 </div>
                 <div class="col-6 col-sm-5 col-md-4">
                     <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>
                 </div>
                 <div class="col-12 col-sm-6 col-md-5 pr-4">
-                    <form action="">
+                    <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
                         <div class="form-group input-group">
-                            <input type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
+                            <input value="{{ request()->input('search') }}" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
                             <div class="input-group-append">
-                                <input class="btn" type="submit" value="সার্চ" style="color:white;background:rgb(0, 152, 119);">
+                                <input
+                                 
+                                class="btn" type="submit" value="সার্চ" style="color:white;background:rgb(0, 152, 119);">
                             </div>
                         </div>
                     </form>
@@ -259,7 +220,31 @@
 
             </div>
             <div>
-                <div class="py-2"style="border-bottom: 1px solid #d4ded9;">এখানে প্রাইস পিল্টার হবে</div>
+                <div class="py-2"style="border-bottom: 1px solid #d4ded9;">
+                    <div class="body-area">
+                    <form id="catalogForm" action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}" method="GET">
+                        @if (!empty(request()->input('search')))
+                          <input type="hidden" name="search" value="{{ request()->input('search') }}">
+                        @endif
+                        @if (!empty(request()->input('sort')))
+                          <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
+                        @endif
+                    
+        
+        
+                        <div class="price-range-block">
+                            <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                            <div class="livecount">
+                              <input type="number" min=0  name="min"  id="min_price" class="price-range-field" />
+                              <span>{{$langg->lang62}}</span>
+                              <input type="number" min=0  name="max" id="max_price" class="price-range-field" />
+                            </div>
+                          </div>
+        
+                          <button class="filter-btn" type="submit">{{$langg->lang58}}</button>
+                      </form>
+                      </div>
+                </div>
             </div>
             <div class="text-center mt-3 sticky-top">
                 <img src="{{ asset('assets/images/brand/sidead.gif')}}" alt="">

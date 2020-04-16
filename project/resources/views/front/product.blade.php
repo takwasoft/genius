@@ -67,8 +67,7 @@
               <div class="right-area">
                 <div class="product-info">
                   <h4 class="product-name">{{ $productt->name }}</h4>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
-                  {{--  <div class="info-meta-1">
+                  <div class="info-meta-1">
                     <ul>
 
                       @if($productt->type == 'Physical')
@@ -105,7 +104,7 @@
                      </li>
                   @endif
                     </ul>
-                  </div>  --}}
+                  </div>
 
 
 
@@ -113,58 +112,14 @@
               <p class="title">{{ $langg->lang87 }} :</p>
                     <p class="price"><span id="sizeprice">{{ $productt->showPrice() }}</span>
                       <small><del>{{ $productt->showPreviousPrice() }}</del></small></p>
-                      <p>Deal Code :</p>
-
-                      <div class="clearfix">
-                      <hr class="float-left" style='border: 1px solid #0a5641; width: 334px;'>
-                      </div>
-
-                      <h5 style="font-weight:700;font-size:20px;color:black">Available Options :</h5>
-                      <div>
-                      <form class="form-inline">
-					<div class="row">
-						<div class="col-6">
-						  <div class="form-group">
-							<label for="color" style="font-weight:700;font-size:17px">Color : </label>
-							<select class="form-control" id="color" width="60px" style="margin-left:8px;">
-							  <option>Red</option>
-							  <option>Green</option>
-							  <option>Blue</option>
-							  <option>White</option>
-							</select>
-						  </div>
-						 </div>
-						 
-						 <div class="col-6">
-						  <div class="form-group">
-							<label for="size" style="font-weight:700;font-size:17px">Size : </label>
-							<select class="form-control" id="size"style="margin-left:8px;">
-							  <option>Large</option>
-							  <option>Medium</option>
-							  <option>Small</option>
-							</select>
-						  </div>
-						 </div>
-						 <div class="col-12 py-3">
-						   <div class="form-group">
-							<label for="quantity" style="font-weight:700;font-size:17px">Quantity : </label>
-							<select class="form-control pl-1" id="quantity" style="margin-left:8px;">
-							  <option>1</option>
-							  <option>2</option>
-							  <option>3</option>
-							  <option>4</option>
-							  <option>5</option>
-							</select>
-						  </div>
-						 </div>
-						
-					</div>
-				</form>
-                      </div>
-                      
+                      @if($productt->youtube != null)
+                      <a href="{{ $productt->youtube }}" class="video-play-btn mfp-iframe">
+                        <i class="fas fa-play"></i>
+                      </a>
+                    @endif
                   </div>
 
-                  {{--  <div class="info-meta-2">
+                  <div class="info-meta-2">
                     <ul>
 
                       @if($productt->type == 'License')
@@ -190,10 +145,10 @@
                       @endif
 
                     </ul>
-                  </div>  --}}
+                  </div>
 
 
-                  {{--  @if(!empty($productt->size)) 
+                  @if(!empty($productt->size))
                   <div class="product-size">
                     <p class="title">{{ $langg->lang88 }} :</p>
                     <ul class="siz-list">
@@ -217,9 +172,9 @@
                       <li>
                     </ul>
                   </div>
-                  @endif  --}}
+                  @endif
 
-                  {{--  @if(!empty($productt->color))
+                  @if(!empty($productt->color))
                   <div class="product-color">
                     <p class="title">{{ $langg->lang89 }} :</p>
                     <ul class="color-list">
@@ -237,7 +192,7 @@
 
                     </ul>
                   </div>
-                  @endif  --}}
+                  @endif
 
                   @if(!empty($productt->size))
 
@@ -262,7 +217,7 @@
                   <input type="hidden" id="curr_sign" value="{{ $curr->sign }}">
                   <div class="info-meta-3">
                     <ul class="meta-list">
-                      {{--  @if($productt->product_type != "affiliate")
+                      @if($productt->product_type != "affiliate")
                       <li class="d-block count {{ $productt->type == 'Physical' ? '' : 'd-none' }}">
                         <div class="qty">
                           <ul>
@@ -282,14 +237,14 @@
                           </ul>
                         </div>
                       </li>
-                      @endif  --}}
+                      @endif
 
                       @if (!empty($productt->attributes))
                         @php
                           $attrArr = json_decode($productt->attributes, true);
                         @endphp
                       @endif
-                      {{--  @if (!empty($attrArr))
+                      @if (!empty($attrArr))
                         <div class="product-attributes my-4">
                           <div class="row">
                           @foreach ($attrArr as $attrKey => $attrVal)
@@ -320,7 +275,7 @@
                           @endforeach
                           </div>
                         </div>
-                      @endif  --}}
+                      @endif
 
                       @if($productt->product_type == "affiliate")
 
@@ -365,8 +320,7 @@
                       </li>
                     </ul>
                   </div>
-                  <div class="social-links social-sharing a2a_kit a2a_kit_size_32 mt-4">
-                  <h5>Share Product : </h5>
+                  <div class="social-links social-sharing a2a_kit a2a_kit_size_32">
                     <ul class="link-list social-links">
                       <li>
                         <a class="facebook a2a_button_facebook" href="">
@@ -393,19 +347,18 @@
                   <script async src="https://static.addtoany.com/menu/page.js"></script>
 
 
-                  {{--  @if($productt->ship != null)
-                    <p class="estimate-time">{{ $langg->lang86 }}: <b> {{ $productt->ship }}</b></p>
-                  @endif
-                  @if( $productt->sku != null )
+                 
+                  @if( $productt->deal_code != null )
+                  <br>
                   <p class="p-sku">
-                    {{ $langg->lang77 }}: <span class="idno">{{ $productt->sku }}</span>
+                    Deal Code: <span class="idno">{{ $productt->deal_code }}</span>
                   </p>
-                  @endif  --}}
+                  @endif
       @if($gs->is_report)
 
       {{-- PRODUCT REPORT SECTION --}}
 
-                    {{--  @if(Auth::guard('web')->check())
+                    @if(Auth::guard('web')->check())
 
                     <div class="report-area">
                         <a href="javascript:;" data-toggle="modal" data-target="#report-modal"><i class="fas fa-flag"></i> {{ $langg->lang776 }}</a>
@@ -416,7 +369,7 @@
                     <div class="report-area">
                         <a href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fas fa-flag"></i> {{ $langg->lang776 }}</a>
                     </div>
-                    @endif  --}}
+                    @endif
 
       {{-- PRODUCT REPORT SECTION ENDS --}}
 
@@ -860,12 +813,12 @@ PRODUCT END -->
 			<div class="card-body" style="padding:1.0rem">
 				<div class="media seller-profile-media">
                      <div class="media-left">
-                        <a href="#">
-                           <img style="border-radius:50%" class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" width="70" alt="">
+                        <a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}">
+                           <img style="border-radius:50%" class="media-object" src="{{ $productt->user->photo ? asset('assets/images/users/'.$productt->user->photo):asset('assets/images/'.$gs->user_image) }}" width="70" alt="">
                         </a>
                     </div>
                     <div class="media-body">
-                        <a href="#"><h4 class="media-heading">{{ $productt->user->shop_name }}
+                        <a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}"><h4 class="media-heading">{{ $productt->user->shop_name }}
                         @if($productt->user->checkStatus())
                   <i style="color:green" class="fas fa-check-circle"></i>
 
@@ -935,15 +888,12 @@ PRODUCT END -->
 				<hr>
 				
 				<div class="follow-profile-pic">
-				<p>This seller has <span style="color:#2395FD">{{$productt->user->favorites->count()}} followers</span></p>
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
-					<img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" alt="">
+				<p>This seller has <span style="color:#2395FD">{{$productt->user->followers->count()}} followers</span></p>
+        @foreach($productt->user->followers as $follower)
+
+					<img class="media-object" src="{{ $follower->user->photo ? asset('assets/images/users/'.$follower->user->photo):asset('assets/images/'.$gs->user_image) }}" alt="">
+        @endforeach
+
 				</div>
 			</div>
 		</div>
