@@ -2,26 +2,35 @@
 @section('content')
 
 <!-- Vendor Area Start -->
-  <div class="vendor-banner" style="background: url({{  $vendor->shop_image != null ? asset('assets/images/vendorbanner/'.$vendor->shop_image) : '' }}); background-repeat: no-repeat; background-size: cover;background-position: center;{!! $vendor->shop_image != null ? '' : 'background-color:'.$gs->vendor_color !!} ">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="content">
-            <p class="sub-title">
-                {{ $langg->lang226 }}
-            </p>
-            <h2 class="title">
-              {{ $vendor->shop_name }}
-            </h2>
+  <div class="vendor-banner" style="background: url({{  $vendor->shop_image != null ? asset('assets/images/vendorbanner/'.$vendor->shop_image) : '' }}); background-repeat: no-repeat; background-size: cover;background-position: center;padding:0;{!! $vendor->shop_image != null ? '' : 'background-color:'.$gs->vendor_color !!} ">
+    <div class="container ">
+      <div class="row align-items-end"  style="height:75vh;">
+       <div class="col-md-2" style="margin-bottom:-25px;">
+          <div class="vendor-details clearfix">
+              <div class="vendor-logo float-left">
+          <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287040feature1.jpg" alt="" style="border-radius:50%; width:150px;height:150px;">
           </div>
-        </div>
+            <!-- <div class="content float-left ml-3 pt-5 mt-2">
+            <p class="sub-title">
+              {{ $vendor->shop_name }}
+            </p>
+            
+          </div> -->
+          </div>
+       </div>
+       
       </div>
     </div>
   </div>
+  <section class="bg-muted">
+    <div class="container" style="border-bottom:1px solid #f5f5f5">
+    <div class="offset-2"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #f5f5f5; border-radius:0">About</button><button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #f5f5f5; border-radius:0">Contact</button></div>
+  </div>
+  </section>
 
 
 {{-- Info Area Start --}}
-<section class="info-area">
+<!-- <section class="info-area">
   <div class="container">
 
 
@@ -59,7 +68,7 @@
 
 
         </div>
-</section>
+</section> -->
 {{-- Info Area End  --}}
 
 
@@ -164,10 +173,113 @@
   </div>
 </div>
 
+
+
+
+
 {{-- MESSAGE VENDOR MODAL ENDS --}}
 
 
 @endif
+
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" >
+  Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered " role="document">
+    <div class="modal-content">
+      <div class=" vendor-model claarfix">
+        <h5 class="modal-title float:left" id="exampleModalCenterTitle">About Us</h5>
+        <button type="button" class="close float:right" style="margin-top:-35px;font-size:28px" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p>
+        <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p>
+        <p>Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p>
+      </div>
+
+    </div>
+  </div>
+</div> -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-header vendor-model" style="padding:25px 15px!important;">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        
+         <div class="col-6">
+         <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287040feature1.jpg" alt=""></div>
+        <div class="col-6"><h2>About Us</h2>
+        <hr class="float-left" style="width:200px;margin-top: -5px; margin-bottom: 1.3rem;border: 0;
+    border-top: 2px solid rgba(63, 103, 60, 0.1);background: #08a245;">
+        <div class="clearfix"></div>
+        Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups. Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</div>
+       
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <div class="modal-header vendor-model" style="padding:25px 15px!important;">
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        
+         <div class="col-6">
+          <div>
+            <form>
+  <div class="form-group">
+    <label for="exampleInputName">Your Name</label>
+    <input type="name" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Enter Name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Your E-mail</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Your Message</label>
+    <textarea class="form-control" placeholder="Please enter your message here..." id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+          </div>
+         </div>
+        <div class="col-6"><h2>Address</h2>
+        <hr class="float-left" style="width:200px;margin-top: -5px; margin-bottom: 1.3rem;border: 0;
+    border-top: 2px solid rgba(63, 103, 60, 0.1);background: #08a245;">
+        <div class="clearfix"></div>
+        
+                <h5 class="pt-3"><i class="fas fa-phone-volume mr-2"></i>01913-837936, 01913-837936</h5>
+                <h5 class="py-3"><i class="far fa-envelope  mr-2" aria-hidden="true"></i>info@takwasoft.com</h5>
+                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>Uttar Kamalapur, Motijheel, Dhaka</h5>
+                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>College Road, Luxmipur Sadar</h5>
+            </div>
+       
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 
