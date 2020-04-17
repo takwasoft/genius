@@ -58,10 +58,9 @@ class VendorController extends Controller
                                     ->when(empty($sort), function ($query, $sort) {
                                         return $query->orderBy('id', 'DESC');
                                     })->where('status', 1)->where('user_id', $vendor->id)->get();
-
-        $vprods = (new Collection(Product::filterProducts($prods)))->paginate(9);
+                                    $vprods = (new Collection(Product::filterProducts($prods)))->paginate(9);
         $data['vprods'] = $vprods;
-
+                                 
 
         return view('front.vendor', $data);
     }
