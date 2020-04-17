@@ -6,10 +6,10 @@
   <div class="vendor-banner" style="background: url({{  $vendor->shop_image != null ? asset('assets/images/vendorbanner/'.$vendor->shop_image) : '' }}); background-repeat: no-repeat; background-size: cover;background-position: center;padding:0;{!! $vendor->shop_image != null ? '' : 'background-color:'.$gs->vendor_color !!} ">
     
       <div class="row align-items-end"  style="height:60vh;">
-       <div class="col-md-2 offset-1" style="margin-bottom:-25px;">
+       <div class="col-md-2 offset-1" style="margin-bottom:-30px;">
           <div class="vendor-details clearfix">
               <div class="vendor-logo float-left">
-          <img src="{{ $vendor->photo ? asset('assets/images/users/'.$vendor->photo):asset('assets/images/'.$gs->user_image) }}" alt="" style="border-radius:50%; width:150px;height:150px;">
+          <img src="{{ $vendor->photo ? asset('assets/images/users/'.$vendor->photo):asset('assets/images/'.$gs->user_image) }}" alt="" style="border-radius:50%; width:150px;height:150px;border: 1px solid grey;">
           </div>
             <!-- <div class="content float-left ml-3 pt-5 mt-2">
             <p class="sub-title">
@@ -24,14 +24,16 @@
     </div> 
   </div>
   <section class="bg-muted">
-    <div class="container" style="border-bottom:1px solid #f5f5f5">
-    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #f5f5f5; border-radius:0">About</button><button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #f5f5f5; border-radius:0">Contact</button></div>
+    <div class="container">
+   <div style="border:1px solid #e6e4e4;">
+    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4; border-radius:0">About</button><button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0">Contact</button></div>
+   </div>
   </div>
   </section>
 
 
 {{-- Info Area Start --}}
- <section class="info-area">
+ {{-- <section class="info-area">
   <div class="container">
 
 
@@ -69,14 +71,14 @@
 
 
         </div>
-</section>
+</section> --}}
 {{-- Info Area End  --}}
 
 
 
 
 <!-- SubCategori Area Start -->
-  <section class="sub-categori">
+  <section class="sub-categori" style="padding-top:30px">
     <div class="container">
       <div class="row">
 
@@ -84,6 +86,7 @@
 
         <div class="col-lg-9 order-first order-lg-last">
           <div class="right-area">
+          
 
             @if(count($vprods) > 0)
 
@@ -114,6 +117,11 @@
           </div>
         </div>
       </div>
+      <div class="top-add mt-4">
+        <div class="">
+            <center><img src="{{ asset('assets/images/brand/gp.gif')}}"></center>
+        </div>
+    </div>
     </div>
   </section>
 <!-- SubCategori Area End -->

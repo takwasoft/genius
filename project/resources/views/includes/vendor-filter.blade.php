@@ -1,6 +1,17 @@
-						<div class="item-filter">
-
-							<ul class="filter-list">
+						<div class="item-filter" style="display:inline">
+							<div class="row">
+							<div class="col-7">
+							 <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
+                        <div class="form-group input-group">
+                            <input value="{{ request()->input('search') }}" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
+                            <div class="input-group-append">
+                                <input
+                                 
+                                class="btn" type="submit" value="সার্চ" style="color:white;background:rgb(0, 152, 119);">
+                            </div>
+                        </div>
+                    </form></div>
+							<div class="col-4 offset-1"><ul class="filter-list" style="margin-right:0">
 								<li class="item-short-area">
 										<p>{{$langg->lang64}} :</p>
 										<form id="sortForm" class="d-inline-block" action="{{ route('front.vendor', Request::route('slug')) }}" method="get">
@@ -18,5 +29,5 @@
 											</select>
 										</form>
 								</li>
-							</ul>
+							</ul></div></div>
 						</div> 

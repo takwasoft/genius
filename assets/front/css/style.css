@@ -9192,10 +9192,15 @@ input[type=checkbox]:checked:disabled+label:before {
 
 .add-to-cart,
 .add-to-cart-btn {
-    background: #024c0b !important;
+    background: #B81D22 !important;
     padding: 7px;
     color: white;
     font-size: 15px;
+    cursor: pointer;
+}
+
+.add-to-cart-btn:hover {
+    background: #024c0b!important;
 }
 
 .add-cart,
@@ -9216,9 +9221,9 @@ input[type=checkbox]:checked:disabled+label:before {
     border-left: 20px solid #0a5641!important;
 }
 
-.vendor-btn:hover{
-    background:#eceaea;
-    transition:.5s;
+.vendor-btn:hover {
+    background: #eceaea;
+    transition: .5s;
 }
 
 .vendor-model {
@@ -9226,9 +9231,7 @@ input[type=checkbox]:checked:disabled+label:before {
     padding: 15px 15px !important;
 }
 
-
 .modal-header .close {
-   
     right: 35px!important;
     top: 25px!important;
     background: #fff;
@@ -9243,7 +9246,8 @@ input[type=checkbox]:checked:disabled+label:before {
     font-weight: 600!important;
     box-shadow: none!important;
 }
+
 .vendor-model .close:hover {
     background-color: #fff!important;
-    color:#000!important;
+    color: #000!important;
 }

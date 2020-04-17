@@ -826,29 +826,33 @@ PRODUCT END -->
                         </h4>
                         
                         </a>
-                        <p>
-                        {{-- <i class="fa fa-star" aria-hidden="true"></i>
+                        {{-- <p>
+                        <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fa fa-star" aria-hidden="true"></i>
                             <i class="fas fa-star-half-alt" aria-hidden="true"></i>
                            <i class="fas fa-star-half-alt" aria-hidden="true"></i>
                                 &nbsp;(3.9)
-						<small><strong>416 reviews</strong></small> --}}
-                        </p>
+						<small><strong>416 reviews</strong></small>
+                        </p> --}}
                         <div class="total-product">
 
            @if( $productt->user_id  != 0)
-              <p>{{ App\Models\Product::where('user_id','=',$productt->user_id)->get()->count() }}</p>
+              <p>{{ App\Models\Product::where('user_id','=',$productt->user_id)->get()->count() }}
+                <span>{{ $langg->lang248 }}</span>
+              </p>
           @else
-              <p>{{ App\Models\Product::where('user_id','=',0)->get()->count() }}</p>
+              <p>{{ App\Models\Product::where('user_id','=',0)->get()->count() }}
+                <span>{{ $langg->lang248 }}</span>
+              </p>
           @endif
-            <span>{{ $langg->lang248 }}</span>
+           
           </div>
                     </div>
                 </div>
-				<div class="row seller-quick-opt">
+				<div class="row seller-quick-opt" style="margin-top:6px;">
 					<div class="col-4 text-center">
-						<a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}"><i class="fa fa-gift fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
+						<a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}"><i class="fa fa-gift fa-3x" style="font-size:1.8em" aria-hidden="true"></i>
 							<p>Seller Shop</p>
 						</a>
 					</div>
@@ -856,11 +860,11 @@ PRODUCT END -->
           @if(Auth::guard('web')->check())
 					
 
-            <a   href="javascript:;" data-toggle="modal" data-target="#vendorform1"><i class="fa fa-comment fa-3x"style="font-size:2.5em" aria-hidden="true"></i>
+            <a   href="javascript:;" data-toggle="modal" data-target="#vendorform1"><i class="fa fa-comment fa-3x"style="font-size:1.8em" aria-hidden="true"></i>
 							<p>Chat Seller</p>
 						</a>
             @else
-	<a    href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fa fa-comment fa-3x"style="font-size:2.5em" aria-hidden="true"></i>
+	<a    href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fa fa-comment fa-3x"style="font-size:1.8em" aria-hidden="true"></i>
 							<p>Chat Seller</p>
 						</a>
             @endif
@@ -879,7 +883,7 @@ PRODUCT END -->
               @endif          
 					
             @else
-        	<a  href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fa fa-user-plus fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
+        	<a  href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"><i class="fa fa-user-plus fa-3x" style="font-size:1.8em" aria-hidden="true"></i>
 							<p>follow</p>
 						</a>
             @endif
