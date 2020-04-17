@@ -426,7 +426,7 @@
                                       alt="">
                                     <h5 class="name">{{ $review->user->name }}</h5>
                                     <p class="date">
-                                      {{ Carbon\Carbon::createFromFormat('Y-m-dH:i:s',$review->review_date)->diffForHumans() }}
+                                      {{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$review->review_date)->diffForHumans() }}
                                     </p>
                                   </div>
                                   <div class="right-area">
