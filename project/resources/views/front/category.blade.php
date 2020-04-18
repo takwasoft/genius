@@ -60,13 +60,13 @@
 }
 .price-range-block {
     text-align: center;
-    margin-top: 34px;
+    margin-top: 15px;
 }
 .price-range-block #slider-range {
     margin-bottom: 21px;
 }
 .body-area {
-    padding: 20px 15px 30px;
+    padding: 5px 12px 5px 0;
     display: block;
 }
 </style>
@@ -118,16 +118,16 @@
     </div>
 
     <div class="mt-4">
-        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:85%">
+        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:78%">
             <div class="row">
-                <div class="col-1 col-md-3" style="padding-left:0px;">
+                {{--  <div class="col-1 col-md-3" style="padding-left:0px;">
                     <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
                   
-                </div>
-                <div class="col-6 col-sm-5 col-md-4">
+                </div>  --}}
+                <div class="col-6">
                     <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>
                 </div>
-                <div class="col-12 col-sm-6 col-md-5 pr-4">
+                <div class="col-6 pr-4">
                     <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
                         <div class="form-group input-group">
                             <input value="{{ request()->input('search') }}" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
@@ -144,7 +144,7 @@
     </div>
 </div>
 <section class="sub-categori" style="padding:0px">
-   <div class="container" style="max-width:85%">
+   <div class="container" style="max-width:75%">
     <div class="row">
         <div class="col-md-3">
            
@@ -192,8 +192,8 @@
     </div>
       <div class="row">
       
-        <div class="col-md-3" style="border-right: 1px solid #d4ded9;positon:relative">
-            <div class="py-3">
+        <div class="col-md-3" style="positon:relative">
+            <div class="py-3" style="border-right: 1px solid #d4ded9;">
                 <div class="pt-2">পোস্টকারীর প্রকার</div>
                 <div class="pb-3" style="border-bottom: 1px solid #d4ded9;">
                     <form action="">
@@ -220,7 +220,7 @@
 
             </div>
             <div>
-                <div class="py-2"style="border-bottom: 1px solid #d4ded9;">
+                <div class="py-2"style="border-bottom: 1px solid #d4ded9;border-right: 1px solid #d4ded9;">
                     <div class="body-area">
                     <form id="catalogForm" action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}" method="GET">
                         @if (!empty(request()->input('search')))
@@ -246,7 +246,7 @@
                       </div>
                 </div>
             </div>
-            <div class="text-center mt-3 sticky-top">
+            <div class="text-center mt-3">
                 <img src="{{ asset('assets/images/brand/sidead.gif')}}" alt="">
             </div>
                 

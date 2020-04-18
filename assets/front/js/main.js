@@ -361,7 +361,7 @@ $(function($) {
         $('.product-slide').owlCarousel({
             loop: true,
             margin: 10,
-            autoplay: false,
+            autoplay: true,
             nav: true,
             navText: [
                 "<i class='fa fa-angle-left fa-2x'></i>",

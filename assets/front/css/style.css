@@ -1242,19 +1242,60 @@ Logo Header Area Start
     border-top: none;
 }
 
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-link:hover {
-    border-top: 4px solid green;
-    border-right: 1px solid #ded9d9;
-    border-left: 1px solid #ded9d9;
+.brand-items .nav-link {
+    color: #333;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
 }
 
-.nav-tabs .nav-link:hover {
-    border: none;
+.brand-items .nav-link.active,
+.brand-items .nav-link.active:hover {
+    border-top: 4px solid green;
+    cursor: default;
+    color: #333;
+    background: none;
+}
+
+.brand-items .nav-link:hover {
     border-top: 4px solid #b81d22;
     color: #d42626;
     background: #eee;
+}
+
+
+/* .nav-tabs .nav-link {
+    border: 0px;
+} */
+
+
+/* 
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
+.nav-tabs>li.active>a:focus {
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    border-top: 4px solid #024c0b;
+}
+
+.nav-tabs>li>a:hover {
+    border-color: #eee #eee #ddd;
+    border-top: 4px solid #B81D22;
+} */
+
+.thumbnail>.product-thum-img {
+    width: 100%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.thumbnail>.product-thum-img img {
+    transition: 2s;
+}
+
+.thumbnail>.product-thum-img:hover img {
+    -ms-transform: scale(1.2, 1.2);
+    -webkit-transform: scale(1.2, 1.2);
+    transform: scale(1.2, 1.2);
 }
 
 

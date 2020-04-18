@@ -15,8 +15,8 @@
 		<section class="hero-area">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-9">
+					
+					<div class="col-md-12">
 						@if($ps->slider == 1)
 
 				@if(count($sliders))
@@ -121,7 +121,7 @@
 					</div>
 				</div>
 				<div class="col-md-9 product-tabs">
-					<ul class="nav nav-tabs">
+					<ul class="nav nav-tabs brand-items">
 						<li  class="nav-item"><a class='nav-link active' data-toggle="tab" href="#home">BRANDS OF THE WEEK</a></li>
 						@foreach($brandCategories as $brandCategory)
 
