@@ -328,7 +328,7 @@
 }
 
 .megamenu>ul>li>ul.sub-menu1 {
-    width: 280px;
+    width: 230px;
     padding: 0px;
     top: 0;
     left: 100%;
@@ -345,8 +345,7 @@
 }
 
 .megamenu>ul>li>ul.sub-menu1>li>ul>li {
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
     padding: 0px;
 }
 
@@ -369,7 +368,7 @@
     margin: 5px 15px;
     list-style: none;
     box-sizing: border-box;
-    width: 280px;
+    width: 230px;
 }
 
 .megamenu>ul>li>ul.sub-menu1>li>ul>li>ul>li>a {
@@ -390,8 +389,8 @@
 }
 
 .megamenu>ul>li>ul.sub-menu1>li>ul>li>ul.sub-menu2>li>ul>li {
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    border-bottom: 2px solid #ccc;
+  
 }
 
 .megamenu>ul>li>ul.sub-menu1>li>ul>li:hover ul {
@@ -409,7 +408,7 @@
     margin: 0 15px;
     list-style: none;
     box-sizing: border-box;
-    width: 280px;
+    width: 230px;
 }
 
 .megamenu>ul>li>ul.sub-menu1>li>ul>li>ul>li>ul>li>ul>li>a {
@@ -431,7 +430,7 @@
 
 .megamenu>ul>li>ul.sub-menu1>li>ul>li>ul.sub-menu2>li>ul>li>ul>li>ul>li {
     border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    
 }
 
 ol,
@@ -585,31 +584,31 @@ Mobile style's
     <div class="row">
         <div class="col-md-12">
             <div class="list-group categories-list megamenu">
-				<ul>
+				<ul style="width:230px">
 					<a class="list-group-item active">
 						<i class="fa fa-bars" aria-hidden="true"></i>Division
 					</a>
                @foreach($divisions as $division)
-               <li onclick="chooseDiv(this)"><a href="#" class="list-group-item megamenu-caret">
-                {{$division->name}}</a>
+               <li onclick="chooseDiv(this)"><a href="javascript:void(0)" class="list-group-item clearfix">
+                <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
 
                     <ul style='background-color:#fff;border:none;' class='sub-menu1'>
-                        <li><a href="#"  class="list-group-item active">District</a>
+                        <li><a href="javascript:void(0)"  class="list-group-item active">District</a>
                             <ul>
                                     @foreach($division->districts as $district)
-                               <li onclick="chooseDis(this)"><a href="#" class="list-group-item megamenu-caret">{{$district->name}}</a>
+                               <li onclick="chooseDis(this)"><a href="javascript:void(0)" class="list-group-item clearfix"><span class="float-left">{{$district->name}}</span> <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
 
                                     <ul class='sub-menu2' style="background-color:#fff;border:none;">
-                                        <li><a href="#"  class="list-group-item active">Sub-District</a>
+                                        <li><a href="javascript:void(0)"  class="list-group-item active">Sub-District</a>
                                             <ul>
                                                     @foreach($district->subdistricts as $subdistrict)
-                                                <li onclick="chooseSubDis(this)"><a href="#" class="list-group-item megamenu-caret" > {{$subdistrict->name}}</a>
+                                                <li onclick="chooseSubDis(this)"><a href="javascript:void(0)" class="list-group-item clearfix" > <span class="float-left">{{$subdistrict->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
 
                                                     <ul class='sub-menu3' style="background-color:#fff;border:none;">
-                                                        <li><a href="#"  class="list-group-item active">Area</a>
+                                                        <li><a href="javascript:void(0)"  class="list-group-item active">Area</a>
                                                             <ul>
                                                                     @foreach($subdistrict->areas as $area)
-                                                                <li><a class="list-group-item megamenu-caret" href="{{route('vendor-prod-physical-create')}}?area={{$area->id}}">{{$area->name}}</a>
+                                                                <li><a class="list-group-item clearfix" href="{{route('vendor-prod-physical-create')}}?area={{$area->id}}"><span class="float-left">{{$area->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
                                                                 </li>
                                                                 @endforeach
                                                             </ul>
