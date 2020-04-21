@@ -54,14 +54,18 @@
                                                 <div class="col-lg-6">
                                                     <input name="email" type="email" class="input-field"
                                                         placeholder="{{ $langg->lang265 }}" required=""
-                                                        value="{{ $user->email }}" disabled>
+                                                        value="{{ $user->email }}" 
+                                                        @if($user->email!= "not set")
+                                                            disabled 
+                                                        @endif
+                                                        >
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <input name="phone" type="text" class="input-field"
                                                         placeholder="{{ $langg->lang266 }}" required=""
-                                                        value="{{ $user->phone }}">
+                                                        value="{{ $user->phone }}" disabled>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <input name="fax" type="text" class="input-field"
