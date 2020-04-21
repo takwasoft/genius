@@ -12,6 +12,7 @@ use Session;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App;
+use App\Models\Message;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,10 +26,14 @@ class AppServiceProvider extends ServiceProvider
 
         $admin_lang = DB::table('admin_languages')->where('is_default','=',1)->first();
         App::setlocale($admin_lang->name);
-    
+        
         view()->composer('*',function($settings){
             $settings->with('gs', DB::table('generalsettings')->find(1));
             $settings->with('seo', DB::table('seotools')->find(1));
+            if(auth()->check()){
+                $settings->with('messageCount',Message::where('recieved_user','=',auth()->user()->id)->where('seen','=',0)->count());
+                
+            }
             $settings->with('categories', Category::where('status','=',1)->get());   
             if (Session::has('language')) 
             {

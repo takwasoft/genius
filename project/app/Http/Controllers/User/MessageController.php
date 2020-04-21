@@ -13,7 +13,7 @@ use App\Models\AdminUserMessage;
 use App\Models\Generalsetting;
 use App\Models\Notification;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -30,7 +30,12 @@ class MessageController extends Controller
     }
 
     public function message($id)
-    {
+    { 
+            $messages=Message::where('conversation_id','=',$id)->where('recieved_user','=',auth()->user()->id)->get();
+            foreach($messages as $message){
+                $message->seen=1;
+                $message->save();
+            }
             $user = Auth::guard('web')->user();
             $conv = Conversation::findOrfail($id);
             return view('user.message.create',compact('user','conv'));                 
@@ -119,7 +124,7 @@ class MessageController extends Controller
     public function postmessage(Request $request)
     {
         $msg = new Message();
-        $input = $request->all();  
+        $input = $request->all();    
         $msg->fill($input)->save();
         //--- Redirect Section     
         $msg = 'Message Sent!';

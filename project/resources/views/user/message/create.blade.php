@@ -86,11 +86,11 @@
                                               <input type="hidden" name="conversation_id" value="{{$conv->id}}">
                               @if($user->id == $conv->sent_user)
                                   <input type="hidden" name="sent_user" value="{{$conv->sent->id}}">
-                                  <input type="hidden" name="reciever" value="{{$conv->recieved->id}}">
-                                @else
-                                  <input type="hidden" name="reciever" value="{{$conv->sent->id}}">
                                   <input type="hidden" name="recieved_user" value="{{$conv->recieved->id}}">
-                              @endif
+                                @else
+                                  <input type="hidden" name="sent_user" value="{{$conv->sent->id}}">
+                                  <input type="hidden" name="recieved_user" value="{{$conv->recieved->id}}">
+                              @endif 
 
                                 <textarea class="form-control" name="message" id="wrong-invoice" rows="5" style="resize: vertical;" required="" placeholder="{{ $langg->lang374 }}"></textarea>
                             </div>

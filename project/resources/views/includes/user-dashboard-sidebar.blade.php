@@ -7,7 +7,7 @@
                   {
                     $link = "https"; 
                   }
-                  else
+                  else 
                   {
                     $link = "http"; 
                       
@@ -64,7 +64,11 @@
               </li>
 
               <li class="{{ $link == route('user-messages') ? 'active':'' }}">
-                  <a href="{{route('user-messages')}}">{{ $langg->lang232 }}</a>
+                  <a href="{{route('user-messages')}}">{{ $langg->lang232 }}
+                  <span class="{{$messageCount>0?'badge badge-danger':''}}">
+                  {{$messageCount}}
+                  </span>
+                  </a>
               </li>
 
               <li class="{{ $link == route('user-message-index') ? 'active':'' }}">
