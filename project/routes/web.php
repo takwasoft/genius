@@ -1247,7 +1247,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
   // CATEGORY SECTION
   Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category');
-  
+  Route::get('/new-product','Front\CatalogController@new')->name('front.new'); 
   
   Route::get('/category/{slug1}/{slug2}','Front\CatalogController@subcategory')->name('front.subcat');
   Route::get('/category/{slug1}/{slug2}/{slug3}','Front\CatalogController@childcategory')->name('front.childcat');

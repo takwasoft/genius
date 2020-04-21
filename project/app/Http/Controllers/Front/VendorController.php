@@ -85,11 +85,11 @@ class VendorController extends Controller
             ];
 
             $mailer = new GeniusMailer();
-            $mailer->sendCustomMail($data);
+            //$mailer->sendCustomMail($data);
         }
         else{
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-            mail($to,$subject,$msg,$headers);
+            //mail($to,$subject,$msg,$headers);
         }
 
 

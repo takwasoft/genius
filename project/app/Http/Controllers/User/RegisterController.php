@@ -28,11 +28,13 @@ class RegisterController extends Controller
 	        }    		
     	}
 
-
+		if(!$request->email){
+			$request["email"]="not set";
+		}
         //--- Validation Section
 
         $rules = [
-		        'email'   => 'required|email|unique:users',
+		        'phone'   => 'required|unique:users',
 		        'password' => 'required|confirmed'
                 ];
         $validator = Validator::make(Input::all(), $rules);

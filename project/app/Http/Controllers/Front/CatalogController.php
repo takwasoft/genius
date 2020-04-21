@@ -57,9 +57,12 @@ class CatalogController extends Controller
       $sort = $request->sort;
       $search = $request->search;
 
+      $prods=$brand->products;
+      if($search){
+        $prods=$prods->where('name','like','%'.$search.'%'); 
+      }
 
-
-     $prods = (new Collection(Product::filterProducts($brand->products)))->paginate(12);
+     $prods = (new Collection(Product::filterProducts($prods)))->paginate(12);
 
       $data['prods'] = $prods;
 
@@ -70,6 +73,34 @@ class CatalogController extends Controller
         return view('includes.product.filtered-products', $data);
       }
       return view('front.brand', $data);
+     
+    }
+    public function new(Request $request)
+    {
+      
+      
+     
+      $cat = null;
+      $subcat = null;
+      $childcat = null;
+      $minprice = $request->min;
+      $maxprice = $request->max;
+      $sort = $request->sort;
+      $search = $request->search;
+
+
+
+     $prods = (new Collection(Product::filterProducts(Product::where('status','=',1)->orderBy('created_at','desc')->get())))->paginate(12);
+
+      $data['prods'] = $prods;
+
+      if($request->ajax()) {
+
+      $data['ajax_check'] = 1;
+
+        return view('includes.product.filtered-products', $data);
+      }
+      return view('front.new', $data);
      
     }
     public function category(Request $request, $slug=null, $slug1=null, $slug2=null)

@@ -29,7 +29,7 @@
                 <form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
                   {{ csrf_field() }}
                   <div class="form-input">
-                    <input type="email" name="email" placeholder="{{ $langg->lang173 }}" required="">
+                    <input type="text" name="phone" placeholder="Enter Your Phone" required="">
                     <i class="icofont-user-alt-5"></i>
                   </div>
                   <div class="form-input">
@@ -86,7 +86,7 @@
               <div class="login-form signup-form">
                 @include('includes.admin.form-login')
                 <form class="mregisterform" action="{{route('user-register-submit')}}" method="POST">
-                  {{ csrf_field() }}
+                  {{ csrf_field() }} 
 
                   <div class="form-input">
                     <input type="text" class="User Name" name="name" placeholder="{{ $langg->lang182 }}" required="">
@@ -94,7 +94,7 @@
                   </div>
 
                   <div class="form-input">
-                    <input type="email" class="User Name" name="email" placeholder="{{ $langg->lang183 }}" required="">
+                    <input type="email" class="User Name" name="email" placeholder="{{ $langg->lang183 }}" >
                     <i class="icofont-email"></i>
                   </div>
 
@@ -104,7 +104,7 @@
                   </div>
 
                   <div class="form-input">
-                    <input type="text" class="User Name" name="address" placeholder="{{ $langg->lang185 }}" required="">
+                    <input type="text" class="User Name" name="address" placeholder="{{ $langg->lang185 }}" >
                     <i class="icofont-location-pin"></i>
                   </div>
 

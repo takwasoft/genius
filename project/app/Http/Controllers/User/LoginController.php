@@ -19,14 +19,14 @@ class LoginController extends Controller
     public function showLoginForm()
     {
       $this->code_image();
-      return view('user.login');
+      return view('user.login'); 
     }
 
     public function login(Request $request)
     {
         //--- Validation Section
         $rules = [
-                  'email'   => 'required|email',
+                  'phone'   => 'required',
                   'password' => 'required'
                 ];
 
@@ -38,7 +38,7 @@ class LoginController extends Controller
         //--- Validation Section Ends
 
       // Attempt to log the user in
-      if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+      if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
 
         // Check If Email is verified or not

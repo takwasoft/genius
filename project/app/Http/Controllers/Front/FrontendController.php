@@ -139,7 +139,7 @@ class FrontendController extends Controller
         $sliders = DB::table('sliders')->get();
         $top_small_banners = DB::table('banners')->where('type','=','TopSmall')->get();
         $ps = DB::table('pagesettings')->find(1);
-        $feature_products =  Product::where('featured','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();
+        $feature_products =  Product::where('status','=',1)->orderBy('id','desc')->take(8)->get();
         $feature_categories=Category::where('is_featured','=','1')->where('status','=',1)->get();
         // dd(Session::get('cart'));
         $brandCategories=BrandCategory::where('show_in_home',1)->get();

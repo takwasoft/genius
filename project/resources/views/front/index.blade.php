@@ -5,7 +5,7 @@
 	@if($ps->slider == 1)
 
 		@if(count($sliders))
-
+ 
 			@include('includes.slider-style')
 		@endif
 	@endif
@@ -157,7 +157,7 @@
 							<div class="row text-center ">
 								@foreach($brandCategory->brands as $brand)
 								<div class="col-sm-3 py-4">
-								<a href="#">
+								<a href="{{ route('front.brand',$brand->name) }}">
 								<img src="{{URL::to('/images/'.$brand->image)}}" alt="" width="80%" />
 								</a>
 									
@@ -310,7 +310,7 @@
 						<h3>New Products</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
-						<p><a href="#">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						<p><a href="{{route('front.new')}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div>
 				</div>
@@ -369,7 +369,7 @@
 						<h3>{{$feature_category->name}}</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
-						<p><a href="{{route('front.category',$feature_category->name)}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						<p><a href="{{route('front.category',$feature_category->slug)}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div>
 				</div>
