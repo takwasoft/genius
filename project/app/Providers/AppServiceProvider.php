@@ -12,6 +12,7 @@ use Session;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App;
+use App\Models\FavoriteSeller;
 use App\Models\Message;
 
 class AppServiceProvider extends ServiceProvider
@@ -32,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
             $settings->with('seo', DB::table('seotools')->find(1));
             if(auth()->check()){
                 $settings->with('messageCount',Message::where('recieved_user','=',auth()->user()->id)->where('seen','=',0)->count());
-                
+                $settings->with('favCount',FavoriteSeller::where('user_id','=',auth()->user()->id)->count());
             }
             $settings->with('categories', Category::where('status','=',1)->get());   
             if (Session::has('language')) 

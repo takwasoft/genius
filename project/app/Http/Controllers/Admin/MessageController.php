@@ -128,7 +128,7 @@ class MessageController extends Controller
         else
         {
         $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-        mail($to,$subject,$msg,$headers);            
+       // mail($to,$subject,$msg,$headers);            
         }
 
         if($request->type == 'Ticket'){

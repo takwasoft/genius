@@ -60,7 +60,11 @@
               </li>
 
               <li class="{{ $link == route('user-favorites') ? 'active':'' }}">
-                  <a href="{{route('user-favorites')}}">{{ $langg->lang231 }}</a>
+                  <a href="{{route('user-favorites')}}">{{ $langg->lang231 }}
+                  <span class="{{$favCount>0?'badge badge-danger':''}}">
+                  {{$favCount}}
+                  </span>
+                  </a>
               </li>
 
               <li class="{{ $link == route('user-messages') ? 'active':'' }}">

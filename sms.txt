@@ -1,0 +1,18 @@
+$url = "http://66.45.237.70/api.php";
+$number=$buyer->phone;
+$text = "Dear $name. Go to this link to verify your phone $domain->value/verification-phone?c=$buyer->phone_code&id=$buyer->id\n Or enter this code $buyer->phone_code in profile section";
+
+$data= array(
+'username'=>"01790581234",
+'password'=>"01790581234",
+'number'=>"$number",
+'message'=>"$text"
+);
+
+$ch = curl_init(); // Initialize cURL
+curl_setopt($ch, CURLOPT_URL,$url);
+curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$smsresult = curl_exec($ch);
+$p = explode("|",$smsresult);
+$sendstatus = $p[0];

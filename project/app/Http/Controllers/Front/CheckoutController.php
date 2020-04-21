@@ -601,7 +601,7 @@ class CheckoutController extends Controller
            $subject = "Your Order Placed!!";
            $msg = "Hello ".$request->name."!\nYou have placed a new order.\nYour order number is ".$order->order_number.".Please wait for your delivery. \nThank you.";
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-           mail($to,$subject,$msg,$headers);            
+          // mail($to,$subject,$msg,$headers);            
         }
         //Sending Email To Admin
         if($gs->is_smtp == 1)
@@ -621,7 +621,7 @@ class CheckoutController extends Controller
            $subject = "New Order Recieved!!";
            $msg = "Hello Admin!\nYour store has recieved a new order.\nOrder Number is ".$order->order_number.".Please login to your panel to check. \nThank you.";
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-           mail($to,$subject,$msg,$headers);
+           //mail($to,$subject,$msg,$headers);
         }
 
         return redirect($success_url);
@@ -729,7 +729,7 @@ $validator = Validator::make($input, $rules, $messages);
         $order['packing_cost'] = $request->packing_cost;
         $order['tax'] = $request->tax;
         $order['customer_phone'] = $request->phone;
-        $order['order_number'] = str_random(4).time();
+        $order['order_number'] = str_random(4).time(); 
         $order['customer_address'] = $request->address;
         $order['customer_country'] = $request->customer_country;
         $order['customer_city'] = $request->city;
@@ -762,7 +762,8 @@ $validator = Validator::make($input, $rules, $messages);
                 $order['affilate_charge'] = $sub;
             }
         $order->save();
-
+        $order['order_number']='shotovag100'.$order->id;
+        $order->save();
         $track = new OrderTrack;
         $track->title = 'Pending';
         $track->text = 'You have successfully placed your order.';
@@ -886,7 +887,7 @@ $validator = Validator::make($input, $rules, $messages);
            $subject = "Your Order Placed!!";
            $msg = "Hello ".$request->name."!\nYou have placed a new order.\nYour order number is ".$order->order_number.".Please wait for your delivery. \nThank you.";
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-           mail($to,$subject,$msg,$headers);            
+          // mail($to,$subject,$msg,$headers);            
         }
         //Sending Email To Admin
         if($gs->is_smtp == 1)
@@ -906,7 +907,7 @@ $validator = Validator::make($input, $rules, $messages);
            $subject = "New Order Recieved!!";
            $msg = "Hello Admin!\nYour store has recieved a new order.\nOrder Number is ".$order->order_number.".Please login to your panel to check. \nThank you.";
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-           mail($to,$subject,$msg,$headers);
+          // mail($to,$subject,$msg,$headers);
         }
 
         return redirect($success_url);

@@ -1,0 +1,33 @@
+user login
+
+1.login = user sudhu matro mbl nmbr r pw bosia a e ac khulte parbe , number instnt vrfy code ase ac opn hobe baki kis dorkar nai 
+sob ac te jay set kore nibe + vrfy 
+= fb/ google login kaz kore na 
+
+
+2. tickt = tickt opsn a user kono notification pay na ,
+=kono file send kora jay na
+=prblm slvd hoya gale tickt close er systm nai , jate r okhn a sms deoa jabe na , onno kono prblm hole onno tock creat korbe.
+=kono tickt nmbr creat hoy na .
+=last sms show kore na 1st tai alys shw kore 
+=my account a jay user panl a gale  bam pase  msg, tickt amn onek opsn ase. po opsn er pase o likha thakbe   Tickrt (2)/ tickt (4)
+
+
+3. massage = saler k sms kora jay, but systm sundor na ,.. fb er moto ak user er sms ak box a show korbe sob
+=my account a jay user panl a gale  bam pase  msg, tickt amn onek opsn ase. po opsn er pase o likha thakbe   massage (2) / msg  (4)  amn likha Asbe + notification o asbe 
+= vndr opsn a sms dekha jay na , vndr tar sms dekte user pnl a ase,, but systm hobe vndr k sms dile vndr opsn a ta dekha jabe .... r vndr jokhn buyr hoya kao k sms dibe tokhn usr pnl a dekha jabe   OR  2 jagay e dekha jabe
+= saler/buyr ki sms kore ta admin dekte pare na / notification pay na , tai admin er okhn a msg opsn r  vndors msg name a akra opsn ane dekhaben, k kar sathe ki chat korse
+
+
+4. fvrt saler =  singl products a gale follw name a akta opsn ase , ota dile fvtr saler a ta show korbe , my aoount a gale ta paben .  akhn a o same  fvrt slr (2) / fvrt saler   (4)  amn dekhabe , clivk korle list chole asbe , popup a ... thn oi list theke saler shop a jaoa jabe .
+
+
+
+5.  = vrdr book01 name a akta products upload dolp but home page a new products a ta aslo na .
+= products upload er jnno admin cnfrmtn lagbe , kao kisu upload dile admin chk kore aprv korbe thn seta publich hobe , admin chile aprv off kore rakte parbe .
+= add prv hole saler mail + site a notifiction pabe ,  rejct hole karon soho mail pabe 
+= book product ta niche asse , but home page a ak rate vitrt abar 2 rokom rt .  rate amn kn ta bujte akto time lagbe
+
+
+6. order id = cstmr order korle order id #O00050 amn asbe jate bolte easy hoy
+= vndr tar order view korte pare na
