@@ -9292,3 +9292,49 @@ input[type=checkbox]:checked:disabled+label:before {
     background-color: #fff!important;
     color: #000!important;
 }
+
+.about-sect a {
+    text-decoration: none;
+    color: #024c0b;
+}
+
+.aside-map > li > a:hover, .aside-map > li > a:focus {
+    text-decoration: none;
+    background-color: #eee;
+}
+.about-sect a:hover {
+    text-decoration: none;
+    color: #d42626;
+}
+
+.contact-sect h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.4;
+    color: inherit;
+}
+.contact-sect h3{
+    font-size: 24px;
+}
+
+.btn-my {
+    background-color: #0a5641;
+    color: white;
+    border: none;
+    transition: 1s;
+}
+.btn-my:hover {
+    background-color: #B81D22;
+    color: white;
+}
+
+.faq-sect .btn-link {
+    font-weight: 400;
+    color: #fff;
+    text-decoration: none;
+}
+
+.faq-sect .btn-link:hover {
+    color: #d42626;
+    text-decoration: underline;
+}

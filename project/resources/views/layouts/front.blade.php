@@ -369,17 +369,19 @@
 							{{-- <li><a href="{{ route('front.blog') }}">{{ $langg->lang18 }}</a></li> --}}
 
 							<li><a href="{{ route('front.index') }}">Home</a></li>
-							<li><a href="{{ route('front.add_product') }}">Add Product</a></li>
+							{{-- <li><a href="{{ route('front.add_product') }}">Add Product</a></li> --}}
 
 
-							{{-- @if($gs->is_faq == 1)
-							<li><a href="{{ route('front.faq') }}">{{ $langg->lang19 }}</a></li>
-							@endif --}}
+							
 							@foreach(DB::table('pages')->where('header','=',1)->get() as $data)
 								<li><a href="{{ route('front.page',$data->slug) }}">{{ $data->title }}</a></li>
 							@endforeach
 							@if($gs->is_contact == 1)
 							<li><a href="{{ route('front.contact') }}" style="color:#333;font-weight:400">{{ $langg->lang20 }}</a></li>
+							@endif
+
+							@if($gs->is_faq == 1)
+							<li><a href="{{ route('front.faq') }}">{{ $langg->lang19 }}</a></li>
 							@endif
 							{{-- <li>
 								<a href="javascript:;" data-toggle="modal" data-target="#track-order-modal" class="track-btn">{{ $langg->lang16 }}</a>
