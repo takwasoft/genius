@@ -20,9 +20,11 @@
 											<table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 												<thead>
 													<tr>
+                          <th>Type</th>
 														<th>{{ $langg->lang380 }}</th>
 														<th>{{ $langg->lang381 }}</th>
 														<th>{{ $langg->lang382 }}</th>
+                            	<th>Status</th>
 														<th>{{ $langg->lang383 }}</th>
 													</tr>
 												</thead>
@@ -31,10 +33,18 @@
                         
                           <tr class="conv">
                             <input type="hidden" value="{{$conv->id}}">
-                            <td>{{$conv->subject}}</td>
+                            <td>{{$conv->ticket->ticketCategory->name}}</td>
+                            <td>{{$conv->ticket->subject}}</td>
                             <td>{{$conv->message}}</td>
 
                             <td>{{$conv->created_at->diffForHumans()}}</td>
+                            <td>
+                            @if($conv->ticket->status==0)
+                            <span class="badge badge-success">Open</span>
+                            @else
+                            <span class="badge badge-danger">Closed</span>
+                            @endif
+                            </td> 
                             <td>
                               <a href="{{route('user-message-show',$conv->id)}}" class="link view"><i class="fa fa-eye"></i></a>
                               <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete" data-href="{{route('user-message-delete1',$conv->id)}}"class="link remove"><i class="fa fa-trash"></i></a>
@@ -72,6 +82,14 @@
                 <form id="emailreply1">
                   {{csrf_field()}}
                   <ul>
+                   <li>
+                    <select required="" name="ticket_category_id" class='input-field'>
+                    <option value="">Select Ticket Type</option>
+                      @foreach($ticketCategories as $ticketCategory)
+                      <option value="{{$ticketCategory->id}}">{{$ticketCategory->name}}</option>
+                      @endforeach
+                    </select>
+                   </li>
                     <li>
                       <input type="text" class="input-field" id="subj1" name="subject" placeholder="{{ $langg->lang387 }} *" required="">
                     </li>
@@ -126,6 +144,7 @@
     
           $(document).on("submit", "#emailreply1" , function(){
           var token = $(this).find('input[name=_token]').val();
+          var ticket_category_id = $(this).find('select[name=ticket_category_id]').val();
           var subject = $(this).find('input[name=subject]').val();
           var message =  $(this).find('textarea[name=message]').val();
           var $type  = $(this).find('input[name=type]').val();
@@ -139,6 +158,7 @@
                 '_token': token,
                 'subject'   : subject,
                 'message'  : message,
+                'ticket_category_id':ticket_category_id,
                 'type'   : $type
                   },
             success: function( data) {

@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row">
         @include('includes.user-dashboard-sidebar')
-        <div class="col-lg-8">
+        <div class="col-lg-8"> 
 					<div class="user-profile-details">
 						<div class="order-history">
 							<div class="header-area">
@@ -71,6 +71,7 @@
 
                     </div>
                     <div class="panel-footer">
+                    @if($conv->ticket->status==0)
                         <form id="messageform" data-href="{{ route('user-message-load',$conv->id) }}" action="{{route('user-message-store')}}" method="POST">
                             {{csrf_field()}}
                             <div class="form-group">
@@ -84,6 +85,9 @@
                                 </button>
                             </div>
                         </form>
+                        @else
+                            <h4>Ticket Closed</h4>
+                        @endif
                     </div>
                 </div>
 

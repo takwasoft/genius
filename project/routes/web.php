@@ -428,8 +428,11 @@ Route::prefix('admin')->group(function() {
 
   Route::group(['middleware'=>'permissions:messages'],function(){
 
-  Route::get('/messages/datatables/{type}', 'Admin\MessageController@datatables')->name('admin-message-datatables');
+  Route::get('/messages/datatables/{type}', 'Admin\MessageController@datatables')->name('admin-message-datatables'); 
+  Route::get('/close-ticket/{ticket}','Admin\MessageController@closeTicket')->name('close-ticket');
   Route::get('/tickets', 'Admin\MessageController@index')->name('admin-message-index');
+  Route::get('/admin-messages','Admin\MessageController@userMessage')->name('admin-messages');
+  Route::get('/admin-messages/{id}','Admin\MessageController@userMessageSingle')->name('admin-message-single');
   Route::get('/disputes', 'Admin\MessageController@disputes')->name('admin-message-dispute');
   Route::get('/message/{id}', 'Admin\MessageController@message')->name('admin-message-show');
   Route::get('/message/load/{id}', 'Admin\MessageController@messageshow')->name('admin-message-load');
@@ -994,13 +997,13 @@ Route::prefix('user')->group(function() {
 
 // Tickets
   Route::get('admin/tickets', 'User\MessageController@adminmessages')->name('user-message-index');
-// Disputes
+// Disputes 
   Route::get('admin/disputes', 'User\MessageController@adminDiscordmessages')->name('user-dmessage-index');
 
   Route::get('admin/message/{id}', 'User\MessageController@adminmessage')->name('user-message-show');
   Route::post('admin/message/post', 'User\MessageController@adminpostmessage')->name('user-message-store');
-  Route::get('admin/message/{id}/delete', 'User\MessageController@adminmessagedelete')->name('user-message-delete1');
-  Route::post('admin/user/send/message', 'User\MessageController@adminusercontact')->name('user-send-message');
+  Route::get('admin/message/{id}/delete', 'User\MessageController@adminmessagedelete')->name('user-message-delete1'); 
+  Route::post('admin/user/send/message', 'User\MessageController@adminusercontact')->name('user-send-message'); 
   Route::get('admin/message/load/{id}', 'User\MessageController@messageload')->name('user-message-load');
 // User Admin Send Message Ends
 
@@ -1370,7 +1373,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   // CRONJOB ENDS
 
   // PAGE SECTION
-  Route::get('/{slug}','Front\FrontendController@page')->name('front.page');
+  Route::get('/{slug}','Front\FrontendController@page')->name('front.page'); 
   // PAGE SECTION ENDS
 
 // ************************************ FRONT SECTION ENDS**********************************************
@@ -1385,6 +1388,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
 
   Route::resource('/admin/areas', 'AreaController');
+  Route::resource('/admin/ticketcategories', 'TicketCategoryController');
 
   Route::resource('/admin/subdistricts', 'SubDistrictController');
   

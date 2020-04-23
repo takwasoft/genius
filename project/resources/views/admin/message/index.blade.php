@@ -32,10 +32,13 @@
                         <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                           <thead>
                             <tr>
+                            <th>Type</th>
                               <th>{{ __('Name') }}</th>
                               <th>{{ __('Subject') }}</th>
                               <th>{{ __('Message') }}</th>
                               <th>{{ __('Date') }}</th>
+                              <th>Status</th>
+
                               <th>{{ __('Options') }}</th>
                             </tr>
                           </thead>
@@ -139,10 +142,12 @@
                serverSide: true,
                ajax: '{{ route('admin-message-datatables','Ticket') }}',
                columns: [
+                  { data: 'ticket.ticket_category.name', name: 'ticket.ticket_category.name' },
                   { data: 'name', name: 'name' },
-                  { data: 'subject', name: 'subject' },
+                  { data: 'ticket.subject', name: 'ticket.subject' },
                   { data: 'message', name: 'message' },
                   { data: 'created_at', name: 'created_at'},
+                  { data: 'status', name: 'status'},
                   { data: 'action', searchable: false, orderable: false }
 
                      ],

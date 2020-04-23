@@ -19,7 +19,7 @@
 
         </ul>
     </li>
-    <li>
+    <li> 
         <a href="#menu2" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
             <i class="icofont-cart"></i>{{ __('Products') }}
         </a>
@@ -136,7 +136,7 @@
         <a href="#menu29" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Areas') }}</a>
         <ul class="collapse list-unstyled
         @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division')
-          show
+          show 
         @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='district')
           show
         @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='subdistrict')
@@ -221,15 +221,21 @@
             <i class="fas fa-fw fa-newspaper"></i>{{ __('Messages') }}
         </a>
         <ul class="collapse list-unstyled" id="msg" data-parent="#accordion">
+            <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='ticketcategory') active @endif">
+                    <a href="{{ URL::to('/admin/ticketcategories')}}"><span>Ticket Category</span></a>
+                </li>
             <li>
                 <a href="{{ route('admin-message-index') }}"><span>{{ __('Tickets') }}</span></a>
             </li>
             <li>
                 <a href="{{ route('admin-message-dispute') }}"><span>{{ __('Disputes') }}</span></a>
             </li>
+            <li>
+                <a href="{{ route('admin-messages') }}"><span>User Messages</span></a>
+            </li>
         </ul>
     </li>
-
+ 
     <li>
         <a href="#general" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
             <i class="fas fa-cogs"></i>{{ __('General Settings') }}

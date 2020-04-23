@@ -10,7 +10,14 @@ class AdminUserConversation extends Model
 	{
 	    return $this->belongsTo('App\Models\User');
 	}
-
+	public function getCategoryAttribute()
+    {
+        return $this->ticket->ticketCategory->name;
+    }
+	public function ticket()
+	{
+	    return $this->belongsTo('App\Models\Ticket');
+	}
 	public function admin()
 	{
 	    return $this->belongsTo('App\Models\Admin');

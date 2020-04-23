@@ -11,8 +11,10 @@ use Validator;
 use App\Models\AdminUserConversation;
 use App\Models\AdminUserMessage;
 use App\Models\User;
+use App\Models\Conversation;
 use App\Models\UserNotification;
 use App\Models\Generalsetting;
+use App\Models\Ticket;
 use Auth;
 
 class MessageController extends Controller
@@ -21,25 +23,35 @@ class MessageController extends Controller
     {
         $this->middleware('auth:admin');
     }
-
+    public function closeTicket(Ticket $ticket){
+        $ticket->status=1;
+        $ticket->save();
+        return redirect()->back();
+    }
     //*** JSON Request
     public function datatables($type)
     {
-         $datas = AdminUserConversation::where('type','=',$type)->get();
+         $datas = AdminUserConversation::where('type','=',$type)->with('ticket','ticket.ticketCategory')->get();
          //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
                             ->editColumn('created_at', function(AdminUserConversation $data) {
                                 $date = $data->created_at->diffForHumans();
                                 return  $date;
                             })
+                            ->addColumn('status', function(AdminUserConversation $data) {
+                                return $data->ticket->status==0?'<span class="badge badge-success">Open</span>':'<span class="badge badge-danger">Closed</span>';
+                                
+                            })
                             ->addColumn('name', function(AdminUserConversation $data) {
                                 $name = $data->user->name;
                                 return  $name;
                             })
                             ->addColumn('action', function(AdminUserConversation $data) {
-                                return '<div class="action-list"><a href="' . route('admin-message-show',$data->id) . '"> <i class="fas fa-eye"></i> Details</a><a href="javascript:;" data-href="' . route('admin-message-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
+                                return '<div class="action-list"><a href="' . route('admin-message-show',$data->id) . '"> <i class="fas fa-eye"></i> Details</a>
+                                <a href="' . route('close-ticket',$data->ticket->id) . '">  Close</a>
+                                <a href="javascript:;" data-href="' . route('admin-message-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
                             }) 
-                            ->rawColumns(['action'])
+                            ->rawColumns(['action','status'])
                             ->toJson(); //--- Returning Json Data To Client Side
     }
 
@@ -48,7 +60,17 @@ class MessageController extends Controller
     {
         return view('admin.message.index');            
     }
+    public function userMessage(){
+        $convs = Conversation::orderBy('id','desc')->get();
+        return view('admin.message.user',compact('convs'));            
 
+    }
+    public function userMessageSingle($id){
+        $conv = Conversation::findOrfail($id);
+        $user=User::find($conv->sent_user);
+
+            return view('admin.message.single',compact('user','conv'));  
+    }
     //*** GET Request
     public function disputes()
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Classes\GeniusMailer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Ticket;
 use Auth;
 use App\Models\Conversation;
 use App\Models\Message;
@@ -12,6 +13,7 @@ use App\Models\AdminUserConversation;
 use App\Models\AdminUserMessage;
 use App\Models\Generalsetting;
 use App\Models\Notification;
+use App\Models\TicketCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +28,7 @@ class MessageController extends Controller
     {
         $user = Auth::guard('web')->user();
         $convs = Conversation::where('sent_user','=',$user->id)->orWhere('recieved_user','=',$user->id)->get();
-        return view('user.message.index',compact('user','convs'));            
+        return view('user.message.index',compact('user','convs'));             
     }
 
     public function message($id)
@@ -40,7 +42,7 @@ class MessageController extends Controller
             $conv = Conversation::findOrfail($id);
             return view('user.message.create',compact('user','conv'));                 
     }
-
+ 
     public function messagedelete($id)
     {
             $conv = Conversation::findOrfail($id);
@@ -135,8 +137,9 @@ class MessageController extends Controller
     public function adminmessages()
     {
             $user = Auth::guard('web')->user();
-            $convs = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->get();
-            return view('user.ticket.index',compact('convs'));            
+            $convs = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->get(); 
+            $ticketCategories=TicketCategory::all(); 
+            return view('user.ticket.index',compact('convs','ticketCategories'));            
     }
 
     public function adminDiscordmessages()
@@ -155,9 +158,10 @@ class MessageController extends Controller
     public function adminmessage($id)
     {
             $conv = AdminUserConversation::findOrfail($id);
-            return view('user.ticket.create',compact('conv'));                 
+            
+            return view('user.ticket.create',compact('conv'));                  
     }   
-
+ 
     public function adminmessagedelete($id)
     {
             $conv = AdminUserConversation::findOrfail($id);
@@ -203,15 +207,28 @@ class MessageController extends Controller
         ];
 
         $mailer = new GeniusMailer();
-        $mailer->sendCustomMail($data);
+        //$mailer->sendCustomMail($data);
         }
         else
         {
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
        // mail($to,$subject,$msg,$headers);
         }
+        $ticketId=0;
         if($request->type == 'Ticket'){
-            $conv = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->where('subject','=',$subject)->first(); 
+            if($request->ticket_id){
+                $ticketId=$request->ticket_id;
+                $conv = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->where('ticket_id','=',$$request->ticket_id)->first(); 
+            }
+            else{
+                $ticket=Ticket::create([
+                    'subject'=>$subject,
+                    'ticket_category_id'=>$request->ticket_category_id
+                ]);
+                $ticketId=$ticket->id;
+                $conv = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->where('ticket_id','=',$ticket->id)->first(); 
+            }
+           
         }
         else{
             $conv = AdminUserConversation::where('type','=','Dispute')->where('user_id','=',$user->id)->where('subject','=',$subject)->first(); 
@@ -227,7 +244,7 @@ class MessageController extends Controller
         }
         else{
             $message = new AdminUserConversation();
-            $message->subject = $subject;
+            $message->ticket_id = $ticketId;
             $message->user_id= $user->id;
             $message->message = $request->message;
             $message->order_number = $request->order;
