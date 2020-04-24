@@ -542,114 +542,29 @@
 			<div class="product-slide1">
 
 
-				<!-- single product  --->
-				<div class="product-item">
+				@foreach ($productt->similarProducts as $product)
+					<div class="product-item">
 					<div class="thumbnail">
 						<a href="product-details.html">
 							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								<a href="{{URL::to('/item/'.$product->slug)}}"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
 							</div>
 						</a>
-						<h4>Lorem Ipsum is simply </h4>
+						<h5 class="mt-2">{{$product->name}}</h5>
 						<div class="price-details clearfix mt-3">
 							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>
 							</div>
 							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
+								<span style="background: red;" class="add-to-cart add-to-cart-btn" data-href="{{ route('product.cart.add',$product->id) }}">
+																	{{ $langg->lang56 }}
+																</span>
 							</div>
 							<div class="clear"></div>
 						</div>
 					</div>
 				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
+				@endforeach
 			</div>
 		</div>
 <!-- 
@@ -912,56 +827,20 @@ PRODUCT END -->
 				<h4>PRODUCTS</h4>
 			</div>
 			<div class="card-body">
+      @foreach($vendors as $vendor) 
 				<div class="media products-media">
                      <div class="media-left">
-                        <a href="#">
-                           <img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" width="70" alt="">
+                        <a href="{{URL::to('/item/'.$vendor->slug)}}">
+                           <img class="media-object" src="{{ $vendor->photo ? asset('assets/images/thumbnails/'.$vendor->thumbnail):asset('assets/images/noimage.png') }}" width="70" alt="">
                         </a>
                     </div>
                     <div class="media-body">
-                        <a href="#"><h5 class="media-heading">samsung</h5></a>
-                        <h6><strong>$ 685.00 </strong> <small>&nbsp; <del>$ 685.00</del></small></h6>
+                        <a href="{{URL::to('/item/'.$vendor->slug)}}"><h5 class="media-heading">{{$vendor->name}}</h5></a>
+                        <h6><strong>{{$vendor->showPrice()}}</strong> <small>&nbsp; <del>{{$vendor->showPreviousPrice()}}</del></small></h6>
                     </div>
                 </div>
 				<hr>
-				<div class="media products-media">
-                     <div class="media-left">
-                        <a href="#">
-                           <img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" width="70" alt="">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#"><h5 class="media-heading">samsung</h5></a>
-                        <h6><strong>$ 685.00 </strong> <small>&nbsp; <del>$ 685.00</del></small></h6>
-                    </div>
-                </div>
-				<hr>
-				<div class="media products-media">
-                     <div class="media-left">
-                        <a href="#">
-                           <img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" width="70" alt="">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#"><h5 class="media-heading">samsung</h5></a>
-                        <h6><strong>$ 685.00 </strong> <small>&nbsp; <del>$ 685.00</del></small></h6>
-                    </div>
-                </div>
-				<hr>
-				<div class="media products-media">
-                     <div class="media-left">
-                        <a href="#">
-                           <img class="media-object" src="{{ asset('assets/images/brand/profile-pic.jpg')}}" width="70" alt="">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <a href="#"><h5 class="media-heading">samsung</h5></a>
-                        <h6><strong>$ 685.00 </strong> <small>&nbsp; <del>$ 685.00</del></small></h6>
-                    </div>
-                </div>
-				
-				
-			</div>
+			@endforeach
 		</div>
     <div class="card mt-5">
 			<div class="card-header">
@@ -1008,124 +887,38 @@ PRODUCT END -->
 						<h3>New Products</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
-						<p><a href="#">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						<p><a href="{{route('front.new')}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
-					<div class="clearfix"></div>
+					<div class="clearfix"></div> 
 				</div>
 		</div>
 
 		<div class="">
 			<div class="product-slide">
 
-
-				<!-- single product  --->
-				<div class="product-item">
+				@foreach ($feature_products as $product)
+					<div class="product-item">
 					<div class="thumbnail">
 						<a href="product-details.html">
 							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
+								<a href="{{URL::to('/item/'.$product->slug)}}"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
 							</div>
 						</a>
-						<h4>Lorem Ipsum is simply </h4>
+						<h5 class="mt-2">{{$product->name}}</h5>
 						<div class="price-details clearfix mt-3">
 							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
+								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>
 							</div>
 							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
+								<span style="background: red;" class="add-to-cart add-to-cart-btn" data-href="{{ route('product.cart.add',$product->id) }}">
+																	{{ $langg->lang56 }}
+																</span>
 							</div>
 							<div class="clear"></div>
 						</div>
 					</div>
 				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
+				@endforeach
 			</div>
 		</div>
 	</div>

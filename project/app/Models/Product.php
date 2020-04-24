@@ -63,6 +63,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Wishlist');
     }
+    public function similarProducts(){
+        return $this->category->products()->take(5);
+    }
 
     public function comments()
     {

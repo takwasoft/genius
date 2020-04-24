@@ -227,7 +227,7 @@
 					</div>
 				</div>
 				<div class="col-lg-4 col-sm-6 col-7 remove-padding order-lg-last">
-				<div class="input-group">
+				<div class="input-group" id="d-cart">
 					<span class="input-group-btn"style=" border-radius: 50px;border-top-right-radius: 0; border-bottom-right-radius: 0;background: #e2dede;">
 						<button class="btn " type="button">
 							<a href="{{route('front.cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
@@ -1029,5 +1029,13 @@
 	@yield('scripts')
 
 </body>
-
+	<script>
+		$(".add-to-cart.add-to-cart-btn").click(function() {
+            setTimeout(function(){
+				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
+    $("#d-cart").html(result);
+  }});
+			},1000)
+        });
+	</script>
 </html>

@@ -20,6 +20,7 @@
 											<table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 												<thead>
 													<tr>
+                          <th>Ticket ID</th>
                           <th>Type</th>
 														<th>{{ $langg->lang380 }}</th>
 														<th>{{ $langg->lang381 }}</th>
@@ -33,10 +34,11 @@
                         
                           <tr class="conv">
                             <input type="hidden" value="{{$conv->id}}">
+                            <td>#00{{$conv->ticket->id}}</td>
                             <td>{{$conv->ticket->ticketCategory->name}}</td>
                             <td>{{$conv->ticket->subject}}</td>
-                            <td>{{$conv->message}}</td>
-
+                            <td>{{$conv->messages->last()->message}}</td>
+ 
                             <td>{{$conv->created_at->diffForHumans()}}</td>
                             <td>
                             @if($conv->ticket->status==0)

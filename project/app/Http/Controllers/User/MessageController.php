@@ -16,7 +16,7 @@ use App\Models\Notification;
 use App\Models\TicketCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-
+use Image;
 class MessageController extends Controller
 {
     public function __construct()
@@ -137,8 +137,8 @@ class MessageController extends Controller
     public function adminmessages()
     {
             $user = Auth::guard('web')->user();
-            $convs = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->get(); 
-            $ticketCategories=TicketCategory::all(); 
+            $convs = AdminUserConversation::where('type','=','Ticket')->where('user_id','=',$user->id)->latest()->get(); 
+            $ticketCategories=TicketCategory::all();  
             return view('user.ticket.index',compact('convs','ticketCategories'));            
     }
 
@@ -156,9 +156,12 @@ class MessageController extends Controller
     }   
 
     public function adminmessage($id)
-    {
+    { 
             $conv = AdminUserConversation::findOrfail($id);
-            
+            foreach($conv->messages as $message){
+                $message->user_seen=1;
+                $message->save();
+            } 
             return view('user.ticket.create',compact('conv'));                  
     }   
  
@@ -177,7 +180,15 @@ class MessageController extends Controller
 
     public function adminpostmessage(Request $request)
     {
+        
         $msg = new AdminUserMessage();
+        if($file=$request->attachment){
+            $name = time().$file->getClientOriginalName();
+            $file->move('assets/images/ticket',$name);           
+            $msg->attachment = $name;
+
+        }
+        $msg->user_seen=1;
         $input = $request->all();  
         $msg->fill($input)->save();
         $notification = new Notification;
@@ -236,6 +247,7 @@ class MessageController extends Controller
 
         if(isset($conv)){
             $msg = new AdminUserMessage();
+            $msg->user_seen=1;
             $msg->conversation_id = $conv->id;
             $msg->message = $request->message;
             $msg->user_id = $user->id;
@@ -254,6 +266,7 @@ class MessageController extends Controller
             $notification->conversation_id = $message->id;
             $notification->save();
             $msg = new AdminUserMessage();
+            $msg->user_seen=1;
             $msg->conversation_id = $message->id;
             $msg->message = $request->message;
             $msg->user_id = $user->id;

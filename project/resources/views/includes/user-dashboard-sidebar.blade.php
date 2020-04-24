@@ -76,7 +76,12 @@
               </li>
 
               <li class="{{ $link == route('user-message-index') ? 'active':'' }}">
-                  <a href="{{route('user-message-index')}}">{{ $langg->lang204 }}</a>
+                  <a href="{{route('user-message-index')}}">{{ $langg->lang204 }}
+                  <span class="{{$ticketCount>0?'badge badge-danger':''}}">
+                  {{$ticketCount}}
+                  </span>
+                  </a>
+                   
               </li>
 
               <li class="{{ $link == route('user-dmessage-index') ? 'active':'' }}">

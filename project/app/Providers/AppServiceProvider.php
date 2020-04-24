@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Config;
 use App\Models\Category;
 use Carbon\Carbon;
-use Session;
+use Session; 
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App;
+use App\Models\AdminUserConversation;
+use App\Models\AdminUserMessage;
 use App\Models\FavoriteSeller;
 use App\Models\Message;
 
@@ -34,6 +36,12 @@ class AppServiceProvider extends ServiceProvider
             if(auth()->check()){
                 $settings->with('messageCount',Message::where('recieved_user','=',auth()->user()->id)->where('seen','=',0)->count());
                 $settings->with('favCount',FavoriteSeller::where('user_id','=',auth()->user()->id)->count());
+                $tc=0;
+                $convs=AdminUserConversation::where('user_id','=',auth()->user()->id)->get();
+                foreach($convs as $conv){
+                    $tc+=$conv->messages->where('user_seen','=',0)->count();
+                }
+                $settings->with('ticketCount',$tc);
             }
             $settings->with('categories', Category::where('status','=',1)->get());   
             if (Session::has('language')) 

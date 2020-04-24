@@ -38,6 +38,10 @@
                                             <div class="reply-area">
                                                 <div class="left">
                                                     <p>{{ $message->message }}</p>
+                                                     @if($message->attachment!='none')
+                                                        <a class="btn btn-outline-warning" href="{{asset('assets/images/ticket/'.$message->attachment)}}" target="_blank">
+                                                            Attchment
+                                                        </a> @endif
                                                 </div>
                                                 <div class="right">
                                             @if($message->conversation->user->is_provider == 1)
@@ -69,6 +73,10 @@
                                                 </div>
                                                 <div class="right">
                                                     <p>{{ $message->message }}</p>
+                                                     @if($message->attachment!='none')
+                                                        <a class="btn btn-outline-warning" href="{{asset('assets/images/ticket/'.$message->attachment)}}" target="_blank">
+                                                            Attchment
+                                                        </a> @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -87,6 +95,8 @@
                                     <div class="form-group">
                                         <input type="hidden" name="conversation_id" value="{{$conv->id}}">
                                         <textarea class="form-control" name="message" id="wrong-invoice" rows="5" required="" placeholder="{{ __('Message') }}"></textarea>
+                                        <br>
+                                            <input name="attachment" type="file" class="form-control-file">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="mybtn1">

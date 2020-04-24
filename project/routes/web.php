@@ -1215,7 +1215,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 // ************************************ VENDOR SECTION ENDS**********************************************
 
 // ************************************ FRONT SECTION **********************************************
-
+Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category');
   Route::get('/', 'Front\FrontendController@index')->name('front.index');
   Route::get('/home', function(){
     return "ok";
@@ -1249,7 +1249,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   // PRODCT AUTO SEARCH SECTION ENDS
 
   // CATEGORY SECTION
-  Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category');
+ 
   Route::get('/new-product','Front\CatalogController@new')->name('front.new'); 
   
   Route::get('/category/{slug1}/{slug2}','Front\CatalogController@subcategory')->name('front.subcat');
@@ -1371,7 +1371,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::get('/vendor/subscription/check','Front\FrontendController@subcheck');
 
   // CRONJOB ENDS
-
+  Route::view('/dynamic-cart','front.dynamic_cart')->name('dynamic.cart');
   // PAGE SECTION
   Route::get('/{slug}','Front\FrontendController@page')->name('front.page'); 
   // PAGE SECTION ENDS

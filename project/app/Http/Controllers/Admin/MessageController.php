@@ -31,16 +31,23 @@ class MessageController extends Controller
     //*** JSON Request
     public function datatables($type)
     {
-         $datas = AdminUserConversation::where('type','=',$type)->with('ticket','ticket.ticketCategory')->get();
+         $datas = AdminUserConversation::where('type','=',$type)->with('ticket','ticket.ticketCategory')->latest()->get();
          //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
                             ->editColumn('created_at', function(AdminUserConversation $data) {
                                 $date = $data->created_at->diffForHumans();
                                 return  $date;
                             })
+                            ->editColumn('message', function(AdminUserConversation $data) {
+                                return  $data->messages->last()->message;
+                            })
                             ->addColumn('status', function(AdminUserConversation $data) {
                                 return $data->ticket->status==0?'<span class="badge badge-success">Open</span>':'<span class="badge badge-danger">Closed</span>';
                                 
+                            })
+                            ->addColumn('ticket_id', function(AdminUserConversation $data) {
+                                
+                                return  "#00".$data->ticket->id;
                             })
                             ->addColumn('name', function(AdminUserConversation $data) {
                                 $name = $data->user->name;
@@ -58,7 +65,7 @@ class MessageController extends Controller
     //*** GET Request
     public function index()
     {
-        return view('admin.message.index');            
+        return view('admin.message.index');             
     }
     public function userMessage(){
         $convs = Conversation::orderBy('id','desc')->get();
@@ -81,7 +88,7 @@ class MessageController extends Controller
     public function message($id)
     {
         $conv = AdminUserConversation::findOrfail($id);
-        return view('admin.message.create',compact('conv'));                 
+        return view('admin.message.create',compact('conv'));                  
     }   
 
     //*** GET Request
@@ -111,12 +118,20 @@ class MessageController extends Controller
     //*** POST Request
     public function postmessage(Request $request)
     {
+        $conv=AdminUserConversation::find($request->conversation_id);
         $msg = new AdminUserMessage();
+        if($file=$request->attachment){
+            $name = time().$file->getClientOriginalName();
+            $file->move('assets/images/ticket',$name);           
+            $msg->attachment = $name;
+
+        }
+        $msg->admin_seen=1;
         $input = $request->all();  
         $msg->fill($input)->save();
         //--- Redirect Section     
         $msg = 'Message Sent!';
-        return response()->json($msg);      
+        return response()->json($msg);       
         //--- Redirect Section Ends    
     }
 
@@ -161,6 +176,7 @@ class MessageController extends Controller
         }
         if(isset($conv)){
             $msg = new AdminUserMessage();
+            $msg->admin_seen=1;
             $msg->conversation_id = $conv->id;
             $msg->message = $request->message;
             $msg->save();
@@ -175,6 +191,7 @@ class MessageController extends Controller
             $message->type = $request->type;
             $message->save();
             $msg = new AdminUserMessage();
+            $msg->admin_seen=1;
             $msg->conversation_id = $message->id;
             $msg->message = $request->message;
             $msg->save();

@@ -236,6 +236,7 @@ class CatalogController extends Controller
 
         return view('includes.product.filtered-products', $data);
       }
+      $data['feature_products']= Product::where('status','=',1)->whereFeatured(1)->orderBy('id','desc')->take(8)->get();
       return view('front.category', $data);
     }
 
@@ -305,7 +306,8 @@ class CatalogController extends Controller
         {
             $vendors = Product::where('status','=',1)->where('user_id','=',0)->take(8)->get();
         }
-        return view('front.product',compact('productt','curr','vendors'));
+        $feature_products =  Product::where('status','=',1)->orderBy('id','desc')->take(8)->get();
+        return view('front.product',compact('productt','curr','vendors','feature_products'));
 
     }
 
