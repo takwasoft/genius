@@ -88,38 +88,42 @@
                 <form class="mregisterform" action="{{route('user-register-submit')}}" method="POST">
                   {{ csrf_field() }} 
 
-                  <div class="form-input">
+                  <div class="form-input r-field">
                     <input type="text" class="User Name" name="name" placeholder="{{ $langg->lang182 }}" required="">
                     <i class="icofont-user-alt-5"></i>
                   </div>
 
-                  <div class="form-input">
+                  <div class="form-input r-field">
                     <input type="email" class="User Name" name="email" placeholder="{{ $langg->lang183 }}" >
                     <i class="icofont-email"></i>
                   </div>
 
-                  <div class="form-input">
+                  <div class="form-input r-field">
                     <input type="text" class="User Name" name="phone" placeholder="{{ $langg->lang184 }}" required="">
                     <i class="icofont-phone"></i>
                   </div>
 
-                  <div class="form-input">
+                  <div class="form-input r-field">
                     <input type="text" class="User Name" name="address" placeholder="{{ $langg->lang185 }}" >
                     <i class="icofont-location-pin"></i>
                   </div>
 
-                  <div class="form-input">
+                  <div class="form-input r-field">
                     <input type="password" class="Password" name="password" placeholder="{{ $langg->lang186 }}"
                       required="">
                     <i class="icofont-ui-password"></i>
                   </div>
 
-                  <div class="form-input">
+                  <div class="form-input r-field">
                     <input type="password" class="Password" name="password_confirmation"
                       placeholder="{{ $langg->lang187 }}" required="">
                     <i class="icofont-ui-password"></i>
                   </div>
-
+                  <div class="form-input code-field" style="display:none">
+                    <input type="number" class="User Name" name="code"
+                      placeholder="Enter The Verification Code" >
+                    <i class="icofont-ui-password"></i>
+                  </div>
                   @if($gs->is_capcha == 1)
 
                   <ul class="captcha-area">

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 21, 2020 at 01:46 PM
--- Server version: 10.1.38-MariaDB
--- PHP Version: 7.3.3
+-- Generation Time: Apr 26, 2020 at 03:53 PM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,14 +33,14 @@ CREATE TABLE `admins` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role_id` int(191) NOT NULL DEFAULT '0',
+  `role_id` int(191) NOT NULL DEFAULT 0,
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `shop_name` text COLLATE utf8mb4_unicode_ci
+  `shop_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -61,11 +61,11 @@ INSERT INTO `admins` (`id`, `name`, `email`, `phone`, `role_id`, `photo`, `passw
 
 CREATE TABLE `admin_languages` (
   `id` int(191) NOT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT '0',
+  `is_default` tinyint(1) NOT NULL DEFAULT 0,
   `language` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `file` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rtl` tinyint(1) NOT NULL DEFAULT '0'
+  `rtl` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -84,27 +84,23 @@ INSERT INTO `admin_languages` (`id`, `is_default`, `language`, `file`, `name`, `
 
 CREATE TABLE `admin_user_conversations` (
   `id` int(191) NOT NULL,
-  `subject` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ticket_id` int(11) NOT NULL,
   `user_id` int(191) NOT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `type` enum('Ticket','Dispute') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `order_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin_user_conversations`
 --
 
-INSERT INTO `admin_user_conversations` (`id`, `subject`, `user_id`, `message`, `created_at`, `updated_at`, `type`, `order_number`) VALUES
-(1, 'dfgdfdsd', 22, 'asd', '2019-08-17 08:23:38', '2019-08-17 08:23:38', 'Ticket', NULL),
-(2, 'dfgdfdsd', 22, 'asdasd', '2019-08-17 08:23:48', '2019-08-17 08:23:48', 'Dispute', 'dfgfgfgfd'),
-(3, 'Order Confirmation', 13, 'sdf', '2019-08-19 23:17:51', '2019-08-19 23:17:51', 'Dispute', 'adasd423423'),
-(4, 'sda', 27, 'asdasd', '2019-10-05 12:49:32', '2019-10-05 12:49:32', NULL, NULL),
-(5, 'lol', 27, 'sdfsdf', '2019-10-05 12:50:29', '2019-10-05 12:50:29', NULL, NULL),
-(6, 'dfgdfdsdasdsf', 27, 'fdgdfgfdgdfg', '2019-10-05 12:50:59', '2019-10-05 12:50:59', NULL, NULL),
-(7, 'dfdfd', 27, 'dfdf', '2019-10-20 04:58:53', '2019-10-20 04:58:53', NULL, NULL);
+INSERT INTO `admin_user_conversations` (`id`, `ticket_id`, `user_id`, `message`, `created_at`, `updated_at`, `type`, `order_number`) VALUES
+(10, 2, 29, 'sa', '2020-04-23 14:31:49', '2020-04-23 14:31:49', 'Ticket', NULL),
+(11, 3, 29, 'd', '2020-04-23 14:35:06', '2020-04-23 14:35:06', 'Ticket', NULL),
+(12, 4, 29, 's', '2020-04-23 17:55:54', '2020-04-23 17:55:54', 'Ticket', NULL);
 
 -- --------------------------------------------------------
 
@@ -117,6 +113,9 @@ CREATE TABLE `admin_user_messages` (
   `conversation_id` int(191) NOT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(191) DEFAULT NULL,
+  `user_seen` int(11) NOT NULL DEFAULT 0,
+  `admin_seen` int(11) NOT NULL DEFAULT 0,
+  `attachment` varchar(200) NOT NULL DEFAULT 'none',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -125,16 +124,19 @@ CREATE TABLE `admin_user_messages` (
 -- Dumping data for table `admin_user_messages`
 --
 
-INSERT INTO `admin_user_messages` (`id`, `conversation_id`, `message`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'asd', 22, '2019-08-17 08:23:38', '2019-08-17 08:23:38'),
-(2, 2, 'asdasd', 22, '2019-08-17 08:23:48', '2019-08-17 08:23:48'),
-(3, 1, 'bv', 22, '2019-08-17 09:21:47', '2019-08-17 09:21:47'),
-(4, 2, 'dfg', 22, '2019-08-17 09:21:58', '2019-08-17 09:21:58'),
-(5, 3, 'sdf', 13, '2019-08-19 23:17:51', '2019-08-19 23:17:51'),
-(6, 4, 'asdasd', NULL, '2019-10-05 12:49:33', '2019-10-05 12:49:33'),
-(7, 5, 'sdfsdf', NULL, '2019-10-05 12:50:30', '2019-10-05 12:50:30'),
-(8, 6, 'fdgdfgfdgdfg', NULL, '2019-10-05 12:51:00', '2019-10-05 12:51:00'),
-(9, 7, 'dfdf', NULL, '2019-10-20 04:58:53', '2019-10-20 04:58:53');
+INSERT INTO `admin_user_messages` (`id`, `conversation_id`, `message`, `user_id`, `user_seen`, `admin_seen`, `attachment`, `created_at`, `updated_at`) VALUES
+(14, 10, 'sa', 29, 1, 0, 'none', '2020-04-23 14:31:49', '2020-04-23 18:42:31'),
+(15, 10, 'f', 29, 1, 0, 'none', '2020-04-23 14:34:21', '2020-04-23 18:42:31'),
+(16, 11, 'd', 29, 1, 0, 'none', '2020-04-23 14:35:06', '2020-04-23 18:42:21'),
+(17, 10, 'konai', NULL, 1, 0, 'none', '2020-04-23 14:37:22', '2020-04-23 18:42:31'),
+(18, 12, 's', 29, 1, 0, 'none', '2020-04-23 17:55:54', '2020-04-24 13:26:16'),
+(19, 12, 'ok', NULL, 1, 1, 'none', '2020-04-23 18:34:24', '2020-04-24 13:26:17'),
+(20, 12, 'koi', 29, 1, 0, 'none', '2020-04-24 13:48:04', '2020-04-24 13:51:56'),
+(21, 12, 'ho', 29, 1, 0, 'none', '2020-04-24 13:48:09', '2020-04-24 13:51:56'),
+(22, 12, 'no', 29, 1, 0, '1587710896Untitled.png', '2020-04-24 13:48:16', '2020-04-24 13:51:56'),
+(23, 12, 'eta dekho', NULL, 1, 1, '1587711571New Text Document.txt', '2020-04-24 13:59:31', '2020-04-24 14:11:30'),
+(24, 12, 'h', NULL, 1, 1, 'none', '2020-04-24 14:03:09', '2020-04-24 14:11:30'),
+(25, 12, 'jani', NULL, 1, 1, 'none', '2020-04-24 14:05:13', '2020-04-24 14:11:30');
 
 -- --------------------------------------------------------
 
@@ -169,8 +171,8 @@ CREATE TABLE `attributes` (
   `attributable_type` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `input_name` varchar(255) DEFAULT NULL,
-  `price_status` int(3) NOT NULL DEFAULT '1' COMMENT '0 - hide, 1- show	',
-  `details_status` int(3) NOT NULL DEFAULT '1' COMMENT '0 - hide, 1- show	',
+  `price_status` int(3) NOT NULL DEFAULT 1 COMMENT '0 - hide, 1- show	',
+  `details_status` int(3) NOT NULL DEFAULT 1 COMMENT '0 - hide, 1- show	',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -288,11 +290,11 @@ CREATE TABLE `blogs` (
   `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `source` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `views` int(11) NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL DEFAULT '1',
-  `meta_tag` text COLLATE utf8mb4_unicode_ci,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
-  `tags` text COLLATE utf8mb4_unicode_ci,
+  `views` int(11) NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `meta_tag` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tags` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -351,7 +353,7 @@ INSERT INTO `blog_categories` (`id`, `name`, `slug`) VALUES
 
 CREATE TABLE `brands` (
   `id` int(10) UNSIGNED NOT NULL,
-  `brand_week` int(11) NOT NULL DEFAULT '0',
+  `brand_week` int(11) NOT NULL DEFAULT 0,
   `brand_category_id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -375,7 +377,7 @@ INSERT INTO `brands` (`id`, `brand_week`, `brand_category_id`, `name`, `image`, 
 
 CREATE TABLE `brand_categories` (
   `id` int(10) UNSIGNED NOT NULL,
-  `show_in_home` int(11) NOT NULL DEFAULT '0',
+  `show_in_home` int(11) NOT NULL DEFAULT 0,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -398,9 +400,9 @@ CREATE TABLE `categories` (
   `id` int(191) NOT NULL,
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_featured` tinyint(1) NOT NULL DEFAULT '0',
+  `is_featured` tinyint(1) NOT NULL DEFAULT 0,
   `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -436,7 +438,7 @@ CREATE TABLE `childcategories` (
   `subcategory_id` int(191) NOT NULL,
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '1'
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -473,7 +475,7 @@ CREATE TABLE `comments` (
   `product_id` int(191) UNSIGNED NOT NULL,
   `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -498,7 +500,7 @@ CREATE TABLE `conversations` (
   `sent_user` int(191) NOT NULL,
   `recieved_user` int(191) NOT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `seen` int(11) NOT NULL DEFAULT '0',
+  `seen` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -524,8 +526,8 @@ CREATE TABLE `counters` (
   `id` int(11) NOT NULL,
   `type` enum('referral','browser') NOT NULL DEFAULT 'referral',
   `referral` varchar(255) DEFAULT NULL,
-  `total_count` int(11) NOT NULL DEFAULT '0',
-  `todays_count` int(11) NOT NULL DEFAULT '0',
+  `total_count` int(11) NOT NULL DEFAULT 0,
+  `todays_count` int(11) NOT NULL DEFAULT 0,
   `today` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -536,7 +538,7 @@ CREATE TABLE `counters` (
 INSERT INTO `counters` (`id`, `type`, `referral`, `total_count`, `todays_count`, `today`) VALUES
 (1, 'referral', 'www.facebook.com', 5, 0, NULL),
 (2, 'referral', 'geniusocean.com', 2, 0, NULL),
-(3, 'browser', 'Windows 10', 3723, 0, NULL),
+(3, 'browser', 'Windows 10', 3779, 0, NULL),
 (4, 'browser', 'Linux', 221, 0, NULL),
 (5, 'browser', 'Unknown OS Platform', 384, 0, NULL),
 (6, 'browser', 'Windows 7', 415, 0, NULL),
@@ -829,8 +831,8 @@ CREATE TABLE `coupons` (
   `type` tinyint(4) NOT NULL,
   `price` double NOT NULL,
   `times` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `used` int(191) UNSIGNED NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL DEFAULT '1',
+  `used` int(191) UNSIGNED NOT NULL DEFAULT 0,
+  `status` tinyint(4) NOT NULL DEFAULT 1,
   `start_date` date NOT NULL,
   `end_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -858,7 +860,7 @@ CREATE TABLE `currencies` (
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sign` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` double NOT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT '0'
+  `is_default` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -922,9 +924,9 @@ INSERT INTO `divisions` (`id`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `email_templates` (
   `id` int(11) NOT NULL,
   `email_type` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email_subject` mediumtext COLLATE utf8_unicode_ci,
-  `email_body` longtext COLLATE utf8_unicode_ci,
-  `status` int(11) NOT NULL DEFAULT '1'
+  `email_subject` mediumtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email_body` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -948,7 +950,7 @@ CREATE TABLE `faqs` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `details` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(1) DEFAULT '0'
+  `status` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1163,118 +1165,118 @@ CREATE TABLE `generalsettings` (
   `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `favicon` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `header_email` text COLLATE utf8mb4_unicode_ci,
-  `header_phone` text COLLATE utf8mb4_unicode_ci,
+  `header_email` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `header_phone` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `footer` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `copyright` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `colors` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `loader` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `admin_loader` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_talkto` tinyint(1) NOT NULL DEFAULT '1',
-  `talkto` text COLLATE utf8mb4_unicode_ci,
-  `is_language` tinyint(1) NOT NULL DEFAULT '1',
-  `is_loader` tinyint(1) NOT NULL DEFAULT '1',
-  `map_key` text COLLATE utf8mb4_unicode_ci,
-  `is_disqus` tinyint(1) NOT NULL DEFAULT '0',
-  `disqus` longtext COLLATE utf8mb4_unicode_ci,
-  `is_contact` tinyint(1) NOT NULL DEFAULT '0',
-  `is_faq` tinyint(1) NOT NULL DEFAULT '0',
-  `guest_checkout` tinyint(1) NOT NULL DEFAULT '0',
-  `stripe_check` tinyint(1) NOT NULL DEFAULT '0',
-  `cod_check` tinyint(1) NOT NULL DEFAULT '0',
-  `stripe_key` text COLLATE utf8mb4_unicode_ci,
-  `stripe_secret` text COLLATE utf8mb4_unicode_ci,
-  `currency_format` tinyint(1) NOT NULL DEFAULT '0',
-  `withdraw_fee` double NOT NULL DEFAULT '0',
-  `withdraw_charge` double NOT NULL DEFAULT '0',
-  `tax` double NOT NULL DEFAULT '0',
-  `shipping_cost` double NOT NULL DEFAULT '0',
+  `is_talkto` tinyint(1) NOT NULL DEFAULT 1,
+  `talkto` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_language` tinyint(1) NOT NULL DEFAULT 1,
+  `is_loader` tinyint(1) NOT NULL DEFAULT 1,
+  `map_key` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_disqus` tinyint(1) NOT NULL DEFAULT 0,
+  `disqus` longtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_contact` tinyint(1) NOT NULL DEFAULT 0,
+  `is_faq` tinyint(1) NOT NULL DEFAULT 0,
+  `guest_checkout` tinyint(1) NOT NULL DEFAULT 0,
+  `stripe_check` tinyint(1) NOT NULL DEFAULT 0,
+  `cod_check` tinyint(1) NOT NULL DEFAULT 0,
+  `stripe_key` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stripe_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_format` tinyint(1) NOT NULL DEFAULT 0,
+  `withdraw_fee` double NOT NULL DEFAULT 0,
+  `withdraw_charge` double NOT NULL DEFAULT 0,
+  `tax` double NOT NULL DEFAULT 0,
+  `shipping_cost` double NOT NULL DEFAULT 0,
   `smtp_host` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `smtp_port` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `smtp_user` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `smtp_pass` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `from_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `from_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_smtp` tinyint(1) NOT NULL DEFAULT '0',
-  `is_comment` tinyint(1) NOT NULL DEFAULT '1',
-  `is_currency` tinyint(1) NOT NULL DEFAULT '1',
-  `add_cart` text COLLATE utf8mb4_unicode_ci,
-  `out_stock` text COLLATE utf8mb4_unicode_ci,
-  `add_wish` text COLLATE utf8mb4_unicode_ci,
-  `already_wish` text COLLATE utf8mb4_unicode_ci,
-  `wish_remove` text COLLATE utf8mb4_unicode_ci,
-  `add_compare` text COLLATE utf8mb4_unicode_ci,
-  `already_compare` text COLLATE utf8mb4_unicode_ci,
-  `compare_remove` text COLLATE utf8mb4_unicode_ci,
-  `color_change` text COLLATE utf8mb4_unicode_ci,
-  `coupon_found` text COLLATE utf8mb4_unicode_ci,
-  `no_coupon` text COLLATE utf8mb4_unicode_ci,
-  `already_coupon` text COLLATE utf8mb4_unicode_ci,
-  `order_title` text COLLATE utf8mb4_unicode_ci,
-  `order_text` text COLLATE utf8mb4_unicode_ci,
-  `is_affilate` tinyint(1) NOT NULL DEFAULT '1',
-  `affilate_charge` int(100) NOT NULL DEFAULT '0',
-  `affilate_banner` text COLLATE utf8mb4_unicode_ci,
-  `already_cart` text COLLATE utf8mb4_unicode_ci,
-  `fixed_commission` double NOT NULL DEFAULT '0',
-  `percentage_commission` double NOT NULL DEFAULT '0',
-  `multiple_shipping` tinyint(1) NOT NULL DEFAULT '0',
-  `multiple_packaging` tinyint(4) NOT NULL DEFAULT '0',
-  `vendor_ship_info` tinyint(1) NOT NULL DEFAULT '0',
-  `reg_vendor` tinyint(1) NOT NULL DEFAULT '0',
-  `cod_text` text COLLATE utf8mb4_unicode_ci,
-  `paypal_text` text COLLATE utf8mb4_unicode_ci,
-  `stripe_text` text COLLATE utf8mb4_unicode_ci,
+  `is_smtp` tinyint(1) NOT NULL DEFAULT 0,
+  `is_comment` tinyint(1) NOT NULL DEFAULT 1,
+  `is_currency` tinyint(1) NOT NULL DEFAULT 1,
+  `add_cart` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `out_stock` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `add_wish` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `already_wish` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wish_remove` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `add_compare` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `already_compare` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `compare_remove` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color_change` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `coupon_found` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `no_coupon` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `already_coupon` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_affilate` tinyint(1) NOT NULL DEFAULT 1,
+  `affilate_charge` int(100) NOT NULL DEFAULT 0,
+  `affilate_banner` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `already_cart` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fixed_commission` double NOT NULL DEFAULT 0,
+  `percentage_commission` double NOT NULL DEFAULT 0,
+  `multiple_shipping` tinyint(1) NOT NULL DEFAULT 0,
+  `multiple_packaging` tinyint(4) NOT NULL DEFAULT 0,
+  `vendor_ship_info` tinyint(1) NOT NULL DEFAULT 0,
+  `reg_vendor` tinyint(1) NOT NULL DEFAULT 0,
+  `cod_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paypal_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stripe_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `header_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `footer_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `copyright_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_admin_loader` tinyint(1) NOT NULL DEFAULT '0',
+  `is_admin_loader` tinyint(1) NOT NULL DEFAULT 0,
   `menu_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `menu_hover_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_home` tinyint(1) NOT NULL DEFAULT '0',
-  `is_verification_email` tinyint(1) NOT NULL DEFAULT '0',
+  `is_home` tinyint(1) NOT NULL DEFAULT 0,
+  `is_verification_email` tinyint(1) NOT NULL DEFAULT 0,
   `instamojo_key` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `instamojo_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `instamojo_text` text COLLATE utf8mb4_unicode_ci,
-  `is_instamojo` tinyint(1) NOT NULL DEFAULT '0',
-  `instamojo_sandbox` tinyint(1) NOT NULL DEFAULT '0',
-  `is_paystack` tinyint(1) NOT NULL DEFAULT '0',
-  `paystack_key` text COLLATE utf8mb4_unicode_ci,
-  `paystack_email` text COLLATE utf8mb4_unicode_ci,
-  `paystack_text` text COLLATE utf8mb4_unicode_ci,
-  `wholesell` int(191) NOT NULL DEFAULT '0',
-  `is_capcha` tinyint(1) NOT NULL DEFAULT '0',
+  `instamojo_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_instamojo` tinyint(1) NOT NULL DEFAULT 0,
+  `instamojo_sandbox` tinyint(1) NOT NULL DEFAULT 0,
+  `is_paystack` tinyint(1) NOT NULL DEFAULT 0,
+  `paystack_key` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paystack_email` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paystack_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `wholesell` int(191) NOT NULL DEFAULT 0,
+  `is_capcha` tinyint(1) NOT NULL DEFAULT 0,
   `error_banner` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_popup` tinyint(1) NOT NULL DEFAULT '0',
-  `popup_title` text COLLATE utf8mb4_unicode_ci,
-  `popup_text` text COLLATE utf8mb4_unicode_ci,
-  `popup_background` text COLLATE utf8mb4_unicode_ci,
+  `is_popup` tinyint(1) NOT NULL DEFAULT 0,
+  `popup_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `popup_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `popup_background` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `invoice_logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vendor_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_secure` tinyint(1) NOT NULL DEFAULT '0',
+  `is_secure` tinyint(1) NOT NULL DEFAULT 0,
   `is_report` tinyint(1) NOT NULL,
-  `paypal_check` tinyint(1) DEFAULT '0',
-  `paypal_business` text COLLATE utf8mb4_unicode_ci,
-  `footer_logo` text COLLATE utf8mb4_unicode_ci,
+  `paypal_check` tinyint(1) DEFAULT 0,
+  `paypal_business` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `footer_logo` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_encryption` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `paytm_merchant` text COLLATE utf8mb4_unicode_ci,
-  `paytm_secret` text COLLATE utf8mb4_unicode_ci,
-  `paytm_website` text COLLATE utf8mb4_unicode_ci,
-  `paytm_industry` text COLLATE utf8mb4_unicode_ci,
-  `is_paytm` int(11) NOT NULL DEFAULT '1',
-  `paytm_text` text COLLATE utf8mb4_unicode_ci,
+  `paytm_merchant` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paytm_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paytm_website` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paytm_industry` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_paytm` int(11) NOT NULL DEFAULT 1,
+  `paytm_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paytm_mode` enum('sandbox','live') CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `is_molly` tinyint(1) NOT NULL DEFAULT '0',
-  `molly_key` text COLLATE utf8mb4_unicode_ci,
-  `molly_text` text COLLATE utf8mb4_unicode_ci,
-  `is_razorpay` int(11) NOT NULL DEFAULT '1',
-  `razorpay_key` text COLLATE utf8mb4_unicode_ci,
-  `razorpay_secret` text COLLATE utf8mb4_unicode_ci,
-  `razorpay_text` text COLLATE utf8mb4_unicode_ci,
-  `show_stock` tinyint(1) NOT NULL DEFAULT '0',
-  `is_maintain` tinyint(1) NOT NULL DEFAULT '0',
-  `maintain_text` text COLLATE utf8mb4_unicode_ci
+  `is_molly` tinyint(1) NOT NULL DEFAULT 0,
+  `molly_key` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `molly_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_razorpay` int(11) NOT NULL DEFAULT 1,
+  `razorpay_key` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `razorpay_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `razorpay_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `show_stock` tinyint(1) NOT NULL DEFAULT 0,
+  `is_maintain` tinyint(1) NOT NULL DEFAULT 0,
+  `maintain_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1282,7 +1284,7 @@ CREATE TABLE `generalsettings` (
 --
 
 INSERT INTO `generalsettings` (`id`, `logo`, `favicon`, `title`, `header_email`, `header_phone`, `footer`, `copyright`, `colors`, `loader`, `admin_loader`, `is_talkto`, `talkto`, `is_language`, `is_loader`, `map_key`, `is_disqus`, `disqus`, `is_contact`, `is_faq`, `guest_checkout`, `stripe_check`, `cod_check`, `stripe_key`, `stripe_secret`, `currency_format`, `withdraw_fee`, `withdraw_charge`, `tax`, `shipping_cost`, `smtp_host`, `smtp_port`, `smtp_user`, `smtp_pass`, `from_email`, `from_name`, `is_smtp`, `is_comment`, `is_currency`, `add_cart`, `out_stock`, `add_wish`, `already_wish`, `wish_remove`, `add_compare`, `already_compare`, `compare_remove`, `color_change`, `coupon_found`, `no_coupon`, `already_coupon`, `order_title`, `order_text`, `is_affilate`, `affilate_charge`, `affilate_banner`, `already_cart`, `fixed_commission`, `percentage_commission`, `multiple_shipping`, `multiple_packaging`, `vendor_ship_info`, `reg_vendor`, `cod_text`, `paypal_text`, `stripe_text`, `header_color`, `footer_color`, `copyright_color`, `is_admin_loader`, `menu_color`, `menu_hover_color`, `is_home`, `is_verification_email`, `instamojo_key`, `instamojo_token`, `instamojo_text`, `is_instamojo`, `instamojo_sandbox`, `is_paystack`, `paystack_key`, `paystack_email`, `paystack_text`, `wholesell`, `is_capcha`, `error_banner`, `is_popup`, `popup_title`, `popup_text`, `popup_background`, `invoice_logo`, `user_image`, `vendor_color`, `is_secure`, `is_report`, `paypal_check`, `paypal_business`, `footer_logo`, `email_encryption`, `paytm_merchant`, `paytm_secret`, `paytm_website`, `paytm_industry`, `is_paytm`, `paytm_text`, `paytm_mode`, `is_molly`, `molly_key`, `molly_text`, `is_razorpay`, `razorpay_key`, `razorpay_secret`, `razorpay_text`, `show_stock`, `is_maintain`, `maintain_text`) VALUES
-(1, '1571567292logo.png', '1571567283favicon.png', 'Genius Cart', 'Info@example.com', '0123 456789', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae', 'COPYRIGHT © 2019. All Rights Reserved By <a href=\"http://geniusocean.com/\">GeniusOcean.com</a>', '#0f78f2', '1564224328loading3.gif', '1564224329loading3.gif', 0, '<script type=\"text/javascript\">\r\nvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\r\n(function(){\r\nvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\r\ns1.async=true;\r\ns1.src=\'https://embed.tawk.to/5bc2019c61d0b77092512d03/default\';\r\ns1.charset=\'UTF-8\';\r\ns1.setAttribute(\'crossorigin\',\'*\');\r\ns0.parentNode.insertBefore(s1,s0);\r\n})();\r\n</script>', 1, 1, 'AIzaSyB1GpE4qeoJ__70UZxvX9CTMUTZRZNHcu8', 0, '<div id=\"disqus_thread\">         \r\n    <script>\r\n    /**\r\n    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.\r\n    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/\r\n    /*\r\n    var disqus_config = function () {\r\n    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page\'s canonical URL variable\r\n    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page\'s unique identifier variable\r\n    };\r\n    */\r\n    (function() { // DON\'T EDIT BELOW THIS LINE\r\n    var d = document, s = d.createElement(\'script\');\r\n    s.src = \'https://junnun.disqus.com/embed.js\';\r\n    s.setAttribute(\'data-timestamp\', +new Date());\r\n    (d.head || d.body).appendChild(s);\r\n    })();\r\n    </script>\r\n    <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>\r\n    </div>', 1, 1, 1, 1, 1, 'pk_test_UnU1Coi1p5qFGwtpjZMRMgJM', 'sk_test_QQcg3vGsKRPlW6T3dXcNJsor', 1, 5, 5, 0, 5, 'in-v3.mailjet.com', '587', '0e05029e2dc70da691aa2223aa53c5be', '5df1b6242e86bce602c3fd9adc178460', 'admin@geniusocean.com', 'GeniusOcean', 1, 1, 1, 'Successfully Added To Cart', 'Out Of Stock', 'Add To Wishlist', 'Already Added To Wishlist', 'Successfully Removed From The Wishlist', 'Successfully Added To Compare', 'Already Added To Compare', 'Successfully Removed From The Compare', 'Successfully Changed The Color', 'Coupon Found', 'No Coupon Found', 'Coupon Already Applied', 'THANK YOU FOR YOUR PURCHASE.', 'We\'ll email you an order confirmation with details and tracking info.', 1, 8, '15587771131554048228onepiece.jpeg', 'Already Added To Cart', 0, 0, 1, 1, 0, 1, 'Pay with cash upon delivery.', 'Pay via your PayPal account.', 'Pay via your Credit Card.', '#ffffff', '#143250', '#02020c', 1, '#ff5500', '#02020c', 0, 0, 'test_172371aa837ae5cad6047dc3052', 'test_4ac5a785e25fc596b67dbc5c267', 'Pay via your Instamojo account.', 1, 1, 1, 'pk_test_162a56d42131cbb01932ed0d2c48f9cb99d8e8e2', 'junnuns@gmail.com', 'Pay via your Paystack account.', 6, 0, '1566878455404.png', 1, 'NEWSLETTER', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita porro ipsa nulla, alias, ab minus.', '1567488562subscribe.jpg', '1571567295logo.png', '1567655174profile.jpg', '#666666', 0, 1, 1, 'shaon143-facilitator-1@gmail.com', '1571567309footers.png', 'tls', 'tkogux49985047638244', 'LhNGUUKE9xCQ9xY8', 'WEBSTAGING', 'Retail', 1, 'Pay via your Paytm account.', 'live', 1, 'test_5HcWVs9qc5pzy36H9Tu9mwAyats33J', 'Pay with Molly Payment.', 1, 'rzp_test_xDH74d48cwl8DF', 'cr0H1BiQ20hVzhpHfHuNbGri', 'Pay via your Razorpay account.', 0, 0, '<div style=\"text-align: center;\"><font size=\"5\"><br></font></div><h1 style=\"text-align: center;\"><font size=\"6\">UNDER MAINTENANCE</font></h1>');
+(1, '1571567292logo.png', '1571567283favicon.png', 'Genius Cart', 'Info@example.com', '0123 456789', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae', 'COPYRIGHT © 2019. All Rights Reserved By <a href=\"http://geniusocean.com/\">GeniusOcean.com</a>', '#0f78f2', '1564224328loading3.gif', '1564224329loading3.gif', 0, '<script type=\"text/javascript\">\r\nvar Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();\r\n(function(){\r\nvar s1=document.createElement(\"script\"),s0=document.getElementsByTagName(\"script\")[0];\r\ns1.async=true;\r\ns1.src=\'https://embed.tawk.to/5bc2019c61d0b77092512d03/default\';\r\ns1.charset=\'UTF-8\';\r\ns1.setAttribute(\'crossorigin\',\'*\');\r\ns0.parentNode.insertBefore(s1,s0);\r\n})();\r\n</script>', 1, 1, 'AIzaSyB1GpE4qeoJ__70UZxvX9CTMUTZRZNHcu8', 0, '<div id=\"disqus_thread\">         \r\n    <script>\r\n    /**\r\n    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.\r\n    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/\r\n    /*\r\n    var disqus_config = function () {\r\n    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page\'s canonical URL variable\r\n    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page\'s unique identifier variable\r\n    };\r\n    */\r\n    (function() { // DON\'T EDIT BELOW THIS LINE\r\n    var d = document, s = d.createElement(\'script\');\r\n    s.src = \'https://junnun.disqus.com/embed.js\';\r\n    s.setAttribute(\'data-timestamp\', +new Date());\r\n    (d.head || d.body).appendChild(s);\r\n    })();\r\n    </script>\r\n    <noscript>Please enable JavaScript to view the <a href=\"https://disqus.com/?ref_noscript\">comments powered by Disqus.</a></noscript>\r\n    </div>', 1, 1, 1, 1, 1, 'pk_test_UnU1Coi1p5qFGwtpjZMRMgJM', 'sk_test_QQcg3vGsKRPlW6T3dXcNJsor', 1, 5, 5, 0, 5, 'mail.shotovag.com', '587', 'sell@shotovag.com', 'takwasoft1*', 'info@shotovag.com', 'info', 1, 1, 1, 'Successfully Added To Cart', 'Out Of Stock', 'Add To Wishlist', 'Already Added To Wishlist', 'Successfully Removed From The Wishlist', 'Successfully Added To Compare', 'Already Added To Compare', 'Successfully Removed From The Compare', 'Successfully Changed The Color', 'Coupon Found', 'No Coupon Found', 'Coupon Already Applied', 'THANK YOU FOR YOUR PURCHASE.', 'We\'ll email you an order confirmation with details and tracking info.', 1, 8, '15587771131554048228onepiece.jpeg', 'Already Added To Cart', 0, 0, 1, 1, 0, 1, 'Pay with cash upon delivery.', 'Pay via your PayPal account.', 'Pay via your Credit Card.', '#ffffff', '#143250', '#02020c', 1, '#ff5500', '#02020c', 0, 0, 'test_172371aa837ae5cad6047dc3052', 'test_4ac5a785e25fc596b67dbc5c267', 'Pay via your Instamojo account.', 1, 1, 1, 'pk_test_162a56d42131cbb01932ed0d2c48f9cb99d8e8e2', 'junnuns@gmail.com', 'Pay via your Paystack account.', 6, 0, '1566878455404.png', 1, 'NEWSLETTER', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita porro ipsa nulla, alias, ab minus.', '1567488562subscribe.jpg', '1571567295logo.png', '1567655174profile.jpg', '#666666', 0, 1, 1, 'shaon143-facilitator-1@gmail.com', '1571567309footers.png', 'tls', 'tkogux49985047638244', 'LhNGUUKE9xCQ9xY8', 'WEBSTAGING', 'Retail', 1, 'Pay via your Paytm account.', 'live', 1, 'test_5HcWVs9qc5pzy36H9Tu9mwAyats33J', 'Pay with Molly Payment.', 1, 'rzp_test_xDH74d48cwl8DF', 'cr0H1BiQ20hVzhpHfHuNbGri', 'Pay via your Razorpay account.', 0, 0, '<div style=\"text-align: center;\"><font size=\"5\"><br></font></div><h1 style=\"text-align: center;\"><font size=\"6\">UNDER MAINTENANCE</font></h1>');
 
 -- --------------------------------------------------------
 
@@ -1292,7 +1294,7 @@ INSERT INTO `generalsettings` (`id`, `logo`, `favicon`, `title`, `header_email`,
 
 CREATE TABLE `languages` (
   `id` int(191) NOT NULL,
-  `is_default` tinyint(1) NOT NULL DEFAULT '0',
+  `is_default` tinyint(1) NOT NULL DEFAULT 0,
   `language` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1317,7 +1319,7 @@ CREATE TABLE `messages` (
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `sent_user` int(191) DEFAULT NULL,
   `recieved_user` int(191) DEFAULT NULL,
-  `seen` int(11) NOT NULL DEFAULT '0',
+  `seen` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1370,7 +1372,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '2020_04_10_061843_create_sub_districts_table', 1),
 (4, '2020_04_10_061901_create_areas_table', 1),
 (6, '2020_04_15_133927_create_brand_categories_table', 2),
-(7, '2020_04_15_133928_create_brands_table', 2);
+(7, '2020_04_15_133928_create_brands_table', 2),
+(8, '2020_04_23_103102_create_ticket_categories_table', 3);
 
 -- --------------------------------------------------------
 
@@ -1385,7 +1388,7 @@ CREATE TABLE `notifications` (
   `vendor_id` int(191) DEFAULT NULL,
   `product_id` int(191) DEFAULT NULL,
   `conversation_id` int(191) DEFAULT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1402,7 +1405,18 @@ INSERT INTO `notifications` (`id`, `order_id`, `user_id`, `vendor_id`, `product_
 (5, 6, NULL, NULL, NULL, NULL, 1, '2020-04-17 06:58:41', '2020-04-20 20:59:41'),
 (6, 7, NULL, NULL, NULL, NULL, 1, '2020-04-17 07:04:49', '2020-04-20 20:59:41'),
 (7, NULL, 31, NULL, NULL, NULL, 1, '2020-04-17 08:55:10', '2020-04-20 20:59:43'),
-(8, NULL, 32, NULL, NULL, NULL, 0, '2020-04-21 02:44:37', '2020-04-21 02:44:37');
+(8, NULL, 32, NULL, NULL, NULL, 1, '2020-04-21 02:44:37', '2020-04-24 13:54:10'),
+(9, NULL, NULL, NULL, NULL, 8, 1, '2020-04-23 13:58:50', '2020-04-23 23:52:32'),
+(10, NULL, NULL, NULL, NULL, 9, 1, '2020-04-23 13:59:30', '2020-04-23 23:52:32'),
+(11, NULL, NULL, NULL, NULL, 10, 1, '2020-04-23 14:31:49', '2020-04-23 23:52:32'),
+(12, NULL, NULL, NULL, NULL, 10, 1, '2020-04-23 14:34:21', '2020-04-23 23:52:32'),
+(13, NULL, NULL, NULL, NULL, 11, 1, '2020-04-23 14:35:06', '2020-04-23 23:52:32'),
+(14, NULL, NULL, NULL, NULL, 12, 1, '2020-04-23 17:55:54', '2020-04-23 23:52:32'),
+(15, NULL, NULL, NULL, NULL, 12, 1, '2020-04-24 13:48:04', '2020-04-24 13:54:13'),
+(16, NULL, NULL, NULL, NULL, 12, 1, '2020-04-24 13:48:09', '2020-04-24 13:54:13'),
+(17, NULL, NULL, NULL, NULL, 12, 1, '2020-04-24 13:48:16', '2020-04-24 13:54:13'),
+(18, NULL, 33, NULL, NULL, NULL, 0, '2020-04-25 13:15:58', '2020-04-25 13:15:58'),
+(19, NULL, 37, NULL, NULL, NULL, 0, '2020-04-25 15:05:36', '2020-04-25 15:05:36');
 
 -- --------------------------------------------------------
 
@@ -1437,7 +1451,7 @@ CREATE TABLE `orders` (
   `shipping_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `shipping_city` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `shipping_zip` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `order_note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `order_note` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `coupon_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `coupon_discount` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('pending','processing','completed','declined','on delivery') NOT NULL DEFAULT 'pending',
@@ -1448,12 +1462,12 @@ CREATE TABLE `orders` (
   `currency_sign` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency_value` double NOT NULL,
   `shipping_cost` double NOT NULL,
-  `packing_cost` double NOT NULL DEFAULT '0',
+  `packing_cost` double NOT NULL DEFAULT 0,
   `tax` int(191) NOT NULL,
-  `dp` tinyint(1) NOT NULL DEFAULT '0',
-  `pay_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `vendor_shipping_id` int(191) NOT NULL DEFAULT '0',
-  `vendor_packing_id` int(191) NOT NULL DEFAULT '0'
+  `dp` tinyint(1) NOT NULL DEFAULT 0,
+  `pay_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vendor_shipping_id` int(191) NOT NULL DEFAULT 0,
+  `vendor_packing_id` int(191) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1478,8 +1492,8 @@ INSERT INTO `orders` (`id`, `user_id`, `cart`, `method`, `shipping`, `pickup_loc
 CREATE TABLE `order_tracks` (
   `id` int(191) NOT NULL,
   `order_id` int(191) NOT NULL,
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1534,10 +1548,10 @@ INSERT INTO `order_tracks` (`id`, `order_id`, `title`, `text`, `created_at`, `up
 
 CREATE TABLE `packages` (
   `id` int(191) NOT NULL,
-  `user_id` int(191) NOT NULL DEFAULT '0',
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `subtitle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `price` double NOT NULL DEFAULT '0'
+  `user_id` int(191) NOT NULL DEFAULT 0,
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subtitle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1559,10 +1573,10 @@ CREATE TABLE `pages` (
   `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_tag` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `header` tinyint(1) NOT NULL DEFAULT '0',
-  `footer` tinyint(1) NOT NULL DEFAULT '0'
+  `meta_tag` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `header` tinyint(1) NOT NULL DEFAULT 0,
+  `footer` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1584,37 +1598,37 @@ CREATE TABLE `pagesettings` (
   `id` int(10) UNSIGNED NOT NULL,
   `contact_success` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `contact_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contact_title` text COLLATE utf8mb4_unicode_ci,
-  `contact_text` text COLLATE utf8mb4_unicode_ci,
-  `side_title` text COLLATE utf8mb4_unicode_ci,
-  `side_text` text COLLATE utf8mb4_unicode_ci,
-  `street` text COLLATE utf8mb4_unicode_ci,
-  `phone` text COLLATE utf8mb4_unicode_ci,
-  `fax` text COLLATE utf8mb4_unicode_ci,
-  `email` text COLLATE utf8mb4_unicode_ci,
-  `site` text COLLATE utf8mb4_unicode_ci,
-  `slider` tinyint(1) NOT NULL DEFAULT '1',
-  `service` tinyint(1) NOT NULL DEFAULT '1',
-  `featured` tinyint(1) NOT NULL DEFAULT '1',
-  `small_banner` tinyint(1) NOT NULL DEFAULT '1',
-  `best` tinyint(1) NOT NULL DEFAULT '1',
-  `top_rated` tinyint(1) NOT NULL DEFAULT '1',
-  `large_banner` tinyint(1) NOT NULL DEFAULT '1',
-  `big` tinyint(1) NOT NULL DEFAULT '1',
-  `hot_sale` tinyint(1) NOT NULL DEFAULT '1',
-  `partners` tinyint(1) NOT NULL DEFAULT '0',
-  `review_blog` tinyint(1) NOT NULL DEFAULT '1',
-  `best_seller_banner` text COLLATE utf8mb4_unicode_ci,
-  `best_seller_banner_link` text COLLATE utf8mb4_unicode_ci,
-  `big_save_banner` text COLLATE utf8mb4_unicode_ci,
-  `big_save_banner_link` text COLLATE utf8mb4_unicode_ci,
-  `bottom_small` tinyint(1) NOT NULL DEFAULT '0',
-  `flash_deal` tinyint(1) NOT NULL DEFAULT '0',
-  `best_seller_banner1` text COLLATE utf8mb4_unicode_ci,
-  `best_seller_banner_link1` text COLLATE utf8mb4_unicode_ci,
-  `big_save_banner1` text COLLATE utf8mb4_unicode_ci,
-  `big_save_banner_link1` text COLLATE utf8mb4_unicode_ci,
-  `featured_category` int(1) NOT NULL DEFAULT '0'
+  `contact_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `side_title` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `side_text` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `street` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fax` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `site` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slider` tinyint(1) NOT NULL DEFAULT 1,
+  `service` tinyint(1) NOT NULL DEFAULT 1,
+  `featured` tinyint(1) NOT NULL DEFAULT 1,
+  `small_banner` tinyint(1) NOT NULL DEFAULT 1,
+  `best` tinyint(1) NOT NULL DEFAULT 1,
+  `top_rated` tinyint(1) NOT NULL DEFAULT 1,
+  `large_banner` tinyint(1) NOT NULL DEFAULT 1,
+  `big` tinyint(1) NOT NULL DEFAULT 1,
+  `hot_sale` tinyint(1) NOT NULL DEFAULT 1,
+  `partners` tinyint(1) NOT NULL DEFAULT 0,
+  `review_blog` tinyint(1) NOT NULL DEFAULT 1,
+  `best_seller_banner` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `best_seller_banner_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `big_save_banner` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `big_save_banner_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bottom_small` tinyint(1) NOT NULL DEFAULT 0,
+  `flash_deal` tinyint(1) NOT NULL DEFAULT 0,
+  `best_seller_banner1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `best_seller_banner_link1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `big_save_banner1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `big_save_banner_link1` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `featured_category` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1658,8 +1672,8 @@ CREATE TABLE `payment_gateways` (
   `id` int(191) NOT NULL,
   `subtitle` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(10) NOT NULL DEFAULT '1'
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(10) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1702,63 +1716,63 @@ CREATE TABLE `products` (
   `id` int(191) UNSIGNED NOT NULL,
   `sku` varchar(255) DEFAULT NULL,
   `product_type` enum('normal','affiliate') NOT NULL DEFAULT 'normal',
-  `affiliate_link` text,
-  `user_id` int(191) NOT NULL DEFAULT '0',
+  `affiliate_link` text DEFAULT NULL,
+  `user_id` int(191) NOT NULL DEFAULT 0,
   `category_id` int(191) UNSIGNED NOT NULL,
   `subcategory_id` int(191) UNSIGNED DEFAULT NULL,
   `childcategory_id` int(191) UNSIGNED DEFAULT NULL,
-  `attributes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `attributes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `slug` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `thumbnail` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `file` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `size` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `size_qty` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `size_price` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `color` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` double NOT NULL,
   `previous_price` double DEFAULT NULL,
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stock` int(191) DEFAULT NULL,
-  `policy` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `status` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
-  `views` int(191) UNSIGNED NOT NULL DEFAULT '0',
+  `policy` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
+  `views` int(191) UNSIGNED NOT NULL DEFAULT 0,
   `tags` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `features` text,
-  `colors` text,
-  `product_condition` tinyint(1) NOT NULL DEFAULT '0',
+  `features` text DEFAULT NULL,
+  `colors` text DEFAULT NULL,
+  `product_condition` tinyint(1) NOT NULL DEFAULT 0,
   `ship` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_meta` tinyint(1) NOT NULL DEFAULT '0',
-  `meta_tag` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `is_meta` tinyint(1) NOT NULL DEFAULT 0,
+  `meta_tag` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `youtube` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` enum('Physical','Digital','License') NOT NULL,
-  `license` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `license_qty` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `license` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `license_qty` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `platform` varchar(255) DEFAULT NULL,
   `region` varchar(255) DEFAULT NULL,
   `licence_type` varchar(255) DEFAULT NULL,
   `measure` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `featured` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
-  `best` tinyint(10) UNSIGNED NOT NULL DEFAULT '0',
-  `top` tinyint(10) UNSIGNED NOT NULL DEFAULT '0',
-  `hot` tinyint(10) UNSIGNED NOT NULL DEFAULT '0',
-  `latest` tinyint(10) UNSIGNED NOT NULL DEFAULT '0',
-  `big` tinyint(10) UNSIGNED NOT NULL DEFAULT '0',
-  `trending` tinyint(1) NOT NULL DEFAULT '0',
-  `sale` tinyint(1) NOT NULL DEFAULT '0',
+  `featured` tinyint(2) UNSIGNED NOT NULL DEFAULT 0,
+  `best` tinyint(10) UNSIGNED NOT NULL DEFAULT 0,
+  `top` tinyint(10) UNSIGNED NOT NULL DEFAULT 0,
+  `hot` tinyint(10) UNSIGNED NOT NULL DEFAULT 0,
+  `latest` tinyint(10) UNSIGNED NOT NULL DEFAULT 0,
+  `big` tinyint(10) UNSIGNED NOT NULL DEFAULT 0,
+  `trending` tinyint(1) NOT NULL DEFAULT 0,
+  `sale` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `is_discount` tinyint(1) NOT NULL DEFAULT '0',
-  `discount_date` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `whole_sell_qty` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `whole_sell_discount` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `is_catalog` tinyint(1) NOT NULL DEFAULT '0',
-  `catalog_id` int(191) NOT NULL DEFAULT '0',
-  `area_id` int(11) NOT NULL DEFAULT '0',
-  `brand_id` int(11) NOT NULL DEFAULT '0',
+  `is_discount` tinyint(1) NOT NULL DEFAULT 0,
+  `discount_date` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `whole_sell_qty` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `whole_sell_discount` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_catalog` tinyint(1) NOT NULL DEFAULT 0,
+  `catalog_id` int(191) NOT NULL DEFAULT 0,
+  `area_id` int(11) NOT NULL DEFAULT 0,
+  `brand_id` int(11) NOT NULL DEFAULT 0,
   `deal_code` varchar(50) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1767,14 +1781,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `sku`, `product_type`, `affiliate_link`, `user_id`, `category_id`, `subcategory_id`, `childcategory_id`, `attributes`, `name`, `slug`, `photo`, `thumbnail`, `file`, `size`, `size_qty`, `size_price`, `color`, `price`, `previous_price`, `details`, `stock`, `policy`, `status`, `views`, `tags`, `features`, `colors`, `product_condition`, `ship`, `is_meta`, `meta_tag`, `meta_description`, `youtube`, `type`, `license`, `license_qty`, `link`, `platform`, `region`, `licence_type`, `measure`, `featured`, `best`, `top`, `hot`, `latest`, `big`, `trending`, `sale`, `created_at`, `updated_at`, `is_discount`, `discount_date`, `whole_sell_qty`, `whole_sell_discount`, `is_catalog`, `catalog_id`, `area_id`, `brand_id`, `deal_code`) VALUES
-(93, NULL, 'normal', NULL, 0, 11, NULL, NULL, NULL, 'Digital Product Title will Be Here by Name 1', 'digital-product-title-will-be-here-by-name-1-94l93dsn', '15680269303GYKjODW.png', '1568026930poclhyxJ.jpg', '1568016463minimal (16).zip', NULL, NULL, NULL, NULL, 50, 75, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 39, 'book,ebook', NULL, NULL, 0, NULL, 0, 'book,ebook', 'These are ebook from Demo store.', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Digital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, 0, 0, 0, '2019-09-09 07:07:43', '2019-11-14 02:31:36', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
+(93, NULL, 'normal', NULL, 0, 11, NULL, NULL, NULL, 'Digital Product Title will Be Here by Name 1', 'digital-product-title-will-be-here-by-name-1-94l93dsn', '15680269303GYKjODW.png', '1568026930poclhyxJ.jpg', '1568016463minimal (16).zip', NULL, NULL, NULL, NULL, 50, 75, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 41, 'book,ebook', NULL, NULL, 0, NULL, 0, 'book,ebook', 'These are ebook from Demo store.', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Digital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, 0, 0, 0, '2019-09-09 07:07:43', '2020-04-24 20:44:59', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (95, 'pr495jsv', 'affiliate', 'https://www.amazon.com/Rolex-Master-Automatic-self-Wind-Certified-Pre-Owned/dp/B07MHJ8SVQ/ref=lp_13779934011_1_2?s=apparel&ie=UTF8&qid=1565186470&sr=1-2&nodeID=13779934011&psd=1', 13, 4, NULL, NULL, NULL, 'Affiliate Product Title will Be Here. Affiliate Product Title will Be Here 95', 'affiliate-product-title-will-be-here-affiliate-product-title-will-be-here-1-pr495jsv', '1568027732dTwHda8l.png', '1568027751AidGUyJv.jpg', NULL, NULL, NULL, NULL, '#000000,#a33333,#d90b0b,#209125', 50, 100, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 55555, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 48, 'watch', NULL, NULL, 2, '5-7 days', 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 1, '2019-09-09 07:36:06', '2020-04-11 09:11:10', 1, '09/08/2021', NULL, NULL, 0, 0, 0, 0, ''),
 (96, 'pr601jsv', 'normal', NULL, 13, 5, 6, NULL, NULL, 'Top Rated product title will be here according to your wish 96', 'top-rated-product-title-will-be-here-according-to-your-wish-96-rdk96x5b', '1568025872cCRVsp2k.png', '1568025872thPsuRSJ.jpg', NULL, NULL, NULL, NULL, '#000000,#15a0bf,#f5cf07,#2b4cc2,#247d32,#d62727', 100, 500, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 13, 'fashion', NULL, NULL, 2, '5-7 days', 0, 'fashion', 'Fashion meta tag from Demo store.', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 1, 0, 1, 0, 0, 1, '2019-09-09 08:00:05', '2019-11-14 02:09:06', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 0, 0, 0, ''),
 (97, 'pr602jsv', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 97', 'physical-product-title-title-will-be-here-97-pr602jsv', '1568026462TxRJ07FG.png', '1568026462WBWcd7KZ.jpg', NULL, 'S,M,L', '2147483596,2147483597,2147483597', '20,30,40', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 68, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, '2019-09-09 11:59:33', '2019-10-14 02:08:07', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 0, 0, 0, ''),
 (99, 'pr604jsv', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 99', 'physical-product-title-title-will-be-here-99-hjm99shr', '15680264040zpMCpmS.png', '1568026404Hm4kTmnP.jpg', NULL, 'S', '2147483641', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 27, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, '2019-09-09 11:59:33', '2020-04-13 04:50:32', 0, NULL, '10,20,30,40', '5,10,15,20', 1, 0, 0, 0, ''),
 (100, 'pr605jsv', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 100', 'physical-product-title-title-will-be-here-100-qqz100nzi', '1568026368qU5AILZo.png', '1568026368CzWwfWLG.jpg', NULL, 'S', '55555555555555554', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 7, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 1, 1, 0, 1, 1, '2019-09-09 11:59:33', '2020-04-14 09:13:03', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 0, 0, 0, ''),
 (101, 'pr606jsv', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 101', 'physical-product-title-title-will-be-here-101-8e1101lbq', '1568026326RDSwScJe.png', '1568026326vMlslLz4.jpg', NULL, 'S', '2147483646', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 33, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, '2019-09-09 11:59:33', '2020-04-21 02:45:55', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 0, 0, 0, ''),
-(102, 'pr607jsv', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 102', 'physical-product-title-title-will-be-here-102-pr607jsv', '1568026301A6SNpEFR.png', '1568026301VLkmQEpb.jpg', NULL, 'S', '2147483644', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 36, 'clothing,bag', NULL, NULL, 1, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, '2019-09-09 11:59:33', '2020-04-17 07:35:05', 0, NULL, '10,20,30,40', '5,10,15,20', 1, 0, 0, 0, ''),
+(102, 'pr607jsv', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 102', 'physical-product-title-title-will-be-here-102-pr607jsv', '1568026301A6SNpEFR.png', '1568026301VLkmQEpb.jpg', NULL, 'S', '2147483644', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 42, 'clothing,bag', NULL, NULL, 1, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, '2019-09-09 11:59:33', '2020-04-24 22:55:10', 0, NULL, '10,20,30,40', '5,10,15,20', 1, 0, 0, 0, ''),
 (103, NULL, 'normal', NULL, 13, 11, NULL, NULL, NULL, 'Digital Product Title will Be Here by Name 1', 'digital-product-title-will-be-here-by-name-1-laj1033wf', '1568026899SLhVRzQv.png', '15680268999fypNo3k.jpg', '1568016463minimal (16).zip', NULL, NULL, NULL, NULL, 50, 75, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 4, 'book,ebook', NULL, NULL, 0, NULL, 0, 'book,ebook', 'These are ebook from Demo store.', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Digital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, 0, 0, 0, '2019-09-09 12:07:43', '2019-10-03 01:16:24', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (104, NULL, 'normal', NULL, 13, 11, NULL, NULL, NULL, 'Digital Product Title will Be Here by Name 104', 'digital-product-title-will-be-here-by-name-104-ffv1047iv', '1568026881R8KnUyJv.png', '1568026881yy7vilmh.jpg', '1568016463minimal (16).zip', NULL, NULL, NULL, NULL, 50, 75, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 6, 'book,ebook', NULL, NULL, 0, NULL, 0, 'book,ebook', 'These are ebook from Demo store.', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Digital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, 0, 0, 0, '2019-09-09 12:07:43', '2019-09-10 08:21:46', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (105, NULL, 'normal', NULL, 13, 11, NULL, NULL, NULL, 'Digital Product Title will Be Here by Name 105', 'digital-product-title-will-be-here-by-name-105-xpt105lfz', '1568026853LMtcb9he.png', '1568026853ZnMf5AkF.jpg', '1568016463minimal (16).zip', NULL, NULL, NULL, NULL, 50, 75, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; font-size: 14px; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" padding:=\"\" 0px;=\"\" text-align:=\"\" justify;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 3, 'book,ebook', NULL, NULL, 0, NULL, 0, 'book,ebook', 'These are ebook from Demo store.', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Digital', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 0, 0, 0, 0, '2019-09-09 12:07:43', '2019-10-07 22:40:15', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
@@ -1831,8 +1845,8 @@ INSERT INTO `products` (`id`, `sku`, `product_type`, `affiliate_link`, `user_id`
 (185, 'XBG4742zhX', 'affiliate', 'https://www.amazon.com/Elvis-Presley-Mugshot-Poster-Stickers/dp/B07PZY9MMR/ref=pd_srecs_sabr_st_6/137-1959597-8129840?_encoding=UTF8&pd_rd_i=B07PZY9MMR&pd_rd_r=d21789f6-e46d-4e3f-84f3-4a1159e47b55&pd_rd_w=Ftzet&pd_rd_wg=Bor07&pf_rd_p=a25d43de-f6f4-41bb-aace-e6f7c0927a67&pf_rd_r=HWDW21HZDDS08T06835S&refRID=HWDW21HZDDS08T06835S', 13, 4, 2, 1, NULL, 'Usertest', 'usertest-xbg4742zhx', '1573704758YZCDvymD.png', '1573704758412SJWpb.jpg', NULL, NULL, NULL, NULL, NULL, 66, 77, '<br>', NULL, '<br>', 1, 2, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-11-13 22:12:38', '2020-04-13 07:19:46', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (186, 'XBG4742zhXgfhfg', 'affiliate', 'https://www.amazon.com/Elvis-Presley-Mugshot-Poster-Stickers/dp/B07PZY9MMR/ref=pd_srecs_sabr_st_6/137-1959597-8129840?_encoding=UTF8&pd_rd_i=B07PZY9MMR&pd_rd_r=d21789f6-e46d-4e3f-84f3-4a1159e47b55&pd_rd_w=Ftzet&pd_rd_wg=Bor07&pf_rd_p=a25d43de-f6f4-41bb-aace-e6f7c0927a67&pf_rd_r=HWDW21HZDDS08T06835S&refRID=HWDW21HZDDS08T06835S', 13, 4, 2, 1, NULL, 'Usertest', 'usertest-xbg4742zhxgfhfg', '15737048788gkL2daH.png', '1573704878kp8AUxsp.jpg', NULL, NULL, NULL, NULL, NULL, 66, 77, '<br>', NULL, '<br>', 1, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-11-13 22:14:38', '2019-11-13 22:14:38', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
 (187, 'h7F4514rJl', 'normal', NULL, 29, 13, NULL, NULL, NULL, 'test', 'test-h7f4514rjl', '1586444589UeFlRXZj.png', '15864445894no6B4ZL.jpg', NULL, NULL, NULL, NULL, NULL, 100, 22, 'test', 50, 'test', 1, 1, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-09 09:03:09', '2020-04-16 00:12:13', 0, NULL, NULL, NULL, 0, 0, 0, 0, ''),
-(188, 'B2m4948eRk', 'normal', NULL, 29, 4, 2, NULL, '{\"warranty_type\":{\"values\":[\"No warranty\"],\"prices\":[\"0\"],\"details_status\":1},\"color_family\":{\"values\":[\"Black\"],\"prices\":[\"0\"],\"details_status\":1}}', 'teast', 'teast-b2m4948erk', '15865250428EXy6b7m.png', '1586525042W6WZxbbr.jpg', NULL, NULL, NULL, NULL, NULL, 100, 15, 'ds', 7, 'fd', 1, 32, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-10 07:24:02', '2020-04-17 07:54:15', 0, NULL, NULL, NULL, 0, 0, 1, 0, ''),
-(189, 'WNX3732b78', 'normal', NULL, 29, 6, 14, NULL, NULL, 'jam', 'jam-wnx3732b78', '1586954294zgqB6XmV.png', '1586954295CU5XBOgk.jpg', NULL, NULL, NULL, NULL, NULL, 100, 3.1903580290677067, 'this is dammu', 15, '<span style=\"font-size: 16px;\">this is dammu</span><br>', 1, 2, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, 'https://www.youtube.com/watch?v=fjJoX9F_F5g', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-15 06:38:14', '2020-04-15 06:41:53', 0, NULL, NULL, NULL, 0, 0, 1, 1, ''),
+(188, 'B2m4948eRk', 'normal', NULL, 29, 4, 2, NULL, '{\"warranty_type\":{\"values\":[\"No warranty\"],\"prices\":[\"0\"],\"details_status\":1},\"color_family\":{\"values\":[\"Black\"],\"prices\":[\"0\"],\"details_status\":1}}', 'teast', 'teast-b2m4948erk', '15865250428EXy6b7m.png', '1586525042W6WZxbbr.jpg', NULL, NULL, NULL, NULL, NULL, 100, 15, 'ds', 7, 'fd', 1, 54, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-10 07:24:02', '2020-04-24 23:15:49', 0, NULL, NULL, NULL, 0, 0, 1, 0, ''),
+(189, 'WNX3732b78', 'normal', NULL, 29, 6, 14, NULL, NULL, 'jam', 'jam-wnx3732b78', '1586954294zgqB6XmV.png', '1586954295CU5XBOgk.jpg', NULL, NULL, NULL, NULL, NULL, 100, 3.1903580290677067, 'this is dammu', 15, '<span style=\"font-size: 16px;\">this is dammu</span><br>', 1, 4, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, 'https://www.youtube.com/watch?v=fjJoX9F_F5g', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-15 06:38:14', '2020-04-24 20:45:07', 0, NULL, NULL, NULL, 0, 0, 1, 1, ''),
 (190, 'kmM7393K3V', 'normal', NULL, 29, 13, NULL, NULL, NULL, 'beast', 'beast-kmm7393k3v', '1586957459Pk2NBHam.png', '1586957460uaUp5QRm.jpg', NULL, NULL, NULL, NULL, NULL, 100, 4.1356492969396195, 'sa', 25, 'dd', 0, 4, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-15 07:30:59', '2020-04-20 21:00:39', 1, '04/17/2020', NULL, NULL, 0, 0, 1, 1, 'DC1902275'),
 (191, 'TIl8198DOf', 'normal', NULL, 29, 15, NULL, NULL, NULL, 'mno', 'mno-til8198dof', '1587438342xQc5hizG.png', '1587438343IxCfKuXt.jpg', NULL, NULL, NULL, NULL, '#170303,#1fd1a6', 200, 300, 'hello', 500, 'polic', 1, 2, NULL, 'honda', '#000000', 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-20 21:05:42', '2020-04-21 04:04:35', 0, NULL, '30,40', '10,15', 0, 0, 1, 1, 'DC1912505'),
 (192, '20s90715zj', 'normal', NULL, 29, 18, NULL, NULL, NULL, 'rpt', 'rpt-20s90715zj', '1587439109v7w1UWaP.png', '1587439109VOa22yNb.jpg', NULL, NULL, NULL, NULL, NULL, 250, 350, 'dsd', 50, 'ds', 0, 2, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-20 21:18:29', '2020-04-20 21:28:41', 0, NULL, NULL, NULL, 0, 0, 1, 1, 'DC1928064');
@@ -2017,7 +2031,29 @@ INSERT INTO `product_clicks` (`id`, `product_id`, `date`) VALUES
 (613, 192, '2020-04-21'),
 (614, 101, '2020-04-21'),
 (615, 176, '2020-04-21'),
-(616, 191, '2020-04-21');
+(616, 191, '2020-04-21'),
+(617, 93, '2020-04-24'),
+(618, 93, '2020-04-24'),
+(619, 189, '2020-04-24'),
+(620, 189, '2020-04-24'),
+(621, 102, '2020-04-24'),
+(622, 102, '2020-04-24'),
+(623, 102, '2020-04-24'),
+(624, 102, '2020-04-24'),
+(625, 102, '2020-04-24'),
+(626, 102, '2020-04-24'),
+(627, 188, '2020-04-24'),
+(628, 188, '2020-04-24'),
+(629, 188, '2020-04-24'),
+(630, 188, '2020-04-24'),
+(631, 188, '2020-04-24'),
+(632, 188, '2020-04-24'),
+(633, 188, '2020-04-24'),
+(634, 188, '2020-04-24'),
+(635, 188, '2020-04-24'),
+(636, 188, '2020-04-24'),
+(637, 188, '2020-04-24'),
+(638, 188, '2020-04-24');
 
 -- --------------------------------------------------------
 
@@ -2029,7 +2065,7 @@ CREATE TABLE `ratings` (
   `id` int(191) NOT NULL,
   `user_id` int(191) NOT NULL,
   `product_id` int(191) NOT NULL,
-  `review` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `review` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `rating` tinyint(2) NOT NULL,
   `review_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2053,7 +2089,7 @@ CREATE TABLE `replies` (
   `comment_id` int(191) UNSIGNED NOT NULL,
   `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2076,8 +2112,8 @@ CREATE TABLE `reports` (
   `id` int(191) NOT NULL,
   `user_id` int(191) NOT NULL,
   `product_id` int(192) NOT NULL,
-  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2092,8 +2128,8 @@ CREATE TABLE `reviews` (
   `id` int(10) UNSIGNED NOT NULL,
   `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subtitle` text COLLATE utf8mb4_unicode_ci,
-  `details` text COLLATE utf8mb4_unicode_ci
+  `subtitle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2114,7 +2150,7 @@ INSERT INTO `reviews` (`id`, `photo`, `title`, `subtitle`, `details`) VALUES
 CREATE TABLE `roles` (
   `id` int(191) NOT NULL,
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `section` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `section` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2134,8 +2170,8 @@ INSERT INTO `roles` (`id`, `name`, `section`) VALUES
 
 CREATE TABLE `seotools` (
   `id` int(10) UNSIGNED NOT NULL,
-  `google_analytics` text COLLATE utf8mb4_unicode_ci,
-  `meta_keys` text COLLATE utf8mb4_unicode_ci
+  `google_analytics` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keys` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2153,7 +2189,7 @@ INSERT INTO `seotools` (`id`, `google_analytics`, `meta_keys`) VALUES
 
 CREATE TABLE `services` (
   `id` int(191) NOT NULL,
-  `user_id` int(191) NOT NULL DEFAULT '0',
+  `user_id` int(191) NOT NULL DEFAULT 0,
   `title` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
@@ -2182,10 +2218,10 @@ INSERT INTO `services` (`id`, `user_id`, `title`, `details`, `photo`) VALUES
 
 CREATE TABLE `shippings` (
   `id` int(11) NOT NULL,
-  `user_id` int(191) NOT NULL DEFAULT '0',
-  `title` text,
-  `subtitle` text,
-  `price` double NOT NULL DEFAULT '0'
+  `user_id` int(191) NOT NULL DEFAULT 0,
+  `title` text DEFAULT NULL,
+  `subtitle` text DEFAULT NULL,
+  `price` double NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2204,21 +2240,21 @@ INSERT INTO `shippings` (`id`, `user_id`, `title`, `subtitle`, `price`) VALUES
 
 CREATE TABLE `sliders` (
   `id` int(191) UNSIGNED NOT NULL,
-  `subtitle_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `subtitle_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subtitle_size` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subtitle_color` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `subtitle_anime` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `title_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title_size` varchar(50) DEFAULT NULL,
   `title_color` varchar(50) DEFAULT NULL,
   `title_anime` varchar(50) DEFAULT NULL,
-  `details_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details_text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `details_size` varchar(50) DEFAULT NULL,
   `details_color` varchar(50) DEFAULT NULL,
   `details_anime` varchar(50) DEFAULT NULL,
   `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `position` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` text
+  `link` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2243,19 +2279,19 @@ CREATE TABLE `socialsettings` (
   `twitter` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `linkedin` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `dribble` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `f_status` tinyint(4) NOT NULL DEFAULT '1',
-  `g_status` tinyint(4) NOT NULL DEFAULT '1',
-  `t_status` tinyint(4) NOT NULL DEFAULT '1',
-  `l_status` tinyint(4) NOT NULL DEFAULT '1',
-  `d_status` tinyint(4) NOT NULL DEFAULT '1',
+  `f_status` tinyint(4) NOT NULL DEFAULT 1,
+  `g_status` tinyint(4) NOT NULL DEFAULT 1,
+  `t_status` tinyint(4) NOT NULL DEFAULT 1,
+  `l_status` tinyint(4) NOT NULL DEFAULT 1,
+  `d_status` tinyint(4) NOT NULL DEFAULT 1,
   `f_check` tinyint(10) DEFAULT NULL,
   `g_check` tinyint(10) DEFAULT NULL,
-  `fclient_id` text COLLATE utf8mb4_unicode_ci,
-  `fclient_secret` text COLLATE utf8mb4_unicode_ci,
-  `fredirect` text COLLATE utf8mb4_unicode_ci,
-  `gclient_id` text COLLATE utf8mb4_unicode_ci,
-  `gclient_secret` text COLLATE utf8mb4_unicode_ci,
-  `gredirect` text COLLATE utf8mb4_unicode_ci
+  `fclient_id` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fclient_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fredirect` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gclient_id` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gclient_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `gredirect` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2291,7 +2327,7 @@ CREATE TABLE `subcategories` (
   `category_id` int(191) NOT NULL,
   `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1'
+  `status` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2348,10 +2384,10 @@ CREATE TABLE `subscriptions` (
   `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` double NOT NULL DEFAULT '0',
+  `price` double NOT NULL DEFAULT 0,
   `days` int(11) NOT NULL,
-  `allowed_products` int(11) NOT NULL DEFAULT '0',
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `allowed_products` int(11) NOT NULL DEFAULT 0,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2388,6 +2424,53 @@ INSERT INTO `sub_districts` (`id`, `name`, `district_id`, `created_at`, `updated
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tickets`
+--
+
+CREATE TABLE `tickets` (
+  `id` int(11) NOT NULL,
+  `subject` varchar(500) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `ticket_category_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `subject`, `status`, `ticket_category_id`, `created_at`, `updated_at`) VALUES
+(1, 'as', 0, 1, '2020-04-23 14:27:29', '2020-04-23 14:27:29'),
+(2, 'd', 1, 2, '2020-04-23 14:31:49', '2020-04-23 15:02:21'),
+(3, 'c', 0, 1, '2020-04-23 14:35:06', '2020-04-23 14:35:06'),
+(4, 'd', 0, 1, '2020-04-23 17:55:54', '2020-04-23 17:55:54');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ticket_categories`
+--
+
+CREATE TABLE `ticket_categories` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `serial` int(11) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `ticket_categories`
+--
+
+INSERT INTO `ticket_categories` (`id`, `name`, `serial`, `created_at`, `updated_at`) VALUES
+(1, 'payment', 0, '2020-04-23 17:42:59', '2020-04-23 17:42:59'),
+(2, 'Product', 0, '2020-04-23 17:44:06', '2020-04-23 17:44:06');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -2401,40 +2484,40 @@ CREATE TABLE `users` (
   `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fax` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' ',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT ' Not Set',
   `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `is_provider` tinyint(10) NOT NULL DEFAULT '0',
-  `status` tinyint(10) NOT NULL DEFAULT '0',
-  `verification_link` text COLLATE utf8mb4_unicode_ci,
+  `is_provider` tinyint(10) NOT NULL DEFAULT 0,
+  `status` tinyint(10) NOT NULL DEFAULT 0,
+  `verification_link` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified` enum('Yes','No') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'No',
-  `affilate_code` text COLLATE utf8mb4_unicode_ci,
-  `affilate_income` double NOT NULL DEFAULT '0',
-  `shop_name` text COLLATE utf8mb4_unicode_ci,
-  `owner_name` text COLLATE utf8mb4_unicode_ci,
-  `shop_number` text COLLATE utf8mb4_unicode_ci,
-  `shop_address` text COLLATE utf8mb4_unicode_ci,
-  `reg_number` text COLLATE utf8mb4_unicode_ci,
-  `shop_message` text COLLATE utf8mb4_unicode_ci,
-  `shop_details` text COLLATE utf8mb4_unicode_ci,
+  `affilate_code` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `affilate_income` double NOT NULL DEFAULT 0,
+  `shop_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `owner_name` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_number` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_address` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reg_number` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shop_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `f_url` text COLLATE utf8mb4_unicode_ci,
-  `g_url` text COLLATE utf8mb4_unicode_ci,
-  `t_url` text COLLATE utf8mb4_unicode_ci,
-  `l_url` text COLLATE utf8mb4_unicode_ci,
-  `is_vendor` tinyint(1) NOT NULL DEFAULT '0',
-  `f_check` tinyint(1) NOT NULL DEFAULT '0',
-  `g_check` tinyint(1) NOT NULL DEFAULT '0',
-  `t_check` tinyint(1) NOT NULL DEFAULT '0',
-  `l_check` tinyint(1) NOT NULL DEFAULT '0',
-  `mail_sent` tinyint(1) NOT NULL DEFAULT '0',
-  `shipping_cost` double NOT NULL DEFAULT '0',
-  `current_balance` double NOT NULL DEFAULT '0',
+  `f_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `g_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `t_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `l_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_vendor` tinyint(1) NOT NULL DEFAULT 0,
+  `f_check` tinyint(1) NOT NULL DEFAULT 0,
+  `g_check` tinyint(1) NOT NULL DEFAULT 0,
+  `t_check` tinyint(1) NOT NULL DEFAULT 0,
+  `l_check` tinyint(1) NOT NULL DEFAULT 0,
+  `mail_sent` tinyint(1) NOT NULL DEFAULT 0,
+  `shipping_cost` double NOT NULL DEFAULT 0,
+  `current_balance` double NOT NULL DEFAULT 0,
   `date` date DEFAULT NULL,
-  `ban` tinyint(1) NOT NULL DEFAULT '0',
-  `area_id` int(11) NOT NULL DEFAULT '0'
+  `ban` tinyint(1) NOT NULL DEFAULT 0,
+  `area_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2444,12 +2527,14 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `photo`, `zip`, `city`, `country`, `address`, `phone`, `fax`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_provider`, `status`, `verification_link`, `email_verified`, `affilate_code`, `affilate_income`, `shop_name`, `owner_name`, `shop_number`, `shop_address`, `reg_number`, `shop_message`, `shop_details`, `shop_image`, `f_url`, `g_url`, `t_url`, `l_url`, `is_vendor`, `f_check`, `g_check`, `t_check`, `l_check`, `mail_sent`, `shipping_cost`, `current_balance`, `date`, `ban`, `area_id`) VALUES
 (13, 'Vendor', '1557677677bouquet_PNG62.png', '1234', 'Washington, DC', 'Algeria', 'Space Needle 400 Broad St, Seattles', '3453453345453411', '23123121', 'vendor@gmail.com', '$2y$10$.4NrvXAeyToa4x07EkFvS.XIUEc/aXGsxe1onkQ.Udms4Sl2W9ZYq', 'XRcBh8iPSOYwxzJhbnpfED9m1wEVZ3B6jkNGFD34CkLnUStmPIS2A5HEAUlh', '2018-03-07 18:05:44', '2019-10-10 02:35:29', 0, 2, '$2y$10$oIf1at.0LwscVwaX/8h.WuSwMKEAAsn8EJ.9P7mWzNUFIcEBQs8ry', 'Yes', '$2y$10$oIf1at.0LwscVwaX/8h.WuSwMKEAAsn8EJ.9P7mWzNUFIcEBQs8rysdfsdfds', 5000, 'Test Stores', 'User', '43543534', 'Space Needle 400 Broad St, Seattles', 'asdasd', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2019-11-24', 0, 0),
 (22, 'User', NULL, '1231', 'Test City', 'United States', 'Test Address', '34534534534', '34534534534', 'user@gmail.com', '$2y$10$.4NrvXAeyToa4x07EkFvS.XIUEc/aXGsxe1onkQ.Udms4Sl2W9ZYq', 'M3RPNruK7j8iUhrtLSPbKX8jqnZLXRhxQ0JTtE3QE3jKMzhJvfa1sTQ0q1mO', '2019-06-20 12:26:24', '2019-10-13 23:13:21', 0, 0, '1edae93935fba69d9542192fb854a80a', 'Yes', '8f09b9691613ecb8c3f7e36e34b97b80', 5000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
-(27, 'Test User', NULL, NULL, NULL, NULL, 'Space Needle 400 Broad St, Seattles', '01736937161', NULL, 'junajunnun@gmail.com', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 'Imu9EouyI1uKJ0gz8HTDWsfAr93cyJMotjV5Sfq5tXQqxPU3qsmzbOueu0rY', '2019-10-05 04:15:08', '2019-10-09 21:32:57', 0, 0, '0521bba4c819528b6a18a581a5842f17', 'Yes', 'bb9d23401cd70f11998fe36ea7677797', 0, 'Test Store', 'User', '43543534', 'Space Needle 400 Broad St, Seattles', 'asdasd', 'ds', NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2019-11-24', 0, 0),
-(28, 'User', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'junnun@gmail.com', '$2y$10$YDfElg7O3K6eQK5enu.TBOyo.8TIr6Ynf9hFQ8dsIDeWAfmmg6hA.', 'pNFebTvEQ3jRaky9p7XnCetHs9aNFFG7nqRFho0U7nWrgT7phS6MoX8f9EYz', '2019-10-13 05:39:13', '2019-10-13 05:39:13', 0, 0, '8036978c6d71501e893ba7d3f3ecc15d', 'Yes', '33899bafa30292165430cb90b545728a', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
+(27, 'Test User', NULL, NULL, NULL, NULL, 'Space Needle 400 Broad St, Seattles', '01736937162', NULL, 'junajunnerun@gmail.com', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 'Imu9EouyI1uKJ0gz8HTDWsfAr93cyJMotjV5Sfq5tXQqxPU3qsmzbOueu0rY', '2019-10-05 04:15:08', '2019-10-09 21:32:57', 0, 0, '0521bba4c819528b6a18a581a5842f17', 'Yes', 'bb9d23401cd70f11998fe36ea7677797', 0, 'Test Store', 'User', '43543534', 'Space Needle 400 Broad St, Seattles', 'asdasd', 'ds', NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2019-11-24', 0, 0),
+(28, 'User', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'junnung@gmail.com', '$2y$10$YDfElg7O3K6eQK5enu.TBOyo.8TIr6Ynf9hFQ8dsIDeWAfmmg6hA.', 'pNFebTvEQ3jRaky9p7XnCetHs9aNFFG7nqRFho0U7nWrgT7phS6MoX8f9EYz', '2019-10-13 05:39:13', '2019-10-13 05:39:13', 0, 0, '8036978c6d71501e893ba7d3f3ecc15d', 'Yes', '33899bafa30292165430cb90b545728a', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
 (29, 'piash', '15870303761567226936Baby.tux-800x800.png', '1200', 'Dhaka', 'Bangladesh', 'Dhaka', '01742349541', NULL, 'piash3700@gmail.com', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', '0jiZxKvOQOSbJ0o3NL6lf4vUVwK09DUZiTumoCtcJswEiVpE9sYGGIoae1yf', '2020-04-09 08:05:23', '2020-04-17 07:31:37', 0, 0, 'ee1da91c1a625f09d87a87f3b0ed62f7', 'Yes', '9567af758a92a16104a4f341dc1b2a38', 0, 'asp', 'sagor', 's3', 'safs', 's', 'ds', 'dammy details', '15865770251584479344.jpg', 'sa', NULL, NULL, NULL, 2, 1, 0, 0, 0, 1, 0, 600, '2020-05-11', 0, 0),
 (30, 'piash', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'piash1840@gmail.com', '$2y$10$pJvm31TmuJmTL12BJ7V6ie/YPAILHgXAkJRVg.6YEYFbAtJ4tFVJW', NULL, '2020-04-14 09:13:02', '2020-04-14 09:13:02', 0, 0, '9f2f51290bd65bbe27fd6be3b069e498', 'Yes', '58267f489fd5d155d1a33ff3cf2e52c8', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
 (31, 'Ashikur Rahman', NULL, NULL, NULL, NULL, 'dhaka', '01742349541', NULL, 'piash@yahoo.com', '$2y$10$.LPeQtReFyQFYDfdw69dNOqy84OGfcrf/9N5cHSJwEB9Ku21LfLtS', 'M9raTEF4BwJYwpRvuvaHJzh4BpuHnQJYLYWG7WVBm5UpMrjWxd0NsVeNA0vz', '2020-04-17 08:55:10', '2020-04-17 09:04:06', 0, 0, 'c5d9bd7982668c4cf297a983bacc4c84', 'Yes', 'f13ac0ade1b2abb7bfc238dc8da4a15a', 0, 'manik', 'Ratan', '15', 'Dhaka 1200', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2020-05-17', 0, 0),
-(32, 'as', NULL, NULL, NULL, NULL, NULL, '0174234', NULL, 'not set', '$2y$10$3HWoOLdVWo2qMyHjMOg8teqzd/upIhwVd8Ebo.WxOppyj/zy9cD0C', 's0Wr1mM1vzUwOtOap8pMoxXh8FNQQJszMQxgoXjX5S35hcIU2r17EAOO7wpF', '2020-04-21 02:44:37', '2020-04-21 02:44:37', 0, 0, '93d2fc09249e107e7d65c9b94f7d3982', 'Yes', 'd2335e43d65de6f9496eb0e58633efd2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0);
+(32, 'as', NULL, NULL, NULL, NULL, NULL, '0174234', NULL, 'not set', '$2y$10$3HWoOLdVWo2qMyHjMOg8teqzd/upIhwVd8Ebo.WxOppyj/zy9cD0C', 's0Wr1mM1vzUwOtOap8pMoxXh8FNQQJszMQxgoXjX5S35hcIU2r17EAOO7wpF', '2020-04-21 02:44:37', '2020-04-21 02:44:37', 0, 0, '93d2fc09249e107e7d65c9b94f7d3982', 'Yes', 'd2335e43d65de6f9496eb0e58633efd2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
+(33, 'piash ashik', NULL, NULL, NULL, NULL, 'dhaka', '0173693716', NULL, 'piash370@gmail.com', '$2y$10$TvwmKOgjU5GU0U7O.SUkLORmppbUj862V3L2BRvkWrZUq2ejD0DTK', 'UmUACUB7Ti18bgxr3pofQgIIEfzbIHnU37aQhKB42gIBtcNYTogO8QCbi5oE', '2020-04-25 13:15:58', '2020-04-25 13:15:58', 0, 0, '23af215ce48b3d528b339a568543e686', 'No', 'a705417ab08dea57c6ce04df9a38d990', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
+(37, 'piash', NULL, NULL, NULL, NULL, NULL, '01736937161', NULL, '01736937161', '$2y$10$V7EpfoLbewB/q3igoLE5zOFVcw1jflwY6k9YmVYZ.dJF1PsOYyE5S', NULL, '2020-04-25 15:05:36', '2020-04-25 15:05:36', 0, 0, '5ffb146728bbe576e72524cdc9b391d0', 'No', '248a59f67e96f5d79e55b47b8841aac1', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -2461,7 +2546,7 @@ CREATE TABLE `user_notifications` (
   `id` int(191) NOT NULL,
   `user_id` int(191) NOT NULL,
   `order_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `is_read` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2494,17 +2579,17 @@ CREATE TABLE `user_subscriptions` (
   `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` double NOT NULL DEFAULT '0',
+  `price` double NOT NULL DEFAULT 0,
   `days` int(11) NOT NULL,
-  `allowed_products` int(11) NOT NULL DEFAULT '0',
-  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `allowed_products` int(11) NOT NULL DEFAULT 0,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `method` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Free',
   `txnid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `charge_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `payment_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
+  `status` int(11) NOT NULL DEFAULT 0,
+  `payment_number` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2557,11 +2642,11 @@ INSERT INTO `vendor_orders` (`id`, `user_id`, `order_id`, `qty`, `price`, `order
 CREATE TABLE `verifications` (
   `id` int(191) NOT NULL,
   `user_id` int(191) NOT NULL,
-  `attachments` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `attachments` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('Pending','Verified','Declined') DEFAULT NULL,
-  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-  `admin_warning` tinyint(1) NOT NULL DEFAULT '0',
-  `warning_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `text` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `admin_warning` tinyint(1) NOT NULL DEFAULT 0,
+  `warning_reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2610,11 +2695,11 @@ CREATE TABLE `withdraws` (
   `iban` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `country` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `acc_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `swift` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reference` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `reference` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` float DEFAULT NULL,
-  `fee` float DEFAULT '0',
+  `fee` float DEFAULT 0,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `status` enum('pending','completed','rejected') NOT NULL DEFAULT 'pending',
@@ -2969,6 +3054,18 @@ ALTER TABLE `sub_districts`
   ADD KEY `sub_districts_district_id_index` (`district_id`);
 
 --
+-- Indexes for table `tickets`
+--
+ALTER TABLE `tickets`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ticket_categories`
+--
+ALTER TABLE `ticket_categories`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -3031,13 +3128,13 @@ ALTER TABLE `admin_languages`
 -- AUTO_INCREMENT for table `admin_user_conversations`
 --
 ALTER TABLE `admin_user_conversations`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `admin_user_messages`
 --
 ALTER TABLE `admin_user_messages`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `areas`
@@ -3193,13 +3290,13 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -3259,7 +3356,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_clicks`
 --
 ALTER TABLE `product_clicks`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=617;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=639;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -3352,10 +3449,22 @@ ALTER TABLE `sub_districts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `tickets`
+--
+ALTER TABLE `tickets`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ticket_categories`
+--
+ALTER TABLE `ticket_categories`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `user_notifications`

@@ -29,7 +29,7 @@ class RegisterController extends Controller
     	}
 
 		if(!$request->email){
-			$request["email"]="not set";
+			$request["email"]=$request->phone;
 		}
         //--- Validation Section
 
@@ -37,11 +37,37 @@ class RegisterController extends Controller
 		        'phone'   => 'required|unique:users',
 		        'password' => 'required|confirmed'
                 ];
-        $validator = Validator::make(Input::all(), $rules);
-        
-        if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-        }
+		$validator = Validator::make(Input::all(), $rules);
+		if ($validator->fails()) {
+			return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+		  }
+        if(!$request->code){
+			$rand=rand(1001,9999);
+			session(['rand'=>$rand]);
+			$url = "http://66.45.237.70/api.php";
+		$number=$request->phone;
+		$text = "Your Sellbazar Verification Code is $rand ";
+		
+		$data= array(
+		'username'=>"01790581234",
+		'password'=>"01790581234",
+		'number'=>"$number",
+		'message'=>"$text"
+		);
+		
+		$ch = curl_init(); // Initialize cURL
+		curl_setopt($ch, CURLOPT_URL,$url);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$smsresult = curl_exec($ch);
+		$p = explode("|",$smsresult);
+		$sendstatus = $p[0];
+		return response()->json(1);
+		}
+
+        if($request->code!=session('rand')){
+			return response()->json('Invalid Code');
+		}
         //--- Validation Section Ends
 
 	        $user = new User;
@@ -98,13 +124,13 @@ class RegisterController extends Controller
 	        }
 	        else {
 
-            $user->email_verified = 'Yes';
+            $user->email_verified = 'No';
             $user->update();
 	        $notification = new Notification;
 	        $notification->user_id = $user->id;
 	        $notification->save();
             Auth::guard('web')->login($user); 
-          	return response()->json(1);
+          	return response()->json(2);
 	        }
 
     }
