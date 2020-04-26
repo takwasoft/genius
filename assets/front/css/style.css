@@ -9249,10 +9249,9 @@ input[type=checkbox]:checked:disabled+label:before {
     margin-top: 5px;
 }
 
-.thumbnail h5.mt-2 {
-    border-bottom: 1px solid #e8e0e0!important;
-    padding-bottom: 18px!important;
-}
+/* .thumbnail h5.mt-2 {
+    padding-bottom: 10px!important;
+} */
 
 .checkout-area .checkout-process li a.active {
     background: #0a5641!important;
@@ -9337,4 +9336,84 @@ input[type=checkbox]:checked:disabled+label:before {
 .faq-sect .btn-link:hover {
     color: #d42626;
     text-decoration: underline;
+}
+
+.local-info{
+    border-bottom: 1px solid #e8e0e0!important;
+    padding-bottom:13px;
+}
+
+.local-main{
+    width: 16px;
+    height: 16px;
+    background: #B81D22;
+    border-radius: 50%;
+    position: relative;
+}
+
+.local-star{
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 23%;
+    font-size: 8px;
+    left: 23%;
+}
+
+.local-content{
+    background: #afb7ad;
+    color: #fff;
+    font-size: 9px;
+    margin-left: -5px;
+    border-radius:2px;
+    height: 15px;
+    padding-left: 9px;
+    padding-right: 6px;
+    padding-top: 2px;
+}
+
+.top-icon-bar{
+    position: absolute;
+    top: 0;
+    right:10px;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s ease-in;
+}
+.top-icon-bar ul{
+    display:flex;
+}
+
+.top-icon-bar ul li {
+    padding:5px;
+}
+
+.top-icon-bar ul li span{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #05660d;
+    background: #05660d;
+    line-height: 30px;
+    border-radius: 50px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    color: #fff;
+    cursor:pointer;
+}
+
+.thumbnail:hover .top-icon-bar{
+    opacity:1;
+    top:5px;
+}
+.sub-cate-item{
+    top: 0%; 
+    position: absolute;
+    left: 100%;  
+    width: 90%; 
+    margin-left: 5px;
+    display: none;
+}
+.main-cate-item li:hover .sub-cate-item{
+    display: block;
 }
