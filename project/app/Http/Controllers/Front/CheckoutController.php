@@ -629,7 +629,7 @@ class CheckoutController extends Controller
 
     public function gateway(Request $request)
     {
-
+ 
 $input = $request->all();
 
 $rules = [
@@ -762,7 +762,7 @@ $validator = Validator::make($input, $rules, $messages);
                 $order['affilate_charge'] = $sub;
             }
         $order->save();
-        $order['order_number']='shotovag100'.$order->id;
+        $order['order_number']='#00'.rand(10,99).$order->id;
         $order->save();
         $track = new OrderTrack;
         $track->title = 'Pending';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Classes\GeniusMailer;
 use App\Models\Childcategory;
 use App\Models\Subcategory;
 use Datatables;
@@ -14,6 +15,7 @@ use App\Models\Attribute;
 use App\Models\AttributeOption;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Generalsetting;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Image;
@@ -30,7 +32,7 @@ class ProductController extends Controller
     public function datatables()
     {
          $datas = Product::where('product_type','=','normal')->orderBy('id','desc')->get();
-
+ 
          //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
                             ->editColumn('name', function(Product $data) {
@@ -61,7 +63,7 @@ class ProductController extends Controller
                                 $class = $data->status == 1 ? 'drop-success' : 'drop-danger';
                                 $s = $data->status == 1 ? 'selected' : '';
                                 $ns = $data->status == 0 ? 'selected' : '';
-                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 1]).'" '.$s.'>Activated</option><<option data-val="0" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 0]).'" '.$ns.'>Deactivated</option>/select></div>';
+                                return '<div class="action-list"><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Activated</option><<option data-val="0" value="0" '.$ns.'>Deactivated</option>/select></div>';
                             })
                             ->addColumn('action', function(Product $data) {
                                 $catalog = $data->type == 'Physical' ? ($data->is_catalog == 1 ? '<a href="javascript:;" data-href="' . route('admin-prod-catalog',['id1' => $data->id, 'id2' => 0]) . '" data-toggle="modal" data-target="#catalog-modal" class="delete"><i class="fas fa-trash-alt"></i> Remove Catalog</a>' : '<a href="javascript:;" data-href="'. route('admin-prod-catalog',['id1' => $data->id, 'id2' => 1]) .'" data-toggle="modal" data-target="#catalog-modal"> <i class="fas fa-plus"></i> Add To Catalog</a>') : '';
@@ -209,11 +211,62 @@ class ProductController extends Controller
     }
 
     //*** GET Request
-    public function status($id1,$id2)
+    public function status($id1,$id2,$reason)
     {
-        $data = Product::findOrFail($id1);
-        $data->status = $id2;
-        $data->update();
+        $product = Product::findOrFail($id1);
+
+        if($id2==0){
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Product has been deactivated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." has been deactivated for ".$reason;
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        else{
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Product has been activated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." has been activated.";
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        
+        $product->status = $id2;
+        $product->update();
+         
     }
 
     //*** GET Request

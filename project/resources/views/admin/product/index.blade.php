@@ -1,5 +1,5 @@
 @extends('layouts.admin') 
-
+ 
 @section('content')  
 					<input type="hidden" id="headerdata" value="{{ __("PRODUCT") }}">
 					<div class="content-area">
@@ -199,7 +199,15 @@
 {{-- DATA TABLE --}}
 
     <script type="text/javascript">
-
+	var changed=(val,id)=>{
+		reason="as";
+		if(val==0){
+			reason=window.prompt('Enter note');
+		}
+		 $.ajax({url: "{{URL::to('/')}}/admin/products/status/"+id+"/"+val+"/"+reason, success: function(result){
+			 
+ 		 }});
+	}
 		var table = $('#geniustable').DataTable({
 			   ordering: false,
                processing: true,
@@ -211,7 +219,7 @@
                         { data: 'stock', name: 'stock' },
                         { data: 'price', name: 'price' },
                         { data: 'status', searchable: false, orderable: false},
-            			{ data: 'action', searchable: false, orderable: false }
+            			{ data: 'action', searchable: false, orderable: false } 
 
                      ],
                 language : {
@@ -301,7 +309,7 @@
   $("#uploadgallery").change(function(){
     $("#form-gallery").submit();  
   });
-
+ 
   $(document).on('submit', '#form-gallery' ,function() {
 		  $.ajax({
 		   url:"{{ route('admin-gallery-store') }}",

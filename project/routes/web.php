@@ -95,7 +95,7 @@ Route::prefix('admin')->group(function() {
 
   Route::group(['middleware'=>'permissions:products'],function(){
 
-  Route::get('/products/datatables', 'Admin\ProductController@datatables')->name('admin-prod-datatables'); //JSON REQUEST
+  Route::get('/products/datatables', 'Admin\ProductController@datatables')->name('admin-prod-datatables'); //JSON REQUEST 
   Route::get('/products', 'Admin\ProductController@index')->name('admin-prod-index');
 
   Route::post('/products/upload/update/{id}', 'Admin\ProductController@uploadUpdate')->name('admin-prod-upload-update');
@@ -830,7 +830,7 @@ Route::prefix('admin')->group(function() {
   Route::post('/general-settings/update/payment', 'Admin\GeneralSettingController@generalupdatepayment')->name('admin-gs-update-payment');
 
   // STATUS SECTION
-  Route::get('/products/status/{id1}/{id2}', 'Admin\ProductController@status')->name('admin-prod-status');
+  Route::get('/products/status/{id1}/{id2}/{reason}', 'Admin\ProductController@status')->name('admin-prod-status'); 
   // STATUS SECTION ENDS
 
   // FEATURE SECTION
@@ -904,8 +904,9 @@ Route::prefix('user')->group(function() {
 
   // User Register
   Route::get('/register', 'User\RegisterController@showRegisterForm')->name('user-register');
+  Route::get('/email-verify', 'User\RegisterController@emailVerify')->name('email.verify');
   Route::post('/register', 'User\RegisterController@register')->name('user-register-submit');
-  Route::get('/register/verify/{token}', 'User\RegisterController@token')->name('user-register-token'); 
+  Route::get('/register/verify/{token}', 'User\RegisterController@token')->name('user-register-token');  
   // User Register End
 
   // User Reset
@@ -988,7 +989,7 @@ Route::prefix('user')->group(function() {
   Route::get('/message/{id}', 'User\MessageController@message')->name('user-message');
   Route::post('/message/post', 'User\MessageController@postmessage')->name('user-message-post');
   Route::get('/message/{id}/delete', 'User\MessageController@messagedelete')->name('user-message-delete');
-  Route::get('/message/load/{id}', 'User\MessageController@msgload')->name('user-vendor-message-load');
+  Route::get('/message/load/{id}', 'User\MessageController@msgload')->name('user-vendor-message-load'); 
 
 // User Vendor Send Message Ends
 

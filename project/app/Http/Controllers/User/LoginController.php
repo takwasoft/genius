@@ -42,11 +42,11 @@ class LoginController extends Controller
         // if successful, then redirect to their intended location
 
         // Check If Email is verified or not
-          if(Auth::guard('web')->user()->email_verified == 'No')
+         /* if(Auth::guard('web')->user()->email_verified == 'No')
           {
             Auth::guard('web')->logout();
             return response()->json(array('errors' => [ 0 => 'Your Email is not Verified!' ]));   
-          }
+          }*/
 
           if(Auth::guard('web')->user()->ban == 1)
           {

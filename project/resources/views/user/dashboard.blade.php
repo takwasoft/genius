@@ -21,7 +21,7 @@
                 <h5 class="title">{{ $user->name }}</h5>
                 <ul class="list">
                   <li>
-                    <p><span class="user-title">{{ $langg->lang209 }}:</span> {{ $user->email }}</p>
+                    <p><span class="user-title">{{ $langg->lang209 }}:</span> {{ $user->email==$user->phone?'Not Set':$user->email }}</p>
                   </li>
                   @if($user->phone != null)
                   <li>

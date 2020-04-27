@@ -15,6 +15,32 @@ use Validator;
 class RegisterController extends Controller
 {
 
+	public function emailVerify(){
+		$gs = Generalsetting::findOrFail(1);
+		$user=auth()->user();
+		$to = $user->email;
+		$token=$user->verification_link;
+		$subject = 'Verify your email address.';
+		$msg = "Dear Customer,<br> We noticed that you need to verify your email address. <a href=".url('user/register/verify/'.$token).">Simply click here to verify. </a>";
+		//Sending Email To Customer
+		if($gs->is_smtp == 1)
+		{
+		$data = [
+			'to' => $to,
+			'subject' => $subject,
+			'body' => $msg,
+		];
+
+		$mailer = new GeniusMailer();
+		$mailer->sendCustomMail($data);
+		}
+		else
+		{
+		$headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+		mail($to,$subject,$msg,$headers);
+		}
+		return "here";
+	}
     public function register(Request $request)
     {
 
@@ -139,8 +165,7 @@ class RegisterController extends Controller
     {
         $gs = Generalsetting::findOrFail(1);
 
-        if($gs->is_verification_email == 1)
-	        {    	
+         	
         $user = User::where('verification_link','=',$token)->first();
         if(isset($user))
         {
@@ -152,9 +177,7 @@ class RegisterController extends Controller
             Auth::guard('web')->login($user); 
             return redirect()->route('user-dashboard')->with('success','Email Verified Successfully');
         }
-    		}
-    		else {
-    		return redirect()->back();	
-    		}
+    		
+    		
     }
 }

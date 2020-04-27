@@ -25,7 +25,7 @@ class MessageController extends Controller
     }
 
    public function messages()
-    {
+    { 
         $user = Auth::guard('web')->user();
         $convs = Conversation::where('sent_user','=',$user->id)->orWhere('recieved_user','=',$user->id)->get();
         return view('user.message.index',compact('user','convs'));             

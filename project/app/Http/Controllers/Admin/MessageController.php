@@ -69,7 +69,7 @@ class MessageController extends Controller
     }
     public function userMessage(){
         $convs = Conversation::orderBy('id','desc')->get();
-        return view('admin.message.user',compact('convs'));            
+        return view('admin.message.user',compact('convs'));         
 
     }
     public function userMessageSingle($id){

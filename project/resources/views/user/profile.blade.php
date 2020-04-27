@@ -54,11 +54,18 @@
                                                 <div class="col-lg-6">
                                                     <input name="email" type="email" class="input-field"
                                                         placeholder="{{ $langg->lang265 }}" required=""
-                                                        value="{{ $user->email }}" 
-                                                        @if($user->email!= "not set")
+                                                        value="{{ $user->email!=$user->phone?$user->email:'' }}" 
+                                                        @if($user->email!= $user->phone)
                                                             disabled 
                                                         @endif
                                                         >
+                                                        @if($user->email_verified=='No'&&$user->email!=$user->phone)
+                                                            <a class="btn btn-success" href='{{route('email.verify')}}'>
+                                                                Verify Email
+                                                            </a>
+                                                        @elseif($user->email_verified=='Yes')
+                                                             <span class="badge badge-success">Email Verified</span>   
+                                                        @endif
                                                 </div>
                                             </div>
                                             <div class="row">

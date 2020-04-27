@@ -791,10 +791,10 @@ PRODUCT END -->
                         0)
   Followed
               @else
-	<a data-href="{{ route('user-favorite',['data1' => Auth::guard('web')->user()->id, 'data2' => $productt->user->id]) }}"
+	<a href="{{ route('user-favorite',['data1' => Auth::guard('web')->user()->id, 'data2' => $productt->user->id]) }}"
                           href="javascript:;"><i class="fa fa-user-plus fa-3x" style="font-size:2.5em" aria-hidden="true"></i>
 							<p>follow</p>
-						</a>
+						</a> 
               @endif          
 					
             @else

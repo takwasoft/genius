@@ -172,7 +172,7 @@ class UserController extends Controller
                     return redirect()->route('user-dashboard')->with('success','Vendor Account Activated Successfully');
 
     }
-
+ 
 
     public function favorite($id1,$id2)
     {
@@ -180,6 +180,7 @@ class UserController extends Controller
         $fav->user_id = $id1;
         $fav->vendor_id = $id2;
         $fav->save();
+        return redirect()->back();
     }
 
     public function favorites()
