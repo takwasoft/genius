@@ -2,12 +2,35 @@
 
 										<div class="product-item">
 											<div class="thumbnail">
+											<div class="extra-list top-icon-bar">
+												<ul>	
+													<li>
+														<span class="quick-view" rel-toggle="tooltip" title="" href="javascript:;" data-href="http://shotovag.com/shop/item/quick/view/124" data-toggle="modal" data-target="#comment-log-reg" data-placement="right" data-original-title="Add To Cart"> <i class="icofont-cart"></i>
+														</span>
+													</li>
+													<li>
+														<span href="javascript:;" class="add-to-compare" data-href="http://shotovag.com/shop/item/compare/add/124" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare">
+															<i class="icofont-exchange"></i>
+														</span>
+													</li>
+													<li>
+														<span href="javascript:;" rel-toggle="tooltip" title="" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg" data-placement="right" data-original-title="Add To Wishlist">
+															<i class="icofont-heart-alt"></i>
+														</span> 
+													</li>
+												</ul>
+											</div>
 												<a href="{{ route('front.product', $prod->slug) }}">
 													<div class="product-thum-img">
 														<a href="{{ route('front.product', $prod->slug) }}"><img  src="{{ $prod->photo ? asset('assets/images/thumbnails/'.$prod->thumbnail):asset('assets/images/noimage.png') }}" alt=""></a>
 													</div>
 												</a>
 												<h5 class="mt-2">{{$prod->name}} </h5>
+												<div class="local-info d-flex flex-row flex-wrap">
+													<div class="d-flex" style="margin-top:5px;"><div class="local-main"><i class="fas fa-star local-star"></i></div><div class="local-content">সদস্য</div></div>
+													<div><span style="margin-left:5px;font-size:14px;">Dhaka,</span></div>
+													<div><span style="margin-left:5px;font-size:14px;">Electronics</span></div>
+												</div>
 												<div class="price-details clearfix mt-3">
 													<div class="price-number float-left">
 														<p class="text-left" style="font-size:20px"><strong class="rupees">{{$prod->price}} BDT</strong></p>

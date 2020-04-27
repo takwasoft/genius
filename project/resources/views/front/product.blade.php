@@ -545,12 +545,35 @@
 				@foreach ($productt->similarProducts as $product)
 					<div class="product-item">
 					<div class="thumbnail">
+          <div class="extra-list top-icon-bar">
+						<ul>	
+							<li>
+								<span class="quick-view" rel-toggle="tooltip" title="" href="javascript:;" data-href="http://shotovag.com/shop/item/quick/view/124" data-toggle="modal" data-target="#comment-log-reg" data-placement="right" data-original-title="Add To Cart"> <i class="icofont-cart"></i>
+								</span>
+							</li>
+							<li>
+								<span href="javascript:;" class="add-to-compare" data-href="http://shotovag.com/shop/item/compare/add/124" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare">
+									<i class="icofont-exchange"></i>
+								</span>
+							</li>
+							<li>
+								<span href="javascript:;" rel-toggle="tooltip" title="" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg" data-placement="right" data-original-title="Add To Wishlist">
+									<i class="icofont-heart-alt"></i>
+								</span> 
+							</li>
+						</ul>
+    				 </div>
 						<a href="product-details.html">
 							<div class="product-thum-img">
 								<a href="{{URL::to('/item/'.$product->slug)}}"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
 							</div>
 						</a>
 						<h5 class="mt-2">{{$product->name}}</h5>
+            <div class="local-info d-flex flex-row flex-wrap">
+							<div class="d-flex" style="margin-top:5px;"><div class="local-main"><i class="fas fa-star local-star"></i></div><div class="local-content">সদস্য</div></div>
+							<div><span style="margin-left:5px;font-size:14px;">Dhaka,</span></div>
+							<div><span style="margin-left:5px;font-size:14px;">Electronics</span></div>
+						</div>
 						<div class="price-details clearfix mt-3">
 							<div class="price-number float-left">
 								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>
@@ -667,12 +690,14 @@ PRODUCT END -->
 				<!-- single product  --->
 				<div class="product-item">
 					<div class="thumbnail">
+          
 						<a href="product-details.html">
 							<div class="product-thum-img">
 								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
 							</div>
 						</a>
 						<h4>Lorem Ipsum is simply </h4>
+            
 						<div class="price-details clearfix mt-3">
 							<div class="price-number float-left">
 								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
@@ -858,17 +883,6 @@ PRODUCT END -->
       </div>
 
 
-
-
-
-
-
-
-      
-
-
-
-
     </div>
 
     </div>
@@ -899,12 +913,35 @@ PRODUCT END -->
 				@foreach ($feature_products as $product)
 					<div class="product-item">
 					<div class="thumbnail">
+          <div class="extra-list top-icon-bar">
+						<ul>	
+							<li>
+								<span class="quick-view" rel-toggle="tooltip" title="" href="javascript:;" data-href="http://shotovag.com/shop/item/quick/view/124" data-toggle="modal" data-target="#comment-log-reg" data-placement="right" data-original-title="Add To Cart"> <i class="icofont-cart"></i>
+								</span>
+							</li>
+							<li>
+								<span href="javascript:;" class="add-to-compare" data-href="http://shotovag.com/shop/item/compare/add/124" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare">
+									<i class="icofont-exchange"></i>
+								</span>
+							</li>
+							<li>
+								<span href="javascript:;" rel-toggle="tooltip" title="" data-toggle="modal" id="wish-btn" data-target="#comment-log-reg" data-placement="right" data-original-title="Add To Wishlist">
+									<i class="icofont-heart-alt"></i>
+								</span> 
+							</li>
+						</ul>
+    				 </div>
 						<a href="product-details.html">
 							<div class="product-thum-img">
 								<a href="{{URL::to('/item/'.$product->slug)}}"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
 							</div>
 						</a>
 						<h5 class="mt-2">{{$product->name}}</h5>
+            <div class="local-info d-flex flex-row flex-wrap">
+							<div class="d-flex" style="margin-top:5px;"><div class="local-main"><i class="fas fa-star local-star"></i></div><div class="local-content">সদস্য</div></div>
+							<div><span style="margin-left:5px;font-size:14px;">Dhaka,</span></div>
+							<div><span style="margin-left:5px;font-size:14px;">Electronics</span></div>
+						</div>
 						<div class="price-details clearfix mt-3">
 							<div class="price-number float-left">
 								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>
