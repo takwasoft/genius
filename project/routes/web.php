@@ -276,6 +276,7 @@ Route::prefix('admin')->group(function() {
   Route::post('/category/edit/{id}', 'Admin\CategoryController@update')->name('admin-cat-update');
   Route::get('/category/delete/{id}', 'Admin\CategoryController@destroy')->name('admin-cat-delete');
   Route::get('/category/status/{id1}/{id2}', 'Admin\CategoryController@status')->name('admin-cat-status');
+  Route::get('/category/open/{id1}/{id2}', 'Admin\CategoryController@open')->name('admin-cat-open');
 
 
   //------------ ADMIN ATTRIBUTE SECTION ------------
@@ -311,6 +312,7 @@ Route::prefix('admin')->group(function() {
 
   Route::get('/childcategory/datatables', 'Admin\ChildCategoryController@datatables')->name('admin-childcat-datatables'); //JSON REQUEST
   Route::get('/childcategory', 'Admin\ChildCategoryController@index')->name('admin-childcat-index');
+  Route::get('/vendorcategory', 'UserCategoryController@index')->name('admin-vendorcat-index');
   Route::get('/childcategory/create', 'Admin\ChildCategoryController@create')->name('admin-childcat-create');
   Route::post('/childcategory/create', 'Admin\ChildCategoryController@store')->name('admin-childcat-store');
   Route::get('/childcategory/edit/{id}', 'Admin\ChildCategoryController@edit')->name('admin-childcat-edit');

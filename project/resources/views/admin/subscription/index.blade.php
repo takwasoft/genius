@@ -33,6 +33,8 @@
                                           <th>{{ __("Currency Symbol") }}</th>
                                           <th>{{ __("Cost") }}</th>
                                           <th>{{ __("Duration") }}</th>
+                                          <th>Max Product Price</th>
+                                          <th>Product Validity</th>
                                           <th>{{ __("Product Allowed") }}</th>
                                           <th>{{ __("Options") }}</th>
                             </tr>
@@ -124,6 +126,8 @@
                         { data: 'currency', name: 'currency' },
                         { data: 'price', name: 'price' },
                         { data: 'days', name: 'days' },
+                         { data: 'max_price', name: 'max_price' },
+                          { data: 'product_duration', name: 'product_duration' },
                         { data: 'allowed_products', name: 'allowed_products' },
                   { data: 'action', searchable: false, orderable: false }
 

@@ -119,6 +119,8 @@
           show
         @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='childcategory')
           show
+             @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='vendorcategory')
+          show
         @endif" id="menu5" data-parent="#accordion" >
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category') active @endif">
                     <a href="{{ route('admin-cat-index') }}"><span>{{ __('Main Category') }}</span></a>
@@ -128,6 +130,9 @@
                 </li>
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='childcategory') active @endif">
                     <a href="{{ route('admin-childcat-index') }}"><span>{{ __('Child Category') }}</span></a>
+                </li>
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='vendorcategory') active @endif">
+                    <a href="{{ route('admin-vendorcat-index') }}"><span>Vendor Category</span></a>
                 </li>
         </ul>
     </li>

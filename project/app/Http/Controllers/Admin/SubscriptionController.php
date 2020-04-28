@@ -6,6 +6,8 @@ use Datatables;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\SubscriptionCategory;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
@@ -40,19 +42,19 @@ class SubscriptionController extends Controller
     //*** GET Request
     public function index()
     {
-        return view('admin.subscription.index');
-    }
+        return view('admin.subscription.index'); 
+    } 
 
     //*** GET Request
     public function create()
     {
-        return view('admin.subscription.create');
+        return view('admin.subscription.create',['categories'=>Category::all()]);
     }
 
     //*** POST Request
     public function store(Request $request)
     {
-
+        
         //--- Logic Section
         $data = new Subscription();
         $input = $request->all();
@@ -63,19 +65,31 @@ class SubscriptionController extends Controller
          }
 
         $data->fill($input)->save();
+
         //--- Logic Section Ends
 
         //--- Redirect Section        
+        // foreach($request->category as $cat){
+        //     SubscriptionCategory::create([
+        //         "subscription_id"=>$data->id,
+        //         "category_id"=>$cat
+        //     ]);
+        // }
+        $data->categories()->attach($request->category);
         $msg = 'New Data Added Successfully.';
-        return response()->json($msg);      
+        return response()->json($msg);       
         //--- Redirect Section Ends    
     }
 
     //*** GET Request
     public function edit($id)
     {
+
+       $categories=Category::all();
+
         $data = Subscription::findOrFail($id);
-        return view('admin.subscription.edit',compact('data'));
+        $cats=$data->categories->pluck('id')->toArray();
+        return view('admin.subscription.edit',compact('data','categories','cats'));
     }
 
     //*** POST Request
@@ -92,6 +106,8 @@ class SubscriptionController extends Controller
         //--- Logic Section Ends
 
         //--- Redirect Section     
+        $data->categories()->detach();
+        $data->categories()->attach($request->category);
         $msg = 'Data Updated Successfully.';
         return response()->json($msg);      
         //--- Redirect Section Ends            

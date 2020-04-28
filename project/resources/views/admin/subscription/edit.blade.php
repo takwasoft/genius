@@ -81,8 +81,54 @@
                               </select>
                           </div>
                         </div>
-
+   <div class="row">
+                          <div class="col-lg-4">
+                            <div class="left-area">
+                                <h4 class="heading">Maximum Product Price*</h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-7">
+                              <input value="{{ $data->max_price }}" name="max_price" type="text" class="input-field" placeholder="Give -1 for unlimited">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="left-area">
+                                <h4 class="heading">Ad Duration*</h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-7">
+                              <input value="{{ $data->product_duration }}" name="product_duration" type="number" class="input-field" placeholder="Give -1 for unlimited">
+                          </div>
+                        </div>
+                         <div class="row">
+                          <div class="col-lg-4">
+                            <div class="left-area">
+                                <h4 class="heading">Category*</h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-7">
+                          <button onclick="checkAll(true)" type="button" class="btn btn-success btn-sm">Check All</button>
+                          <button onclick="checkAll(false)" type="button" class="btn btn-danger btn-sm">Uncheck All</button>
+                          <br>
+                              @foreach($categories as $category)
+                                <input
+                                @if(in_array($category->id,$cats))
+                                checked
+                                @endif
+                                 class="ck"  type='checkbox' name='category[]' value='{{$category->id}}'>
+                                {{$category->name}}
+                                <br>
+                              @endforeach
+                              <script>
+                              checkAll=(val)=>{
+                                $(".ck").prop('checked', val)
+                              }
+                              </script>
+                          </div>
+                        </div>
                         <div class="{{ $data->allowed_products == 0 ? 'showbox' : '' }}" id="limits">
+                          
                           <div class="row">
                             <div class="col-lg-4">
                               <div class="left-area">

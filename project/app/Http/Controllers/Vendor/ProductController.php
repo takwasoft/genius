@@ -128,11 +128,14 @@ class ProductController extends Controller
 
     //*** GET Request
     public function createPhysical()
-    {
-        $cats = Category::all();
+    { 
+        $package = auth()->user()->subscribes()->orderBy('id','desc')->first(); 
+        
+        $cats = $package->subscription->categories;
+        $maxPrice=$package->subscription->max_price;
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
-        return view('vendor.product.create.physical',compact('cats','sign','brands'));
+        return view('vendor.product.create.physical',compact('cats','sign','brands','maxPrice'));
     }
 
     //*** GET Request
@@ -368,7 +371,7 @@ if (!Product::where('sku',$line[0])->exists()){
     {
 
         $user = Auth::user();
-        $package = $user->subscribes()->orderBy('id','desc')->first();
+        $package = $user->subscribes()->orderBy('id','desc')->first(); 
         $prods = $user->products()->orderBy('id','desc')->get()->count();
         if(Generalsetting::find(1)->verify_product == 1)
         {

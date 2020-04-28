@@ -11,7 +11,7 @@
                       <div class="body-area">
                         @include('includes.admin.form-error')  
                       <form id="geniusformdata" action="{{route('admin-subscription-create')}}" method="POST" enctype="multipart/form-data">
-                        {{csrf_field()}}
+                        {{csrf_field()}} 
 
                         <div class="row">
                           <div class="col-lg-4">
@@ -82,7 +82,48 @@
                               </select>
                           </div>
                         </div>
-
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="left-area">
+                                <h4 class="heading">Maximum Product Price*</h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-7">
+                              <input name="max_price" type="text" class="input-field" placeholder="Give -1 for unlimited">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="left-area">
+                                <h4 class="heading">Ad Duration*</h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-7">
+                              <input name="product_duration" type="number" class="input-field" placeholder="Give -1 for unlimited">
+                          </div>
+                        </div>
+                      <div class="row">
+                          <div class="col-lg-4">
+                            <div class="left-area">
+                                <h4 class="heading">Category*</h4>
+                            </div>
+                          </div>
+                          <div class="col-lg-7">
+                          <button onclick="checkAll(true)" type="button" class="btn btn-success btn-sm">Check All</button>
+                          <button onclick="checkAll(false)" type="button" class="btn btn-danger btn-sm">Uncheck All</button>
+                          <br>
+                              @foreach($categories as $category)
+                                <input class="ck" checked type='checkbox' name='category[]' value='{{$category->id}}'>
+                                {{$category->name}}
+                                <br>
+                              @endforeach
+                              <script>
+                              checkAll=(val)=>{
+                                $(".ck").prop('checked', val)
+                              }
+                              </script>
+                          </div>
+                        </div>
                         <div class="showbox" id="limits">
                           <div class="row">
                             <div class="col-lg-4">

@@ -28,6 +28,12 @@ class CategoryController extends Controller
                                 $ns = $data->status == 0 ? 'selected' : '';
                                 return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-cat-status',['id1' => $data->id, 'id2' => 1]).'" '.$s.'>Activated</option><option data-val="0" value="'. route('admin-cat-status',['id1' => $data->id, 'id2' => 0]).'" '.$ns.'>Deactivated</option>/select></div>';
                             })
+                            ->addColumn('open', function(Category $data) {
+                                $class = $data->open == 1 ? 'drop-success' : 'drop-danger';
+                                $s = $data->open == 1 ? 'selected' : '';
+                                $ns = $data->open == 0 ? 'selected' : '';
+                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-cat-open',['id1' => $data->id, 'id2' => 1]).'" '.$s.'>Open</option><option data-val="0" value="'. route('admin-cat-open',['id1' => $data->id, 'id2' => 0]).'" '.$ns.'>Closed</option>/select></div>';
+                            })
                             ->addColumn('attributes', function(Category $data) {
                                 $buttons = '<div class="action-list"><a data-href="' . route('admin-attr-createForCategory', $data->id) . '" class="attribute" data-toggle="modal" data-target="#attribute"> <i class="fas fa-edit"></i>Create</a>';
                                 if ($data->attributes()->count() > 0) {
@@ -36,17 +42,17 @@ class CategoryController extends Controller
                                 $buttons .= '</div>';
 
                                 return $buttons;
-                            })
+                            }) 
                             ->addColumn('action', function(Category $data) {
                                 return '<div class="action-list"><a data-href="' . route('admin-cat-edit',$data->id) . '" class="edit" data-toggle="modal" data-target="#modal1"> <i class="fas fa-edit"></i>Edit</a><a href="javascript:;" data-href="' . route('admin-cat-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
                             })
-                            ->rawColumns(['status','attributes','action'])
+                            ->rawColumns(['status','attributes','action','open'])
                             ->toJson(); //--- Returning Json Data To Client Side
     }
 
     //*** GET Request
     public function index()
-    {
+    { 
         return view('admin.category.index');
     }
 
@@ -203,6 +209,12 @@ class CategoryController extends Controller
       {
           $data = Category::findOrFail($id1);
           $data->status = $id2;
+          $data->update();
+      }
+      public function open($id1,$id2)
+      {
+          $data = Category::findOrFail($id1);
+          $data->open = $id2;
           $data->update();
       }
 

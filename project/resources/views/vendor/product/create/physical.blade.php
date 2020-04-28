@@ -396,12 +396,19 @@
 																{{ $langg->lang664 }}*
 															</h4>
 															<p class="sub-heading">
+															
 																({{ $langg->lang665 }} {{$sign->name}})
+																@if($maxPrice!=-1)
+																<br>
+																<span class="text text-danger">
+																You can set the price maximum {{$maxPrice}} {{$sign->name}} in your current package
+																</span>
+															@endif
 															</p>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input name="price" step="0.1" type="number" class="input-field" placeholder="{{ $langg->lang666 }}" required="" min="0">
+														<input max="{{$maxPrice}}" name="price" step="0.1" type="number" class="input-field" placeholder="{{ $langg->lang666 }}" required="" min="0">
 													</div>
 												</div>
 
