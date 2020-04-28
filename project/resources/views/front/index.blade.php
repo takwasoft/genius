@@ -1,5 +1,41 @@
 @extends('layouts.front')
 
+@section('styles')
+<style>
+
+
+	@media(min-width:992px){
+	#mg-menu{
+		display:none;
+	}
+	.mainmenu-area .core-nav .wrap-core-nav-list.right {
+     text-align: left!important; 
+    margin-top: -1px;
+	}
+
+	.core-nav .wrap-core-nav-list.right {
+    	text-align: left!important; 
+	}
+	#home-menu-item li{
+	background:#024c0b;
+	border-right:1px solid white;
+}
+#home-menu-item li a{
+	color:white;
+}
+	#home-menu-item li:last-child a{
+		padding-right:20px!important;
+	}
+	}
+	@media(max-width:991px){
+	#mg-menu{
+		display:block;
+	}
+	}
+</style>
+
+@endsection
+
 @section('content')
 
 	@if($ps->slider == 1)
@@ -12,11 +48,92 @@
 
 	@if($ps->slider == 1)
 		<!-- Hero Area Start -->
-		<section class="hero-area">
+		<section class="hero-area mt-4" >
 			<div class="container">
 				<div class="row">
-					
-					<div class="col-md-12">
+					<div id="mg-menu" class="col-lg-3 categorimenu-wrapper remove-padding d-none d-lg-block">
+					<!--categorie menu start-->
+					<div class="categories_menu categories_menu2" style="margin-left:15px">
+						<div class="categories_title" style="background:#024c0b">
+							<h2 class="categori_toggle" style="height:39px;margin-bottom:0;padding:0px 15px;line-height:40px;"><i class="fa fa-bars"></i>  {{ $langg->lang14 }} <i class="fa fa-angle-down arrow-down" style="float:right;line-height:40px;"></i></h2>
+						</div>
+						<div class="categories_menu_inner stay_home1" style="padding:0">
+							<ul>
+								@php
+								$i=1;
+								@endphp
+								@foreach($categories as $category)
+
+								<li class="{{count($category->subs) > 0 ? 'dropdown_list':''}} {{ $i >= 15 ? 'rx-child' : '' }}">
+								@if(count($category->subs) > 0)
+									<div class="img">
+										<img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+									</div>
+									<div class="link-area">
+										<span><a href="{{ route('front.category',$category->slug) }}">{{ $category->name }}</a></span>
+										@if(count($category->subs) > 0)
+										<a href="javascript:;">
+											<i class="fa fa-angle-right" aria-hidden="true" ></i>
+										</a>
+										@endif
+									</div>
+
+								@else
+									<a href="{{ route('front.category',$category->slug) }}"><img src="{{ asset('assets/images/categories/'.$category->photo) }}"> {{ $category->name }}</a>
+
+								@endif
+									@if(count($category->subs) > 0)
+
+									@php
+									$ck = 0;
+									foreach($category->subs as $subcat) {
+										if(count($subcat->childs) > 0) {
+											$ck = 1;
+											break;
+										}
+									}
+									@endphp
+									<ul class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }} stay_home_3">
+										@foreach($category->subs as $subcat)
+											<li>
+												<a href="{{ route('front.subcat',['slug1' => $subcat->category->slug, 'slug2' => $subcat->slug]) }}">{{$subcat->name}}</a>
+												@if(count($subcat->childs) > 0)
+													<div class="categorie_sub_menu">
+														<ul>
+															@foreach($subcat->childs as $childcat)
+															<li><a href="{{ route('front.childcat',['slug1' => $childcat->subcategory->category->slug, 'slug2' => $childcat->subcategory->slug, 'slug3' => $childcat->slug]) }}">{{$childcat->name}}</a></li>
+															@endforeach
+														</ul>
+													</div>
+												@endif
+											</li>
+										@endforeach
+									</ul>
+
+									@endif
+
+									</li>
+
+									@php
+									$i++;
+									@endphp
+
+									@if($i == 15)
+						                <li>
+						                <a href="{{ route('front.categories') }}"><i class="fas fa-plus"></i> {{ $langg->lang15 }} </a>
+						                </li>
+						                @break
+									@endif
+
+
+									@endforeach
+
+							</ul>
+						</div>
+					</div>
+					<!--categorie menu end-->
+				</div>
+					<div class="col-lg-9 col-12">
 						@if($ps->slider == 1)
 
 				@if(count($sliders))
@@ -494,7 +611,7 @@
 		{{--  about section  --}}
 
 		
-        <div id="about" class="mt-5">
+        <div id="about" class="mt-5 d-none d-sm-block">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">

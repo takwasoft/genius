@@ -234,7 +234,13 @@
 						</button>
 						
 					</span>
-					<div class="cart-text" style="padding-top: 7px; width: 72%;text-align: center;border: 1px solid #d0d0d2;"><span>{{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }} items | </span> {{Session::has('cart') ?Session::get('cart')->totalPrice:'0'}} BDT</div>
+					<div class="cart-text" style="padding-top: 7px; width: 52%;text-align: center;border: 1px solid #d0d0d2;"><span>{{ Session::has('cart') ? count(Session::get('cart')->items) : '0' }} items | </span> {{Session::has('cart') ?Session::get('cart')->totalPrice:'0'}} BDT</div>
+					<span class="input-group-btn"style="background: #e2dede;border-right: 1px solid #bebec3;">
+						<button class="btn " type="button">
+							<a href="{{route('front.cart')}}"><i class="icofont-exchange" aria-hidden="true" style="font-size:20px;"></i></a>
+						</button>
+						
+					</span>
 					<span class="input-group-btn" style=" border-radius: 50px;border-top-left-radius: 0; border-bottom-left-radius: 0;background: #e2dede;">
 						<button class="btn" type="button">
 						@if(Auth::guard('web')->check())
@@ -278,10 +284,10 @@
 				<div id="mg-menu" class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
 					<!--categorie menu start-->
 					<div class="categories_menu" style="margin-left:15px">
-						<div class="categories_title">
+						<div class="categories_title" style="background:#024c0b">
 							<h2 class="categori_toggle" style="height:39px;"><i class="fa fa-bars"></i>  {{ $langg->lang14 }} <i class="fa fa-angle-down arrow-down"></i></h2>
 						</div>
-						<div class="categories_menu_inner">
+						<div class="categories_menu_inner stay_home">
 							<ul>
 								@php
 								$i=1;
@@ -357,12 +363,12 @@
 					</div>
 					<!--categorie menu end-->
 				</div>
-				<div class="col-lg-9 col-md-6 mainmenu-wrapper remove-padding">
+				<div class="col-lg-9 col-md-6 mainmenu-wrapper remove-padding" >
 					<nav hidden>
 						<div class="nav-header">
 							<button class="toggle-bar"><span class="fa fa-bars"></span></button>
 						</div>
-						<ul class="menu">
+						<ul class="menu" id="home-menu-item">
 							@if($gs->is_home == 1)
 							<li><a href="{{ route('front.index') }}">{{ $langg->lang17 }}</a></li>
 							@endif
@@ -377,7 +383,7 @@
 								<li><a href="{{ route('front.page',$data->slug) }}">{{ $data->title }}</a></li>
 							@endforeach
 							@if($gs->is_contact == 1)
-							<li><a href="{{ route('front.contact') }}" style="color:#333;font-weight:400">{{ $langg->lang20 }}</a></li>
+							<li><a href="{{ route('front.contact') }}">{{ $langg->lang20 }}</a></li>
 							@endif
 
 							@if($gs->is_faq == 1)

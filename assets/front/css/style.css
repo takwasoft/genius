@@ -9417,3 +9417,11 @@ input[type=checkbox]:checked:disabled+label:before {
 .main-cate-item li:hover .sub-cate-item{
     display: block;
 }
+
+.categories-list-division li:hover .sub-cate-item-division{
+    display: block;
+}
+
+.container{
+    max-width:78%;
+}

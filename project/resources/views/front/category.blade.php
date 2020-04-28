@@ -423,19 +423,51 @@
                         </div>
 
                         <div class="btn text-muted mt-3">বিভাগ</div>
-                        <div class=" categories-list model-item">
+                        <div class=" categories-list model-item categories-list-division">
                             <ul>
                                 <li>
                                     <a href="#" class="clearfix">
                                         <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                     <div class="categories-list sub-cate-item sub-cate-item-division" >
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Dhaka 5</a></li>
+                                            <li><a href="#" class="text-muted">Ghazipur 5</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Kishoreganj 5</a></li>
+                                            <li><a href="#" class=" text-muted">Manikganj 5</a></li>
+                                        </ul>
+                                    </div>
                                 </li>
                                 <li>
                                     <a href="#" class="clearfix">
                                         <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                    <div class="categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Chittagong 100</a></li>
+                                            <li><a href="#" class="text-muted">Chittagong 100</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Chittagong 100</a></li>
+                                            <li><a href="#" class=" text-muted">Chittagong 100</a></li>
+                                        </ul>
+                                    </div>
+
                                 </li>
                                 <li>
                                     <a href="#" class="clearfix">
                                         <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                        <div class="categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Barisal 420</a></li>
+                                            <li><a href="#" class="text-muted">Barisal 420</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Barisal 420</a></li>
+                                            <li><a href="#" class=" text-muted">Barisal 420</a></li>
+                                        </ul>
+                                    </div>
+
                                 </li>
                                 <li>
                                     <a href="#" class="clearfix">
