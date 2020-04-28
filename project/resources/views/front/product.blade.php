@@ -793,7 +793,7 @@ PRODUCT END -->
 				<div class="row seller-quick-opt" style="margin-top:6px;">
 					<div class="col-4 text-center">
 						<a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}"><i class="fa fa-gift fa-3x" style="font-size:1.8em" aria-hidden="true"></i>
-							<p>Seller Shop</p>
+							<p>Seller Shop</p> 
 						</a>
 					</div>
 					<div class="col-4 text-center">

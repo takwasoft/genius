@@ -1030,12 +1030,16 @@
 
 </body>
 	<script>
-		$(".add-to-cart.add-to-cart-btn").click(function() {
-            setTimeout(function(){
+		$(document).ready(function(){
+
+setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
     $("#d-cart").html(result);
   }});
-			},1000)
-        });
+			},4000)
+
+		})
+            
+        
 	</script>
 </html>

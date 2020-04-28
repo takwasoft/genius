@@ -624,6 +624,23 @@ $(function($) {
 
         // Wishlist Section
 
+        $(document).on('click', '.wishlist-new', function() {
+            $.get($(this).data('href'), function(data) {
+
+                if (data[0] == 1) {
+                    toastr.success(langg.add_wish);
+                    $('#wishlist-count').html(data[1]);
+
+                } else {
+
+                    toastr.error(langg.already_wish);
+                }
+
+            });
+
+            return false;
+        });
+
         $(document).on('click', '.add-to-wish', function() {
             $.get($(this).data('href'), function(data) {
 
@@ -719,7 +736,13 @@ $(function($) {
             });
             return false;
         });
+        $(document).on('click', '.add-new-cart', function() {
 
+
+
+            toastr.success(langg.add_cart);
+            return false;
+        });
 
         $(document).on('click', '.cart-remove', function() {
             var $selector = $(this).data('class');
