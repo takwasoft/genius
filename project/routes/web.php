@@ -1252,7 +1252,7 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   // PRODCT AUTO SEARCH SECTION ENDS
 
   // CATEGORY SECTION
- 
+  
   Route::get('/new-product','Front\CatalogController@new')->name('front.new'); 
   
   Route::get('/category/{slug1}/{slug2}','Front\CatalogController@subcategory')->name('front.subcat');
@@ -1398,6 +1398,7 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   Route::resource('/admin/districts', 'DistrictController');
   
   Route::resource('/admin/divisions', 'DivisionController');
+  Route::resource('/admin/boostcategories', 'BoostCategoryController');
 
   Route::resource('/admin/brands', 'BrandController');
   Route::resource('/admin/brandcategories', 'BrandCategoryController');
