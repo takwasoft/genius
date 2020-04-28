@@ -13,4 +13,15 @@ class Division extends Model
         public function Districts(){
             return $this->hasMany(District::class);
         }
+        public function subDistricts()
+        {
+            $subdistricts = [];
+            foreach ($this->districts as $district) {
+                $subdistricts[] = $district->subdistricts;
+            }
+            return $subdistricts;
+        }
+        public function products(){
+            return $this->hasMany(Product::class);
+        } 
 }

@@ -15,4 +15,7 @@ class District extends Model
         public function SubDistricts(){
             return $this->hasMany(SubDistrict::class);
         }
+        public function products(){
+            return $this->hasMany(Product::class);
+        } 
 }

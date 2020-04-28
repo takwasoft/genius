@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vendor;
 
 use App\Http\Controllers\Controller;
+use App\Models\Area;
 use App\Models\Category;
 use App\Models\Childcategory;
 use App\Models\Currency;
@@ -13,7 +14,9 @@ use App\Models\Subcategory;
 use App\Models\Attribute;
 use App\Models\AttributeOption;
 use App\Models\Brand;
+use App\Models\District;
 use App\Models\Division;
+use App\Models\SubDistrict;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -128,7 +131,7 @@ class ProductController extends Controller
 
     //*** GET Request
     public function createPhysical()
-    { 
+    {  
         $package = auth()->user()->subscribes()->orderBy('id','desc')->first(); 
         
         $cats = $package->subscription->categories;
@@ -624,6 +627,9 @@ if (!Product::where('sku',$line[0])->exists()){
             else{
                 $input['area_id']=$user->area_id;
             }
+            $input['sub_district_id']=Area::find($input['area_id'])->sub_district_id;
+            $input['district_id']=SubDistrict::find($input['sub_district_id'])->district_id;
+            $input['division_id']=District::find($input['sub_district_id'])->division_id;
             // Save Data
                 $data->fill($input)->save();
 

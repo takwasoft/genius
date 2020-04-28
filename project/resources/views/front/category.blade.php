@@ -309,107 +309,52 @@
                     <div class="col-md-6">
                         <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
-                        <h6 class="mt-4" style="color: #0074ba">খুলনা-এর সবগুলো</h6>
+                        
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="categories-list model-item main-cate-item">
                             <ul>
-                                <li>
+                                @foreach($districts as $district)
+
+                                    <li>
                                     <a href="#" class="clearfix">
-                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
                                     <div class="categories-list sub-cate-item" style="">
                                         <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Dhaka</a></li>
-                                            <li><a href="#" class="text-muted">Ghazipur</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Kishoreganj</a></li>
-                                            <li><a href="#" class=" text-muted">Manikganj</a></li>
+                                         <li><a class="text-muted" href="http://google.com">{{$district->name}} এর সবগুলো</a></li>
+                                            @foreach($district->subdistricts as $subdistrict)
+                                                <li><a class="text-muted" href="http://google.com">{{$subdistrict->name}}</a></li>
+                                            @endforeach
+                                            
                                         </ul>
                                     </div>
 
                                 </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                         <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Chittagong 1</a></li>
-                                            <li><a href="#" class="text-muted">Chittagong 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Chittagong 3</a></li>
-                                            <li><a href="#" class=" text-muted">Chittagong 4</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                       <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Barisal 1</a></li>
-                                            <li><a href="#" class="text-muted">Barisal 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Barisal 3</a></li>
-                                            <li><a href="#" class=" text-muted">Barisal 4</a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
+                                @endforeach
+                              
                             </ul>
                         </div>
 
                         <div class="btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item">
                             <ul>
+                               @foreach($divisions as $division)
                                 <li>
                                     <a href="#" class="clearfix">
-                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                         <li><a class="text-muted" href="http://google.com">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                            @foreach($division->districts as $district)
+                                                <li><a class="text-muted" href="http://google.com">{{$district->name}}</a></li>
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </div>
                                 </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
@@ -426,6 +371,9 @@
 
 @section('scripts')
 <script>
+    function chooseArea(div,dis,subdis,area){
+//
+    }
     function myFunction() {
 
         var x = document.getElementById("myDIV");

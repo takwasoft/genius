@@ -15,4 +15,7 @@ class SubDistrict extends Model
         public function Areas(){
             return $this->hasMany(Area::class);
         }  
+        public function products(){
+            return $this->hasMany(Product::class);
+        } 
 }

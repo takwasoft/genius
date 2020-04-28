@@ -12,4 +12,7 @@ class Area extends Model
         public function SubDistrict(){
             return $this->belongsTo(SubDistrict::class);
         }  
+        public function products(){
+            return $this->hasMany(Product::class);
+        } 
 }

@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Models\Childcategory;
 use App\Models\Comment;
 use App\Models\Currency;
+use App\Models\District;
+use App\Models\Division;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductClick;
@@ -237,8 +239,11 @@ class CatalogController extends Controller
         return view('includes.product.filtered-products', $data);
       }
       $data['feature_products']= Product::where('status','=',1)->whereFeatured(1)->orderBy('id','desc')->take(8)->get();
+      $data['divisions']=Division::all();
+      $data['districts']=District::all();
+
       return view('front.category', $data);
-    }
+    } 
 
 
     public function getsubs(Request $request) {
