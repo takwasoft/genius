@@ -686,7 +686,7 @@
 						</div>
 
 						{{-- Start Area modal  --}}
-<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">
 
@@ -710,20 +710,7 @@
                     <div class="col-md-6">
                         <div class="categories-list model-item main-cate-item">
                             <ul>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Dhaka</a></li>
-                                            <li><a href="#" class="text-muted">Ghazipur</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Kishoreganj</a></li>
-                                            <li><a href="#" class=" text-muted">Manikganj</a></li>
-                                        </ul>
-                                    </div>
 
-                                </li>
                                 <li>
                                     <a href="#" class="clearfix">
                                         <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
@@ -845,6 +832,82 @@
 
         </div>
     </div>
+</div> --}}
+
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
+                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
+                        <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
+                        
+                    </div>
+
+					
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item main-cate-item ">
+                            <ul>
+                                @foreach($districts as $district)
+
+                                    <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                         <li><a class="text-muted" href="http://google.com">{{$district->name}} এর সবগুলো</a></li>
+                                            @foreach($district->subdistricts as $subdistrict)
+                                                <li><a class="text-muted" href="http://google.com">{{$subdistrict->name}}</a></li>
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                @endforeach
+                              
+                            </ul>
+                        </div>
+
+                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <div class=" categories-list model-item categories-list-division">
+                            <ul>
+                               @foreach($divisions as $division)
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div class="categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                         <li><a class="text-muted" href="http://google.com">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                            @foreach($division->districts as $district)
+                                                <li><a class="text-muted" href="http://google.com">{{$district->name}}</a></li>
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 						{{-- End Area model --}}
 
@@ -871,67 +934,27 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="categories-list model-item main-cate-item model-item1">
-                            <ul>
+                            <ul> 
+							@foreach($cats as $cat)
                                 <li>
                                     <a href="#" class="clearfix">
-                                        <span class="float-left">নিত্য প্রয়োজনীয় সামগ্রী</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <span class="float-left">{{$cat->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
                                     <div class="categories-list sub-cate-item" style="">
                                         <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">নিত্য প্রয়োজনীয় সামগ্রী</a></li>
-                                            <li><a href="#" class="text-muted">নিত্য প্রয়োজনীয় সামগ্রী 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">নিত্য প্রয়োজনীয় সামগ্রী 3</a></li>
-                                            <li><a href="#" class=" text-muted">নিত্য প্রয়োজনীয় সামগ্রী 4</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">মোবাইল</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                         <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">মোবাইল 1</a></li>
-                                            <li><a href="#" class="text-muted">মোবাইল 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">মোবাইল 3</a></li>
-                                            <li><a href="#" class=" text-muted">মোবাইল 4</a></li>
+										@foreach($cat->subs as $sub)
+                                            <li><a class="text-muted" href="http://google.com">{{$sub->name}}</a></li>
+											@foreach($sub->childs as $child)
+                                            <li><a class="text-muted" href="http://google.com">{{$child->name}}</a></li>
+											//same vabe divisions->district->subdistrict->area na dst ha koise duita 2 ta dekhabe
+											//divison->district? hmm are category r subcategory_id
+											//tahole district dhakar vitore uttara/mirpur esob thakbe na?
+											//ami jani na sa balse system  4 thakbe but sa 2 ta dekhabe bikroy.com r moto
+										@endforeach
+										@endforeach
                                         </ul>
                                     </div>
                                 </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">ইলেকট্রনিক্স</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                       <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">ইলেকট্রনিক্স 1</a></li>
-                                            <li><a href="#" class="text-muted">ইলেকট্রনিক্স 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">ইলেকট্রনিক্স 3</a></li>
-                                            <li><a href="#" class=" text-muted">ইলেকট্রনিক্স 4</a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">যানবাহন</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">প্রপার্টি</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">চাকরি</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">বিদেশে চাকরি</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
+								@endforeach
                             </ul>
                         </div>
                     </div>

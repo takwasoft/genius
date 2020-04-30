@@ -215,10 +215,17 @@ class ProductController extends Controller
         $package = auth()->user()->subscribes()->orderBy('id','desc')->first(); 
         
         $cats = $package->subscription->categories;
+        //sob gulo category jabena. ei vendor er package e jgulo ache sudhu ogulo jabe
+        //return $cats[0]->subs[0]->childs;
         $maxPrice=$package->subscription->max_price; 
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
-        return view('vendor.product.create.physical',compact('cats','sign','brands','maxPrice'));
+        $divisions=Division::all();
+        $districts=District::all();
+        $categories=Category::all();
+        $childcategories=Childcategory::all();
+        //every category has many subs. every subs has many childs
+        return view('vendor.product.create.physical',compact('cats','sign','brands','maxPrice','divisions','districts','categories','childcategories'));
     }
 
     //*** GET Request
