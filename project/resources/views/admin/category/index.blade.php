@@ -35,6 +35,7 @@
 				                        <th width="20%">{{ __('Slug') }}</th>
 																<th>{{ __('Attributes') }}</th>
 				                        <th>{{ __('Status') }}</th>
+										<th>{{ __('Serial') }}</th>
 										<th>Open</th>
 				                        <th>{{ __('Options') }}</th>
 														</tr>
@@ -152,6 +153,7 @@
 												{ data: 'slug', name: 'slug' },
                         { data: 'attributes', name: 'attributes', searchable: false, orderable: false },
                         { data: 'status', searchable: false, orderable: false},
+						{ data: 'serial', searchable: false, orderable: false},
 						{ data: 'open', searchable: false, orderable: false},
             			{ data: 'action', searchable: false, orderable: false }
 

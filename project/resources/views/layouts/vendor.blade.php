@@ -137,7 +137,17 @@
                                 	</li>
 								</ul>
 							</li>
-
+<li>
+								<a href="#menu52" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
+									<i class="icofont-cart"></i>Promotion
+								</a>
+								<ul class="collapse list-unstyled" id="menu52" data-parent="#accordion">
+									<li>
+										<a href="{{ route('my-boost') }}"><span>My Boosting</span></a>
+									</li>
+									
+								</ul>
+							</li>
 							<li>
 								<a href="#menu2" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
 									<i class="icofont-cart"></i>{{ $langg->lang444 }}

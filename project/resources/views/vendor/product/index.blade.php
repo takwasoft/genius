@@ -17,7 +17,7 @@
 											<li>
 												<a href="{{ route('vendor-prod-index') }}">{{ $langg->lang446 }}</a>
 											</li>
-										</ul>
+										</ul> 
 								</div>
 							</div>
 						</div>
@@ -36,6 +36,7 @@
 									                        <th>{{ $langg->lang609 }}</th>
 									                        <th>{{ $langg->lang610 }}</th>
 									                        <th>{{ $langg->lang611 }}</th>
+															<th>Promotion</th>
 									                        <th>{{ $langg->lang612 }}</th>
 														</tr>
 													</thead>
@@ -170,6 +171,7 @@
                         { data: 'type', name: 'type' },
                         { data: 'price', name: 'price' },
                         { data: 'status', searchable: false, orderable: false},
+						{ data: 'promotion', searchable: false, orderable: false},
             			{ data: 'action', searchable: false, orderable: false }
 
                      ],

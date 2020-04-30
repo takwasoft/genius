@@ -76,7 +76,29 @@
 </head>
 
 <body>
+ @if($gs->is_messenger == 1)
+    <style>
+.fb_dialog { 
+     left: 18pt;
+ };
 
+  iframe.fb_customer_chat_bounce_in_v2{
+     left:36pt!important;
+  }
+
+  iframe.fb_customer_chat_bounce_out_v2{
+     left:36pt!important;
+  }
+#fb-root > div.fb-customerchat.fb_invisible_flow.fb_iframe_widget > span > iframe{
+left: 9pt !important;
+}
+#fb-root > div.fb_dialog.fb_dialog_advanced.fb_customer_chat_bubble_animated_no_badge.fb_customer_chat_bubble_pop_in{
+left: 18pt !important;
+}
+</style>
+      {!! $gs->messenger !!}
+    
+  @endif
 @if($gs->is_loader == 1)
 	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>
 @endif

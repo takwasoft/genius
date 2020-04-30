@@ -19,9 +19,12 @@ class CategoryController extends Controller
     //*** JSON Request
     public function datatables()
     {
-         $datas = Category::orderBy('id','desc')->get();
+         $datas = Category::orderBy('serial')->get();
          //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
+                            ->addColumn('serial',function(Category $data){
+                                return '<a class="btn btn-sm btn-success" href="'.route('admin-subcat-serial',$data->id).'">Serial</a>';
+                            })
                             ->addColumn('status', function(Category $data) {
                                 $class = $data->status == 1 ? 'drop-success' : 'drop-danger';
                                 $s = $data->status == 1 ? 'selected' : '';
@@ -46,7 +49,7 @@ class CategoryController extends Controller
                             ->addColumn('action', function(Category $data) {
                                 return '<div class="action-list"><a data-href="' . route('admin-cat-edit',$data->id) . '" class="edit" data-toggle="modal" data-target="#modal1"> <i class="fas fa-edit"></i>Edit</a><a href="javascript:;" data-href="' . route('admin-cat-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
                             })
-                            ->rawColumns(['status','attributes','action','open'])
+                            ->rawColumns(['serial','status','attributes','action','open'])
                             ->toJson(); //--- Returning Json Data To Client Side
     }
 
@@ -55,7 +58,20 @@ class CategoryController extends Controller
     { 
         return view('admin.category.index');
     }
-
+    public function serial(){
+        $categories=Category::orderBy('serial')->get();
+        return view('admin.category.serial',compact('categories'));
+    }
+    public function serialUpdate(Request $request){
+        $lists= json_decode($request->lists);
+        for($i=0;$i<count($lists);$i++){
+            $category=Category::find($lists[$i]);
+            $category->serial=$i;
+            $category->save();
+        }
+        return redirect()->route('admin-cat-serial');
+       // return view('admin.category.serial');
+    }
     //*** GET Request
     public function create()
     {

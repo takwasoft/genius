@@ -10,6 +10,7 @@
 		<!-- Title -->
 		<title>{{$gs->title}}</title>
 		<!-- favicon -->
+		  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css"/>
 		<link rel="icon"  type="image/x-icon" href="{{asset('assets/images/'.$gs->favicon)}}"/>
 		<!-- Bootstrap -->
 		<link href="{{asset('assets/admin/css/bootstrap.min.css')}}" rel="stylesheet" />
@@ -159,7 +160,7 @@
 							@else
 							@include('includes.admin.roles.normal')
 							@endif
-
+ 
 						</ul>
 					@if(Auth::guard('admin')->user()->IsSuper())
 					<p class="version-name"> Version: 1.7.1</p>

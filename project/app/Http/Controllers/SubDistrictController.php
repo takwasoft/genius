@@ -52,26 +52,7 @@ class SubDistrictController extends Controller
     public function create()
     {
 
-        $action="admin/subdistricts";
-        $name="SubDistrict";
-        $fields=[
-            [
-                "name"=>"district_id",
-                "label"=>"District",
-                "type"=>"select",
-                "required"=>true,
-                "options"=>District::all(),
-                "optionlabel"=>"name"
-            ],
-            [
-                "name"=>"name",
-                "label"=>"SubDistrict",
-                "type"=>"text",
-                "required"=>true
-            ]
-            ];
-
-        return view('admin.form.create',["action"=>$action,"name"=>$name,"fields"=>$fields]);
+        return view('admin.subdistrict.create',["districts"=>District::all()]);
     }
 
     /**
@@ -82,9 +63,14 @@ class SubDistrictController extends Controller
      */
     public function store(Request $request)
     {
-        SubDistrict::create(
-            $request->all()
-        );
+        for($i=0;$i<count($request->name);$i++){
+            SubDistrict::create(
+               [
+                   "name"=>$request->name[$i],
+                   "district_id"=>$request->district_id[$i]
+               ]
+            ); 
+        }
         return redirect('/admin/subdistricts');
     }
 

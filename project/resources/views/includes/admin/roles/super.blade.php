@@ -69,7 +69,21 @@
             </li>
         </ul>
     </li>
+<li>
+        <a href="#promotion" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
+            <i class="icofont-ui-user-group"></i>Promotion
+        </a>
+        <ul class="collapse list-unstyled" id="promotion" data-parent="#accordion">
+            <li>
+                <a href="{{ URL::to('/admin/boostcategories')}}"><span>Boost Category</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-product-boost') }}"><span>Boosts</span></a>
+            </li>
+          
 
+        </ul>
+    </li>
     <li>
         <a href="#vendor" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
             <i class="icofont-ui-user-group"></i>{{ __('Vendors') }}
@@ -122,6 +136,9 @@
              @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='vendorcategory')
           show
         @endif" id="menu5" data-parent="#accordion" >
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category') active @endif">
+                    <a href="{{ route('admin-cat-serial') }}"><span>Category Serial</span></a>
+                </li>
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category') active @endif">
                     <a href="{{ route('admin-cat-index') }}"><span>{{ __('Main Category') }}</span></a>
                 </li>
@@ -149,6 +166,9 @@
           @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='area')
           show
         @endif" id="menu29" data-parent="#accordion" >
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
+                    <a href="{{ URL::to('/admin/division/serial')}}"><span>Division Serial</span></a>
+                </li>
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
                     <a href="{{ URL::to('/admin/divisions')}}"><span>Division</span></a>
                 </li>

@@ -137,7 +137,9 @@
 
 
 @section('scripts')
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+  <script type="text/javascript" src="https://cdn.datatables.net/select/1.2.6/js/dataTables.select.min.js"></script>
 {{-- DATA TABLE --}}
 
     <script type="text/javascript">
@@ -173,7 +175,15 @@
       });
 
 {{-- DATA TABLE ENDS--}}
+var c = {};
 
+$("#geniustable tr").draggable({
+        helper: "clone",
+        start: function(event, ui) {
+            c.tr = this;
+            c.helper = ui.helper;
+        }
+});
 </script>
 
 @endsection

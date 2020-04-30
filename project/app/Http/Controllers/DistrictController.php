@@ -52,26 +52,24 @@ class DistrictController extends Controller
      */
     public function create()
     {
-        $action="admin/districts";
-        $name="District";
-        $fields=[
-            [
-                "name"=>"division_id",
-                "label"=>"Division",
-                "type"=>"select",
-                "required"=>true,
-                "options"=>Division::all(),
-                "optionlabel"=>"name"
-            ],
-            [
-                "name"=>"name",
-                "label"=>"District Name",
-                "type"=>"text",
-                "required"=>true
-            ]
-            ];
+       
+ 
+        return view('admin.district.create',["divisions"=>Division::all()]);
+    }
 
-        return view('admin.form.create',["action"=>$action,"name"=>$name,"fields"=>$fields]);
+    public function serial(Division $division){
+        $districts=District::where('division_id',$division->id)->orderBy('serial')->get();
+        return view('admin.district.serial',compact('division','districts'));
+    }
+    public function serialUpdate(Request $request,Division $division){
+        $lists= json_decode($request->lists);
+        for($i=0;$i<count($lists);$i++){
+            $district=District::find($lists[$i]);
+            $district->serial=$i;
+            $district->save();
+        }
+        return redirect()->route('admin-dis-serial',$division->id);
+       // return view('admin.category.serial');
     }
 
     /**
@@ -82,9 +80,15 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-       District::create(
-            $request->all()
-        );
+        for($i=0;$i<count($request->name);$i++){
+            District::create(
+               [
+                   "name"=>$request->name[$i],
+                   "division_id"=>$request->division_id[$i]
+               ]
+            ); 
+        }
+       
         return redirect('/admin/districts');
     }
 

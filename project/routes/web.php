@@ -94,10 +94,11 @@ Route::prefix('admin')->group(function() {
   //------------ ADMIN PRODUCT SECTION ------------
 
   Route::group(['middleware'=>'permissions:products'],function(){
-
+ 
   Route::get('/products/datatables', 'Admin\ProductController@datatables')->name('admin-prod-datatables'); //JSON REQUEST 
   Route::get('/products', 'Admin\ProductController@index')->name('admin-prod-index');
-
+  Route::get('/products-boost', 'Admin\ProductController@boost')->name('admin-product-boost');
+  Route::get('/boosts/datatables', 'Admin\ProductController@boostDatatables')->name('admin-boost-datatables'); 
   Route::post('/products/upload/update/{id}', 'Admin\ProductController@uploadUpdate')->name('admin-prod-upload-update');
 
   Route::get('/products/deactive/datatables', 'Admin\ProductController@deactivedatatables')->name('admin-prod-deactive-datatables'); //JSON REQUEST
@@ -270,6 +271,14 @@ Route::prefix('admin')->group(function() {
 
   Route::get('/category/datatables', 'Admin\CategoryController@datatables')->name('admin-cat-datatables'); //JSON REQUEST
   Route::get('/category', 'Admin\CategoryController@index')->name('admin-cat-index');
+  Route::get('/category/serial', 'Admin\CategoryController@serial')->name('admin-cat-serial');
+  Route::get('/category/serial/update', 'Admin\CategoryController@serialUpdate')->name('admin-cat-serial-update');
+
+
+  Route::get('/division/serial', 'DivisionController@serial')->name('admin-div-serial');
+  Route::get('/division/serial/update', 'DivisionController@serialUpdate')->name('admin-div-serial-update');
+
+
   Route::get('/category/create', 'Admin\CategoryController@create')->name('admin-cat-create');
   Route::post('/category/create', 'Admin\CategoryController@store')->name('admin-cat-store');
   Route::get('/category/edit/{id}', 'Admin\CategoryController@edit')->name('admin-cat-edit');
@@ -297,6 +306,13 @@ Route::prefix('admin')->group(function() {
   // SUBCATEGORY SECTION ------------
 
   Route::get('/subcategory/datatables', 'Admin\SubCategoryController@datatables')->name('admin-subcat-datatables'); //JSON REQUEST
+
+  Route::get('/subcategory/serial/{category}', 'Admin\SubCategoryController@serial')->name('admin-subcat-serial');
+  Route::get('/subcategory/serial/update/{category}','Admin\SubCategoryController@serialUpdate')->name('admin-subcat-serial-update');
+
+  Route::get('/district/serial/{division}', 'DistrictController@serial')->name('admin-dis-serial');
+  Route::get('/district/serial/update/{division}','DistrictController@serialUpdate')->name('admin-dis-serial-update');
+
   Route::get('/subcategory', 'Admin\SubCategoryController@index')->name('admin-subcat-index');
   Route::get('/subcategory/create', 'Admin\SubCategoryController@create')->name('admin-subcat-create');
   Route::post('/subcategory/create', 'Admin\SubCategoryController@store')->name('admin-subcat-store');
@@ -508,6 +524,7 @@ Route::prefix('admin')->group(function() {
 
   Route::get('/general-settings/admin/loader/{status}', 'Admin\GeneralSettingController@isadminloader')->name('admin-gs-is-admin-loader');
   Route::get('/general-settings/talkto/{status}', 'Admin\GeneralSettingController@talkto')->name('admin-gs-talkto');
+  Route::get('/general-settings/messenger/{status}', 'Admin\GeneralSettingController@messenger')->name('admin-gs-messenger');
 
   Route::get('/general-settings/multiple/shipping/{status}', 'Admin\GeneralSettingController@mship')->name('admin-gs-mship');
   Route::get('/general-settings/multiple/packaging/{status}', 'Admin\GeneralSettingController@mpackage')->name('admin-gs-mpackage');
@@ -832,7 +849,8 @@ Route::prefix('admin')->group(function() {
   Route::post('/general-settings/update/payment', 'Admin\GeneralSettingController@generalupdatepayment')->name('admin-gs-update-payment');
 
   // STATUS SECTION
-  Route::get('/products/status/{id1}/{id2}/{reason}', 'Admin\ProductController@status')->name('admin-prod-status'); 
+  Route::get('/products/status/{id1}/{id2}/{reason}', 'Admin\ProductController@status')->name('admin-prod-status');
+  Route::get('/boost/status/{id1}/{id2}/{reason}', 'Admin\ProductController@boostStatus')->name('admin-boost-status');  
   // STATUS SECTION ENDS
 
   // FEATURE SECTION
@@ -906,7 +924,7 @@ Route::prefix('user')->group(function() {
 
   // User Register
   Route::get('/register', 'User\RegisterController@showRegisterForm')->name('user-register');
-  Route::get('/email-verify', 'User\RegisterController@emailVerify')->name('email.verify');
+  Route::get('/email-verify', 'User\RegisterController@emailVerify')->name('email.verify');  
   Route::post('/register', 'User\RegisterController@register')->name('user-register-submit');
   Route::get('/register/verify/{token}', 'User\RegisterController@token')->name('user-register-token');  
   // User Register End
@@ -1096,6 +1114,8 @@ Route::prefix('vendor')->group(function() {
   Route::post('/products/upload/update/{id}', 'Vendor\ProductController@uploadUpdate')->name('vendor-prod-upload-update');
 
   // CREATE SECTION
+  Route::get('/products/boost', 'Vendor\ProductController@myBoost')->name('my-boost');
+  Route::get('/products/boost-datatable', 'Vendor\ProductController@boostDataTable')->name('vendor-boost-datatables');
   Route::get('/products/select-area', 'Vendor\ProductController@types')->name('select-area');
   Route::get('/products/physical/create', 'Vendor\ProductController@createPhysical')->name('vendor-prod-physical-create');
   Route::get('/products/digital/create', 'Vendor\ProductController@createDigital')->name('vendor-prod-digital-create');
@@ -1112,6 +1132,8 @@ Route::prefix('vendor')->group(function() {
 
   // EDIT SECTION
   Route::get('/products/edit/{id}', 'Vendor\ProductController@edit')->name('vendor-prod-edit');
+  Route::get('/products/boost/{product}', 'Vendor\ProductController@boostProduct')->name('vendor-prod-boost');
+  Route::post('/products/boost/{product}', 'Vendor\ProductController@boostProductInsert')->name('vendor-product-boost');
   Route::post('/products/edit/{id}', 'Vendor\ProductController@update')->name('vendor-prod-update');
 
   Route::get('/products/catalog/{id}', 'Vendor\ProductController@catalogedit')->name('vendor-prod-catalog-edit');

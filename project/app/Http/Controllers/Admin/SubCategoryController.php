@@ -56,34 +56,40 @@ class SubCategoryController extends Controller
 
     //*** GET Request
     public function create()
-    {
+    { 
       	$cats = Category::all();
         return view('admin.subcategory.create',compact('cats'));
+    }
+
+
+    public function serial(Category $category){
+        $subcategories=Subcategory::where('category_id',$category->id)->orderBy('serial')->get();
+        return view('admin.subcategory.serial',compact('category','subcategories'));
+    }
+    public function serialUpdate(Request $request,Category $category){
+        $lists= json_decode($request->lists);
+        for($i=0;$i<count($lists);$i++){
+            $subcategory=Subcategory::find($lists[$i]);
+            $subcategory->serial=$i;
+            $subcategory->save();
+        }
+        return redirect()->route('admin-subcat-serial',$category->id);
+       // return view('admin.category.serial');
     }
 
     //*** POST Request
     public function store(Request $request)
     {
-        //--- Validation Section
-        $rules = [
-            'slug' => 'unique:subcategories|regex:/^[a-zA-Z0-9\s-]+$/'
-                 ];
-        $customs = [
-            'slug.unique' => 'This slug has already been taken.',
-            'slug.regex' => 'Slug Must Not Have Any Special Characters.'
-                   ];
-        $validator = Validator::make(Input::all(), $rules, $customs);
 
-        if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        for($i=0;$i<count($request->name);$i++){
+            Subcategory::create(
+               [
+                   "name"=>$request->name[$i],
+                   "slug"=>$request->slug[$i],
+                   "category_id"=>$request->category_id[$i],
+               ]
+            ); 
         }
-        //--- Validation Section Ends
-
-        //--- Logic Section
-        $data = new Subcategory();
-        $input = $request->all();
-        $data->fill($input)->save();
-        //--- Logic Section Ends
 
         //--- Redirect Section
         $msg = 'New Data Added Successfully.';

@@ -15,9 +15,9 @@
                         <div class="form-group">
                                 <label for="exampleInputEmail1">{{$field['label']}}</label>
                                 <input @if($field["required"])
-required
-@endif
- name="{{$field['name']}}" type="text" class="form-control" 
+                                required
+                                @endif
+                                name="{{$field['name']}}" type="text" class="form-control" 
                                     >
                             </div>
                             @elseif($field["type"]=="date")

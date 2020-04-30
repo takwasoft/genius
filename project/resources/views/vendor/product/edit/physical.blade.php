@@ -5,7 +5,7 @@
 <link href="{{asset('assets/admin/css/jquery.Jcrop.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin/css/Jcrop-style.css')}}" rel="stylesheet"/>
 
-@endsection
+@endsection 
 @section('content')
 
 						<div class="content-area">
@@ -1127,7 +1127,7 @@ $('.cropme').click();
   <script type="text/javascript">
   $(document).ready(function() {
 
-    let html = `<img src="{{ empty($data->photo) ? asset('assets/images/noimage.png') : filter_var($data->photo, FILTER_VALIDATE_URL) ? $data->photo :asset('assets/images/products/'.$data->photo) }}" alt="">`;
+    let html = `<img src="{{ (empty($data->photo) ? asset('assets/images/noimage.png') : filter_var($data->photo, FILTER_VALIDATE_URL)) ? $data->photo :asset('assets/images/products/'.$data->photo) }}" alt="">`;
     $(".span4.cropme").html(html);
 
     $.ajaxSetup({

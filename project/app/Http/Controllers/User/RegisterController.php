@@ -39,7 +39,7 @@ class RegisterController extends Controller
 		$headers = "From: ".$gs->from_name."<".$gs->from_email.">";
 		mail($to,$subject,$msg,$headers);
 		}
-		return "here";
+		return redirect()->route('user-dashboard')->with('success','Email Has Been Sent');
 	}
     public function register(Request $request)
     {
@@ -124,7 +124,7 @@ class RegisterController extends Controller
 			  }
 			  
 			$user->fill($input)->save();
-	        if($gs->is_verification_email == 1)
+	        if($gs->is_verification_email == 1&&$request->email)
 	        {
 	        $to = $request->email;
 	        $subject = 'Verify your email address.';

@@ -240,6 +240,51 @@
                             </div>
 
 
+
+
+
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3">
+                              <div class="left-area">
+                                <h4 class="heading">
+                                    {{ __('Messenger') }}
+                                </h4>
+                              </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="action-list">
+                                    <select class="process select droplinks {{ $gs->is_messenger == 1 ? 'drop-success' : 'drop-danger' }}">
+                                      <option data-val="1" value="{{route('admin-gs-messenger',1)}}" {{ $gs->is_messenger == 1 ? 'selected' : '' }}>{{ __('Activated') }}</option>
+                                      <option data-val="0" value="{{route('admin-gs-messenger',0)}}" {{ $gs->is_messenger == 0 ? 'selected' : '' }}>{{ __('Deactivated') }}</option>
+                                    </select>
+                                  </div>
+                            </div>
+                          </div>
+                          <div class="row justify-content-center">
+                              <div class="col-lg-3">
+                                <div class="left-area">
+                                  <h4 class="heading">
+                                      {{ __('Messenger Code') }} *
+                                  </h4>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                  <div class="tawk-area">
+                                    <textarea  name="messenger">{{$gs->messenger}}</textarea>
+                                  </div>
+                              </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
                         <div class="row justify-content-center">
                             <div class="col-lg-3">
                               <div class="left-area">

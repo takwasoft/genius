@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 $settings->with('ticketCount',$tc);
             }
-            $settings->with('categories', Category::where('status','=',1)->get());   
+            $settings->with('categories', Category::where('status','=',1)->orderBy('serial')->get());   
             if (Session::has('language')) 
             {
                 $data = DB::table('languages')->find(Session::get('language'));

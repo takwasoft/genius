@@ -13,6 +13,8 @@ use App\Models\Generalsetting;
 use App\Models\Subcategory;
 use App\Models\Attribute;
 use App\Models\AttributeOption;
+use App\Models\Boost;
+use App\Models\BoostCategory;
 use App\Models\Brand;
 use App\Models\District;
 use App\Models\Division;
@@ -50,7 +52,72 @@ class ProductController extends Controller
             }
 
     }
+    public function boostProductInsert(Request $request,Product $product){
+        Boost::create([
+            "boost_category_id"=>$request->boost_category_id,
+            "product_id"=>$product->id,
+            "status"=>0,
+            "paid"=>1
+        ]);
+        //return redirect()->route();
+    }
+    public function myBoost(){
+        return view('vendor.product.myboost');
+    }
+    public function boostDataTable(){
+        $datas = Boost::whereHas('product', function($query) {
+            $query->where('user_id','=', auth()->user()->id);
+         })->orderBy('id','desc')->with('product.user')->with('boostcategory')->get();
+ 
+         //--- Integrating This Collection Into Datatables
+         return Datatables::of($datas)
+                            ->editColumn('id',function($data){
+                                return '#00'.$data->id;
+                            })
+                            ->editColumn('status',function($data){
+                                if($data->paid == 1)
+                                {
+                                    return '<span class="badge badge-success">Paid</span>';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    return '<span class="badge badge-danger">Unpaid</span>';
+                                }
+                                
+                            })
+                            ->addColumn('action', function( $data) { 
+                                if($data->status == 1)
+                                {
+                                    $class =   'drop-success';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    $class =   'drop-warning';
+                                }
+                                else{
+                                    $class =   'drop-danger';
+                                }
+                                
 
+                                $s = $data->status == 1 ? 'selected' : '';
+                                $ns = $data->status == 0 ? 'selected' : '';
+                                $cs = $data->status == 2 ? 'selected' : '';
+                                return '<div class="action-list"><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Confirm</option><option data-val="0" value="0" '.$ns.'>Pending</option><option data-val="2" value="2" '.$cs.'>Cancel</option>/select></div>';
+                            })
+                            ->addColumn('applied', function( $data) {
+                                return $data->created_at->diffForHumans();
+                            })
+                            ->addColumn('valid', function( $data) {
+                                //
+                                return $data->product->boost_expired->diff(Carbon::now())->format('%d day %h hour  %i min');
+                            })
+                            ->rawColumns(['status','action'])
+                            ->toJson();
+    }
+    public function boostProduct(Product $product){
+        $boostCategories=BoostCategory::where('status','=','1')->get();
+        return view('vendor.product.boost',compact('product','boostCategories'));
+    } 
     //*** JSON Request
     public function datatables()
     {
@@ -74,10 +141,14 @@ class ProductController extends Controller
                                return $data->status == 1 ? '<span class="badge badge-success">Activated</span>' : '<span class="badge badge-danger">Deactivated</span>';
                                 
                             })
+                            ->addColumn('promotion', function(Product $data) {
+                                return '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>';
+                                 
+                             })
                             ->addColumn('action', function(Product $data) {
                                 return '<div class="action-list"><a href="' . route('vendor-prod-edit',$data->id) . '"> <i class="fas fa-edit"></i>'.$this->vendor_language->lang715.'</a><a href="javascript" class="set-gallery" data-toggle="modal" data-target="#setgallery"><input type="hidden" value="'.$data->id.'"><i class="fas fa-eye"></i> '.$this->vendor_language->lang716.'</a><a href="javascript:;" data-href="' . route('vendor-prod-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
                             })
-                            ->rawColumns(['name', 'status', 'action'])
+                            ->rawColumns(['name','promotion', 'status', 'action'])
                             ->toJson(); //--- Returning Json Data To Client Side
     }
 
@@ -112,7 +183,7 @@ class ProductController extends Controller
 
     //*** GET Request
     public function index()
-    {
+    { 
         return view('vendor.product.index');
     }
 
@@ -698,6 +769,7 @@ if (!Product::where('sku',$line[0])->exists()){
             return view('vendor.product.edit.license',compact('cats','data','sign'));
         else
             return view('vendor.product.edit.physical',compact('cats','data','sign'));
+
     }
 
 

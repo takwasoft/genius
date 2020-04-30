@@ -38,7 +38,7 @@ class LoginController extends Controller
         //--- Validation Section Ends
 
       // Attempt to log the user in
-      if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
+      if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])||Auth::attempt(['email' => $request->phone, 'password' => $request->password])) {
         // if successful, then redirect to their intended location
 
         // Check If Email is verified or not

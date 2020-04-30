@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Session;
 class Product extends Model
 {
 
+
+
+    protected $dates = ['created_at', 'updated_at', 'boost_expired'];
     protected $fillable = ['user_id','deal_code','brand_id','category_id','product_type','affiliate_link','sku', 'subcategory_id', 'childcategory_id', 'attributes', 'name', 'photo', 'size','size_qty','size_price', 'color', 'details','price','previous_price','stock','policy','status', 'views','tags','featured','best','top','hot','latest','big','trending','sale','features','colors','product_condition','ship','meta_tag','meta_description','youtube','type','file','license','license_qty','link','platform','region','licence_type','measure','discount_date','is_discount','whole_sell_qty','whole_sell_discount','catalog_id','slug','area_id','division_id','sub_district_id','district_id'];
 
     public static function filterProducts($collection)

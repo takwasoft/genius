@@ -21,7 +21,13 @@
                 <h5 class="title">{{ $user->name }}</h5>
                 <ul class="list">
                   <li>
-                    <p><span class="user-title">{{ $langg->lang209 }}:</span> {{ $user->email==$user->phone?'Not Set':$user->email }}</p>
+                    <p><span class="user-title">{{ $langg->lang209 }}:</span> {{ $user->email==$user->phone?'Not Set':$user->email }}
+                    @if($user->email!=$user->phone&&$user->email_verified==0)
+                      <span class="badge badge-danger">
+                      Unverified</span>
+                    @endif
+                    </p>
+                    
                   </li>
                   @if($user->phone != null)
                   <li>

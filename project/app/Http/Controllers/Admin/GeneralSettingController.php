@@ -383,6 +383,12 @@ class GeneralSettingController extends Controller
         $data->is_talkto = $status;
         $data->update();
     }
+    public function messenger($status)
+    {
+        $data = Generalsetting::findOrFail(1);
+        $data->is_messenger = $status;
+        $data->update();
+    }
 
     public function issubscribe($status)
     {

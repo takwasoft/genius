@@ -15,6 +15,7 @@ use App\Models\Attribute;
 use App\Models\AttributeOption;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Boost;
 use App\Models\Generalsetting;
 use Illuminate\Support\Facades\Input;
 use Validator;
@@ -108,7 +109,7 @@ class ProductController extends Controller
                                 $class = $data->status == 1 ? 'drop-success' : 'drop-danger';
                                 $s = $data->status == 1 ? 'selected' : '';
                                 $ns = $data->status == 0 ? 'selected' : '';
-                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 1]).'" '.$s.'>Activated</option><<option data-val="0" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 0]).'" '.$ns.'>Deactivated</option>/select></div>';
+                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 1,'reason'=>'abc']).'" '.$s.'>Activated</option><<option data-val="0" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 0,'reason'=>'abc']).'" '.$ns.'>Deactivated</option>/select></div>';
                             })
                             ->addColumn('action', function(Product $data) {
                                 $catalog = $data->type == 'Physical' ? ($data->is_catalog == 1 ? '<a href="javascript:;" data-href="' . route('admin-prod-catalog',['id1' => $data->id, 'id2' => 0]) . '" data-toggle="modal" data-target="#catalog-modal" class="delete"><i class="fas fa-trash-alt"></i> Remove Catalog</a>' : '<a href="javascript:;" data-href="'. route('admin-prod-catalog',['id1' => $data->id, 'id2' => 1]) .'" data-toggle="modal" data-target="#catalog-modal"> <i class="fas fa-plus"></i> Add To Catalog</a>') : '';
@@ -153,7 +154,7 @@ class ProductController extends Controller
                                 $class = $data->status == 1 ? 'drop-success' : 'drop-danger';
                                 $s = $data->status == 1 ? 'selected' : '';
                                 $ns = $data->status == 0 ? 'selected' : '';
-                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 1]).'" '.$s.'>Activated</option><<option data-val="0" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 0]).'" '.$ns.'>Deactivated</option>/select></div>';
+                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 1,'reason'=>'abc']).'" '.$s.'>Activated</option><<option data-val="0" value="'. route('admin-prod-status',['id1' => $data->id, 'id2' => 0,'reason'=>'abc']).'" '.$ns.'>Deactivated</option>/select></div>';
                             })
                             ->addColumn('action', function(Product $data) {
                                 return '<div class="godropdown"><button class="go-dropdown-toggle"> Actions<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-prod-edit',$data->id) . '"> <i class="fas fa-edit"></i> Edit</a><a href="javascript" class="set-gallery" data-toggle="modal" data-target="#setgallery"><input type="hidden" value="'.$data->id.'"><i class="fas fa-eye"></i> View Gallery</a><a data-href="' . route('admin-prod-feature',$data->id) . '" class="feature" data-toggle="modal" data-target="#modal2"> <i class="fas fa-star"></i> Highlight</a><a href="javascript:;" data-href="' . route('admin-prod-catalog',['id1' => $data->id, 'id2' => 0]) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> Remove Catalog</a></div></div>';
@@ -167,9 +168,60 @@ class ProductController extends Controller
     {
         return view('admin.product.index');
     }
+    public function boost(){
+        return view('admin.product.boost');
+    }
+ 
+    public function boostDatatables(){ 
+        $datas = Boost::orderBy('id','desc')->with('product.user')->with('boostcategory')->get();
+ 
+         //--- Integrating This Collection Into Datatables
+         return Datatables::of($datas)
+                            ->editColumn('id',function($data){
+                                return '#00'.$data->id;
+                            })
+                            ->editColumn('status',function($data){
+                                if($data->paid == 1)
+                                {
+                                    return '<span class="badge badge-success">Paid</span>';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    return '<span class="badge badge-danger">Unpaid</span>';
+                                }
+                                
+                            })
+                            ->addColumn('action', function( $data) { 
+                                if($data->status == 1)
+                                {
+                                    $class =   'drop-success';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    $class =   'drop-warning';
+                                }
+                                else{
+                                    $class =   'drop-danger';
+                                }
+                                
 
+                                $s = $data->status == 1 ? 'selected' : '';
+                                $ns = $data->status == 0 ? 'selected' : '';
+                                $cs = $data->status == 2 ? 'selected' : '';
+                                return '<div class="action-list"><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Confirm</option><option data-val="0" value="0" '.$ns.'>Pending</option><option data-val="2" value="2" '.$cs.'>Cancel</option>/select></div>';
+                            })
+                            ->addColumn('applied', function( $data) {
+                                return $data->created_at->diffForHumans();
+                            })
+                            ->addColumn('valid', function( $data) {
+                                //
+                                return $data->product->boost_expired->diff(Carbon::now())->format('%d day %h hour  %i min');
+                            })
+                            ->rawColumns(['status','action'])
+                            ->toJson();
+    }
     //*** GET Request
-    public function deactive()
+     public function deactive()
     {
         return view('admin.product.deactive');
     }
@@ -209,8 +261,69 @@ class ProductController extends Controller
         $sign = Currency::where('is_default','=',1)->first();
         return view('admin.product.create.license',compact('cats','sign'));
     }
-
+    
     //*** GET Request
+    public function boostStatus($id1,$id2,$reason)
+    {
+        $boost=Boost::findOrFail($id1);
+        $product = $boost->product;
+
+        if($id2==2){
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Product has been deactivated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." boost has been canceled for ".$reason;
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        else if($id2==1){
+            $product->boost=1;
+            $product->boost_expired=Carbon::now()->addDays($boost->boostCategory->duration);
+            $product->update();
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Boost has been activated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." has been boosted successfully.";
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        
+        $boost->status = $id2;
+        $boost->update();
+         
+    }
     public function status($id1,$id2,$reason)
     {
         $product = Product::findOrFail($id1);

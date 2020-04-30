@@ -29,7 +29,7 @@
                 <form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
                   {{ csrf_field() }}
                   <div class="form-input">
-                    <input type="text" name="phone" placeholder="Enter Your Phone" required="">
+                    <input type="text" name="phone" placeholder="Enter Your Phone Or Email" required="">
                     <i class="icofont-user-alt-5"></i>
                   </div>
                   <div class="form-input">
