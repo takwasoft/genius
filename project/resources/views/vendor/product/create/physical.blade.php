@@ -4,6 +4,55 @@
 <link href="{{asset('assets/vendor/css/product.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin/css/jquery.Jcrop.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin/css/Jcrop-style.css')}}" rel="stylesheet"/>
+<style>
+	.sub-cate-item{
+    top: 0%; 
+    position: absolute;
+    left: 100%;  
+    width: 90%; 
+    margin-left: 5px;
+    display: none;
+}
+.close span {
+    font-size: 27px!important;
+}
+.main-cate-item li:hover .sub-cate-item{
+    display: block;
+}
+
+.categories-list-division li:hover .sub-cate-item-division{
+    display: block;
+}
+.model-item li {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: .7rem 0 .7rem .80rem;
+}
+.model-item li li {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: .6rem .5rem;
+}
+.model-item li:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+.model-item li:first-child {
+    border-top: none;
+}
+.model-item1 li:first-child {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+}
+.model-item ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+	padding: 0;
+    list-style: none;
+}
+.model-item li a {
+    color: #0074ba;
+}
+.model-item li ul li a {
+    color: #0074ba!important;
+}
+</style>
 @endsection
 @section('content')
 
@@ -110,6 +159,27 @@
                                   <option  value="{{ $brand->id }}">{{$brand->name}}</option>
                                   @endforeach
                              </select>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-lg-4">
+														<div class="left-area">
+																<h4 class="heading">Area</h4>
+														</div>
+													</div>
+													<div class="col-lg-7">
+															<div data-target="#my-modal" data-toggle="modal">Dhaka/Gazipur</div>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-lg-4">
+														<div class="left-area">
+																<h4 class="heading">Category</h4>
+														</div>
+													</div>
+													<div class="col-lg-7">
+															<div data-target="#my-modal2" data-toggle="modal">Electronics/LED TV</div>
 													</div>
 												</div>
 
@@ -614,6 +684,265 @@
 								</div>
 							</div>
 						</div>
+
+						{{-- Start Area modal  --}}
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
+                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
+                        <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
+                        <h6 class="mt-4" style="color: #0074ba">খুলনা-এর সবগুলো</h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item main-cate-item">
+                            <ul>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Dhaka</a></li>
+                                            <li><a href="#" class="text-muted">Ghazipur</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Kishoreganj</a></li>
+                                            <li><a href="#" class=" text-muted">Manikganj</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                         <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Chittagong 1</a></li>
+                                            <li><a href="#" class="text-muted">Chittagong 2</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Chittagong 3</a></li>
+                                            <li><a href="#" class=" text-muted">Chittagong 4</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                       <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Barisal 1</a></li>
+                                            <li><a href="#" class="text-muted">Barisal 2</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Barisal 3</a></li>
+                                            <li><a href="#" class=" text-muted">Barisal 4</a></li>
+                                        </ul>
+                                    </div>
+
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <div class=" categories-list model-item categories-list-division">
+                            <ul>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                     <div class="categories-list sub-cate-item sub-cate-item-division" >
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Dhaka 5</a></li>
+                                            <li><a href="#" class="text-muted">Ghazipur 5</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Kishoreganj 5</a></li>
+                                            <li><a href="#" class=" text-muted">Manikganj 5</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                    <div class="categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Chittagong 100</a></li>
+                                            <li><a href="#" class="text-muted">Chittagong 100</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Chittagong 100</a></li>
+                                            <li><a href="#" class=" text-muted">Chittagong 100</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                        <div class="categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">Barisal 420</a></li>
+                                            <li><a href="#" class="text-muted">Barisal 420</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">Barisal 420</a></li>
+                                            <li><a href="#" class=" text-muted">Barisal 420</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+						{{-- End Area model --}}
+
+							{{-- Start category modal  --}}
+<div class="modal fade" id="my-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-2">একটি শ্রেণী নির্বাচন করুন:</h6>
+                        <a href="" class="mb-3" style="color: #0074ba;display:inline-block">সকল শ্রেণী</a>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <h6>একটি উপ-শ্রেণী নির্বাচন করুন:</h6>
+                        <a href="#" class="mt-4" style="color: #0074ba">সকল ইলেকট্রনিক্স</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item main-cate-item model-item1">
+                            <ul>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">নিত্য প্রয়োজনীয় সামগ্রী</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">নিত্য প্রয়োজনীয় সামগ্রী</a></li>
+                                            <li><a href="#" class="text-muted">নিত্য প্রয়োজনীয় সামগ্রী 2</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">নিত্য প্রয়োজনীয় সামগ্রী 3</a></li>
+                                            <li><a href="#" class=" text-muted">নিত্য প্রয়োজনীয় সামগ্রী 4</a></li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">মোবাইল</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                         <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">মোবাইল 1</a></li>
+                                            <li><a href="#" class="text-muted">মোবাইল 2</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">মোবাইল 3</a></li>
+                                            <li><a href="#" class=" text-muted">মোবাইল 4</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">ইলেকট্রনিক্স</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+
+                                       <div class="categories-list sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                            <li><a class="text-muted" href="http://google.com">ইলেকট্রনিক্স 1</a></li>
+                                            <li><a href="#" class="text-muted">ইলেকট্রনিক্স 2</a>
+                                            </li>
+                                            <li><a href="#" class="text-muted">ইলেকট্রনিক্স 3</a></li>
+                                            <li><a href="#" class=" text-muted">ইলেকট্রনিক্স 4</a></li>
+                                        </ul>
+                                    </div>
+
+
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">যানবাহন</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">প্রপার্টি</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">চাকরি</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="clearfix">
+                                        <span class="float-left">বিদেশে চাকরি</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+						{{-- End Category model --}}
 
 		<div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
