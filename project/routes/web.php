@@ -454,7 +454,8 @@ Route::prefix('admin')->group(function() {
   Route::get('/close-ticket/{ticket}','Admin\MessageController@closeTicket')->name('close-ticket');
   Route::get('/tickets', 'Admin\MessageController@index')->name('admin-message-index');
   Route::get('/admin-messages','Admin\MessageController@userMessage')->name('admin-messages');
-  Route::get('/admin-messages/{id}','Admin\MessageController@userMessageSingle')->name('admin-message-single');
+  Route::get('/admin-messages-datatable','Admin\MessageController@userMessageDatatable')->name('admin-messages-datatable');
+  Route::get('/admin-messages/{id}','Admin\MessageController@userMessageSingle')->name('admin-message-single'); 
   Route::get('/disputes', 'Admin\MessageController@disputes')->name('admin-message-dispute');
   Route::get('/message/{id}', 'Admin\MessageController@message')->name('admin-message-show');
   Route::get('/message/load/{id}', 'Admin\MessageController@messageshow')->name('admin-message-load');
@@ -1434,8 +1435,8 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
 Route::get('/get-district/{division}','AreaController@getDistrict');
 Route::get('/get-subdistrict/{district}','AreaController@getSubDistrict');
 Route::get('/get-area/{subdistrict}','AreaController@getArea');
-
-
+Route::post('/vendor/send-email','TicketController@sendVendorMail')->name('send-mail-vendor');
+//
 
 
 

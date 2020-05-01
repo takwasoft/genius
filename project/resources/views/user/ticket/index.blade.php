@@ -49,7 +49,7 @@
                             </td> 
                             <td>
                               <a href="{{route('user-message-show',$conv->id)}}" class="link view"><i class="fa fa-eye"></i></a>
-                              <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete" data-href="{{route('user-message-delete1',$conv->id)}}"class="link remove"><i class="fa fa-trash"></i></a>
+                              {{--  <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete" data-href="{{route('user-message-delete1',$conv->id)}}"class="link remove"><i class="fa fa-trash"></i></a>  --}}
                             </td>
 
                           </tr>

@@ -33,13 +33,13 @@ class MessageController extends Controller
 
     public function message($id)
     { 
-            $messages=Message::where('conversation_id','=',$id)->where('recieved_user','=',auth()->user()->id)->get();
-            foreach($messages as $message){
-                $message->seen=1;
-                $message->save();
-            }
-            $user = Auth::guard('web')->user();
-            $conv = Conversation::findOrfail($id);
+        $messages=Message::where('conversation_id','=',$id)->where('recieved_user','=',auth()->user()->id)->get();
+        foreach($messages as $message){
+            $message->seen=1;
+            $message->save();
+        }
+        $user = Auth::guard('web')->user();
+        $conv = Conversation::findOrfail($id);
             return view('user.message.create',compact('user','conv'));                 
     }
  
@@ -126,7 +126,22 @@ class MessageController extends Controller
     public function postmessage(Request $request)
     {
         $msg = new Message();
+        $conv= Conversation::find($request->conversation_id);
+         
         $input = $request->all();    
+        if($file=$request->attachment){
+            $name = time().$file->getClientOriginalName();
+            $file->move('assets/images/ticket',$name);           
+            $input["attachment"] = $name;
+
+        }
+        $input['sent_user']=auth()->user()->id;
+        if(auth()->user()->id==$conv->sent_user){
+            $input['recieved_user']=$conv->recieved_user;
+        }
+        else{
+            $input['recieved_user']=$conv->sent_user;
+        }
         $msg->fill($input)->save();
         //--- Redirect Section     
         $msg = 'Message Sent!';

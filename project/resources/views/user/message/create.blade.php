@@ -26,22 +26,26 @@
                       <div class="gocover" style="background: url({{ asset('assets/images/'.$gs->loader) }}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>                  
                     <div class="panel-body" id="messages">
                       @foreach($conv->messages as $message)
-                        @if($message->sent_user != null)
+                        @if($message->sent_user !=auth()->user()->id)
 
                         <div class="single-reply-area admin">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="reply-area">
                                         <div class="left">
-                                            @if($message->conversation->sent->is_provider == 1 )
-                                            <img class="img-circle" src="{{ $message->conversation->sent->photo != null ? $message->conversation->sent->photo : asset('assets/images/noimage.png') }}" alt="">
-                                            @else 
-                                            <img class="img-circle" src="{{ $message->conversation->sent->photo != null ? asset('assets/images/users/'.$message->conversation->sent->photo) : asset('assets/images/noimage.png') }}" alt="">
-                                            @endif
-                                            <p class="ticket-date">{{ $message->conversation->sent->name }}</p>
+                                           
+                                            <img class="img-circle" src="{{ $message->sender->photo != null ? asset('assets/images/users/'.$message->sender->photo) : asset('assets/images/noimage.png') }}" alt="">
+                                            
+                                            <p class="ticket-date">{{ $message->sender->name }}</p>
                                         </div>
                                         <div class="right">
-                                            <p>{{ $message->message }}</p>
+                                            <p>
+                                        
+                                            {{ $message->message }}</p>
+                                             @if($message->attachment!='none')
+                                                        <a class="btn btn-warning" href="{{asset('assets/images/ticket/'.$message->attachment)}}" target="_blank">
+                                                            Attchment
+                                                        </a> @endif
                                         </div>
                                     </div>
                                 </div>
@@ -60,12 +64,14 @@
                                             <p>{{ $message->message }}</p>
                                         </div>
                                         <div class="right">
-                                            @if($message->conversation->recieved->is_provider == 1 )
-                                            <img class="img-circle" src="{{ $message->conversation->recieved->photo != null ? $message->conversation->recieved->photo : asset('assets/images/noimage.png') }}" alt="">
-                                            @else 
-                                            <img class="img-circle" src="{{ $message->conversation->recieved->photo != null ? asset('assets/images/users/'.$message->conversation->recieved->photo) : asset('assets/images/noimage.png') }}" alt="">
-                                            @endif
-                                            <p class="ticket-date">{{$message->conversation->recieved->name}}</p>
+                                           
+                                            <img class="img-circle" src="{{ $message->sender->photo != null ? asset('assets/images/users/'.$message->sender->photo) : asset('assets/images/noimage.png') }}" alt="">
+                                            
+                                            <p class="ticket-date">{{$message->sender->name}}</p>
+                                             @if($message->attachment!='none')
+                                                        <a class="btn btn-warning" href="{{asset('assets/images/ticket/'.$message->attachment)}}" target="_blank">
+                                                            Attchment
+                                                        </a> @endif
                                         </div>
                                     </div>
                                 </div>
@@ -84,15 +90,11 @@
                             {{csrf_field()}}
                             <div class="form-group">
                                               <input type="hidden" name="conversation_id" value="{{$conv->id}}">
-                              @if($user->id == $conv->sent_user)
-                                  <input type="hidden" name="sent_user" value="{{$conv->sent->id}}">
-                                  <input type="hidden" name="recieved_user" value="{{$conv->recieved->id}}">
-                                @else
-                                  <input type="hidden" name="sent_user" value="{{$conv->sent->id}}">
-                                  <input type="hidden" name="recieved_user" value="{{$conv->recieved->id}}">
-                              @endif 
+                              
 
                                 <textarea class="form-control" name="message" id="wrong-invoice" rows="5" style="resize: vertical;" required="" placeholder="{{ $langg->lang374 }}"></textarea>
+                                <br>
+                                            <input id="attach" name="attachment" type="file" class="form-control-file">
                             </div>
                             <div class="form-group">
                                 <button class="mybtn1">

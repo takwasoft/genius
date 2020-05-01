@@ -261,22 +261,26 @@
         <div class="row">
         
          <div class="col-6">
-          <div>
-            <form>
+          <div> 
+            <form >
+
+            {{csrf_field()}}
+            <input type="hidden" name="vendor" value="{{$vendor->id}}">
   <div class="form-group">
     <label for="exampleInputName">Your Name</label>
-    <input type="name" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Enter Name">
+    <input id="name" name="name" type="name" class="form-control"aria-describedby="emailHelp" placeholder="Enter Name">
   </div>
   <div class="form-group">
     <label for="exampleInputEmail1">Your E-mail</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    <input id="email"  name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
   </div>
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Your Message</label>
-    <textarea class="form-control" placeholder="Please enter your message here..." id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea name="message" class="form-control" placeholder="Please enter your message here..." id="message" rows="3"></textarea>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button id="btn1" type="button" onclick="sendEmail()" class="btn btn-primary" >Submit</button>
 </form>
+
           </div>
          </div>
         <div class="col-6"><h2>Address</h2>
@@ -284,7 +288,7 @@
     border-top: 2px solid rgba(63, 103, 60, 0.1);background: #08a245;">
         <div class="clearfix"></div>
                 
-                <h5 class="pt-3"><i class="fas fa-phone-volume mr-2"></i>{{$vendor->phone}}</h5>
+                <h5 class="pt-3"><a href="tel:{{$vendor->phone}}"><i class="fas fa-phone-volume mr-2"></i>{{$vendor->phone}}</a></h5>
                 <h5 class="py-3"><i class="far fa-envelope  mr-2" aria-hidden="true"></i>{{$vendor->email}}</h5>
                 <h4 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>
                 {{$vendor->area->name}},{{$vendor->area->subdistrict->name}}
@@ -305,6 +309,36 @@
 @section('scripts')
 
 <script type="text/javascript">
+sendEmail = () => {
+          if(!$("#name").val()){
+            toastr.warning("Please Enter Your Name");
+            return;
+          }
+          if(!$("#email").val()){
+            toastr.warning("Please Enter Your Email");
+            return;
+          }
+          if(!$("#message").val()){
+            toastr.warning("Please Enter Your Message");
+            return;
+          }
+          $('#btn1').prop('disabled', true);
+             $.ajax({
+                method: "POST",
+                url: "{{route('send-mail-vendor')}}",
+                data: {
+                  vendor:{{$vendor->id}},
+                  name:$("#name").val(),
+                  email:$("#email").val(),
+                  message:$("#message").val(),
+                  _token:$('input[name ="_token"]').val()
+                },
+                success: function(data) {
+                    toastr.success("Your message has been submitted");
+                     $('#btn1').prop('disabled', false);
+                }
+             })
+        }
         $("#sortby").on('change',function () {
           var sort = $("#sortby").val();
           window.location = "{{url('/store')}}/{{ str_replace(' ', '-', $vendor->shop_name) }}?sort="+sort;

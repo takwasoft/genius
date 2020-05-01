@@ -1002,6 +1002,28 @@ $(function($) {
                 }
             });
         });
+
+
+        // $(document).on('submit', 'vendor-mail', function(e) {
+        //     e.preventDefault();
+        //     var btn = $(this).find('button[type=submit]');
+        //     var $this = $(this).parent();
+        //     btn.prop('disabled', true);
+        //     alert("here")
+        //         // $.ajax({
+        //         //     method: "POST",
+        //         //     url: $(this).prop('action'),
+        //         //     data: new FormData(this),
+        //         //     contentType: false,
+        //         //     cache: false,
+        //         //     processData: false,
+        //         //     success: function(data) {
+        //         //         text.html(data);
+        //         //         $this.toggle();
+        //         //         btn.prop('disabled', false);
+        //         //     }
+        //         // });
+        // });
         // UPDATE ENDS
 
         // COMMENT DELETE
@@ -1327,6 +1349,7 @@ $(function($) {
                         $('.alert-success').show();
                         $('.alert-success p').html(data);
                         $('#messageform textarea').val('');
+                        $("#attach").val("");
                         $('#messages').load(href);
                     }
                     $('.gocover').hide();

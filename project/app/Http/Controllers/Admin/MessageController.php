@@ -69,13 +69,35 @@ class MessageController extends Controller
     }
     public function userMessage(){
         $convs = Conversation::orderBy('id','desc')->get();
-        return view('admin.message.user',compact('convs'));         
+        return view('admin.message.user',compact('convs'));          
+
+    }
+    public function userMessageDatatable(){
+        $datas = Conversation::orderBy('id','desc')->with('recieved')->with('sent')->get();
+        //--- Integrating This Collection Into Datatables
+        return Datatables::of($datas)
+                           ->editColumn('time', function(Conversation $data) {
+                               $date = $data->messages->last()->created_at->diffForHumans();
+                               return  $date;
+                           })
+                           ->editColumn('last', function(Conversation $data) {
+                               return  $data->messages->last()->message;
+                           })
+
+                           ->addColumn('action', function(Conversation $data) {
+                            return '<div class="action-list"><a href="' . route('admin-message-single',$data->id) . '"> <i class="fas fa-eye"></i> View</a>
+                            </div>';
+                               
+                           }) 
+                           ->rawColumns(['action'])
+                           ->toJson();   
+                        //    <a href="javascript:;" data-href="' . route('user-message-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a>      
 
     }
     public function userMessageSingle($id){
         $conv = Conversation::findOrfail($id);
         $user=User::find($conv->sent_user);
-
+  
             return view('admin.message.single',compact('user','conv'));  
     }
     //*** GET Request

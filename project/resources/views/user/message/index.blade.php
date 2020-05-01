@@ -44,9 +44,9 @@
                             <td>{{$conv->messages->last()->created_at->diffForHumans()}}</td>
                             <td>
                               <a href="{{route('user-message',$conv->id)}}" class="link view"><i class="fa fa-eye"></i></a>
-                              <a href="javascript:;" data-toggle="modal" data-target="#confirm-delete" data-href="{{route('user-message-delete',$conv->id)}}" class="link remove"><i class="fa fa-trash"></i></a>
+                              
                             </td>
-
+ 
                           </tr>
 
                         @endforeach
