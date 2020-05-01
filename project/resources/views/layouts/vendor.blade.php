@@ -22,7 +22,7 @@
 		<link href="{{asset('assets/vendor/plugins/fullside-menu/waves.min.css')}}" rel="stylesheet" />
 
 		<link href="{{asset('assets/vendor/css/plugin.css')}}" rel="stylesheet" />
-
+	<link rel="stylesheet" href="{{asset('assets/front/css/toastr.css')}}">
 		<link href="{{asset('assets/vendor/css/jquery.tagit.css')}}" rel="stylesheet" />
     	<link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap-coloroicker.css') }}">
 		<!-- Main Css -->
@@ -266,6 +266,7 @@
 		<script src="{{asset('assets/vendor/js/custom.js')}}"></script>
 		<!-- AJAX Js-->
 		<script src="{{asset('assets/vendor/js/myscript.js')}}"></script>
+		<script src="{{asset('assets/front/js/toastr.js')}}"></script>
 		@yield('scripts')
 
 @if($gs->is_admin_loader == 0)

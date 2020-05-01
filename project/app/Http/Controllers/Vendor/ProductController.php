@@ -138,11 +138,20 @@ class ProductController extends Controller
                                 return  $price;
                             })
                             ->addColumn('status', function(Product $data) {
-                               return $data->status == 1 ? '<span class="badge badge-success">Activated</span>' : '<span class="badge badge-danger">Deactivated</span>';
+                                if($data->status == 1 ){
+                                    return '<span class="badge badge-success">Activated</span>';
+                                }
+                                else if($data->status == 0){
+                                    return '<span class="badge badge-danger">Deactivated</span>';
+                                }
+                                else{
+                                    return '<span class="badge badge-warning">Pending</span>';
+
+                                }
                                 
                             })
                             ->addColumn('promotion', function(Product $data) {
-                                return '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>';
+                                return $data->status==1? '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>':'<span class="badge badge-danger">Not Eligible</span>';
                                  
                              })
                             ->addColumn('action', function(Product $data) {
@@ -183,7 +192,7 @@ class ProductController extends Controller
 
     //*** GET Request
     public function index()
-    { 
+    {  
         return view('vendor.product.index');
     }
 
@@ -723,6 +732,7 @@ if (!Product::where('sku',$line[0])->exists()){
                 $thumbnail = time().str_random(8).'.jpg';
                 $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
                 $prod->thumbnail  = $thumbnail;
+                $prod->status=2;
                 $prod->update();
 
             // Add To Gallery If any

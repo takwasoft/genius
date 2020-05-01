@@ -358,9 +358,9 @@
 		<div class="">
 			<div class="product-slide">
 							
-@foreach ($feature_category->products->take(5) as $product)
+@foreach ($feature_category->products->where('status',1)->take(5) as $product)
 @include('includes.product.sell')
-@endforeach
+@endforeach 
 				<!-- end single product  --->
 			</div>
 		</div>
