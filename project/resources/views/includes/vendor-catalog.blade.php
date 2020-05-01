@@ -147,52 +147,7 @@
 
             @else
 
-            <div class="service-center">
-              <div class="header-area">
-                <h4 class="title">
-                    {{ $langg->lang227 }}
-                </h4>
-              </div>
-              <div class="body-area">
-                <ul class="list">
-                  <li>
-                      <a href="javascript:;" data-toggle="modal" data-target="{{ Auth::guard('web')->check() ? '#vendorform1' : '#comment-log-reg' }}">
-                          <i class="icofont-email"></i> <span class="service-text">{{ $langg->lang228 }}</span>
-                      </a>
-                  </li>
-                  <li>
-                        <a href="tel:+{{$vendor->shop_number}}">
-                          <i class="icofont-phone"></i> <span class="service-text">{{$vendor->shop_number}}</span>
-                        </a>
-                  </li>
-                </ul>
-              <!-- Modal -->
-              </div>
-
-              <div class="footer-area">
-                <p class="title">
-                  {{ $langg->lang229 }}
-                </p>
-                <ul class="list">
-
-
-              @if($vendor->f_check != 0)
-              <li><a href="{{$vendor->f_url}}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-              @endif
-              @if($vendor->g_check != 0)
-              <li><a href="{{$vendor->g_url}}" target="_blank"><i class="fab fa-google"></i></a></li>
-              @endif
-              @if($vendor->t_check != 0)
-              <li><a href="{{$vendor->t_url}}" target="_blank"><i class="fab fa-twitter"></i></a></li>
-              @endif
-              @if($vendor->l_check != 0)
-              <li><a href="{{$vendor->l_url}}" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
-              @endif
-
-
-                </ul>
-              </div>
-            </div>
+           
 
 
             @endif

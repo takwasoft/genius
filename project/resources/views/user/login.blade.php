@@ -86,7 +86,7 @@
               <div class="login-form signup-form">
                 @include('includes.admin.form-login')
                 <form class="mregisterform" action="{{route('user-register-submit')}}" method="POST">
-                  {{ csrf_field() }} 
+                  {{ csrf_field() }}  
 
                   <div class="form-input r-field">
                     <input type="text" class="User Name" name="name" placeholder="{{ $langg->lang182 }}" required="">
@@ -155,4 +155,12 @@
   </div>
 </section>
 
+@endsection
+
+@section('scripts')
+  <script>
+  @if(Session::get('error'))
+              alert("Ban")
+  @endif
+  </script>
 @endsection

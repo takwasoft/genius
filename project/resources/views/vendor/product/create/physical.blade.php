@@ -104,7 +104,7 @@
 														</div>
 													</div>
 													<div class="col-lg-7">
-															<select  name="brand_id" required="">
+															<select  name="brand_id" >
 																	<option value="">Select Brand</option>
                                   @foreach($brands as $brand)
                                   <option  value="{{ $brand->id }}">{{$brand->name}}</option>
@@ -403,7 +403,7 @@
 																<span class="text text-danger">
 																You can set the price maximum {{$maxPrice}} {{$sign->name}} in your current package
 																</span>
-															@endif
+															@endif 
 															</p>
 														</div>
 													</div>

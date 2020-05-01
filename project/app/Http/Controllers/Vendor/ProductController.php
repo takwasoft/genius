@@ -206,7 +206,7 @@ class ProductController extends Controller
         $package = auth()->user()->subscribes()->orderBy('id','desc')->first(); 
         
         $cats = $package->subscription->categories;
-        $maxPrice=$package->subscription->max_price;
+        $maxPrice=$package->subscription->max_price; 
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
         return view('vendor.product.create.physical',compact('cats','sign','brands','maxPrice'));
@@ -443,7 +443,7 @@ if (!Product::where('sku',$line[0])->exists()){
     //*** POST Request
     public function store(Request $request)
     {
-
+ 
         $user = Auth::user();
         $package = $user->subscribes()->orderBy('id','desc')->first(); 
         $prods = $user->products()->orderBy('id','desc')->get()->count();
@@ -698,9 +698,13 @@ if (!Product::where('sku',$line[0])->exists()){
             else{
                 $input['area_id']=$user->area_id;
             }
-            $input['sub_district_id']=Area::find($input['area_id'])->sub_district_id;
+            if(!$request->brand_id){
+                $input['brand_id']=0;
+            }
+            $input['sub_district_id']=Area::find($input['area_id'])->sub_district_id; 
             $input['district_id']=SubDistrict::find($input['sub_district_id'])->district_id;
-            $input['division_id']=District::find($input['sub_district_id'])->division_id;
+            
+            $input['division_id']=District::find($input['district_id'])->division_id;
             // Save Data
                 $data->fill($input)->save();
 

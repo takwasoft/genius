@@ -153,5 +153,8 @@ class User extends Authenticatable
     {
         return $this->verifies()->where('admin_warning','=','1')->orderBy('id','desc')->first()->warning_reason;
     }
+    public function area(){
+        return $this->belongsTo(Area::class);
+    }
 
 }

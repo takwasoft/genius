@@ -26,7 +26,12 @@
   <section class="bg-muted">
     <div class="container">
    <div style="border:1px solid #e6e4e4;">
-    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4; border-radius:0">About</button><button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0">Contact</button></div>
+    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4; border-radius:0">About</button>
+    
+    @if($contact_hide==0)
+<button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0">Contact</button>
+    @endif
+    </div>
    </div>
   </div>
   </section>
@@ -278,11 +283,15 @@
         <hr class="float-left" style="width:200px;margin-top: -5px; margin-bottom: 1.3rem;border: 0;
     border-top: 2px solid rgba(63, 103, 60, 0.1);background: #08a245;">
         <div class="clearfix"></div>
-        
+                
                 <h5 class="pt-3"><i class="fas fa-phone-volume mr-2"></i>{{$vendor->phone}}</h5>
                 <h5 class="py-3"><i class="far fa-envelope  mr-2" aria-hidden="true"></i>{{$vendor->email}}</h5>
-                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->address}}</h5>
-                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->city}}{{$vendor->zip}}</h5>
+                <h4 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>
+                {{$vendor->area->name}},{{$vendor->area->subdistrict->name}}
+                <br>
+                {{$vendor->area->subdistrict->district->name}},{{$vendor->area->subdistrict->district->division->name}}
+                </h4>
+                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->address}},{{$vendor->city}}{{$vendor->zip}}</h5>
             </div>
        
       </div>

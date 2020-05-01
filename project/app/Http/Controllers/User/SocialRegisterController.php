@@ -73,8 +73,14 @@ class SocialRegisterController extends Controller
 
             $user = $socialProvider->user;
         }
-
+        
+        
         Auth::guard('web')->login($user); 
+        if(Auth::guard('web')->user()->ban == 1)
+          {
+            Auth::guard('web')->logout();
+            return redirect()->route('user.login')->with(['error'=>'Your Account Has Been Banned.']);   
+          }
         return redirect()->route('user-dashboard');
 
     }

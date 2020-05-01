@@ -22,13 +22,15 @@ class VendorController extends Controller
 
     public function index(Request $request,$slug)
     {
-        $this->code_image();
+        $this->code_image();  
         // $sort = "";
         $minprice = $request->min;
         $maxprice = $request->max;
         $sort = $request->sort;
         $string = str_replace('-',' ', $slug);
         $vendor = User::where('shop_name','=',$string)->firstOrFail();
+        $package = $vendor->subscribes()->orderBy('id','desc')->first(); 
+        $data['contact_hide']= $package->subscription->contact_hide; 
         $data['vendor'] = $vendor;
         $data['services'] = DB::table('services')->where('user_id','=',$vendor->id)->get();
         // $oldcats = $vendor->products()->where('status','=',1)->orderBy('id','desc')->get();
