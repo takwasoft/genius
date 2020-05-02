@@ -9453,3 +9453,14 @@ h6,
 .categories-list-division li:hover .sub-cate-item-division{
     display: block;
 }
+<<<<<<< HEAD
+=======
+
+.categories-list-division li:hover .sub-cate-item-division{
+    display: block;
+}
+
+.container{
+    max-width:78%;
+}
+>>>>>>> origin/ramadan

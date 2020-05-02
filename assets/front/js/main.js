@@ -34,12 +34,17 @@ $(function($) {
             /*categories slideToggle*/
             $(".categories_title").on("mouseover", function() {
                 $(this).addClass('active');
-                $('.categories_menu_inner').stop().slideDown('medium');
+                $('.stay_home').stop().slideDown('medium');
             });
 
 
             /*------addClass/removeClass categories-------*/
-            $(".categories_menu_inner > ul > li").on("mouseover", function() {
+            $(".stay_home1 > ul > li").on("mouseover", function() {
+                $(this).find('.link-area a').toggleClass('open').parent().parent().find('.categories_mega_menu, categorie_sub').addClass('open');
+                $(this).siblings().find('.categories_mega_menu, .categorie_sub').removeClass('open');
+            });
+
+            $(".stay_home > ul > li").on("mouseover", function() {
                 $(this).find('.link-area a').toggleClass('open').parent().parent().find('.categories_mega_menu, categorie_sub').addClass('open');
                 $(this).siblings().find('.categories_mega_menu, .categorie_sub').removeClass('open');
             });
@@ -47,20 +52,28 @@ $(function($) {
 
 
             $(document).on('mouseover', function(e) {
-                var container = $(".categories_menu_inner, .categories_mega_menu, .categories_title");
+                var container = $(".stay_home, .categories_mega_menu, .categories_title");
 
                 // if the target of the click isn't the container nor a descendant of the container
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
-                    $('.categories_menu_inner').stop().slideUp('medium');
-                    $('.categories_mega_menu, .categorie_sub').removeClass('open');
-                    $(".categories_mega_menu").removeClass('open');
-                    $(".categories_title").removeClass('active');
+                    $('.stay_home').stop().slideUp('medium');
+                    // $('.categories_mega_menu, .categorie_sub').removeClass('open');
+                    // $(".categories_mega_menu").removeClass('open');
+                    // $(".categories_title").removeClass('active');
                 }
-
-
-
             });
 
+            $(document).on('mouseover', function(e) {
+                var container = $(".stay_home1, .categories_mega_menu,.stay_home_3, .categories_title");
+
+                // if the target of the click isn't the container nor a descendant of the container
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                   
+                    $('.stay_home_3').removeClass('open');
+                    // $(".categories_mega_menu").removeClass('open');
+                    $(".categories_title").removeClass('active');
+                }
+            });
 
 
 
@@ -75,11 +88,11 @@ $(function($) {
         if (w <= 991) {
             $(".categories_title").on("click", function() {
                 $(this).toggleClass('active');
-                $('.categories_menu_inner').stop().slideToggle('medium');
+                $('.stay_home').stop().slideToggle('medium');
             });
 
             /*------addClass/removeClass categories-------*/
-            $(".categories_menu_inner > ul > li").on("click", function() {
+            $(".stay_home > ul > li").on("click", function() {
                 $(this).find('.link-area a').toggleClass('open').parent().parent().find('.categories_mega_menu, categorie_sub').toggleClass('open');
                 $(this).siblings().find('.categories_mega_menu, .categorie_sub').removeClass('open');
             });
@@ -87,22 +100,22 @@ $(function($) {
 
 
             $(document).on('click', function(e) {
-                var container = $(".categories_menu_inner, .categories_mega_menu, .categories_title");
+                var container = $(".stay_home, .categories_mega_menu, .categories_title");
 
                 // if the target of the click isn't the container nor a descendant of the container
                 if (!container.is(e.target) && container.has(e.target).length === 0) {
-                    $('.categories_menu_inner').stop().slideUp('medium');
+                    $('.stay_home').stop().slideUp('medium');
                     $('.categories_mega_menu, .categorie_sub').removeClass('open');
                     $(".categories_mega_menu").removeClass('open');
                     $(".categories_title").removeClass('active');
                 }
             });
 
-            $(".categories_menu_inner > ul > li.dropdown_list .link-area > a").on('click', function() {
+            $(".stay_home > ul > li.dropdown_list .link-area > a").on('click', function() {
                 $(this).find('i').toggleClass('fa-plus').toggleClass('fa-minus');
             });
 
-            $(".categories_menu_inner > ul > li.dropdown_list .link-area > a").each(function() {
+            $(".stay_home > ul > li.dropdown_list .link-area > a").each(function() {
                 $(this).html('<i class="fas fa-plus"></i>');
             });
 
