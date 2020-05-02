@@ -709,7 +709,7 @@ if (!Product::where('sku',$line[0])->exists()){
              $input['attributes'] = $jsonAttr;
            }
            if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id){
-            $input['area_id']=$user->area_id;
+            $input['subdistrict_id']=$user->subdistrict_id;
             $input['sub_district_id']=Area::find($input['area_id'])->sub_district_id; 
             $input['district_id']=SubDistrict::find($input['sub_district_id'])->district_id;
             

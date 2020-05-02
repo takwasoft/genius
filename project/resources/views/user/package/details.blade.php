@@ -1,6 +1,6 @@
 @extends('layouts.front')
 @section('content')
-
+ 
 <section class="user-dashbord">
     <div class="container">
         <div class="row">
@@ -93,114 +93,101 @@
                                 @include('includes.admin.form-error')
 
                                 {{ csrf_field() }}
+<input id="district_id" name="district_id" type="hidden">
+												<input id="subdistrict_id" name="subdistrict_id" type="hidden">
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
 
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
+                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
+                        <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
+                        
+                    </div>
 
+					
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item main-cate-item ">
+                            <ul>
+                                @foreach($districts as $district)
+                            
+                                    <li>
+                                    <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
+                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
+                                        <ul class="sub-menu1 text-muted">
+                                         <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
+                                            @foreach($district->subdistricts as $subdistrict)
+                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}')">{{$subdistrict->name}}</a></li>
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                @endforeach
+                              
+                            </ul>
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+                    
+                    <script>
+
+	showItem=(cls,id,cls2,sid,svalue,r,hid,hval)=>{
+		toastr.success(hval+" selected");
+		document.getElementById(hid).innerHTML=hval;
+		console.log(r)
+		r.forEach(ri=>{
+			document.getElementById(ri).value="";
+		})
+		document.getElementById(sid).value=svalue;
+		$(cls2).hide();
+		id="#"+cls+id;
+		cls="."+cls;
+		$(cls).hide();
+		$(id).show();
+	}
+</script>
                                 @if($user->is_vendor == 0)
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <h5 class="title pt-1">
-                                            Division *
+                                            Area
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select class="form-control" onchange="changeDistrict(this.value)">
-                                            <option>
-                                                Choose Division
-                                            </option>
-                                            @foreach($divisions as $division)
-                                            <option value="{{$division->id}}">{{$division->name}}</option>
-                                            @endforeach
-                                        </select>
+                                       <div data-target="#my-modal" data-toggle="modal">
+                                            <span id="area_name">Choose Area*</span>
+                                    
+                                        </div>
                                     </div>
                                 </div>
-
-                                <br>
-                                <div class="row">
-                                        <div class="col-lg-4">
-                                            <h5 class="title pt-1">
-                                                District *
-                                            </h5>
-                                        </div>
-                                        <div class="col-lg-8">
-                                            <select id="district" class="form-control"  onchange="changeSubDistrict(this.value)">
-                                                <option>
-                                                    Choose District 
-                                                </option>
-                                               
-                                            </select>
-                                        </div>
-                                    </div>
-    
-                                    <br>
-                                    <div class="row">
-                                            <div class="col-lg-4">
-                                                <h5 class="title pt-1">
-                                                    Sub District *
-                                                </h5>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select id="subDistrict" class="form-control"  onchange="changeArea(this.value)">
-                                                    <option>
-                                                        Choose Sub District
-                                                    </option>
-                                                   
-                                                </select>
-                                            </div>
-                                        </div>
-        
-                                        <br>
-                                        <div class="row">
-                                                <div class="col-lg-4">
-                                                    <h5 class="title pt-1">
-                                                        Area *
-                                                    </h5>
-                                                </div>
-                                                <div class="col-lg-8">
-                                                    <select name="area_id" required class="form-control" id="area">
-                                                        <option>
-                                                            Choose Area
-                                                        </option>
-                                                       
-                                                    </select>
-                                                </div>
-                                            </div>
-            <script>
-            changeDistrict=(id)=>{
-                var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("district").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", `{{URL::to('/get-district')}}/${id}`, true);
-  xhttp.send();   
-            }
-            changeSubDistrict=(id)=>{
-                var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("subDistrict").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", `{{URL::to('/get-subdistrict')}}/${id}`, true);
-  xhttp.send();   
-            }
-            changeArea=(id)=>{
-                var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     document.getElementById("area").innerHTML = this.responseText;
-    }
-  };
-  xhttp.open("GET", `{{URL::to('/get-area')}}/${id}`, true);
-  xhttp.send();   
-            }
-            </script>
-                                            <br>
+                            
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <h5 class="title pt-1">
-                                            {{ $langg->lang238 }} *
+                                            {{ $langg->lang238 }} 
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Classes\GeniusMailer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\District;
 use App\Models\Division;
 use Auth;
 use Illuminate\Support\Facades\Input;
@@ -101,6 +102,7 @@ class UserController extends Controller
         $user = Auth::user();
         $subs = Subscription::all();
         $package = $user->subscribes()->where('status',1)->orderBy('id','desc')->first();
+
         return view('user.package.index',compact('user','subs','package'));
     }
 
@@ -116,12 +118,17 @@ class UserController extends Controller
             return redirect()->back();
         }
         $divisions=Division::all();
-        return view('user.package.details',compact('user','subs','package','divisions'));
+        $districts=District::all();
+
+        return view('user.package.details',compact('user','subs','package','divisions','districts'));
     }
 
     public function vendorrequestsub(Request $request)
     {
-        $this->validate($request, [
+        
+        $this->validate($request,[
+            'subdistrict_id'=>'required'
+        ], [
             'shop_name'   => 'unique:users',
            ],[ 
                'shop_name.unique' => 'This shop name has already been taken.'
@@ -133,6 +140,7 @@ class UserController extends Controller
                     $today = Carbon::now()->format('Y-m-d');
                     $input = $request->all();  
                     $user->is_vendor = 2;
+                    $user->subdistrict_id = $request->subdistrict_id;
                     $user->date = date('Y-m-d', strtotime($today.' + '.$subs->days.' days'));
                     $user->mail_sent = 1;     
                     $user->update($input);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2020 at 06:24 PM
+-- Generation Time: May 02, 2020 at 01:16 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -48,7 +48,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `phone`, `role_id`, `photo`, `password`, `status`, `remember_token`, `created_at`, `updated_at`, `shop_name`) VALUES
-(1, 'Admin', 'admin@gmail.com', '01629552892', 0, '1556780563user.png', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 1, 'SmIIXZ9Cp7EpFdhCUpOP37V6TaYycdWR5miu5WvbgbBMEPQAAzkvFt2ztavC', '2018-02-28 23:27:08', '2019-07-26 21:21:32', 'Genius Store'),
+(1, 'Admin', 'admin@gmail.com', '01629552892', 0, '1556780563user.png', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 1, 'kNxGhq5LM1BoS8iX9mt6ZuMhro77mJ0tIjC4i12pf8iCgTY3Cm6w34ICiOOD', '2018-02-28 23:27:08', '2019-07-26 21:21:32', 'Genius Store'),
 (5, 'Mr Mamun', 'mamun@gmail.com', '34534534', 17, '1568803644User.png', '$2y$10$3AEjcvFBiQHECgtH9ivXTeQZfMf.rw318G820TtVBsYaCt7UNOwGC', 1, NULL, '2019-09-18 04:47:24', '2019-09-18 21:21:49', NULL),
 (6, 'Mr. Manik', 'manik@gmail.com', '5079956958', 18, '1568863361user-admin.png', '$2y$10$Z3Jx5jHjV2m4HtZHzeaKMuwxkLAKfJ1AX3Ed5MPACvFJLFkEWN9L.', 1, NULL, '2019-09-18 21:22:41', '2019-09-18 21:22:41', NULL),
 (7, 'Mr. Pratik', 'pratik@gmail.com', '34534534', 16, '1568863396user-admin.png', '$2y$10$u.93l4y6wOz6vq3BlAxvU.LuJ16/uBQ9s2yesRGTWUtLRiQSwoH1C', 1, 'iZPbEaxjSWBJMvncLqeMtAQsG7VoSirVMJ1EBfdJogvgXK2DM5mw236fBCOq', '2019-09-18 21:23:16', '2019-09-18 21:23:16', NULL);
@@ -100,7 +100,8 @@ CREATE TABLE `admin_user_conversations` (
 INSERT INTO `admin_user_conversations` (`id`, `ticket_id`, `user_id`, `message`, `created_at`, `updated_at`, `type`, `order_number`) VALUES
 (10, 2, 29, 'sa', '2020-04-23 14:31:49', '2020-04-23 14:31:49', 'Ticket', NULL),
 (11, 3, 29, 'd', '2020-04-23 14:35:06', '2020-04-23 14:35:06', 'Ticket', NULL),
-(12, 4, 29, 's', '2020-04-23 17:55:54', '2020-04-23 17:55:54', 'Ticket', NULL);
+(12, 4, 29, 's', '2020-04-23 17:55:54', '2020-04-23 17:55:54', 'Ticket', NULL),
+(13, 5, 37, 'hi', '2020-05-02 01:23:28', '2020-05-02 01:23:28', 'Ticket', NULL);
 
 -- --------------------------------------------------------
 
@@ -136,7 +137,8 @@ INSERT INTO `admin_user_messages` (`id`, `conversation_id`, `message`, `user_id`
 (22, 12, 'no', 29, 1, 0, '1587710896Untitled.png', '2020-04-24 13:48:16', '2020-04-24 13:51:56'),
 (23, 12, 'eta dekho', NULL, 1, 1, '1587711571New Text Document.txt', '2020-04-24 13:59:31', '2020-04-24 14:11:30'),
 (24, 12, 'h', NULL, 1, 1, 'none', '2020-04-24 14:03:09', '2020-04-24 14:11:30'),
-(25, 12, 'jani', NULL, 1, 1, 'none', '2020-04-24 14:05:13', '2020-04-24 14:11:30');
+(25, 12, 'jani', NULL, 1, 1, 'none', '2020-04-24 14:05:13', '2020-04-24 14:11:30'),
+(26, 13, 'hi', 37, 1, 0, 'none', '2020-05-02 01:23:28', '2020-05-02 01:23:28');
 
 -- --------------------------------------------------------
 
@@ -585,7 +587,8 @@ INSERT INTO `conversations` (`id`, `subject`, `sent_user`, `recieved_user`, `mes
 (3, 'Order Confirmation', 13, 22, 'EE', 0, '2019-08-19 23:17:26', '2019-08-19 23:17:26'),
 (4, 'kinbo', 29, 13, 'kothai', 0, '2020-04-21 04:02:24', '2020-04-21 04:02:24'),
 (5, 'ok', 27, 29, 'google', 0, '2020-04-21 04:04:47', '2020-04-21 04:04:47'),
-(6, 'hello', 37, 13, 'I am piash', 0, '2020-04-27 17:51:27', '2020-04-27 17:51:27');
+(6, 'hello', 37, 29, 'I am piash', 0, '2020-04-27 17:51:27', '2020-04-27 17:51:27'),
+(7, 'iam', 37, 29, 'testing', 0, '2020-05-01 22:53:59', '2020-05-01 22:53:59');
 
 -- --------------------------------------------------------
 
@@ -609,7 +612,7 @@ CREATE TABLE `counters` (
 INSERT INTO `counters` (`id`, `type`, `referral`, `total_count`, `todays_count`, `today`) VALUES
 (1, 'referral', 'www.facebook.com', 5, 0, NULL),
 (2, 'referral', 'geniusocean.com', 2, 0, NULL),
-(3, 'browser', 'Windows 10', 3915, 0, NULL),
+(3, 'browser', 'Windows 10', 3943, 0, NULL),
 (4, 'browser', 'Linux', 221, 0, NULL),
 (5, 'browser', 'Unknown OS Platform', 384, 0, NULL),
 (6, 'browser', 'Windows 7', 415, 0, NULL),
@@ -1233,8 +1236,6 @@ INSERT INTO `galleries` (`id`, `product_id`, `photo`) VALUES
 (236, 190, '15869574601568026791NGCCXoMs.png'),
 (237, 190, '15869574621568026881R8KnUyJv.png'),
 (238, 190, '15869574621568026899SLhVRzQv.png'),
-(239, 191, '15874383431586948146.jpg'),
-(240, 191, '15874383431586961093.png'),
 (241, 193, '158810079115.PNG'),
 (242, 193, '1588100791Cat.PNG'),
 (243, 194, '158810091715.PNG'),
@@ -1408,6 +1409,7 @@ CREATE TABLE `messages` (
   `sent_user` int(191) DEFAULT NULL,
   `recieved_user` int(191) DEFAULT NULL,
   `seen` int(11) NOT NULL DEFAULT 0,
+  `attachment` varchar(100) NOT NULL DEFAULT 'none',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1416,29 +1418,42 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `conversation_id`, `message`, `sent_user`, `recieved_user`, `seen`, `created_at`, `updated_at`) VALUES
-(1, 1, 'fdfgdfgfdgdfg', 22, NULL, 0, '2019-08-17 08:24:14', '2019-08-17 08:24:14'),
-(2, 2, 'dasd', 22, NULL, 0, '2019-08-17 08:59:40', '2019-08-17 08:59:40'),
-(3, 2, 'bv', 22, NULL, 0, '2019-08-17 09:21:24', '2019-08-17 09:21:24'),
-(4, 2, 'df', 22, NULL, 0, '2019-08-17 09:21:27', '2019-08-17 09:21:27'),
-(5, 2, 'dfg', 22, NULL, 0, '2019-08-17 09:21:29', '2019-08-17 09:21:29'),
-(6, 3, 'EE', 13, NULL, 0, '2019-08-19 23:17:26', '2019-08-19 23:17:26'),
-(7, 2, 'defgdfghdsfg', 22, NULL, 0, '2019-08-20 23:34:02', '2019-08-20 23:34:02'),
-(8, 1, 'te', 22, NULL, 0, '2019-08-21 00:19:46', '2019-08-21 00:19:46'),
-(9, 4, 'kothai', 29, NULL, 0, '2020-04-21 04:02:24', '2020-04-21 04:02:24'),
-(10, 4, 'eito', 29, NULL, 0, '2020-04-21 04:04:12', '2020-04-21 04:04:12'),
-(11, 5, 'google', 27, NULL, 0, '2020-04-21 04:04:47', '2020-04-21 04:04:47'),
-(12, 5, 'got it', NULL, 29, 1, '2020-04-21 04:05:30', '2020-04-21 05:11:17'),
-(13, 5, 'where', 27, NULL, 0, '2020-04-21 04:33:11', '2020-04-21 04:33:11'),
-(14, 5, 'no', 27, 29, 1, '2020-04-21 04:45:44', '2020-04-21 05:11:17'),
-(15, 5, 'who', NULL, 29, 1, '2020-04-21 04:47:44', '2020-04-21 05:11:17'),
-(16, 5, 'why', 27, 29, 1, '2020-04-21 04:48:08', '2020-04-21 05:11:17'),
-(17, 5, 'ok', NULL, 29, 1, '2020-04-21 04:48:45', '2020-04-21 05:11:17'),
-(18, 5, 'oj', 27, 29, 1, '2020-04-21 04:49:05', '2020-04-21 05:11:17'),
-(19, 5, 'bj', 27, 29, 1, '2020-04-21 04:49:16', '2020-04-21 05:11:17'),
-(20, 5, 'na', 27, 29, 0, '2020-04-21 05:11:27', '2020-04-21 05:11:27'),
-(21, 6, 'I am piash', 37, NULL, 0, '2020-04-27 17:51:27', '2020-04-27 17:51:27'),
-(22, 6, 'ok', 37, 13, 0, '2020-04-27 17:59:30', '2020-04-27 17:59:30');
+INSERT INTO `messages` (`id`, `conversation_id`, `message`, `sent_user`, `recieved_user`, `seen`, `attachment`, `created_at`, `updated_at`) VALUES
+(1, 1, 'fdfgdfgfdgdfg', 22, NULL, 0, 'none', '2019-08-17 08:24:14', '2019-08-17 08:24:14'),
+(2, 2, 'dasd', 22, NULL, 0, 'none', '2019-08-17 08:59:40', '2019-08-17 08:59:40'),
+(3, 2, 'bv', 22, NULL, 0, 'none', '2019-08-17 09:21:24', '2019-08-17 09:21:24'),
+(4, 2, 'df', 22, NULL, 0, 'none', '2019-08-17 09:21:27', '2019-08-17 09:21:27'),
+(5, 2, 'dfg', 22, NULL, 0, 'none', '2019-08-17 09:21:29', '2019-08-17 09:21:29'),
+(6, 3, 'EE', 13, NULL, 0, 'none', '2019-08-19 23:17:26', '2019-08-19 23:17:26'),
+(7, 2, 'defgdfghdsfg', 22, NULL, 0, 'none', '2019-08-20 23:34:02', '2019-08-20 23:34:02'),
+(8, 1, 'te', 22, NULL, 0, 'none', '2019-08-21 00:19:46', '2019-08-21 00:19:46'),
+(9, 4, 'kothai', 29, NULL, 0, 'none', '2020-04-21 04:02:24', '2020-04-21 04:02:24'),
+(10, 4, 'eito', 29, NULL, 0, 'none', '2020-04-21 04:04:12', '2020-04-21 04:04:12'),
+(11, 5, 'google', 27, NULL, 0, 'none', '2020-04-21 04:04:47', '2020-04-21 04:04:47'),
+(12, 5, 'got it', NULL, 29, 1, 'none', '2020-04-21 04:05:30', '2020-04-21 05:11:17'),
+(13, 5, 'where', 27, NULL, 0, 'none', '2020-04-21 04:33:11', '2020-04-21 04:33:11'),
+(14, 5, 'no', 27, 29, 1, 'none', '2020-04-21 04:45:44', '2020-04-21 05:11:17'),
+(15, 5, 'who', NULL, 29, 1, 'none', '2020-04-21 04:47:44', '2020-04-21 05:11:17'),
+(16, 5, 'why', 27, 29, 1, 'none', '2020-04-21 04:48:08', '2020-04-21 05:11:17'),
+(17, 5, 'ok', NULL, 29, 1, 'none', '2020-04-21 04:48:45', '2020-04-21 05:11:17'),
+(18, 5, 'oj', 27, 29, 1, 'none', '2020-04-21 04:49:05', '2020-04-21 05:11:17'),
+(19, 5, 'bj', 27, 29, 1, 'none', '2020-04-21 04:49:16', '2020-04-21 05:11:17'),
+(20, 5, 'na', 27, 29, 1, 'none', '2020-04-21 05:11:27', '2020-05-01 22:51:16'),
+(21, 6, 'I am piash', 37, NULL, 0, 'none', '2020-04-27 17:51:27', '2020-04-27 17:51:27'),
+(23, 6, 'I am this', 37, 29, 0, 'none', '2020-05-01 22:49:51', '2020-05-01 22:49:51'),
+(38, 7, 'ko', 37, 29, 1, 'none', '2020-05-01 23:19:02', '2020-05-01 23:19:16'),
+(39, 7, 'na re', 29, 37, 1, 'none', '2020-05-01 23:19:41', '2020-05-01 23:20:16'),
+(40, 7, 'ami ashik', 37, 29, 1, 'none', '2020-05-01 23:23:38', '2020-05-01 23:23:57'),
+(41, 7, 'ami piash', 29, 37, 1, 'none', '2020-05-01 23:24:08', '2020-05-01 23:26:01'),
+(42, 7, 'bol', 37, 29, 1, 'none', '2020-05-01 23:42:01', '2020-05-01 23:43:02'),
+(43, 7, 'got it', 29, 37, 1, 'none', '2020-05-01 23:43:11', '2020-05-01 23:44:43'),
+(44, 7, 'vai', 29, 37, 1, 'none', '2020-05-01 23:44:31', '2020-05-01 23:44:43'),
+(45, 7, 'bol', 37, 29, 0, 'none', '2020-05-01 23:44:50', '2020-05-01 23:44:50'),
+(46, 7, 'hm', 37, 29, 0, '158835816515.PNG', '2020-05-02 01:36:05', '2020-05-02 01:36:05'),
+(47, 7, 'na', 37, 29, 0, '1588358303fb_cred.txt', '2020-05-02 01:38:23', '2020-05-02 01:38:23'),
+(48, 7, 'f', 37, 29, 0, '1588358334fb_cred.txt', '2020-05-02 01:38:54', '2020-05-02 01:38:54'),
+(49, 7, 'no', 37, 29, 0, '1588358534fb_cred.txt', '2020-05-02 01:42:14', '2020-05-02 01:42:14'),
+(50, 7, 'ok', 37, 29, 0, '1588358552fb_cred.txt', '2020-05-02 01:42:32', '2020-05-02 01:42:32');
 
 -- --------------------------------------------------------
 
@@ -1510,7 +1525,8 @@ INSERT INTO `notifications` (`id`, `order_id`, `user_id`, `vendor_id`, `product_
 (18, NULL, 33, NULL, NULL, NULL, 1, '2020-04-25 13:15:58', '2020-04-27 14:05:37'),
 (19, NULL, 37, NULL, NULL, NULL, 1, '2020-04-25 15:05:36', '2020-04-27 14:05:37'),
 (20, NULL, 37, NULL, NULL, NULL, 1, '2020-04-27 17:41:19', '2020-04-27 17:49:37'),
-(21, NULL, 37, NULL, NULL, NULL, 1, '2020-04-27 17:42:42', '2020-04-27 17:49:37');
+(21, NULL, 37, NULL, NULL, NULL, 1, '2020-04-27 17:42:42', '2020-04-27 17:49:37'),
+(22, NULL, NULL, NULL, NULL, 13, 1, '2020-05-02 01:23:28', '2020-05-02 01:47:56');
 
 -- --------------------------------------------------------
 
@@ -1938,18 +1954,23 @@ INSERT INTO `products` (`id`, `sku`, `product_type`, `affiliate_link`, `user_id`
 (179, 'mf56823djs', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 99', 'physical-product-title-title-will-be-here-99-mf56823djs', '1570877127ByWwIJUA.jpg', '1570877128HKed4vMT.jpg', NULL, 'S', '2147483644', '20', 'White,Red,#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 0, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-10-12 04:45:27', '2019-10-12 04:45:28', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 99, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (180, 'myy7236gFD', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 99u', 'physical-product-title-title-will-be-here-99u-myy7236gfd', '1570877254IpMreGOE.jpg', '1570877254wBRHJA4w.jpg', NULL, 'S', '2147483644', '20', 'White,Red,#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 1, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-10-12 04:47:34', '2019-10-12 05:26:04', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 99, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (181, 'TJV7256rgp', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 99u', 'physical-product-title-title-will-be-here-99u-tjv7256rgp', '1570877275UqISZURU.jpg', '1570877275TFxddEsi.jpg', NULL, 'S', '2147483644', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 0, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-10-12 04:47:55', '2019-10-12 04:47:55', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 99, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
-(182, 'b017277kfm', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 99u', 'physical-product-title-title-will-be-here-99u-b017277kfm', '1570877286SxUGZME4.jpg', '1570877286o4pUSqMY.jpg', NULL, 'S', '2147483644', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 2, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag,js,css,php', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-10-12 04:48:06', '2019-10-13 03:22:45', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 99, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
+(182, 'b017277kfm', 'normal', NULL, 13, 5, 7, NULL, NULL, 'Physical Product Title Title will Be Here 99u', 'physical-product-title-title-will-be-here-99u-b017277kfm', '1570877286SxUGZME4.jpg', '1570877286o4pUSqMY.jpg', NULL, 'S', '2147483644', '20', '#000000,#851818,#ff0d0d,#1feb4c,#d620cf,#186ceb', 100, 200, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', NULL, '<p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.</p><p style=\"margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" font-size:=\"\" 14px;\"=\"\">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 1, 4, 'clothing,bag', NULL, NULL, 2, '5-7 days', 0, 'clothing,bag,js,css,php', 'clothing, bag', 'https://www.youtube.com/watch?v=HxNydN5tScI', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-10-12 04:48:06', '2020-05-01 19:14:24', 0, NULL, '10,20,30,40', '5,10,15,20', 0, 99, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (183, '123343561', 'affiliate', 'https://www.amazon.com/adidas-Girls-Sleeveless-Toddler-Little/dp/B07MTJL7ZT/ref=sr_1_1?keywords=dress&qid=1565068717&s=gateway&sr=8-1', 13, 4, 2, 1, NULL, 'Test CSV Product', 'test-csv-product-123343561', 'https://geniusocean.com/demo/kingcommerce/minimal/assets/images/1553323541minimal%20(16).jpg', '1573702721tylkFYoy.jpg', NULL, 'X,3XL', '22,23', '5,8', '#000000,#9c1515,#24f015,#050bc2,#d1900c', 20, 25, 'This is product Description', 10, 'Test policy', 1, 1, 'CLOTHS,FASHION,WOMEN FASHION,DRESSES,MENSWEAR', NULL, NULL, 0, NULL, 0, '', '', 'https://www.youtube.com/watch?v=7hx4gdlfamo', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-11-13 21:38:40', '2020-04-16 05:49:20', 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (184, 'WjP47001pZ', 'affiliate', 'https://www.amazon.com/Elvis-Presley-Mugshot-Poster-Stickers/dp/B07PZY9MMR/ref=pd_srecs_sabr_st_6/137-1959597-8129840?_encoding=UTF8&pd_rd_i=B07PZY9MMR&pd_rd_r=d21789f6-e46d-4e3f-84f3-4a1159e47b55&pd_rd_w=Ftzet&pd_rd_wg=Bor07&pf_rd_p=a25d43de-f6f4-41bb-aace-e6f7c0927a67&pf_rd_r=HWDW21HZDDS08T06835S&refRID=HWDW21HZDDS08T06835S', 13, 4, 2, 1, NULL, 'User', 'user-wjp47001pz', '1573704715Sj0qqtZ6.png', '1573704716SchylgSm.jpg', NULL, NULL, NULL, NULL, NULL, 66, 667, '<br>', NULL, '<br>', 1, 4, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-11-13 22:11:55', '2020-04-28 22:10:12', 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (185, 'XBG4742zhX', 'affiliate', 'https://www.amazon.com/Elvis-Presley-Mugshot-Poster-Stickers/dp/B07PZY9MMR/ref=pd_srecs_sabr_st_6/137-1959597-8129840?_encoding=UTF8&pd_rd_i=B07PZY9MMR&pd_rd_r=d21789f6-e46d-4e3f-84f3-4a1159e47b55&pd_rd_w=Ftzet&pd_rd_wg=Bor07&pf_rd_p=a25d43de-f6f4-41bb-aace-e6f7c0927a67&pf_rd_r=HWDW21HZDDS08T06835S&refRID=HWDW21HZDDS08T06835S', 13, 4, 2, 1, NULL, 'Usertest', 'usertest-xbg4742zhx', '1573704758YZCDvymD.png', '1573704758412SJWpb.jpg', NULL, NULL, NULL, NULL, NULL, 66, 77, '<br>', NULL, '<br>', 1, 2, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-11-13 22:12:38', '2020-04-13 07:19:46', 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (186, 'XBG4742zhXgfhfg', 'affiliate', 'https://www.amazon.com/Elvis-Presley-Mugshot-Poster-Stickers/dp/B07PZY9MMR/ref=pd_srecs_sabr_st_6/137-1959597-8129840?_encoding=UTF8&pd_rd_i=B07PZY9MMR&pd_rd_r=d21789f6-e46d-4e3f-84f3-4a1159e47b55&pd_rd_w=Ftzet&pd_rd_wg=Bor07&pf_rd_p=a25d43de-f6f4-41bb-aace-e6f7c0927a67&pf_rd_r=HWDW21HZDDS08T06835S&refRID=HWDW21HZDDS08T06835S', 13, 4, 2, 1, NULL, 'Usertest', 'usertest-xbg4742zhxgfhfg', '15737048788gkL2daH.png', '1573704878kp8AUxsp.jpg', NULL, NULL, NULL, NULL, NULL, 66, 77, '<br>', NULL, '<br>', 1, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2019-11-13 22:14:38', '2019-11-13 22:14:38', 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
-(187, 'h7F4514rJl', 'normal', NULL, 29, 13, NULL, NULL, NULL, 'test', 'test-h7f4514rjl', '1586444589UeFlRXZj.png', '15864445894no6B4ZL.jpg', NULL, NULL, NULL, NULL, NULL, 100, 22, 'test', 50, 'test', 1, 8, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-09 09:03:09', '2020-04-29 00:16:39', 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
+(187, 'h7F4514rJl', 'normal', NULL, 29, 13, NULL, NULL, NULL, 'test', 'test-h7f4514rjl', '1586444589UeFlRXZj.png', '15864445894no6B4ZL.jpg', NULL, NULL, NULL, NULL, NULL, 100, 22, 'test', 50, 'test', 1, 12, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-09 09:03:09', '2020-05-01 22:53:52', 0, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
 (188, 'B2m4948eRk', 'normal', NULL, 29, 4, 2, NULL, '{\"warranty_type\":{\"values\":[\"No warranty\"],\"prices\":[\"0\"],\"details_status\":1},\"color_family\":{\"values\":[\"Black\"],\"prices\":[\"0\"],\"details_status\":1}}', 'teast', 'teast-b2m4948erk', '15865250428EXy6b7m.png', '1586525042W6WZxbbr.jpg', NULL, NULL, NULL, NULL, NULL, 100, 15, 'ds', 7, 'fd', 1, 65, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-10 07:24:02', '2020-04-28 22:42:00', 0, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 0, '', 0, '2020-04-29 11:15:03'),
-(189, 'WNX3732b78', 'normal', NULL, 29, 6, 14, NULL, NULL, 'jam', 'jam-wnx3732b78', '1586954294zgqB6XmV.png', '1586954295CU5XBOgk.jpg', NULL, NULL, NULL, NULL, NULL, 100, 3.1903580290677067, 'this is dammu', 15, '<span style=\"font-size: 16px;\">this is dammu</span><br>', 1, 4, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, 'https://www.youtube.com/watch?v=fjJoX9F_F5g', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-15 06:38:14', '2020-04-24 20:45:07', 0, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 1, '', 0, '2020-04-29 11:15:03'),
+(189, 'WNX3732b78', 'normal', NULL, 29, 6, 14, NULL, NULL, 'jam', 'jam-wnx3732b78', '1586954294zgqB6XmV.png', '1586954295CU5XBOgk.jpg', NULL, NULL, NULL, NULL, NULL, 100, 3.1903580290677067, 'this is dammu', 15, '<span style=\"font-size: 16px;\">this is dammu</span><br>', 0, 4, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, 'https://www.youtube.com/watch?v=fjJoX9F_F5g', 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-15 06:38:14', '2020-05-01 18:03:19', 0, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 1, '', 0, '2020-04-29 11:15:03'),
 (190, 'kmM7393K3V', 'normal', NULL, 29, 13, NULL, NULL, NULL, 'beast', 'beast-kmm7393k3v', '1586957459Pk2NBHam.png', '1586957460uaUp5QRm.jpg', NULL, NULL, NULL, NULL, NULL, 100, 4.1356492969396195, 'sa', 25, 'dd', 0, 4, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-15 07:30:59', '2020-04-20 21:00:39', 1, '04/17/2020', NULL, NULL, 0, 0, 1, 0, 0, 0, 1, 'DC1902275', 0, '2020-04-29 11:15:03'),
-(191, 'TIl8198DOf', 'normal', NULL, 29, 15, NULL, NULL, NULL, 'mno', 'mno-til8198dof', '1587438342xQc5hizG.png', '1587438343IxCfKuXt.jpg', NULL, NULL, NULL, NULL, '#170303,#1fd1a6', 200, 300, 'hello', 500, 'polic', 1, 3, NULL, 'honda', '#000000', 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-20 21:05:42', '2020-04-27 18:12:09', 0, NULL, '30,40', '10,15', 0, 0, 1, 0, 0, 0, 1, 'DC1912505', 0, '2020-04-29 11:15:03'),
 (192, '20s90715zj', 'normal', NULL, 29, 18, NULL, NULL, NULL, 'rpt', 'rpt-20s90715zj', '1587439109v7w1UWaP.png', '1587439109VOa22yNb.jpg', NULL, NULL, NULL, NULL, NULL, 250, 350, 'dsd', 50, 'ds', 0, 2, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-04-20 21:18:29', '2020-04-27 18:51:37', 0, NULL, NULL, NULL, 0, 0, 1, 0, 0, 0, 1, 'DC1928064', 0, '2020-04-29 11:15:03'),
-(194, 'eia06921ux', 'normal', NULL, 29, 6, 14, NULL, NULL, 'Samsung s2', 'samsung-s2-eia06921ux', '1588100917ostXFxsP.png', '1588100917tyKq2tDG.jpg', NULL, NULL, NULL, NULL, NULL, 1400, 2100, 'hel', 25, 'sa', 1, 0, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 0, 0, '2020-04-29 02:08:37', '2020-04-30 16:15:27', 0, NULL, NULL, NULL, 0, 0, 2, 2, 3, 2, 1, 'DC1941007', 1, '2020-05-02 00:46:33');
+(194, 'eia06921ux', 'normal', NULL, 29, 6, 14, NULL, NULL, 'Samsung s2', 'samsung-s2-eia06921ux', '1588100917ostXFxsP.png', '1588100917tyKq2tDG.jpg', NULL, NULL, NULL, NULL, NULL, 1400, 2100, 'hel', 25, 'sa', 1, 6, NULL, NULL, NULL, 1, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 1, 0, 0, '2020-04-29 02:08:37', '2020-05-01 22:49:42', 0, NULL, NULL, NULL, 0, 0, 2, 2, 3, 2, 1, 'DC1941007', 1, '2020-05-02 00:46:33'),
+(195, '0Vs777085j', 'normal', NULL, 29, 4, NULL, NULL, NULL, 'as', 'as-0vs777085j', '15882783151p6SN7FK.png', '1588278316kxo9lAPk.jpg', NULL, NULL, NULL, NULL, NULL, 25, 20, 'as', 20, 'as', 0, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-05-01 03:25:15', '2020-05-01 03:25:16', 0, NULL, NULL, NULL, 0, 0, 5, 2, 2, 1, 0, 'DC1953190', 0, '2020-04-30 20:25:15'),
+(196, 'lB08752lSd', 'normal', NULL, 29, 4, NULL, NULL, NULL, 'as', 'as-lb08752lsd', '1588329112wd7ILlEH.png', '15883291139frqyByP.jpg', NULL, NULL, NULL, NULL, NULL, 25, 30, 's', 20, 's', 0, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-05-01 17:31:52', '2020-05-01 17:31:53', 0, NULL, NULL, NULL, 0, 0, 1, 2, 2, 1, 0, 'DC1968399', 0, '2020-05-01 10:31:52'),
+(197, 'hm79664poj', 'normal', NULL, 29, 4, NULL, NULL, NULL, 'sa', 'sa-hm79664poj', '1588329694zh7VKWOA.png', '1588329694uTyCr9GC.jpg', NULL, NULL, NULL, NULL, NULL, 200, 250, '<br>', 2, '<br>', 0, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-05-01 17:41:34', '2020-05-01 17:41:34', 0, NULL, NULL, NULL, 0, 0, 1, 2, 2, 1, 0, 'DC1972831', 0, '2020-05-01 10:41:34'),
+(198, 'eZP9881YlG', 'normal', NULL, 29, 4, NULL, NULL, NULL, 'sa', 'sa-ezp9881ylg', '1588329909SJzO7af9.png', '1588329909fV1h31je.jpg', NULL, NULL, NULL, NULL, NULL, 200, 250, '<br>', 2, '<br>', 0, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-05-01 17:45:09', '2020-05-01 18:00:46', 0, NULL, NULL, NULL, 0, 0, 1, 2, 2, 1, 0, 'DC1982351', 0, '2020-05-01 10:45:09'),
+(199, 'G1g4723Naw', 'normal', NULL, 29, 4, 2, NULL, NULL, 'test', 'test-g1g4723naw', '15884149165R0wPRq5.png', '1588414917VyCgShF7.jpg', NULL, NULL, NULL, NULL, NULL, 250, 200, '<br>', NULL, '<br>', 2, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-05-02 17:21:56', '2020-05-02 17:21:57', 0, NULL, NULL, NULL, 0, 0, 1, 2, 2, 1, 0, 'DC1993872', 0, '2020-05-02 10:21:56'),
+(200, 'bRU6319jO1', 'normal', NULL, 29, 5, 7, NULL, NULL, 'test', 'test-bru6319jo1', '1588416575jEFPEAcg.png', '158841657554OXJXKu.jpg', NULL, NULL, NULL, NULL, NULL, 30, 50, '<br>', NULL, '<br>', 2, 0, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 'Physical', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, '2020-05-02 17:49:35', '2020-05-02 17:49:35', 0, NULL, NULL, NULL, 0, 0, 0, 2, 2, 0, 0, 'DC2005434', 0, '2020-05-02 10:49:35');
 
 -- --------------------------------------------------------
 
@@ -2127,11 +2148,9 @@ INSERT INTO `product_clicks` (`id`, `product_id`, `date`) VALUES
 (609, 188, '2020-04-17'),
 (610, 188, '2020-04-17'),
 (611, 192, '2020-04-21'),
-(612, 191, '2020-04-21'),
 (613, 192, '2020-04-21'),
 (614, 101, '2020-04-21'),
 (615, 176, '2020-04-21'),
-(616, 191, '2020-04-21'),
 (617, 93, '2020-04-24'),
 (618, 93, '2020-04-24'),
 (619, 189, '2020-04-24'),
@@ -2155,7 +2174,6 @@ INSERT INTO `product_clicks` (`id`, `product_id`, `date`) VALUES
 (637, 188, '2020-04-24'),
 (638, 188, '2020-04-24'),
 (639, 101, '2020-04-27'),
-(640, 191, '2020-04-27'),
 (641, 101, '2020-04-27'),
 (642, 101, '2020-04-27'),
 (643, 101, '2020-04-27'),
@@ -2194,7 +2212,19 @@ INSERT INTO `product_clicks` (`id`, `product_id`, `date`) VALUES
 (676, 187, '2020-04-28'),
 (677, 187, '2020-04-28'),
 (678, 134, '2020-04-28'),
-(679, 134, '2020-04-28');
+(679, 134, '2020-04-28'),
+(680, 182, '2020-05-01'),
+(681, 182, '2020-05-01'),
+(682, 194, '2020-05-01'),
+(683, 194, '2020-05-01'),
+(684, 194, '2020-05-01'),
+(685, 194, '2020-05-01'),
+(686, 194, '2020-05-01'),
+(687, 194, '2020-05-01'),
+(688, 187, '2020-05-01'),
+(689, 187, '2020-05-01'),
+(690, 187, '2020-05-01'),
+(691, 187, '2020-05-01');
 
 -- --------------------------------------------------------
 
@@ -2534,20 +2564,22 @@ CREATE TABLE `subscriptions` (
   `allowed_products` int(11) NOT NULL DEFAULT 0,
   `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `max_price` double NOT NULL,
-  `product_duration` int(11) NOT NULL
+  `product_duration` int(11) NOT NULL,
+  `contact_hide` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `subscriptions`
 --
 
-INSERT INTO `subscriptions` (`id`, `title`, `currency`, `currency_code`, `price`, `days`, `allowed_products`, `details`, `max_price`, `product_duration`) VALUES
-(5, 'Standard', '$', 'NGN', 60, 45, 25, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 0, 0),
-(6, 'Premium', '$', 'USD', 120, 90, 90, '<span style=\"color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" text-align:=\"\" justify;\"=\"\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span><br>', 0, 0),
-(7, 'Unlimited', 'ট', 'USD', 250, 365, 0, '<span style=\"color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" text-align:=\"\" justify;\"=\"\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span><br>', 0, 0),
-(8, 'Basic', 'ট', 'USD', 0, 30, 0, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 1500, 0),
-(11, 'test', 'bdt', 'bd', 52, 10, 0, 'd', 50, 10),
-(12, 'pos', 's', 'sa', 10, 15, 0, 're', 15, 20);
+INSERT INTO `subscriptions` (`id`, `title`, `currency`, `currency_code`, `price`, `days`, `allowed_products`, `details`, `max_price`, `product_duration`, `contact_hide`) VALUES
+(5, 'Standard', '$', 'NGN', 60, 45, 25, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 0, 0, 0),
+(6, 'Premium', '$', 'USD', 120, 90, 90, '<span style=\"color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" text-align:=\"\" justify;\"=\"\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span><br>', 0, 0, 0),
+(7, 'Unlimited', 'ট', 'USD', 250, 365, 0, '<span style=\"color: rgb(0, 0, 0); font-family: \" open=\"\" sans\",=\"\" arial,=\"\" sans-serif;=\"\" text-align:=\"\" justify;\"=\"\">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span><br>', 0, 0, 0),
+(8, 'Basic', 'ট', 'USD', 0, 30, 0, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 1500, 0, 0),
+(11, 'test', 'bdt', 'bd', 52, 10, 0, 'd', 50, 10, 0),
+(12, 'pos', 's', 'sa', 10, 15, 0, 're', 15, 20, 1),
+(13, 'tr', 's', 's', 20, 15, 15, 'as', 500, 50, 1);
 
 -- --------------------------------------------------------
 
@@ -2570,11 +2602,26 @@ CREATE TABLE `subscription_categories` (
 INSERT INTO `subscription_categories` (`id`, `subscription_id`, `category_id`, `created_at`, `updated_at`) VALUES
 (1, 11, 4, '2020-04-28 15:03:04', '2020-04-28 15:03:04'),
 (2, 11, 10, '2020-04-28 15:03:04', '2020-04-28 15:03:04'),
-(6, 12, 18, NULL, NULL),
-(7, 12, 19, NULL, NULL),
 (8, 8, 4, NULL, NULL),
 (9, 8, 5, NULL, NULL),
-(10, 8, 6, NULL, NULL);
+(10, 8, 6, NULL, NULL),
+(13, 12, 18, NULL, NULL),
+(14, 12, 19, NULL, NULL),
+(15, 13, 6, NULL, NULL),
+(16, 13, 9, NULL, NULL),
+(17, 13, 8, NULL, NULL),
+(18, 13, 7, NULL, NULL),
+(19, 13, 4, NULL, NULL),
+(20, 13, 5, NULL, NULL),
+(21, 13, 10, NULL, NULL),
+(22, 13, 11, NULL, NULL),
+(23, 13, 12, NULL, NULL),
+(24, 13, 13, NULL, NULL),
+(25, 13, 15, NULL, NULL),
+(26, 13, 16, NULL, NULL),
+(27, 13, 17, NULL, NULL),
+(28, 13, 18, NULL, NULL),
+(29, 13, 19, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2625,7 +2672,8 @@ INSERT INTO `tickets` (`id`, `subject`, `status`, `ticket_category_id`, `created
 (1, 'as', 0, 1, '2020-04-23 14:27:29', '2020-04-23 14:27:29'),
 (2, 'd', 1, 2, '2020-04-23 14:31:49', '2020-04-23 15:02:21'),
 (3, 'c', 0, 1, '2020-04-23 14:35:06', '2020-04-23 14:35:06'),
-(4, 'd', 0, 1, '2020-04-23 17:55:54', '2020-04-23 17:55:54');
+(4, 'd', 0, 1, '2020-04-23 17:55:54', '2020-04-23 17:55:54'),
+(5, 'ds', 0, 1, '2020-05-02 01:23:28', '2020-05-02 01:23:28');
 
 -- --------------------------------------------------------
 
@@ -2698,24 +2746,24 @@ CREATE TABLE `users` (
   `current_balance` double NOT NULL DEFAULT 0,
   `date` date DEFAULT NULL,
   `ban` tinyint(1) NOT NULL DEFAULT 0,
-  `area_id` int(11) NOT NULL DEFAULT 0
+  `subdistrict_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `photo`, `zip`, `city`, `country`, `address`, `phone`, `fax`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_provider`, `status`, `verification_link`, `email_verified`, `affilate_code`, `affilate_income`, `shop_name`, `owner_name`, `shop_number`, `shop_address`, `reg_number`, `shop_message`, `shop_details`, `shop_image`, `f_url`, `g_url`, `t_url`, `l_url`, `is_vendor`, `f_check`, `g_check`, `t_check`, `l_check`, `mail_sent`, `shipping_cost`, `current_balance`, `date`, `ban`, `area_id`) VALUES
+INSERT INTO `users` (`id`, `name`, `photo`, `zip`, `city`, `country`, `address`, `phone`, `fax`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `is_provider`, `status`, `verification_link`, `email_verified`, `affilate_code`, `affilate_income`, `shop_name`, `owner_name`, `shop_number`, `shop_address`, `reg_number`, `shop_message`, `shop_details`, `shop_image`, `f_url`, `g_url`, `t_url`, `l_url`, `is_vendor`, `f_check`, `g_check`, `t_check`, `l_check`, `mail_sent`, `shipping_cost`, `current_balance`, `date`, `ban`, `subdistrict_id`) VALUES
 (13, 'Vendor', '1557677677bouquet_PNG62.png', '1234', 'Washington, DC', 'Algeria', 'Space Needle 400 Broad St, Seattles', '3453453345453411', '23123121', 'vendor@gmail.com', '$2y$10$.4NrvXAeyToa4x07EkFvS.XIUEc/aXGsxe1onkQ.Udms4Sl2W9ZYq', 'XRcBh8iPSOYwxzJhbnpfED9m1wEVZ3B6jkNGFD34CkLnUStmPIS2A5HEAUlh', '2018-03-07 18:05:44', '2019-10-10 02:35:29', 0, 2, '$2y$10$oIf1at.0LwscVwaX/8h.WuSwMKEAAsn8EJ.9P7mWzNUFIcEBQs8ry', 'Yes', '$2y$10$oIf1at.0LwscVwaX/8h.WuSwMKEAAsn8EJ.9P7mWzNUFIcEBQs8rysdfsdfds', 5000, 'Test Stores', 'User', '43543534', 'Space Needle 400 Broad St, Seattles', 'asdasd', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2019-11-24', 0, 0),
 (22, 'User', NULL, '1231', 'Test City', 'United States', 'Test Address', '34534534534', '34534534534', 'user@gmail.com', '$2y$10$.4NrvXAeyToa4x07EkFvS.XIUEc/aXGsxe1onkQ.Udms4Sl2W9ZYq', 'M3RPNruK7j8iUhrtLSPbKX8jqnZLXRhxQ0JTtE3QE3jKMzhJvfa1sTQ0q1mO', '2019-06-20 12:26:24', '2019-10-13 23:13:21', 0, 0, '1edae93935fba69d9542192fb854a80a', 'Yes', '8f09b9691613ecb8c3f7e36e34b97b80', 5000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
 (27, 'Test User', NULL, NULL, NULL, NULL, 'Space Needle 400 Broad St, Seattles', '01736937162', NULL, 'junajunnerun@gmail.com', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 'Imu9EouyI1uKJ0gz8HTDWsfAr93cyJMotjV5Sfq5tXQqxPU3qsmzbOueu0rY', '2019-10-05 04:15:08', '2019-10-09 21:32:57', 0, 0, '0521bba4c819528b6a18a581a5842f17', 'Yes', 'bb9d23401cd70f11998fe36ea7677797', 0, 'Test Store', 'User', '43543534', 'Space Needle 400 Broad St, Seattles', 'asdasd', 'ds', NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2019-11-24', 0, 0),
 (28, 'User', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'junnung@gmail.com', '$2y$10$YDfElg7O3K6eQK5enu.TBOyo.8TIr6Ynf9hFQ8dsIDeWAfmmg6hA.', 'pNFebTvEQ3jRaky9p7XnCetHs9aNFFG7nqRFho0U7nWrgT7phS6MoX8f9EYz', '2019-10-13 05:39:13', '2019-10-13 05:39:13', 0, 0, '8036978c6d71501e893ba7d3f3ecc15d', 'Yes', '33899bafa30292165430cb90b545728a', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
-(29, 'piash', '15870303761567226936Baby.tux-800x800.png', '1200', 'Dhaka', 'Bangladesh', 'Dhaka', '01742349541', NULL, 'piash3700@gmail.com', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 'ZB9ABWiulXGW1gA0dJFWVf7RW0xeKgenhSL2SbxNwqHrmhIOyB1cLHxZ8ahT', '2020-04-09 08:05:23', '2020-04-17 07:31:37', 0, 0, 'ee1da91c1a625f09d87a87f3b0ed62f7', 'No', '9567af758a92a16104a4f341dc1b2a38', 0, 'asp', 'sagor', 's3', 'safs', 's', 'ds', 'dammy details', '15865770251584479344.jpg', 'sa', NULL, NULL, NULL, 2, 1, 0, 0, 0, 1, 0, 600, '2020-05-11', 0, 0),
+(29, 'piash', '15870303761567226936Baby.tux-800x800.png', '1200', 'Dhaka', 'Bangladesh', 'Dhaka', '01742349541', NULL, 'piash3700@gmail.com', '$2y$10$klbY/2rpx/nNMdbnwxaK6ulVOHFEKiGHB4CU/fjE1MGO/fSAyB3A2', 'MVlGM8SvN9gzsVqBdcmSR4x269k3gu0vsCrPXdZ96wOBSo53bWjCA1FG5Mk9', '2020-04-09 08:05:23', '2020-04-17 07:31:37', 0, 0, 'ee1da91c1a625f09d87a87f3b0ed62f7', 'No', '9567af758a92a16104a4f341dc1b2a38', 0, 'asp', 'sagor', 's3', 'safs', 's', 'ds', 'dammy details', '15865770251584479344.jpg', 'sa', NULL, NULL, NULL, 2, 1, 0, 0, 0, 1, 0, 600, '2020-05-11', 0, 1),
 (30, 'piash', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'piash1840@gmail.com', '$2y$10$pJvm31TmuJmTL12BJ7V6ie/YPAILHgXAkJRVg.6YEYFbAtJ4tFVJW', NULL, '2020-04-14 09:13:02', '2020-04-14 09:13:02', 0, 0, '9f2f51290bd65bbe27fd6be3b069e498', 'Yes', '58267f489fd5d155d1a33ff3cf2e52c8', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
 (31, 'Ashikur Rahman', NULL, NULL, NULL, NULL, 'dhaka', '01742349541', NULL, 'piash@yahoo.com', '$2y$10$.LPeQtReFyQFYDfdw69dNOqy84OGfcrf/9N5cHSJwEB9Ku21LfLtS', 'M9raTEF4BwJYwpRvuvaHJzh4BpuHnQJYLYWG7WVBm5UpMrjWxd0NsVeNA0vz', '2020-04-17 08:55:10', '2020-04-17 09:04:06', 0, 0, 'c5d9bd7982668c4cf297a983bacc4c84', 'Yes', 'f13ac0ade1b2abb7bfc238dc8da4a15a', 0, 'manik', 'Ratan', '15', 'Dhaka 1200', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2020-05-17', 0, 0),
 (32, 'as', NULL, NULL, NULL, NULL, NULL, '0174234', NULL, 'not set', '$2y$10$3HWoOLdVWo2qMyHjMOg8teqzd/upIhwVd8Ebo.WxOppyj/zy9cD0C', 's0Wr1mM1vzUwOtOap8pMoxXh8FNQQJszMQxgoXjX5S35hcIU2r17EAOO7wpF', '2020-04-21 02:44:37', '2020-04-21 02:44:37', 0, 0, '93d2fc09249e107e7d65c9b94f7d3982', 'Yes', 'd2335e43d65de6f9496eb0e58633efd2', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
 (33, 'piash ashik', NULL, NULL, NULL, NULL, 'dhaka', '0173693716', NULL, 'piash370@gmail.com', '$2y$10$TvwmKOgjU5GU0U7O.SUkLORmppbUj862V3L2BRvkWrZUq2ejD0DTK', 'UmUACUB7Ti18bgxr3pofQgIIEfzbIHnU37aQhKB42gIBtcNYTogO8QCbi5oE', '2020-04-25 13:15:58', '2020-04-25 13:15:58', 0, 0, '23af215ce48b3d528b339a568543e686', 'No', 'a705417ab08dea57c6ce04df9a38d990', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0),
-(37, 'piash', NULL, NULL, NULL, NULL, 'dhaka', '01736937161', NULL, 'piash30@gmail.com', '$2y$10$V7EpfoLbewB/q3igoLE5zOFVcw1jflwY6k9YmVYZ.dJF1PsOYyE5S', 'lpMIuBGGI2ebxQUqNbosL2dLwhtrxHIUcE2nVI5v56IBYfmRvmw6X73zLERv', '2020-04-25 15:05:36', '2020-04-27 17:41:19', 0, 0, '5ffb146728bbe576e72524cdc9b391d0', 'Yes', '248a59f67e96f5d79e55b47b8841aac1', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0);
+(37, 'ashik', NULL, NULL, NULL, NULL, 'dhaka', '01736937161', NULL, 'piash30@gmail.com', '$2y$10$V7EpfoLbewB/q3igoLE5zOFVcw1jflwY6k9YmVYZ.dJF1PsOYyE5S', 'R6caL6bL2cRyBFUXq71T2HYZUkn51HsmbXDYp2W0Ag13S8MHVF7UV0uJmjRU', '2020-04-25 15:05:36', '2020-05-02 18:15:04', 0, 0, '5ffb146728bbe576e72524cdc9b391d0', 'Yes', '248a59f67e96f5d79e55b47b8841aac1', 0, 'as', 'sa', 'as', 'as', 'as', 'dsd', NULL, NULL, NULL, NULL, NULL, NULL, 2, 0, 0, 0, 0, 1, 0, 0, '2020-06-01', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -2795,7 +2843,8 @@ INSERT INTO `user_subscriptions` (`id`, `user_id`, `subscription_id`, `title`, `
 (81, 27, 5, 'Standard', '$', 'NGN', 60, 45, 25, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 'Paystack', '688094995', NULL, '2019-10-09 21:32:57', '2019-10-09 21:32:57', 1, NULL),
 (84, 13, 5, 'Standard', '$', 'NGN', 60, 45, 500, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 'Paystack', '242099342', NULL, '2019-10-10 02:35:29', '2019-10-10 02:35:29', 1, NULL),
 (85, 29, 8, 'Basic', 'ট', 'USD', 0, 30, 0, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 'Free', NULL, NULL, '2020-04-10 21:48:33', '2020-04-10 21:48:33', 1, NULL),
-(87, 31, 8, 'Basic', 'ট', 'USD', 0, 30, 0, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 'Free', NULL, NULL, '2020-04-17 09:04:06', '2020-04-17 09:04:06', 1, NULL);
+(87, 31, 8, 'Basic', 'ট', 'USD', 0, 30, 0, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 'Free', NULL, NULL, '2020-04-17 09:04:06', '2020-04-17 09:04:06', 1, NULL),
+(89, 37, 8, 'Basic', 'ট', 'USD', 0, 30, 0, '<ol><li>Lorem ipsum dolor sit amet<br></li><li>Lorem ipsum dolor sit ame<br></li><li>Lorem ipsum dolor sit am<br></li></ol>', 'Free', NULL, NULL, '2020-05-02 18:15:04', '2020-05-02 18:15:04', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -3363,13 +3412,13 @@ ALTER TABLE `admin_languages`
 -- AUTO_INCREMENT for table `admin_user_conversations`
 --
 ALTER TABLE `admin_user_conversations`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `admin_user_messages`
 --
 ALTER TABLE `admin_user_messages`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `areas`
@@ -3459,7 +3508,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `conversations`
 --
 ALTER TABLE `conversations`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `counters`
@@ -3537,7 +3586,7 @@ ALTER TABLE `languages`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -3549,7 +3598,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -3603,13 +3652,13 @@ ALTER TABLE `pickups`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(191) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
+  MODIFY `id` int(191) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
 
 --
 -- AUTO_INCREMENT for table `product_clicks`
 --
 ALTER TABLE `product_clicks`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=680;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=692;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -3693,13 +3742,13 @@ ALTER TABLE `subscribers`
 -- AUTO_INCREMENT for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `subscription_categories`
 --
 ALTER TABLE `subscription_categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `sub_districts`
@@ -3711,7 +3760,7 @@ ALTER TABLE `sub_districts`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `ticket_categories`
@@ -3741,7 +3790,7 @@ ALTER TABLE `user_notifications`
 -- AUTO_INCREMENT for table `user_subscriptions`
 --
 ALTER TABLE `user_subscriptions`
-  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(191) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `vendor_orders`
