@@ -76,29 +76,7 @@
 </head>
 
 <body>
- @if($gs->is_messenger == 1)
-    <style>
-.fb_dialog { 
-     left: 18pt;
- };
 
-  iframe.fb_customer_chat_bounce_in_v2{
-     left:36pt!important;
-  }
-
-  iframe.fb_customer_chat_bounce_out_v2{
-     left:36pt!important;
-  }
-#fb-root > div.fb-customerchat.fb_invisible_flow.fb_iframe_widget > span > iframe{
-left: 9pt !important;
-}
-#fb-root > div.fb_dialog.fb_dialog_advanced.fb_customer_chat_bubble_animated_no_badge.fb_customer_chat_bubble_pop_in{
-left: 18pt !important;
-}
-</style>
-      {!! $gs->messenger !!}
-    
-  @endif
 @if($gs->is_loader == 1)
 	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>
 @endif
@@ -528,7 +506,7 @@ left: 18pt !important;
 
 	<!-- LOGIN MODAL -->
 	<div class="modal fade" id="comment-log-reg" tabindex="-1" role="dialog" aria-labelledby="comment-log-reg-Title"
-		aria-hidden="true"> 
+		aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -537,7 +515,7 @@ left: 18pt !important;
 					</button>
 				</div>
 				<div class="modal-body">
-					<nav class="comment-log-reg-tabmenu"> 
+					<nav class="comment-log-reg-tabmenu">
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link login active" id="nav-log-tab1" data-toggle="tab" href="#nav-log1"
 								role="tab" aria-controls="nav-log" aria-selected="true">
@@ -559,54 +537,56 @@ left: 18pt !important;
 								<div class="login-form signin-form">
 									@include('includes.admin.form-login')
 									<form class="mloginform" action="{{ route('user.login.submit') }}" method="POST">
-                  {{ csrf_field() }}
-                  <div class="form-input">
-                    <input type="text" name="phone" placeholder="Enter Your Phone" required="">
-                    <i class="icofont-user-alt-5"></i>
-                  </div>
-                  <div class="form-input">
-                    <input type="password" class="Password" name="password" placeholder="{{ $langg->lang174 }}"
-                      required="">
-                    <i class="icofont-ui-password"></i>
-                  </div>
-                  <div class="form-forgot-pass">
-                    <div class="left">
-                      <input type="checkbox" name="remember" id="mrp" {{ old('remember') ? 'checked' : '' }}>
-                      <label for="mrp">{{ $langg->lang175 }}</label>
-                    </div>
-                    <div class="right">
-                      <a href="{{ route('user-forgot') }}">
-                        {{ $langg->lang176 }}
-                      </a>
-                    </div>
-                  </div>
-                  <input type="hidden" name="modal" value="1">
-                  <input class="mauthdata" type="hidden" value="{{ $langg->lang177 }}">
-                  <button type="submit" class="submit-btn">{{ $langg->lang178 }}</button>
-                  @if(App\Models\Socialsetting::find(1)->f_check == 1 || App\Models\Socialsetting::find(1)->g_check ==
-                  1)
-                  <div class="social-area">
-                    <h3 class="title">{{ $langg->lang179 }}</h3>
-                    <p class="text">{{ $langg->lang180 }}</p>
-                    <ul class="social-links">
-                      @if(App\Models\Socialsetting::find(1)->f_check == 1)
-                      <li>
-                        <a href="{{ route('social-provider','facebook') }}">
-                          <i class="fab fa-facebook-f"></i>
-                        </a>
-                      </li>
-                      @endif
-                      @if(App\Models\Socialsetting::find(1)->g_check == 1)
-                      <li>
-                        <a href="{{ route('social-provider','google') }}">
-                          <i class="fab fa-google-plus-g"></i>
-                        </a>
-                      </li>
-                      @endif
-                    </ul>
-                  </div>
-                  @endif
-                </form>
+										{{ csrf_field() }}
+										<div class="form-input">
+											<input type="email" name="email" placeholder="{{ $langg->lang173 }}"
+												required="">
+											<i class="icofont-user-alt-5"></i>
+										</div>
+										<div class="form-input">
+											<input type="password" class="Password" name="password"
+												placeholder="{{ $langg->lang174 }}" required="">
+											<i class="icofont-ui-password"></i>
+										</div>
+										<div class="form-forgot-pass">
+											<div class="left">
+												<input type="checkbox" name="remember" id="mrp"
+													{{ old('remember') ? 'checked' : '' }}>
+												<label for="mrp">{{ $langg->lang175 }}</label>
+											</div>
+											<div class="right">
+												<a href="javascript:;" id="show-forgot">
+													{{ $langg->lang176 }}
+												</a>
+											</div>
+										</div>
+										<input type="hidden" name="modal" value="1">
+										<input class="mauthdata" type="hidden" value="{{ $langg->lang177 }}">
+										<button type="submit" class="submit-btn">{{ $langg->lang178 }}</button>
+										@if(App\Models\Socialsetting::find(1)->f_check == 1 ||
+										App\Models\Socialsetting::find(1)->g_check == 1)
+										<div class="social-area">
+											<h3 class="title">{{ $langg->lang179 }}</h3>
+											<p class="text">{{ $langg->lang180 }}</p>
+											<ul class="social-links">
+												@if(App\Models\Socialsetting::find(1)->f_check == 1)
+												<li>
+													<a href="{{ route('social-provider','facebook') }}">
+														<i class="fab fa-facebook-f"></i>
+													</a>
+												</li>
+												@endif
+												@if(App\Models\Socialsetting::find(1)->g_check == 1)
+												<li>
+													<a href="{{ route('social-provider','google') }}">
+														<i class="fab fa-google-plus-g"></i>
+													</a>
+												</li>
+												@endif
+											</ul>
+										</div>
+										@endif
+									</form>
 								</div>
 							</div>
 						</div>
@@ -617,65 +597,70 @@ left: 18pt !important;
 								</div>
 								<div class="login-form signup-form">
 									@include('includes.admin.form-login')
-									<form class="mregisterform" action="{{route('user-register-submit')}}" method="POST">
-                  {{ csrf_field() }} 
+									<form class="mregisterform" action="{{route('user-register-submit')}}"
+										method="POST">
+										{{ csrf_field() }}
 
-                  <div class="form-input r-field">
-                    <input type="text" class="User Name" name="name" placeholder="{{ $langg->lang182 }}" required="">
-                    <i class="icofont-user-alt-5"></i>
-                  </div>
+										<div class="form-input">
+											<input type="text" class="User Name" name="name"
+												placeholder="{{ $langg->lang182 }}" required="">
+											<i class="icofont-user-alt-5"></i>
+										</div>
 
-                  <div class="form-input r-field">
-                    <input type="email" class="User Name" name="email" placeholder="{{ $langg->lang183 }}" >
-                    <i class="icofont-email"></i>
-                  </div>
+										<div class="form-input">
+											<input type="email" class="User Name" name="email"
+												placeholder="{{ $langg->lang183 }}" required="">
+											<i class="icofont-email"></i>
+										</div>
 
-                  <div class="form-input r-field">
-                    <input type="text" class="User Name" name="phone" placeholder="{{ $langg->lang184 }}" required="">
-                    <i class="icofont-phone"></i>
-                  </div>
+										<div class="form-input">
+											<input type="text" class="User Name" name="phone"
+												placeholder="{{ $langg->lang184 }}" required="">
+											<i class="icofont-phone"></i>
+										</div>
 
-                  <div class="form-input r-field">
-                    <input type="text" class="User Name" name="address" placeholder="{{ $langg->lang185 }}" >
-                    <i class="icofont-location-pin"></i>
-                  </div>
+										<div class="form-input">
+											<input type="text" class="User Name" name="address"
+												placeholder="{{ $langg->lang185 }}" required="">
+											<i class="icofont-location-pin"></i>
+										</div>
 
-                  <div class="form-input r-field">
-                    <input type="password" class="Password" name="password" placeholder="{{ $langg->lang186 }}"
-                      required="">
-                    <i class="icofont-ui-password"></i>
-                  </div>
+										<div class="form-input">
+											<input type="password" class="Password" name="password"
+												placeholder="{{ $langg->lang186 }}" required="">
+											<i class="icofont-ui-password"></i>
+										</div>
 
-                  <div class="form-input r-field">
-                    <input type="password" class="Password" name="password_confirmation"
-                      placeholder="{{ $langg->lang187 }}" required="">
-                    <i class="icofont-ui-password"></i>
-                  </div>
-                  <div class="form-input code-field" style="display:none">
-                    <input type="number" class="User Name" name="code"
-                      placeholder="Enter The Verification Code" >
-                    <i class="icofont-ui-password"></i>
-                  </div>
-                  @if($gs->is_capcha == 1)
+										<div class="form-input">
+											<input type="password" class="Password" name="password_confirmation"
+												placeholder="{{ $langg->lang187 }}" required="">
+											<i class="icofont-ui-password"></i>
+										</div>
 
-                  <ul class="captcha-area">
-                    <li>
-                      <p><img class="codeimg1" src="{{asset("assets/images/capcha_code.png")}}" alt=""> <i
-                          class="fas fa-sync-alt pointer refresh_code "></i></p>
-                    </li>
-                  </ul>
 
-                  <div class="form-input">
-                    <input type="text" class="Password" name="codes" placeholder="{{ $langg->lang51 }}" required="">
-                    <i class="icofont-refresh"></i>
-                  </div>
+										@if($gs->is_capcha == 1)
 
-                  @endif
+										<ul class="captcha-area">
+											<li>
+												<p><img class="codeimg1"
+														src="{{asset("assets/images/capcha_code.png")}}" alt=""> <i
+														class="fas fa-sync-alt pointer refresh_code "></i></p>
+											</li>
+										</ul>
 
-                  <input class="mprocessdata" type="hidden" value="{{ $langg->lang188 }}">
-                  <button type="submit" class="submit-btn">{{ $langg->lang189 }}</button>
+										<div class="form-input">
+											<input type="text" class="Password" name="codes"
+												placeholder="{{ $langg->lang51 }}" required="">
+											<i class="icofont-refresh"></i>
+										</div>
 
-                </form>
+
+										@endif
+
+										<input class="mprocessdata" type="hidden" value="{{ $langg->lang188 }}">
+										<button type="submit" class="submit-btn">{{ $langg->lang189 }}</button>
+
+									</form>
 								</div>
 							</div>
 						</div>
@@ -1051,16 +1036,12 @@ left: 18pt !important;
 
 </body>
 	<script>
-		$(document).ready(function(){
-
-setInterval(function(){
+		$(".add-to-cart.add-to-cart-btn").click(function() {
+            setTimeout(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
     $("#d-cart").html(result);
   }});
-			},4000)
-
-		})
-            
-        
+			},1000)
+        });
 	</script>
 </html>
