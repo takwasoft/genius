@@ -215,10 +215,17 @@ class ProductController extends Controller
         $package = auth()->user()->subscribes()->orderBy('id','desc')->first(); 
         
         $cats = $package->subscription->categories;
+        //sob gulo category jabena. ei vendor er package e jgulo ache sudhu ogulo jabe
+        //return $cats[0]->subs[0]->childs;
         $maxPrice=$package->subscription->max_price; 
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
-        return view('vendor.product.create.physical',compact('cats','sign','brands','maxPrice'));
+        $divisions=Division::all();
+        $districts=District::all();
+        $categories=Category::all();
+      
+        //every category has many subs. every subs has many childs
+        return view('vendor.product.create.physical',compact('cats','sign','brands','maxPrice','divisions','districts','categories'));
     }
 
     //*** GET Request
@@ -701,19 +708,23 @@ if (!Product::where('sku',$line[0])->exists()){
              $jsonAttr = json_encode($attrArr);
              $input['attributes'] = $jsonAttr;
            }
-            if($request->area_id){
-                $input['area_id']=$request->area_id;
-            }
-            else{
-                $input['area_id']=$user->area_id;
-            }
-            if(!$request->brand_id){
-                $input['brand_id']=0;
-            }
+           if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id){
+            $input['area_id']=$user->area_id;
             $input['sub_district_id']=Area::find($input['area_id'])->sub_district_id; 
             $input['district_id']=SubDistrict::find($input['sub_district_id'])->district_id;
             
             $input['division_id']=District::find($input['district_id'])->division_id;
+            }
+            else{
+                $input['area_id']=0;
+                if(!$request->division_id){
+                    $input['division_id']=District::find($request->district_id)->division_id; 
+                }
+            }
+            if(!$request->brand_id){
+                $input['brand_id']=0;
+            }
+            
             // Save Data
                 $data->fill($input)->save();
 

@@ -154,7 +154,7 @@
 								</a>
 								<ul class="collapse list-unstyled" id="menu2" data-parent="#accordion">
 									<li>
-										<a href="{{ route('select-area') }}"><span>{{ $langg->lang445 }}</span></a>
+										<a href="{{ route('vendor-prod-physical-create') }}"> <span>{{ $langg->lang445 }}</span></a>
 									</li>
 									<li>
 										<a href="{{ route('vendor-prod-index') }}"><span>{{ $langg->lang446 }}</span></a>
