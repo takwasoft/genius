@@ -878,7 +878,7 @@
                                         <ul class="sub-menu1 text-muted">
                                          <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
                                             @foreach($district->subdistricts as $subdistrict)
-                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}')">{{$subdistrict->name}}</a></li>
+                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
                                             @endforeach
                                             
                                         </ul>
@@ -905,7 +905,7 @@
                                          <li><a class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
                                             @foreach($division->districts as $district)
                                                 <li><a class="text-muted" href="#"
-												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}'"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
 												>{{$district->name}}</a></li>
                                             @endforeach
                                             
@@ -926,7 +926,11 @@
 
 <script>
 
-	showItem=(cls,id,cls2,sid,svalue,r,hid,hval)=>{
+	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+		if(cm){
+
+		$(cm).modal('toggle');
+		}
 		toastr.success(hval+" selected");
 		document.getElementById(hid).innerHTML=hval;
 		console.log(r)
@@ -975,7 +979,7 @@
                                         <ul class="sub-menu1 text-muted">
 										@foreach($cat->subs as $sub)
                                             <li><a
-											onclick="showItem('','','.aos','subcategory_id',{{$sub->id}},[],'cat_name','{{$sub->name}}')"
+											onclick="showItem('','','.aos','subcategory_id',{{$sub->id}},[],'cat_name','{{$sub->name}}','#my-modal2')"
 											 class="text-muted" href="#">{{$sub->name}}</a></li>
 											{{--  @foreach($sub->childs as $child)
                                             <li><a class="text-muted" href="http://google.com">{{$child->name}}</a></li>

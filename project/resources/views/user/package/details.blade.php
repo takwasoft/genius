@@ -130,7 +130,7 @@
                                         <ul class="sub-menu1 text-muted">
                                          <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
                                             @foreach($district->subdistricts as $subdistrict)
-                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}')">{{$subdistrict->name}}</a></li>
+                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
                                             @endforeach
                                             
                                         </ul>
@@ -154,7 +154,11 @@
                     
                     <script>
 
-	showItem=(cls,id,cls2,sid,svalue,r,hid,hval)=>{
+	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+if(cm){
+
+		$(cm).modal('toggle');
+		}
 		toastr.success(hval+" selected");
 		document.getElementById(hid).innerHTML=hval;
 		console.log(r)
