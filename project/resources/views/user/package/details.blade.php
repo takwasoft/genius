@@ -1,4 +1,50 @@
 @extends('layouts.front')
+@section('styles')
+
+<style>
+	.sub-cate-item{
+    top: 0%; 
+    position: absolute;
+    left: 100%;  
+    width: 90%; 
+    margin-left: 5px;
+    display: none;
+}
+.close span {
+    font-size: 27px!important;
+}
+
+.model-item li {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: .7rem 0 .7rem .80rem;
+}
+.model-item li li {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: .6rem .5rem;
+}
+.model-item li:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+.model-item li:first-child {
+    border-top: none;
+}
+.model-item1 li:first-child {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+}
+.model-item ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+	padding: 0;
+    list-style: none;
+}
+.model-item li a {
+    color: #0074ba;
+}
+.model-item li ul li a {
+    color: #0074ba!important;
+}
+</style>
+@endsection
 @section('content')
  
 <section class="user-dashbord">
