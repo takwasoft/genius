@@ -125,7 +125,7 @@
                   
                 </div>  --}}
                 <div class="col-6">
-                    <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>
+                    <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> <span id="area_name">অবস্থান নির্বাচন করুন</span></button>
                 </div>
                 <div class="col-6 pr-4">
                     <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
@@ -289,7 +289,7 @@
             </div>
          </div>
       </div>
-   </div>
+   </div> 
 </section>
 
 <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -311,21 +311,23 @@
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
                         
                     </div>
+
+					
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="categories-list model-item main-cate-item">
+                        <div class="categories-list model-item main-cate-item ">
                             <ul>
                                 @foreach($districts as $district)
 
                                     <li>
-                                    <a href="#" class="clearfix">
+                                    <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
                                         <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div class="categories-list sub-cate-item" style="">
+                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="http://google.com">{{$district->name}} এর সবগুলো</a></li>
+                                         <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
                                             @foreach($district->subdistricts as $subdistrict)
-                                                <li><a class="text-muted" href="http://google.com">{{$subdistrict->name}}</a></li>
+                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
                                             @endforeach
                                             
                                         </ul>
@@ -342,77 +344,22 @@
                             <ul>
                                @foreach($divisions as $division)
                                 <li>
-                                    <a href="#" class="clearfix">
-
+                                    <a
+									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
+									
+									 href="#" class="clearfix">
                                         <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                        <div class="categories-list sub-cate-item" style="">
+                                        <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="http://google.com">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                         <li><a class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
                                             @foreach($division->districts as $district)
-                                                <li><a class="text-muted" href="http://google.com">{{$district->name}}</a></li>
+                                                <li><a class="text-muted" href="#"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
+												>{{$district->name}}</a></li>
                                             @endforeach
                                             
                                         </ul>
                                     </div>
-
-                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                     <div class="categories-list sub-cate-item sub-cate-item-division" >
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Dhaka 5</a></li>
-                                            <li><a href="#" class="text-muted">Ghazipur 5</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Kishoreganj 5</a></li>
-                                            <li><a href="#" class=" text-muted">Manikganj 5</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                    <div class="categories-list sub-cate-item sub-cate-item-division" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Chittagong 100</a></li>
-                                            <li><a href="#" class="text-muted">Chittagong 100</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Chittagong 100</a></li>
-                                            <li><a href="#" class=" text-muted">Chittagong 100</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                        <div class="categories-list sub-cate-item sub-cate-item-division" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Barisal 420</a></li>
-                                            <li><a href="#" class="text-muted">Barisal 420</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Barisal 420</a></li>
-                                            <li><a href="#" class=" text-muted">Barisal 420</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
                                 </li>
                                 @endforeach
                             </ul>
@@ -431,18 +378,21 @@
 
 @section('scripts')
 <script>
-    function chooseArea(div,dis,subdis,area){
-//
-    }
-    function myFunction() {
 
-        var x = document.getElementById("myDIV");
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
+	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+		if(cm){
+
+		$(cm).modal('toggle');
+		}
+		toastr.success(hval+" selected");
+		document.getElementById(hid).innerHTML=hval;
+
+		$(cls2).hide();
+		id="#"+cls+id;
+		cls="."+cls;
+		$(cls).hide();
+		$(id).show();
+	}
 </script>
 <script>
 

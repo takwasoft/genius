@@ -89,7 +89,7 @@ class Product extends Model
         return $this->belongsTo('App\Models\District');
     }
     public function subdistrict(){
-        return $this->belongsTo('App\Models\SubDistrict');
+        return $this->belongsTo('App\Models\SubDistrict','sub_district_id');
     }
     public function user()
     {

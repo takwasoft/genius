@@ -34,10 +34,10 @@
 						<h5 class="mt-2">{{$product->name}}</h5>
 						<div class="local-info d-flex flex-row flex-wrap">
 							<div class="d-flex" style="margin-top:5px;"><div class="local-main"><i class="fas fa-star local-star"></i></div><div class="local-content">Member</div></div>
-							<div><span style="margin-left:5px;font-size:14px;">{{$product->area?$product->area->name:''}},</span></div> 
+							<div><span style="margin-left:5px;font-size:14px;">{{$product->subdistrict?$product->subdistrict->name:''}},</span></div> 
 							<div><span style="margin-left:5px;font-size:14px;">{{$product->category->name}}</span></div>
 							<div class="ml-auto mt-2" style="font-size:14px">
-								{{$product->created_at->diffForHumans()}}
+								{{$product->created_at->diffForHumans()}} 
 							</div>
 						</div>
 						<div class="price-details clearfix mt-3">
