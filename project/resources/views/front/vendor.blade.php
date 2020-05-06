@@ -263,24 +263,23 @@
          <div class="col-6">
           <div> 
             <form >
-
             {{csrf_field()}}
             <input type="hidden" name="vendor" value="{{$vendor->id}}">
-  <div class="form-group">
-    <label for="exampleInputName">Your Name</label>
-    <input id="name" name="name" type="name" class="form-control"aria-describedby="emailHelp" placeholder="Enter Name">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Your E-mail</label>
-    <input id="email"  name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
-  </div>
-  <div class="form-group">
-    <label for="exampleFormControlTextarea1">Your Message</label>
-    <textarea name="message" class="form-control" placeholder="Please enter your message here..." id="message" rows="3"></textarea>
-  </div>
-  <button id="btn1" type="button" onclick="sendEmail()" class="btn btn-primary" >Submit</button>
-</form>
-
+            <div class="form-group">
+              <label for="exampleInputName">Your Name</label>
+              <input id="name" name="name" type="name" class="form-control"aria-describedby="emailHelp" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Your E-mail</label>
+              <input id="email"
+              name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Your Message</label>
+              <textarea name="message" class="form-control" placeholder="Please enter your message here..." id="message" rows="3"></textarea>
+            </div>
+            <button id="btn1" type="button" onclick="sendEmail()" class="btn btn-primary" >Submit</button>
+          </form>
           </div>
          </div>
         <div class="col-6"><h2>Address</h2>
@@ -291,9 +290,10 @@
                 <h5 class="pt-3"><a href="tel:{{$vendor->phone}}"><i class="fas fa-phone-volume mr-2"></i>{{$vendor->phone}}</a></h5>
                 <h5 class="py-3"><i class="far fa-envelope  mr-2" aria-hidden="true"></i>{{$vendor->email}}</h5>
                 <h4 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>
-                {{$vendor->area->name}},{{$vendor->area->subdistrict->name}}
+                {{$vendor->subdistrict->name}}
                 <br>
-                {{$vendor->area->subdistrict->district->name}},{{$vendor->area->subdistrict->district->division->name}}
+                {{$vendor->subdistrict->district->name}},
+                {{$vendor->subdistrict->district->division->name}}
                 </h4>
                 <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->address}},{{$vendor->city}}{{$vendor->zip}}</h5>
             </div>
