@@ -23,6 +23,9 @@ class DistrictController extends Controller
             $data = District::latest()->with('Division')->get();
                 return Datatables::of($data)
                         ->addIndexColumn()
+                        ->addColumn('serial',function(District $data){
+                            return '<a class="btn btn-sm btn-success" href="'.route('admin-subdis-serial',$data->id).'">Serial</a>'; 
+                        }) 
                         ->addColumn('action', function($row){
 
                                $btn = '<div class="btn-group"><a href="'.URL::to('/admin/').'/districts/'.$row->id.'/edit" class="btn btn-sm btn-outline-primary">Edit</a>
@@ -37,11 +40,13 @@ class DistrictController extends Controller
 
                    }
                     $thead='<th>ID</th>
-                    <th>District</th>
-                    <th>Name</th>';
+                    <th>Name</th>
+                    <th>Division</th>
+                    <th>Serial</th>';
                     $columns="{data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
                     {data: 'division.name', name: 'division.name'},
-                    {data: 'name', name: 'name'},";
+                    {data: 'serial', name: 'serial'},";
                     return view('table.data',["columns"=>$columns,"thead"=>$thead,"layout"=>'admin.master','ajax'=>'districts','title'=>'District List']);
     }
 

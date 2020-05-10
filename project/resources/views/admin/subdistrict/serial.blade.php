@@ -1,16 +1,16 @@
- @extends('layouts.admin')
+  @extends('layouts.admin')
 
 @section('content')
   <div class="card" style="width:100%">
         <div class="card-header">
-            <h4>Sort District Of {{$division->name}}</h4>
+            <h4>Sort Sub District Of {{$district->name}}</h4>
         </div>
         <div class="card-body">
             <br>
                 <ul class="list-group" id="my-list">
-                        @foreach ($districts as $district)
-                        <li class="list-group-item" data-x="{{$district->id}}">
-                                <b>{{$district->name}}</b>
+                        @foreach ($subdistricts as $subdistrict)
+                        <li class="list-group-item" data-x="{{$subdistrict->id}}">
+                                <b>{{$subdistrict->name}}</b>
                         </li>
                     @endforeach
                 </ul>
@@ -66,7 +66,7 @@
         for(i=0;i<lists.length;i++){
             ar.push(lists[i].getAttribute("data-x"));
         }
-        window.location.href="{{URL::to('/admin/district/serial/update/'.$division->id)}}?lists="+JSON.stringify(ar);
+        window.location.href="{{URL::to('/admin/subdistrict/serial/update/'.$district->id)}}?lists="+JSON.stringify(ar);
       }
 </script>
 @endsection

@@ -315,7 +315,11 @@ Route::prefix('admin')->group(function() {
   Route::get('/subcategory/serial/update/{category}','Admin\SubCategoryController@serialUpdate')->name('admin-subcat-serial-update');
 
   Route::get('/district/serial/{division}', 'DistrictController@serial')->name('admin-dis-serial');
+  Route::get('/subdistrict/serial/{district}', 'SubDistrictController@serial')->name('admin-subdis-serial');
+
   Route::get('/district/serial/update/{division}','DistrictController@serialUpdate')->name('admin-dis-serial-update');
+
+  Route::get('/subdistrict/serial/update/{district}','SubDistrictController@serialUpdate')->name('admin-subdis-serial-update'); 
 
   Route::get('/subcategory', 'Admin\SubCategoryController@index')->name('admin-subcat-index');
   Route::get('/subcategory/create', 'Admin\SubCategoryController@create')->name('admin-subcat-create');
@@ -916,7 +920,7 @@ Route::group(['middleware'=>'permissions:super'],function(){
 // ************************************ ADMIN SECTION ENDS**********************************************
 
 // ************************************ USER SECTION **********************************************
-
+ 
 Route::prefix('user')->group(function() {
 
   // User Dashboard
@@ -924,14 +928,14 @@ Route::prefix('user')->group(function() {
 
   // User Login
   Route::get('/login', 'User\LoginController@showLoginForm')->name('user.login');
-  Route::post('/login', 'User\LoginController@login')->name('user.login.submit');
+  Route::post('/login', 'User\LoginController@login')->name('user.login.submit'); 
   // User Login End
 
   // User Register
   Route::get('/register', 'User\RegisterController@showRegisterForm')->name('user-register');
   Route::get('/email-verify', 'User\RegisterController@emailVerify')->name('email.verify');  
   Route::post('/register', 'User\RegisterController@register')->name('user-register-submit');
-  Route::get('/register/verify/{token}', 'User\RegisterController@token')->name('user-register-token');  
+  Route::get('/register/verify/{token}', 'User\RegisterController@token')->name ('user-register-token');  
   // User Register End
 
   // User Reset

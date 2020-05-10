@@ -86,6 +86,7 @@ class RegisterController extends Controller
 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$smsresult = curl_exec($ch);
+		return $smsresult;
 		$p = explode("|",$smsresult);
 		$sendstatus = $p[0];
 		return response()->json(1);

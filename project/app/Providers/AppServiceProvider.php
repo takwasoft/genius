@@ -16,9 +16,10 @@ use App\Models\AdminUserConversation;
 use App\Models\AdminUserMessage;
 use App\Models\FavoriteSeller;
 use App\Models\Message;
+use App\Models\Product;
 
 class AppServiceProvider extends ServiceProvider
-{
+{ 
     /**
      * Bootstrap any application services.
      *
@@ -42,6 +43,8 @@ class AppServiceProvider extends ServiceProvider
                     $tc+=$conv->messages->where('user_seen','=',0)->count();
                 }
                 $settings->with('ticketCount',$tc);
+                $pendingCount=Product::where('status','=',2)->count();
+                $settings->with('pendingCount',$pendingCount);
             }
             $settings->with('categories', Category::where('status','=',1)->orderBy('serial')->get());   
             if (Session::has('language')) 

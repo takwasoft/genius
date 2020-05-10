@@ -111,7 +111,19 @@ class Product extends Model
 
         return $price;
     }
-
+    public function getAddress(){
+       
+        if($this->subdistrict_id){
+           return $this->subdistrict(); 
+        }
+        if($this->district_id){
+            return $this->district(); 
+         }
+         if($this->division_id){
+            return $this->division(); 
+         }
+         return "";
+    }
     public function vendorSizePrice() {
         $gs = Generalsetting::findOrFail(1);
         $price = $this->price;

@@ -21,7 +21,7 @@
     </li>
     <li> 
         <a href="#menu2" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
-            <i class="icofont-cart"></i>{{ __('Products') }}
+            <i class="icofont-cart"></i>{{ __('Products') }} <span class="badge badge-danger"> {{$pendingCount}}</span>
         </a>
         <ul class="collapse list-unstyled" id="menu2" data-parent="#accordion">
             <li>
@@ -31,7 +31,9 @@
                 <a href="{{ route('admin-prod-index') }}"><span>{{ __('All Products') }}</span></a>
             </li>
             <li>
-                <a href="{{ route('admin-prod-pending') }}"><span>{{ __('Pending Product') }}</span></a>
+                <a href="{{ route('admin-prod-pending') }}"><span>{{ __('Pending Product') }}
+                
+                </span></a>
             </li>
             <li>
                 <a href="{{ route('admin-prod-deactive') }}"><span>{{ __('Deactivated Product') }}</span></a>
@@ -157,7 +159,7 @@
         </ul>
     </li>
 
-    <li>
+    <li> 
         <a href="#menu29" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Areas') }}</a>
         <ul class="collapse list-unstyled
         @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division')

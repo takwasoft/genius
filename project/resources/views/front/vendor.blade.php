@@ -290,10 +290,10 @@
                 <h5 class="pt-3"><a href="tel:{{$vendor->phone}}"><i class="fas fa-phone-volume mr-2"></i>{{$vendor->phone}}</a></h5>
                 <h5 class="py-3"><i class="far fa-envelope  mr-2" aria-hidden="true"></i>{{$vendor->email}}</h5>
                 <h4 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>
-                {{$vendor->subdistrict->name}}
+                {{$vendor->subdistrict?$vendor->subdistrict->name:''}}
                 <br>
-                {{$vendor->subdistrict->district->name}},
-                {{$vendor->subdistrict->district->division->name}}
+                {{$vendor->district?$vendor->district->name:''}},
+                {{$vendor->division?$vendor->division->name:''}}
                 </h4>
                 <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->address}},{{$vendor->city}}{{$vendor->zip}}</h5>
             </div>

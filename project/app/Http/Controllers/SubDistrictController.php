@@ -54,7 +54,21 @@ class SubDistrictController extends Controller
 
         return view('admin.subdistrict.create',["districts"=>District::all()]);
     }
+    public function serial(District $district){
+        $subdistricts=SubDistrict::where('district_id',$district->id)->orderBy('serial')->get();
+        return view('admin.subdistrict.serial',compact('district','subdistricts'));
+    }
 
+    public function serialUpdate(Request $request,District $district){
+        $lists= json_decode($request->lists);
+        for($i=0;$i<count($lists);$i++){
+            $subdistrict=SubDistrict::find($lists[$i]);
+            $subdistrict->serial=$i;
+            $subdistrict->save();
+        }
+        return redirect()->route('admin-subdis-serial',$district->id);
+       // return view('admin.category.serial');
+    }
     /**
      * Store a newly created resource in storage.
      *

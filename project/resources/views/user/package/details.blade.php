@@ -137,10 +137,11 @@
                                 @include('includes.form-success')
                                 @include('includes.form-error')
                                 @include('includes.admin.form-error')
-
+ 
                                 {{ csrf_field() }}
-<input id="district_id" name="district_id" type="hidden">
 												<input id="subdistrict_id" name="subdistrict_id" type="hidden">
+                                                <input id="district_id" name="district_id" type="hidden">
+                                                <input id="division_id" name="division_id" type="hidden">
 <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">
@@ -151,12 +152,11 @@
                       </button>
                 <div class="row">
                     <div class="col-md-6">
-                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
-                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
+                        
                         <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
                     </div>
                     <div class="col-md-6">
-                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
                         
                     </div>

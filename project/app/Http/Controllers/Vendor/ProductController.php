@@ -708,12 +708,13 @@ if (!Product::where('sku',$line[0])->exists()){
              $jsonAttr = json_encode($attrArr);
              $input['attributes'] = $jsonAttr;
            }
+
            if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id){
             $input['subdistrict_id']=$user->subdistrict_id;
-            $input['sub_district_id']=Area::find($input['area_id'])->sub_district_id; 
-            $input['district_id']=SubDistrict::find($input['sub_district_id'])->district_id;
+            $input['sub_district_id']=$user->subdistrict_id;
+            $input['district_id']=$user->district_id;
             
-            $input['division_id']=District::find($input['district_id'])->division_id;
+            $input['division_id']=$user->division_id;
             }
             else{
                 $input['area_id']=0;

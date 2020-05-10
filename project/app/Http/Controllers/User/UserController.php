@@ -109,6 +109,7 @@ class UserController extends Controller
 
     public function vendorrequest($id)
     {
+
         $subs = Subscription::findOrFail($id);
         $gs = Generalsetting::findOrfail(1);
         $user = Auth::user();
@@ -125,10 +126,8 @@ class UserController extends Controller
 
     public function vendorrequestsub(Request $request)
     {
-        
-        $this->validate($request,[
-            'subdistrict_id'=>'required'
-        ], [
+
+        $this->validate($request, [ 
             'shop_name'   => 'unique:users',
            ],[ 
                'shop_name.unique' => 'This shop name has already been taken.'
@@ -139,8 +138,13 @@ class UserController extends Controller
         $settings = Generalsetting::findOrFail(1);
                     $today = Carbon::now()->format('Y-m-d');
                     $input = $request->all();  
+
                     $user->is_vendor = 2;
                     $user->subdistrict_id = $request->subdistrict_id;
+                    $user->district_id = $request->district_id;
+                    if($request->district_id){
+                        $user->division_id=District::find($request->district_id)->division_id;
+                    }
                     $user->date = date('Y-m-d', strtotime($today.' + '.$subs->days.' days'));
                     $user->mail_sent = 1;     
                     $user->update($input);
