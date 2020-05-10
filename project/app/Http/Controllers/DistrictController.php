@@ -16,7 +16,11 @@ class DistrictController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -47,7 +51,7 @@ class DistrictController extends Controller
                     {data: 'name', name: 'name'},
                     {data: 'division.name', name: 'division.name'},
                     {data: 'serial', name: 'serial'},";
-                    return view('table.data',["columns"=>$columns,"thead"=>$thead,"layout"=>'admin.master','ajax'=>'districts','title'=>'District List']);
+                    return view('table.data',["columns"=>$columns,"thead"=>$thead,"layout"=>'admin.master','ajax'=>'districts','title'=>'District List']); 
     }
 
     /**
