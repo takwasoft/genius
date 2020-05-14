@@ -10,12 +10,18 @@
             <li>
                 <a href="{{route('admin-order-processing')}}"> {{ __('Processing Orders') }}</a>
             </li>
+                        <li>
+                <a href="{{route('admin-order-delivery')}}"> {{ __('On Delivery') }}</a>
+            </li>
             <li>
                 <a href="{{route('admin-order-completed')}}"> {{ __('Completed Orders') }}</a>
             </li>
             <li>
                 <a href="{{route('admin-order-declined')}}"> {{ __('Declined Orders') }}</a>
-            </li> 
+            </li>
+                        <li>
+                <a href="{{route('admin-order-paid')}}"> {{ __('Paid Orders') }}</a>
+            </li>  
 
         </ul>
     </li>
@@ -253,13 +259,21 @@
                     <a href="{{ URL::to('/admin/ticketcategories')}}"><span>Ticket Category</span></a>
                 </li>
             <li>
-                <a href="{{ route('admin-message-index') }}"><span>{{ __('Tickets') }}</span></a>
+                <a href="{{ route('admin-message-index') }}"><span>{{ __('Tickets') }}
+                <span class="badge badge-danger"> {{$ticketCount}}</span>
+                </span>
+                
+                </a>
             </li>
             <li>
                 <a href="{{ route('admin-message-dispute') }}"><span>{{ __('Disputes') }}</span></a>
             </li>
             <li>
-                <a href="{{ route('admin-messages') }}"><span>User Messages</span></a>
+                <a href="{{ route('admin-messages') }}"><span>User Messages
+                <span class="badge badge-danger"> {{$userMessageCount}}</span>
+                </span>
+                
+                </a>
             </li>
         </ul>
     </li>

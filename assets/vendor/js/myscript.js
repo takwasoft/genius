@@ -459,10 +459,13 @@
 
     $(document).on('submit', '#geniusform', function(e) {
         e.preventDefault();
-        if (!document.getElementById("category_id").value) {
-            toastr.warning('No Category Selected');
-            return;
+        if (document.getElementById("category_id")) {
+            if (!document.getElementById("category_id").value) {
+                toastr.warning('No Category Selected');
+                return;
+            }
         }
+
         if (admin_loader == 1) {
             $('.gocover').show();
         }

@@ -6,11 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\AdditionalField' => $baseDir . '/app/AdditionalField.php',
     'App\\Classes\\GeniusMailer' => $baseDir . '/app/Classes/GeniusMailer.php',
     'App\\Classes\\Instamojo' => $baseDir . '/app/Classes/Instamojo.php',
     'App\\Console\\Commands\\CrudGenerator' => $baseDir . '/app/Console/Commands/CrudGenerator.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\HiddenCharge' => $baseDir . '/app/HiddenCharge.php',
     'App\\Http\\Controllers\\Admin\\AdminLanguageController' => $baseDir . '/app/Http/Controllers/Admin/AdminLanguageController.php',
     'App\\Http\\Controllers\\Admin\\AttributeController' => $baseDir . '/app/Http/Controllers/Admin/AttributeController.php',
     'App\\Http\\Controllers\\Admin\\BannerController' => $baseDir . '/app/Http/Controllers/Admin/BannerController.php',
@@ -191,6 +193,8 @@ return array(
     'App\\Models\\Verification' => $baseDir . '/app/Models/Verification.php',
     'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
     'App\\Models\\Withdraw' => $baseDir . '/app/Models/Withdraw.php',
+    'App\\Payment' => $baseDir . '/app/Payment.php',
+    'App\\PaymentVerification' => $baseDir . '/app/PaymentVerification.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',
     'App\\Providers\\BroadcastServiceProvider' => $baseDir . '/app/Providers/BroadcastServiceProvider.php',

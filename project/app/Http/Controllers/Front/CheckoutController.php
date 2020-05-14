@@ -631,7 +631,7 @@ class CheckoutController extends Controller
     {
  
 $input = $request->all();
-
+ 
 $rules = [
     'txn_id4' => 'required',
 ];
@@ -729,7 +729,7 @@ $validator = Validator::make($input, $rules, $messages);
         $order['packing_cost'] = $request->packing_cost;
         $order['tax'] = $request->tax;
         $order['customer_phone'] = $request->phone;
-        $order['order_number'] = str_random(4).time(); 
+        $order['order_number'] = '00'.rand(10,99).$order->id;
         $order['customer_address'] = $request->address;
         $order['customer_country'] = $request->customer_country;
         $order['customer_city'] = $request->city;
@@ -761,8 +761,6 @@ $validator = Validator::make($input, $rules, $messages);
                 $order['affilate_user'] = $user->name;
                 $order['affilate_charge'] = $sub;
             }
-        $order->save();
-        $order['order_number']='#00'.rand(10,99).$order->id;
         $order->save();
         $track = new OrderTrack;
         $track->title = 'Pending';

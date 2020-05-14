@@ -44,7 +44,11 @@ class AppServiceProvider extends ServiceProvider
                 }
                 $settings->with('ticketCount',$tc);
                 $pendingCount=Product::where('status','=',2)->count();
+                $ticketCount=AdminUserMessage::where('admin_seen','=',0)->count();
+                $userMessageCount=Message::where('admin_seen','=',0)->count();
                 $settings->with('pendingCount',$pendingCount);
+                $settings->with('ticketCount',$ticketCount);
+                $settings->with('userMessageCount',$userMessageCount);
             }
             $settings->with('categories', Category::where('status','=',1)->orderBy('serial')->get());   
             if (Session::has('language')) 

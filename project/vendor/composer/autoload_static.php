@@ -495,11 +495,13 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
     );
 
     public static $classMap = array (
+        'App\\AdditionalField' => __DIR__ . '/../..' . '/app/AdditionalField.php',
         'App\\Classes\\GeniusMailer' => __DIR__ . '/../..' . '/app/Classes/GeniusMailer.php',
         'App\\Classes\\Instamojo' => __DIR__ . '/../..' . '/app/Classes/Instamojo.php',
         'App\\Console\\Commands\\CrudGenerator' => __DIR__ . '/../..' . '/app/Console/Commands/CrudGenerator.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\HiddenCharge' => __DIR__ . '/../..' . '/app/HiddenCharge.php',
         'App\\Http\\Controllers\\Admin\\AdminLanguageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminLanguageController.php',
         'App\\Http\\Controllers\\Admin\\AttributeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AttributeController.php',
         'App\\Http\\Controllers\\Admin\\BannerController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/BannerController.php',
@@ -680,6 +682,8 @@ class ComposerStaticInit6107b6dcf25e5fc524a9689f58e77036
         'App\\Models\\Verification' => __DIR__ . '/../..' . '/app/Models/Verification.php',
         'App\\Models\\Wishlist' => __DIR__ . '/../..' . '/app/Models/Wishlist.php',
         'App\\Models\\Withdraw' => __DIR__ . '/../..' . '/app/Models/Withdraw.php',
+        'App\\Payment' => __DIR__ . '/../..' . '/app/Payment.php',
+        'App\\PaymentVerification' => __DIR__ . '/../..' . '/app/PaymentVerification.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

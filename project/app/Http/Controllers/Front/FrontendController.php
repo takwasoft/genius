@@ -146,7 +146,7 @@ class FrontendController extends Controller
         // dd(Session::get('cart'));
         $brandCategories=BrandCategory::where('show_in_home',1)->get();
         $weekBrands=Brand::where('brand_week',1)->get();
-	    return view('front.index',compact('feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products')); 
+	    return view('front.index',compact('feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
 	}
     public function product(){
     

@@ -108,13 +108,16 @@ class CatalogController extends Controller
     public function category(Request $request, $slug=null, $slug1=null, $slug2=null)
     {
       $cat = null;
+      $division_id = null;
+      $district_id = null;
+      $sub_district_id = null;
       $subcat = null;
       $childcat = null;
       $minprice = $request->min;
       $maxprice = $request->max;
       $sort = $request->sort;
       $search = $request->search;
-
+ 
       if (!empty($slug)) {
         $cat = Category::where('slug', $slug)->firstOrFail();
         $data['cat'] = $cat;
@@ -127,6 +130,16 @@ class CatalogController extends Controller
         $childcat = Childcategory::where('slug', $slug2)->firstOrFail();
         $data['childcat'] = $childcat;
       }
+      if($request->division_id){
+        $division_id= $request->division_id;
+      }
+      if($request->district_id){
+        $district_id= $request->district_id;
+      }
+      if($request->subdistrict_id){
+        $sub_district_id= $request->subdistrict_id;
+      }
+      
 
       $prods = Product::when($cat, function ($query, $cat) {
                                       return $query->where('category_id', $cat->id);
@@ -137,6 +150,15 @@ class CatalogController extends Controller
                                   ->when($childcat, function ($query, $childcat) {
                                       return $query->where('childcategory_id', $childcat->id);
                                   })
+                                  ->when($division_id, function ($query, $division_id) {
+                                    return $query->where('division_id', $division_id);
+                                })
+                                ->when($district_id, function ($query, $district_id) {
+                                  return $query->where('district_id', $district_id);
+                              })
+                              ->when($sub_district_id, function ($query, $sub_district_id) {
+                                return $query->where('sub_district_id', $sub_district_id);
+                            })
                                   ->when($search, function ($query, $search) {
                                       return $query->whereRaw('MATCH (name) AGAINST (? IN BOOLEAN MODE)' , array($search));
                                   })
@@ -242,7 +264,7 @@ class CatalogController extends Controller
       $data['divisions']=Division::all();
       $data['districts']=District::all();
 
-      return view('front.category', $data);
+      return view('front.category', $data); 
     } 
 
 

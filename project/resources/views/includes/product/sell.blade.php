@@ -39,7 +39,7 @@
 							<div class="ml-auto mt-2" style="font-size:14px">
 								{{$product->created_at->diffForHumans()}} 
 							</div>
-						</div>
+						</div> 
 						<div class="price-details clearfix mt-3">
 							<div class="price-number float-left">
 								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>

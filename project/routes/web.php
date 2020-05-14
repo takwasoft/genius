@@ -64,6 +64,8 @@ Route::prefix('admin')->group(function() {
   Route::get('/order/edit/{id}', 'Admin\OrderController@edit')->name('admin-order-edit');
   Route::post('/order/update/{id}', 'Admin\OrderController@update')->name('admin-order-update');
   Route::get('/orders/pending', 'Admin\OrderController@pending')->name('admin-order-pending');
+  Route::get('/orders/delivery', 'Admin\OrderController@delivery')->name('admin-order-delivery');
+  Route::get('/orders/paid', 'Admin\OrderController@paid')->name('admin-order-paid');
   Route::get('/orders/processing', 'Admin\OrderController@processing')->name('admin-order-processing');
   Route::get('/orders/completed', 'Admin\OrderController@completed')->name('admin-order-completed');
   Route::get('/orders/declined', 'Admin\OrderController@declined')->name('admin-order-declined');
@@ -728,6 +730,12 @@ Route::prefix('admin')->group(function() {
   Route::get('/paymentgateway/create', 'Admin\PaymentGatewayController@create')->name('admin-payment-create');
   Route::post('/paymentgateway/create', 'Admin\PaymentGatewayController@store')->name('admin-payment-store');
   Route::get('/paymentgateway/edit/{id}', 'Admin\PaymentGatewayController@edit')->name('admin-payment-edit');
+  Route::post('add-additional', 'Admin\PaymentGatewayController@addAdditional')->name('admin-payment-additional');
+  Route::post('add-verification', 'Admin\PaymentGatewayController@addVerification')->name('admin-payment-verification');
+  Route::get('delete-verification/{id}', 'Admin\PaymentGatewayController@deleteVerification')->name('admin-payment-verification-delete');
+  Route::get('delete-additional/{id}', 'Admin\PaymentGatewayController@deleteAdditional')->name('admin-payment-additional-delete');
+  Route::get('/paymentgateway/rule/{id}', 'Admin\PaymentGatewayController@rule')->name('admin-payment-rule');
+
   Route::post('/paymentgateway/update/{id}', 'Admin\PaymentGatewayController@update')->name('admin-payment-update');
   Route::get('/paymentgateway/delete/{id}', 'Admin\PaymentGatewayController@destroy')->name('admin-payment-delete');
   Route::get('/paymentgateway/status/{id1}/{id2}', 'Admin\PaymentGatewayController@status')->name('admin-payment-status');
@@ -1249,7 +1257,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 // ************************************ VENDOR SECTION ENDS**********************************************
 
 // ************************************ FRONT SECTION **********************************************
-Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category');
+Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\CatalogController@category')->name('front.category'); 
   Route::get('/', 'Front\FrontendController@index')->name('front.index');
   Route::get('/home', function(){
     return "ok";

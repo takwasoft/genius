@@ -34,7 +34,8 @@
 														<tr>
 									                        <th width="30%">{{ __('Title') }}</th>
 									                        <th width="50%">{{ __('Details') }}</th>
-									                        <th>{{ __('Status') }}</th>
+									                        <th>{{ __('Rule') }}</th>
+															<th>{{ __('Status') }}</th>
 									                        <th>{{ __('Options') }}</th>
 														</tr>
 													</thead>
@@ -124,6 +125,7 @@
                columns: [
                         { data: 'title', name: 'title' },
                         { data: 'details', name: 'details' },
+                        { data: 'rule', name: 'rule' },
             			{ data: 'status', searchable: false, orderable: false },
             			{ data: 'action', searchable: false, orderable: false }
 

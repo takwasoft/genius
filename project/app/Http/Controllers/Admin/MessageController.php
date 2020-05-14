@@ -29,7 +29,7 @@ class MessageController extends Controller
         return redirect()->back();
     }
     //*** JSON Request
-    public function datatables($type)
+    public function datatables($type) 
     {
          $datas = AdminUserConversation::where('type','=',$type)->with('ticket','ticket.ticketCategory')->latest()->get();
          //--- Integrating This Collection Into Datatables
@@ -54,7 +54,10 @@ class MessageController extends Controller
                                 return  $name;
                             })
                             ->addColumn('action', function(AdminUserConversation $data) {
-                                return '<div class="action-list"><a href="' . route('admin-message-show',$data->id) . '"> <i class="fas fa-eye"></i> Details</a>
+                                $un=$data->messages->where('admin_seen','=',0)->count();
+                                return $un>0?'<div class="action-list"><a href="' . route('admin-message-show',$data->id) . '"> <i class="fas fa-eye"></i> Details <span class="badge badge-danger">'.$un.'</span></a>
+                                <a href="' . route('close-ticket',$data->ticket->id) . '">  Close</a>
+                                <a href="javascript:;" data-href="' . route('admin-message-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>':'<div class="action-list"><a href="' . route('admin-message-show',$data->id) . '"> <i class="fas fa-eye"></i> Details</a>
                                 <a href="' . route('close-ticket',$data->ticket->id) . '">  Close</a>
                                 <a href="javascript:;" data-href="' . route('admin-message-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
                             }) 
@@ -65,14 +68,15 @@ class MessageController extends Controller
     //*** GET Request
     public function index()
     {
+
         return view('admin.message.index');             
     }
-    public function userMessage(){
+    public function userMessage(){ 
         $convs = Conversation::orderBy('id','desc')->get();
         return view('admin.message.user',compact('convs'));          
 
     }
-    public function userMessageDatatable(){
+    public function userMessageDatatable(){ 
         $datas = Conversation::orderBy('id','desc')->with('recieved')->with('sent')->get();
         //--- Integrating This Collection Into Datatables
         return Datatables::of($datas)
@@ -85,7 +89,9 @@ class MessageController extends Controller
                            })
 
                            ->addColumn('action', function(Conversation $data) {
-                            return '<div class="action-list"><a href="' . route('admin-message-single',$data->id) . '"> <i class="fas fa-eye"></i> View</a>
+                            $un=$data->messages->where('admin_seen','=',0)->count();
+                            return $un==0?'<div class="action-list"><a href="' . route('admin-message-single',$data->id) . '"> <i class="fas fa-eye"></i> View</a>
+                            </div>':'<div class="action-list"><a href="' . route('admin-message-single',$data->id) . '"> <i class="fas fa-eye"></i> View</a><span class="badge badge-danger">'.$un.'</span>
                             </div>';
                                
                            }) 
@@ -96,8 +102,12 @@ class MessageController extends Controller
     }
     public function userMessageSingle($id){
         $conv = Conversation::findOrfail($id);
+        foreach($conv->messages as $message){
+            $message->admin_seen=1;
+            $message->save();
+        }
         $user=User::find($conv->sent_user);
-  
+    
             return view('admin.message.single',compact('user','conv'));  
     }
     //*** GET Request
@@ -109,7 +119,13 @@ class MessageController extends Controller
     //*** GET Request
     public function message($id)
     {
+
         $conv = AdminUserConversation::findOrfail($id);
+
+        foreach($conv->messages as $message){
+            $message->admin_seen=1;
+            $message->save();
+        }
         return view('admin.message.create',compact('conv'));                  
     }   
 

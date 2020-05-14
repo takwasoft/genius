@@ -38,6 +38,7 @@ class DashboardController extends Controller
         $users = User::all();
         $products = Product::all();
         $blogs = Blog::all();
+        $totalSell=Order::where('payment_status','=','Completed')->sum('pay_amount');
         $pproducts = Product::orderBy('id','desc')->take(5)->get();
         $rorders = Order::orderBy('id','desc')->take(5)->get();
         $poproducts = Product::orderBy('views','desc')->take(5)->get();
@@ -54,8 +55,8 @@ class DashboardController extends Controller
         }
 
 
-        return view('admin.dashboard',compact('pending','activation_notify','processing','completed','products','users','blogs','days','sales','pproducts','rorders','poproducts','rusers','referrals','browsers'));
-    }
+        return view('admin.dashboard',compact('pending','activation_notify','processing','completed','products','users','blogs','days','sales','pproducts','rorders','poproducts','rusers','referrals','browsers','totalSell'));
+    } 
 
     public function profile()
     {

@@ -86,7 +86,7 @@ class RegisterController extends Controller
 		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$smsresult = curl_exec($ch);
-		return $smsresult;
+		
 		$p = explode("|",$smsresult);
 		$sendstatus = $p[0];
 		return response()->json(1);
@@ -150,7 +150,7 @@ class RegisterController extends Controller
           	return response()->json('We need to verify your email address. We have sent an email to '.$to.' to verify your email address. Please click link in that email to continue.');
 	        }
 	        else {
-
+		
             $user->email_verified = 'No';
             $user->update();
 	        $notification = new Notification;

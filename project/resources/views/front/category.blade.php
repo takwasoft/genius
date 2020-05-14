@@ -325,7 +325,7 @@
                                         <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
                                     <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
+                                         <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
                                             @foreach($district->subdistricts as $subdistrict)
                                                 <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
                                             @endforeach
@@ -338,7 +338,8 @@
                               
                             </ul>
                         </div>
-
+                        <input type="hidden" id="area_key" >
+                        <input type="hidden" id="area_value" >
                         <div class="btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
@@ -351,7 +352,7 @@
                                         <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
                                         <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                         <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
                                             @foreach($division->districts as $district)
                                                 <li><a class="text-muted" href="#"
 												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
@@ -378,8 +379,12 @@
 
 @section('scripts')
 <script>
-
+closeModal=()=>{
+  $("#my-modal").modal('toggle');
+}
 	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+    document.getElementById("area_key").value=sid;
+    document.getElementById("area_value").value=svalue;
 		if(cm){
 
 		$(cm).modal('toggle');
@@ -392,7 +397,9 @@
 		cls="."+cls;
 		$(cls).hide();
 		$(id).show();
-	}
+     $("#ajaxLoader").show();
+      filter(); 
+	} 
 </script>
 <script>
 
@@ -408,10 +415,10 @@
     $(".filter-btn").on('click', function(e) {
       e.preventDefault();
       $("#ajaxLoader").show();
-      filter();
+      filter(); 
     });
   });
-
+  
   function filter() {
     let filterlink = '';
 
@@ -459,8 +466,11 @@
 
     // console.log(filterlink);
     console.log(encodeURI(filterlink));
+    if ($("#area_key").val() != '') {
+      filterlink += '&'+$("#area_key").val()+"="+$("#area_value").val();
+    }
     $("#ajaxContent").load(encodeURI(filterlink), function(data) {
-      // add query string to pagination
+      // add query string to pagination 
       addToPagination();
       $("#ajaxLoader").fadeOut(1000);
     });

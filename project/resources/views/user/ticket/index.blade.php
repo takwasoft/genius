@@ -16,8 +16,8 @@
 							</div>
 							<div class="mr-table allproduct message-area  mt-4">
 								@include('includes.form-success')
-									<div class="table-responsiv">
-											<table id="example" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+									<div class="table-responsive">
+											<table id="example" class="table table-hover " cellspacing="0" width="100%">
 												<thead>
 													<tr>
                           <th>Ticket ID</th>

@@ -22,12 +22,16 @@
                 <ul class="list">
                   <li>
                     <p><span class="user-title">{{ $langg->lang209 }}:</span> {{ $user->email==$user->phone?'Not Set':$user->email }}
-                    @if($user->email!=$user->phone&&$user->email_verified==0)
+                    @if($user->email!=$user->phone&&$user->email_verified=='No')
                       <span class="badge badge-danger">
                       Unverified</span>
+                      <a class="btn btn-success btn-sm" href='{{route('email.verify')}}'>
+                                                                Verify Email
+                          <span class="badge badge-success">Email Verified</span>                                   </a>
+                          @else
                     @endif
                     </p>
-                    
+                     
                   </li>
                   @if($user->phone != null)
                   <li>

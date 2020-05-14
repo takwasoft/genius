@@ -19,7 +19,7 @@
                 aria-hidden="true">×</span></button>
         <h3 class="text-center">{{ Session::get("cache") }}</h3>
     </div>
-
+ 
 
   @endif
 
@@ -106,6 +106,20 @@
                 <div class="right d-flex align-self-center">
                     <div class="icon">
                         <i class="icofont-newspaper"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="col-md-12 col-lg-6 col-xl-4">
+            <div class="mycard bg6">
+                <div class="left">
+                    <h5 class="title">{{ __('Total Sell!') }}</h5>
+                    <span class="number">{{$totalSell}}</span>
+                    <a href="{{route('admin-order-paid')}}"  class="link">{{ __('View All') }}</a>
+                </div> 
+                <div class="right d-flex align-self-center">
+                    <div class="icon">
+                        <i class="icofont-dollar"></i>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 @extends('layouts.vendor') 
-
+ 
 @section('content')
                     <div class="content-area">
 

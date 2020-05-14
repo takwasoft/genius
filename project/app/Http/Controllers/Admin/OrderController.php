@@ -28,6 +28,12 @@ class OrderController extends Controller
         elseif($status == 'processing') {
             $datas = Order::where('status','=','processing')->get();
         }
+        elseif($status == 'delivery') {
+            $datas = Order::where('status','=','on delivery')->get();
+        }
+        elseif($status == 'paid') {
+            $datas = Order::where('payment_status','=','Completed')->get();
+        }
         elseif($status == 'completed') {
             $datas = Order::where('status','=','completed')->get();
         }
@@ -190,6 +196,14 @@ class OrderController extends Controller
     public function pending()
     {
         return view('admin.order.pending');
+    }
+    public function delivery()
+    {
+        return view('admin.order.ondelivery');
+    }
+    public function paid()
+    {
+        return view('admin.order.paid');
     }
     public function processing()
     {

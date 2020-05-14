@@ -63,7 +63,7 @@
                                         {{$order->method}} {{ $langg->lang295 }} <p>{{$order->charge_id}}</p>
                                         @endif
                                         {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}}</p>
-                                        <a id="tid" style="cursor: pointer;" class="mybtn2">{{ $langg->lang297 }}</a> 
+                                        {{--  <a id="tid" style="cursor: pointer;" class="mybtn2">{{ $langg->lang297 }}</a>   --}}
 
                                         <form id="tform">
                                             <input style="display: none; width: 100%;" type="text" id="tin" placeholder="{{ $langg->lang299 }}" required="" class="mb-3">
@@ -147,7 +147,7 @@
                                         @endif
                                         {{$order->method}} {{ $langg->lang296 }} <p id="ttn"> {{$order->txnid}}</p>
 
-                                        <a id="tid" style="cursor: pointer;" class="mybtn2">{{ $langg->lang297 }}</a> 
+                                        {{--  <a id="tid" style="cursor: pointer;" class="mybtn2">{{ $langg->lang297 }}</a>   --}}
 
                                         <form id="tform">
                                             <input style="display: none; width: 100%;" type="text" id="tin" placeholder="{{ $langg->lang299 }}" required="" class="mb-3">
