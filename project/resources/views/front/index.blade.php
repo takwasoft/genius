@@ -245,7 +245,7 @@
 	<div id="brand-ad">
 		<div class="container">
 			<div class="row mt-4">
-				<div class="col-md-4 col-lg-3 d-none d-sm-block">
+				<div class="col-md-4 col-lg-3 d-none d-md-block">
 					<div class="card">
 						<div class="card-header">
 							<h4>Deals of the week !!</h4>
@@ -255,7 +255,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-8 col-lg-9 product-tabs d-none d-sm-block">
+				<div class="col-md-8 col-lg-9 product-tabs d-none d-md-block">
 					<ul class="nav nav-tabs brand-items">
 						<li  class="nav-item"><a class='nav-link active' data-toggle="tab" href="#home">BRANDS OF THE WEEK</a></li>
 						@foreach($brandCategories as $brandCategory)
@@ -330,12 +330,12 @@
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287047feature2.jpg" alt="">
                         </a>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6 mt-3 mt-lg-0">
                         <a href="https://www.google.com/" target="_blank" class="banner-effect">
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287054feature3.jpg" alt="">
                         </a>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6 mt-3 mt-lg-0">
                         <a href="https://www.google.com/" target="_blank" class="banner-effect">
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287106feature4.jpg" alt="">
                         </a>
@@ -559,7 +559,7 @@
 
             <div class="container">
                 <div class="row padding mt-4">
-                    <div class="col-md-6  d-none d-sm-block">
+                    <div class="col-md-6  d-none d-md-block">
                         <div class="col-sm-12">
                             <div class="icon-wrapper">
                                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>
@@ -571,7 +571,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6  d-none d-sm-block">
+                    <div class="col-md-6  d-none d-md-block">
                         <div class="col-sm-12">
                             <div class="icon-wrapper">
                                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>

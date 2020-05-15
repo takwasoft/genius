@@ -1030,7 +1030,7 @@
 	@yield('scripts')
 
 </body>
-	{{-- <script>
+	<script>
 	
             setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
@@ -1038,5 +1038,5 @@
   }});
 			},3000)
 
-	</script> --}}
+	</script>
 </html>
