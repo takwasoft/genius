@@ -1233,7 +1233,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
   Route::get('/withdraw/datatables', 'Vendor\WithdrawController@datatables')->name('vendor-wt-datatables');
   Route::get('/withdraw', 'Vendor\WithdrawController@index')->name('vendor-wt-index');
-  Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create');
+  Route::get('/vendor-get-additional', 'Vendor\WithdrawController@getAdditional')->name('vendor-get-additional'); 
+  Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create'); 
   Route::post('/withdraw/create', 'Vendor\WithdrawController@store')->name('vendor-wt-store');
 
   Route::get('/service/datatables', 'Vendor\ServiceController@datatables')->name('vendor-service-datatables');

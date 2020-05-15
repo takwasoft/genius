@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Vendor;
 
+use App\AdditionalField;
 use App\Models\User;
 use App\Models\Withdraw;
 use App\Models\Generalsetting;
@@ -9,6 +10,8 @@ use Auth;
 use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\PaymentGateway;
+use App\WithdrawAdditional;
 
 class WithdrawController extends Controller
 {
@@ -24,17 +27,22 @@ class WithdrawController extends Controller
         return view('vendor.withdraw.index',compact('withdraws','sign'));
     }
 
-
+    public function getAdditional(){
+        $fields=AdditionalField::where('payment_gateway_id','=',request()->id)->get();
+        return view('vendor.withdraw.additional' ,compact('fields'));
+    }
     public function create()
     {
         $sign = Currency::where('is_default','=',1)->first();
-        return view('vendor.withdraw.create' ,compact('sign'));
+        $gateways=PaymentGateway::all();
+        return view('vendor.withdraw.create' ,compact('sign','gateways'));
     }
 
 
     public function store(Request $request)
     {
 
+        
         $from = User::findOrFail(Auth::guard('web')->user()->id);
 
         $withdrawcharge = Generalsetting::findOrFail(1);
@@ -45,7 +53,7 @@ class WithdrawController extends Controller
             $amount = $request->amount;
 
             if ($from->current_balance >= $amount){
-                $fee = (($withdrawcharge->withdraw_charge / 100) * $amount) + $charge;
+                $fee = 0;
                 $finalamount = $amount - $fee;
                 $finalamount = number_format((float)$finalamount,2,'.','');
 
@@ -66,7 +74,13 @@ class WithdrawController extends Controller
                 $newwithdraw['fee'] = $fee;
                 $newwithdraw['type'] = 'vendor';
                 $newwithdraw->save();
-
+                for($i=0;$i<count(array_keys($request->additional));$i++){
+                    WithdrawAdditional::create([
+                        "withdraw_id"=>$newwithdraw->id,
+                        "additional_field_id"=>array_keys($request->additional)[$i],
+                        "value"=>$request->additional[array_keys($request->additional)[$i]]
+                    ]);
+                }
                 return response()->json('Withdraw Request Sent Successfully.'); 
 
             }else{

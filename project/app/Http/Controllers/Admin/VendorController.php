@@ -232,9 +232,12 @@ class VendorController extends Controller
         //*** JSON Request
         public function withdrawdatatables()
         {
-             $datas = Withdraw::where('type','=','vendor')->orderBy('id','desc')->get();
+             $datas = Withdraw::where('type','=','vendor')->orderBy('id','desc')->get(); 
              //--- Integrating This Collection Into Datatables
              return Datatables::of($datas)
+                                ->editColumn('method', function(Withdraw $data) {
+                                    return $data->paymentGateway->title;
+                                }) 
                                 ->addColumn('name', function(Withdraw $data) {
                                     $name = $data->user->name;
                                     return '<a href="' . route('admin-vendor-show',$data->user->id) . '" target="_blank">'. $name .'</a>';

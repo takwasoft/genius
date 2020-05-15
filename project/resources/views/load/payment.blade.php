@@ -3,7 +3,7 @@
 
 
 @endif
-@if($payment == 'paypal') 
+{{--  @if($payment == 'paypal') 
                                 <input type="hidden" name="method" value="Paypal">
                                 <input type="hidden" name="cmd" value="_xclick">
                                 <input type="hidden" name="no_note" value="1">
@@ -122,4 +122,4 @@
 
 
   </div>
-@endif
+@endif  --}}

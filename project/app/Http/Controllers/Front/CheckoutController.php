@@ -25,6 +25,7 @@ use Validator;
 
 class CheckoutController extends Controller
 {
+
     public function loadpayment($slug1,$slug2)
     {
         if (Session::has('currency')) {
@@ -39,11 +40,12 @@ class CheckoutController extends Controller
         if($pay_id != 0) {
             $gateway = PaymentGateway::findOrFail($pay_id);
         }
+        return "abc";
         return view('load.payment',compact('payment','pay_id','gateway','curr'));
     }
 
     public function checkout()
-    {
+    { 
         $this->code_image();
         if (!Session::has('cart')) {
             return redirect()->route('front.cart')->with('success',"You don't have any product to checkout.");

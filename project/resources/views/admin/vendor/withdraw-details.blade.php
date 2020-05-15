@@ -46,35 +46,18 @@
                                             </tr>
                                             <tr>
                                                 <th>{{ __("Withdraw Method") }}</th>
-                                                <td>{{$withdraw->method}}</td>
-                                            </tr>
-                                            @if($withdraw->method != "Bank")
-                                            <tr>
-                                                <th>{{$withdraw->method}} {{ __("Email") }}:</th>
-                                                <td>{{$withdraw->acc_email}}</td>
-                                            </tr>
-                                            @else 
-                                            <tr>
-                                                <th>{{$withdraw->method}} {{ __("Account") }}:</th>
-                                                <td>{{$withdraw->iban}}</td>
+                                                <td>{{$withdraw->paymentGateway->title}}</td>
                                             </tr>
                                             <tr>
-                                                <th>{{ __("Account Name") }}:</th>
-                                                <td>{{$withdraw->acc_name}}</td>
+                                            <th>Additional Fields</th>
                                             </tr>
-                                            <tr>
-                                                <th>{{ __("Country") }}</th>
-                                                <td>{{ucfirst(strtolower($withdraw->country))}}</td>
+                                            @foreach($withdraw->additionalFields as $field)
+                                                <tr>
+                                                <th>{{$field->additionalField->title}}</th>
+                                                <td>{{$field->value}}</td>
                                             </tr>
-                                            <tr>
-                                                <th>{{ __("Address") }}</th>
-                                                <td>{{$withdraw->address}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>{{$withdraw->method}} {{__("Swift Code")}}:</th>
-                                                <td>{{$withdraw->swift}}</td>
-                                            </tr>
-                                            @endif
+                                            @endforeach
+                                           
                                         </table>
                                     </div>
 

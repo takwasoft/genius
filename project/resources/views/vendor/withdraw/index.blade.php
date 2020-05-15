@@ -29,7 +29,7 @@
 														<tr>
 						                                <th>{{ $langg->lang474 }}</th>
 						                                <th>{{ $langg->lang475 }}</th>
-						                                <th>{{ $langg->lang476 }}</th>
+						                                <th>Details</th>
 						                                <th>{{ $langg->lang477 }}</th>
 						                                <th>{{ $langg->lang478 }}</th>
 														</tr>
@@ -39,12 +39,17 @@
                             @foreach($withdraws as $withdraw)
                                 <tr>
                                     <td>{{date('d-M-Y',strtotime($withdraw->created_at))}}</td>
-                                    <td>{{$withdraw->method}}</td>
-                                    @if($withdraw->method != "Bank")
-                                        <td>{{$withdraw->acc_email}}</td>
-                                    @else
-                                        <td>{{$withdraw->iban}}</td>
-                                    @endif
+                                    <td>{{$withdraw->paymentGateway->title}}</td>
+                                  <td>
+								    <ul class="list-group">
+									@foreach($withdraw->additionalFields as $field)
+                                                <li class="list-group-item">
+                                                <span>{{$field->additionalField->title}}</span>
+                                                <span>{{$field->value}}</span>
+                                            </li>
+                                            @endforeach
+									</ul>
+								  </td>
                                     <td>{{$sign->sign}}{{ round($withdraw->amount * $sign->value , 2) }}</td>
                                     <td>{{ucfirst($withdraw->status)}}</td>
                                 </tr>

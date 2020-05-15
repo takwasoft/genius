@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\AdditionalField;
+use App\WithdrawAdditional;
 use Illuminate\Database\Eloquent\Model;
 
 class Withdraw extends Model
@@ -12,4 +14,11 @@ class Withdraw extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-}
+    public function paymentGateway()
+    {
+        return $this->belongsTo('App\Models\PaymentGateway','method');
+    }
+    public function additionalFields(){
+        return $this->hasMany(WithdrawAdditional::class);
+    }
+} 

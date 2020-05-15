@@ -30,6 +30,7 @@
                                                 <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
+                                                            <th>#</th>
                                                             <th>{{ __("Email") }}</th>
                                                             <th>{{ __("Phone") }}</th>
                                                             <th>{{ __("Amount") }}</th>
@@ -151,6 +152,7 @@
                serverSide: true,
                ajax: '{{ route('admin-vendor-withdraw-datatables') }}',
                columns: [
+                   { data: 'id', name: 'id' },
                         { data: 'email', name: 'email' },
                         { data: 'phone', name: 'phone' },
                         { data: 'amount', name: 'amount' },
