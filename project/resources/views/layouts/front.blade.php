@@ -192,9 +192,9 @@
 	<!-- Logo Header Area Start -->
 	<section class="logo-header">
 		<div class="container">
-			<div class="row ">
+			<div class="row mt-3 mt-sm-0">
 				
-				<div class="col-lg-8 col-sm-12 remove-padding order-last order-sm-2 order-md-2">
+				<div class="col-xl-8 col-md-7 col-12 remove-padding">
 					<div class="search-box-wrapper">
 						<div class="search-box" >
 							<div class="categori-container" id="catSelectForm">
@@ -226,7 +226,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-sm-6 col-7 remove-padding order-lg-last">
+				<div class="col-xl-4 col-md-5 col-12 mt-3 mt-md-0 remove-padding">
 				<div class="input-group" id="d-cart">
 					<span class="input-group-btn"style=" border-radius: 50px;border-top-right-radius: 0; border-bottom-right-radius: 0;background: #e2dede;">
 						<button class="btn " type="button">
@@ -282,10 +282,10 @@
 	<!--Main-Menu Area Start-->
 	<div class="mainmenu-area mainmenu-bb">
 		<div class="container">
-			<div class="row align-items-center mainmenu-area-innner">
+			<div class="row align-items-center mainmenu-area-innner" style="">
 				<div id="mg-menu" class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
 					<!--categorie menu start-->
-					<div class="categories_menu" style="margin-left:15px">
+					<div class="categories_menu">
 						<div class="categories_title" style="background:#024c0b">
 							<h2 class="categori_toggle" style="height:39px;"><i class="fa fa-bars"></i>  {{ $langg->lang14 }} <i class="fa fa-angle-down arrow-down"></i></h2>
 						</div>
@@ -376,7 +376,7 @@
 							@endif
 							{{-- <li><a href="{{ route('front.blog') }}">{{ $langg->lang18 }}</a></li> --}}
 
-							<li><a href="{{ route('front.index') }}">Home</a></li>
+							<li><a href="{{ route('front.index') }}" class="active">Home</a></li>
 							{{-- <li><a href="{{ route('front.add_product') }}">Add Product</a></li> --}}
 
 
@@ -1030,7 +1030,7 @@
 	@yield('scripts')
 
 </body>
-	<script>
+	{{-- <script>
 	
             setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
@@ -1038,5 +1038,5 @@
   }});
 			},3000)
 
-	</script>
+	</script> --}}
 </html>
