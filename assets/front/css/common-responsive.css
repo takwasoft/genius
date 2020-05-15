@@ -89,25 +89,35 @@
         padding: 7px 0px 9px;
     }
     .logo-header .search-box .categori-container .categoris {
-        line-height: 35px!important;
+        line-height: 36px!important;
     }
     .logo-header .search-box .categori-container {
-        height: 35px;
+        height: 36px;
     }
     .logo-header .search-box {
-        height: 35px;
+        height: 36px;
     }
     .logo-header .search-box .search-form input {
-        height: 35px;
+        height: 36px;
     }
 
 }
+@media only screen and (max-width: 491px){
+    .cart-text {
+        width: 60% !important;
+      }
+}
 
+@media only screen and (max-width: 448px){
+    .cart-text {
+        width: 55% !important;
+      }
+}
 
 @media only screen and (max-width: 414px) {
     .logo-header .search-box .search-form button {
         font-size: 12px;
-        width: 24px;
+        width: 79px;
     }
     .logo-header .search-box .search-form input {
         padding: 0px 3px 0px 4px;
@@ -155,6 +165,11 @@
     line-height: normal!important;
     padding: 4px 20px!important;
   }
+}
+@media only screen and (max-width: 401px){
+    .cart-text {
+        width:48% !important;
+      }
 }
 
 

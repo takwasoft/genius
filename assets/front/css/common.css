@@ -8,9 +8,9 @@
 .categories_menu_inner > ul > li a{
   display: block;
 }
-.mainmenu-area{
+/* .mainmenu-area{
   height: 40px;
-}
+} */
 .mainmenu-area .categories_menu .categories_title h2{
   padding: 0px 15px;
 }
@@ -22,9 +22,9 @@
 .mainmenu-area .categories_menu .categories_title h2 i.arrow-down {
   margin-top: 14px;
 }
-.categories_title h2 {
+/* .categories_title h2 {
   margin-bottom: 2px;
-}
+} */
 .contact-us .right-area .social-links ul li a.facebook{
   background: #3b5999 ;
 }
@@ -48,23 +48,23 @@
     border-radius: 50px;
     padding: 12px 30px;
 }
-.mainmenu-area .core-nav,
+/* .mainmenu-area .core-nav,
 .mainmenu-area .core-nav .wrap-core-nav-list.right
 .mainmenu-area .core-nav .wrap-core-nav-list .core-nav-list,
 .mainmenu-area .core-nav .wrap-core-nav-list .core-nav-list li,
 .mainmenu-area .core-nav .wrap-core-nav-list .core-nav-list li a
 {
     height: 40px!important;
-}
+} */
 
 .mainmenu-area .core-nav .full-container {
   height: auto;
 }
-.mainmenu-area .core-nav .wrap-core-nav-list .core-nav-list{
+/* .mainmenu-area .core-nav .wrap-core-nav-list .core-nav-list{
   margin: 0px 0px 0px 0px !important;
   height: 40px;
   top: 0px;
-}
+} */
 
 .mainmenu-area nav .menu li a {
   line-height: 36px;
@@ -440,9 +440,9 @@ line-height: unset;
   padding: 1rem 1rem !important;
 }
 
-.mainmenu-area .categories_menu .categories_menu_inner {
+/* .mainmenu-area .categories_menu .categories_menu_inner {
   margin-top: -2px!important;
-}
+} */
 
 .common-padding{
   padding: 4px 2px!important;
@@ -482,7 +482,7 @@ line-height: unset;
   padding-top: 0px!important;
 }
 .mainmenu-bb {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.07) !important;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.07) !important; */
 }
 div#comment-log-reg {
     z-index: 9999;

@@ -10,21 +10,39 @@
 	}
 	.mainmenu-area .core-nav .wrap-core-nav-list.right {
      text-align: left!important; 
-    margin-top: -1px;
+     margin-top: -1px;
 	}
 
 	.core-nav .wrap-core-nav-list.right {
     	text-align: left!important; 
 	}
-	#home-menu-item li{
-	background:#024c0b;
-	border-right:1px solid white;
-}
-#home-menu-item li a{
-	color:white;
-}
+	#home-menu-item li a{
+		font-weight: 600;
+		font-size: 14px;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: #fff;
+		display: block;
+		padding: 8px 20px;
+		border-right: 2px ridge #585858;
+		-webkit-transition: all .9s;
+		-moz-transition: all .9s;
+		-o-transition: all .9s;
+		-ms-transition: all .9s;
+		transition: all .9s;
+	}
 	#home-menu-item li:last-child a{
 		padding-right:20px!important;
+	}
+	#home-menu-item li:first-child a{
+		border-top-left-radius: 6px;
+		border-bottom-left-radius: 6px;
+	}
+	#home-menu-item li a.active{
+		background: #024c0b;
+	}
+	#home-menu-item li a:hover, #home-menu-item a.active {
+    background: #024c0b;
 	}
 	}
 	@media(max-width:991px){
@@ -227,7 +245,7 @@
 	<div id="brand-ad">
 		<div class="container">
 			<div class="row mt-4">
-				<div class="col-md-3">
+				<div class="col-md-4 col-lg-3 d-none d-md-block">
 					<div class="card">
 						<div class="card-header">
 							<h4>Deals of the week !!</h4>
@@ -237,7 +255,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-9 product-tabs">
+				<div class="col-md-8 col-lg-9 product-tabs d-none d-md-block">
 					<ul class="nav nav-tabs brand-items">
 						<li  class="nav-item"><a class='nav-link active' data-toggle="tab" href="#home">BRANDS OF THE WEEK</a></li>
 						@foreach($brandCategories as $brandCategory)
@@ -299,7 +317,7 @@
 
 
 	<!-- offer ad -->
-        <section class="slider_bottom_banner mt-4">
+        <section class="slider_bottom_banner mt-4 d-none d-sm-block">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-6">
@@ -312,12 +330,12 @@
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287047feature2.jpg" alt="">
                         </a>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6 mt-3 mt-lg-0">
                         <a href="https://www.google.com/" target="_blank" class="banner-effect">
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287054feature3.jpg" alt="">
                         </a>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6 mt-3 mt-lg-0">
                         <a href="https://www.google.com/" target="_blank" class="banner-effect">
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287106feature4.jpg" alt="">
                         </a>
@@ -541,7 +559,7 @@
 
             <div class="container">
                 <div class="row padding mt-4">
-                    <div class="col-md-6">
+                    <div class="col-md-6  d-none d-md-block">
                         <div class="col-sm-12">
                             <div class="icon-wrapper">
                                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>
@@ -553,7 +571,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6  d-none d-md-block">
                         <div class="col-sm-12">
                             <div class="icon-wrapper">
                                 <i class="fa fa-search fa-2x" aria-hidden="true"></i>
