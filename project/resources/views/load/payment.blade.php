@@ -1,8 +1,24 @@
 @if($payment == 'cod') 
                                 <input type="hidden" name="method" value="Cash On Delivery">
+@else
+ @foreach($additionalFields as $field)
+<div class="item form-group">
+                                <label class="control-label col-sm-12" for="name">{{ $field->title }} {{$field->required==1?'*':''}}
 
+                                    </label>
+                                <div class="col-sm-12">
+                                    <input 
+                                    @if($field->required==1)
+												required
+												@endif
+                                     name="additional[{{$field->id}}]"  class="form-control" type="text"  required>
+                                </div>
+                            </div>
+@endforeach
 
 @endif
+
+
 {{--  @if($payment == 'paypal') 
                                 <input type="hidden" name="method" value="Paypal">
                                 <input type="hidden" name="cmd" value="_xclick">

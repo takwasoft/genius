@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\AdditionalField;
 use App\Classes\GeniusMailer;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
@@ -40,8 +41,8 @@ class CheckoutController extends Controller
         if($pay_id != 0) {
             $gateway = PaymentGateway::findOrFail($pay_id);
         }
-        return "abc";
-        return view('load.payment',compact('payment','pay_id','gateway','curr'));
+        $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();   
+        return view('load.payment',compact('payment','pay_id','gateway','curr','additionalFields'));
     }
 
     public function checkout()
