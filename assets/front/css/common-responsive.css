@@ -100,12 +100,19 @@
     .logo-header .search-box .search-form input {
         height: 36px;
     }
+    .info-area .info-box .info .details .title {
+        font-size: 14px;
+    }
+    .info-area .info-box .info .details .text {
+        font-size: 13px;
+    }
 
 }
 @media only screen and (max-width: 491px){
     .cart-text {
         width: 60% !important;
       }
+   
 }
 
 @media only screen and (max-width: 448px){
