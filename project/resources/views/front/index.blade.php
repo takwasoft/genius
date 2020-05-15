@@ -504,14 +504,14 @@
 	<section class="banner-section">
 		<div class="container">
 								<div class="row">
-												<div class="col-lg-6" style="padding:10px">
+												<div class="col-lg-6 d-none d-md-block" style="padding:10px">
 							<div class="left">
 								<a class="banner-effect" href="https://www.google.com/" target="_blank">
 									<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889151top2.jpg" alt="">
 								</a>
 							</div>
 						</div>
-												<div class="col-lg-6"  style="padding:10px">
+												<div class="col-lg-6 d-none d-md-block"  style="padding:10px">
 							<div class="left">
 								<a class="banner-effect" href="" target="_blank">
 									<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889146top1.jpg" alt="">
