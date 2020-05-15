@@ -125,7 +125,7 @@
                   
                 </div>  --}}
                 <div class="col-6">
-                    <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>
+                    {{--  <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> অবস্থান নির্বাচন করুন</button>  --}}
                 </div>
                 <div class="col-6 pr-4">
                     <form action="{{ route('front.brand',Request::route('x')) }}">

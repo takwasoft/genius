@@ -18,6 +18,9 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\VendorOrder;
+use App\OrderAdditional;
+use App\OrderPaymentVerification;
+use App\PaymentVerification;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -41,8 +44,9 @@ class CheckoutController extends Controller
         if($pay_id != 0) {
             $gateway = PaymentGateway::findOrFail($pay_id);
         }
-        $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();   
-        return view('load.payment',compact('payment','pay_id','gateway','curr','additionalFields'));
+        $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();
+        $verificationFields=PaymentVerification::where('payment_gateway_id','=',$gateway->id)->get();   
+        return view('load.payment',compact('payment','pay_id','gateway','curr','additionalFields','verificationFields'));
     }
 
     public function checkout()
@@ -269,7 +273,7 @@ class CheckoutController extends Controller
         return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'checked' => $ck, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);  
                         }
                     }
-                }
+                } 
         return view('front.checkout', ['products' => $cart->items, 'totalPrice' => $total, 'pickups' => $pickups, 'totalQty' => $cart->totalQty, 'gateways' => $gateways, 'shipping_cost' => 0, 'digital' => $dp, 'curr' => $curr,'shipping_data' => $shipping_data,'package_data' => $package_data, 'vendor_shipping_id' => $vendor_shipping_id, 'vendor_packing_id' => $vendor_packing_id]);                 
                }
 
@@ -367,6 +371,7 @@ class CheckoutController extends Controller
 
     public function cashondelivery(Request $request)
     {
+
         if($request->pass_check) {
             $users = User::where('email','=',$request->personal_email)->get();
             if(count($users) == 0) {
@@ -448,7 +453,7 @@ class CheckoutController extends Controller
         $order['packing_cost'] = $request->packing_cost;
         $order['tax'] = $request->tax;
         $order['customer_phone'] = $request->phone;
-        $order['order_number'] = str_random(4).time();
+        $order['order_number'] = '00'.rand(10,99).$order->id;
         $order['customer_address'] = $request->address;
         $order['customer_country'] = $request->customer_country;
         $order['customer_city'] = $request->city;
@@ -632,11 +637,11 @@ class CheckoutController extends Controller
 
     public function gateway(Request $request)
     {
- 
+
 $input = $request->all();
  
 $rules = [
-    'txn_id4' => 'required',
+   
 ];
 
 
@@ -745,7 +750,7 @@ $validator = Validator::make($input, $rules, $messages);
         $order['shipping_city'] = $request->shipping_city;
         $order['shipping_zip'] = $request->shipping_zip;
         $order['order_note'] = $request->order_notes;
-        $order['txnid'] = $request->txn_id4;
+        $order['txnid'] = " ";
         $order['coupon_code'] = $request->coupon_code;
         $order['coupon_discount'] = $request->coupon_discount;
         $order['dp'] = $request->dp;
@@ -765,6 +770,20 @@ $validator = Validator::make($input, $rules, $messages);
                 $order['affilate_charge'] = $sub;
             }
         $order->save();
+        for($i=0;$i<count(array_keys($request->additional));$i++){
+            OrderAdditional::create([
+                "order_id"=>$order->id,
+                "additional_field_id"=>array_keys($request->additional)[$i],
+                "value"=>$request->additional[array_keys($request->additional)[$i]]
+            ]);
+        }
+        for($i=0;$i<count(array_keys($request->verification));$i++){
+            OrderPaymentVerification::create([
+                "order_id"=>$order->id,
+                "payment_verification_id"=>array_keys($request->verification)[$i],
+                "value"=>$request->verification[array_keys($request->verification)[$i]]
+            ]);
+        }
         $track = new OrderTrack;
         $track->title = 'Pending';
         $track->text = 'You have successfully placed your order.';

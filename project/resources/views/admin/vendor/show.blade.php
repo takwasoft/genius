@@ -157,8 +157,8 @@ table#example2 {
                                                                             <td>
                                                                                 <div class="action-list">
                                                                                 <select class="process select droplinks {{ $dt->status == 1 ? 'drop-success' : 'drop-danger' }}">
-                                                                                    <option data-val="1" value="{{ route('admin-prod-status',['id1' => $data->id, 'id2' => 1]) }}" {{ $dt->status == 1 ? 'selected' : '' }}>{{ __("Activated") }}</option>
-                                                                                    <<option data-val="0" value="{{ route('admin-prod-status',['id1' => $data->id, 'id2' => 0]) }}" {{ $dt->status == 0 ? 'selected' : '' }}>{{ __("Deactivated") }}</option>
+                                                                                    <option data-val="1" value="{{ route('admin-prod-status',['id1' => $data->id, 'id2' => 1,'reason'=>'']) }}" {{ $dt->status == 1 ? 'selected' : '' }}>{{ __("Activated") }}</option>
+                                                                                    <<option data-val="0" value="{{ route('admin-prod-status',['id1' => $data->id, 'id2' => 0,'reason'=>'']) }}" {{ $dt->status == 0 ? 'selected' : '' }}>{{ __("Deactivated") }}</option>
                                                                                 </select>
                                                                                 </div>
                                                                             </td>

@@ -505,10 +505,10 @@
 
   --}}
 @if($digital == 0)
-
+<input value="Cash On Delivery" type="hidden" name="method" id="mt">
 @foreach($gateways as $gt)
-
-															<a class="nav-link payment" data-val="" data-show="yes" data-form="{{route('gateway.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'other','slug2' => $gt->id]) }}" id="v-pills-tab{{ $gt->id }}-tab" data-toggle="pill" href="#v-pills-tab{{ $gt->id }}" role="tab" aria-controls="v-pills-tab{{ $gt->id }}" aria-selected="false">
+ 
+															<a onclick="document.getElementById('mt').value='{{$gt->title}}'" class="nav-link payment" data-val="" data-show="yes" data-form="{{route('gateway.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'other','slug2' => $gt->id]) }}" id="v-pills-tab{{ $gt->id }}-tab" data-toggle="pill" href="#v-pills-tab{{ $gt->id }}" role="tab" aria-controls="v-pills-tab{{ $gt->id }}" aria-selected="false">
 																	<div class="icon">
 																			<span class="radio"></span>
 																	</div>

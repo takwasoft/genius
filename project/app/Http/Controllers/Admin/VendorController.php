@@ -189,7 +189,7 @@ class VendorController extends Controller
     public function show($id)
     {
         $data = User::findOrFail($id);
-        return view('admin.vendor.show',compact('data'));
+        return view('admin.vendor.show',compact('data')); 
     }
     
 
@@ -228,10 +228,13 @@ class VendorController extends Controller
             return response()->json($msg);      
             //--- Redirect Section Ends    
     }
-
+    public function withdrawPrint($id){
+        $withdraw=Withdraw::find($id);
+        return view('admin.vendor.withdrawPrint',compact('withdraw'));
+    }
         //*** JSON Request
         public function withdrawdatatables()
-        {
+        { 
              $datas = Withdraw::where('type','=','vendor')->orderBy('id','desc')->get(); 
              //--- Integrating This Collection Into Datatables
              return Datatables::of($datas)
@@ -241,7 +244,11 @@ class VendorController extends Controller
                                 ->addColumn('name', function(Withdraw $data) {
                                     $name = $data->user->name;
                                     return '<a href="' . route('admin-vendor-show',$data->user->id) . '" target="_blank">'. $name .'</a>';
-                                }) 
+                                })
+                                ->addColumn('print', function(Withdraw $data) {
+                                    
+                                    return '<a class="btn btn-success" href="' . route('admin-vendor-withdraw-print',$data->id) . '" target="_blank">Print</a>';
+                                })  
                                 ->addColumn('email', function(Withdraw $data) {
                                     $email = $data->user->email;
                                     return $email;
@@ -267,13 +274,13 @@ class VendorController extends Controller
                                     $action .= '</div>';
                                     return $action;
                                 }) 
-                                ->rawColumns(['name','action'])
+                                ->rawColumns(['name','action','print'])
                                 ->toJson(); //--- Returning Json Data To Client Side
         }
 
         //*** GET Request
         public function withdraws()
-        {
+        { 
             return view('admin.vendor.withdraws');
         }
 

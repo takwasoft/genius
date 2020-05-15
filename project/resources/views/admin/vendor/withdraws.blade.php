@@ -26,20 +26,36 @@
                                 <div class="col-lg-12">
                                     <div class="mr-table allproduct">
                                         @include('includes.admin.form-success') 
-                                        <div class="table-responsiv">
-                                                <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                                        <div class="table-responsive">
+                                                <table id="geniustable" class="table table-hover " cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
                                                             <th>{{ __("Email") }}</th>
+                                                            <th>{{ __("Name") }}</th>
                                                             <th>{{ __("Phone") }}</th>
                                                             <th>{{ __("Amount") }}</th>
                                                             <th>{{ __("Method") }}</th>
                                                             <th>{{ __("Withdraw Date") }}</th>
                                                             <th>{{ __("Status") }}</th>
                                                             <th>{{ __("Options") }}</th>
+                                                            <th>{{ __("Print") }}</th>
                                                         </tr>
                                                     </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>{{ __("Email") }}</th>
+                                                            <th>{{ __("Name") }}</th>
+                                                            <th>{{ __("Phone") }}</th>
+                                                            <th>{{ __("Amount") }}</th>
+                                                            <th>{{ __("Method") }}</th>
+                                                            <th>{{ __("Withdraw Date") }}</th>
+                                                            <th>{{ __("Status") }}</th>
+                                                            <th>{{ __("Options") }}</th>
+                                                            <th>{{ __("Print") }}</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                         </div>
                                     </div>
@@ -145,27 +161,48 @@
 {{-- DATA TABLE --}}
 
     <script type="text/javascript">
-
+ $('#geniustable tfoot th').each(function () {
+    {{--  if ($(this).index() != 0 && $(this).index() != 1 && $(this).index() != 8) {
+        return;
+      }  --}}
+      var title = $(this).text();
+      $(this).html('<input style="width:70px" type="text" placeholder="Search ' + title + '" />');
+    });
         var table = $('#geniustable').DataTable({
-               ordering: false,
+               ordering: false, 
                processing: true,
                serverSide: true,
                ajax: '{{ route('admin-vendor-withdraw-datatables') }}',
                columns: [
                    { data: 'id', name: 'id' },
                         { data: 'email', name: 'email' },
+                        { data: 'name', name: 'name' },
                         { data: 'phone', name: 'phone' },
                         { data: 'amount', name: 'amount' },
                         { data: 'method', name: 'method' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'status', name: 'status' },
-                        { data: 'action', searchable: false, orderable: false }
+                        { data: 'action', searchable: false, orderable: false },
+                        { data: 'print', searchable: false, orderable: false }
                      ],
                language : {
                     processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
                 }
             });
-                           
+                  table.columns().every(function () {
+      var that = this;
+      
+      $('input', this.footer()).on('keyup change clear', function () {
+        if (that.search() !== this.value) {
+           that
+                    .search( this.value.split(",").join("|"), true, false )
+                    .draw();
+        }
+      });
+    });
+    $('tfoot').each(function () {
+      $(this).insertAfter($(this).siblings('thead'));
+    });          
         $('#confirm-delete1').on('show.bs.modal', function(e) {
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         });

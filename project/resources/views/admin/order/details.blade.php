@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-     
+      
 @section('styles')
 
 <style type="text/css">
@@ -72,8 +72,22 @@
                                                     <td width="10%">:</td>
                                                     <td width="45%">{{$order->method}}</td>
                                                 </tr>
-                
-                                                @if($order->method != "Cash On Delivery")
+                 @foreach($order->additionalFields as $field)
+              <tr>
+                 <th width="45%">{{$field->additionalField->title}}</th>
+                                                    <td width="10%">:</td>
+                                                    <td width="45%">{{$field->value}}</td>
+                                                    </tr>
+                                            
+                                         @endforeach
+                                          @foreach($order->paymentVerifications as $field)
+                                          <tr>
+                                          <th width="45%">{{$field->paymentVerification->title}}</th>
+                                                    <td width="10%">:</td>
+                                                    <td width="45%">{{$field->value}}</td>
+                                                    </tr>
+                                         @endforeach
+                                                {{--  @if($order->method != "Cash On Delivery")
                                                 @if($order->method=="Stripe")
                                                 <tr>
                                                     <th width="45%">{{$order->method}} {{ __('Charge ID') }}</th>
@@ -86,7 +100,7 @@
                                                     <td width="10%">:</td>
                                                     <td width="45%">{{$order->txnid}}</td>
                                                 </tr>                         
-                                                @endif
+                                                @endif  --}}
 
 
                                                     <th width="45%">{{ __('Payment Status') }}</th>

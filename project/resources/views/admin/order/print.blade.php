@@ -72,6 +72,16 @@ html {
                         </span><br>
                         @endif
                         <span> <strong>{{ __('Payment Method') }} :</strong> {{$order->method}}</span>
+                         <br> 
+                        @foreach($order->additionalFields as $field)
+                        <span> <strong>{{$field->additionalField->title}} :</strong> {{$field->value}}</span>
+                        <br>
+                                          
+                                         @endforeach
+                                          @foreach($order->paymentVerifications as $field)
+                                          <span> <strong>{{$field->paymentVerification->title}} :</strong> {{$field->value}}</span>
+                                          <br>
+                                         @endforeach
                     </div>
                 </div>
             </div>

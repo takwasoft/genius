@@ -145,7 +145,14 @@
                                         @if($order->method=="Stripe")
                                         {{$order->method}} {{ $langg->lang295 }} <p>{{$order->charge_id}}</p>
                                         @endif
-                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn"> {{$order->txnid}}</p>
+                                         @foreach($order->additionalFields as $field)
+                                          <p>{{$field->additionalField->title}} : {{$field->value}}</p>
+                                         @endforeach
+                                          @foreach($order->paymentVerifications as $field)
+                                          <p>
+                                          {{$field->paymentVerification->title}} : {{$field->value}}
+                                          </p>
+                                         @endforeach
 
                                         {{--  <a id="tid" style="cursor: pointer;" class="mybtn2">{{ $langg->lang297 }}</a>   --}}
 
