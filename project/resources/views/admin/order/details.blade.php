@@ -286,6 +286,7 @@
                                     <th>{{ __('Vendor Status') }}</th>
                                     <th>{{ __('Product Title') }}</th>
                                     <th width="20%">{{ __('Details') }}</th>
+                                    <th width="10%">{{ __('Extra Charge') }}</th>
                                     <th width="10%">{{ __('Total Price') }}</th>
                                 </tr>
                                                             </tr>
@@ -401,8 +402,10 @@
 
 
                                             </td>
-
-                                            <td>{{$order->currency_sign}}{{ round($product['price'] * $order->currency_value , 2) }}</td>
+<td>{{$order->currency_sign}} {{$order->extraCharges->sum('charge')}}</td>
+                                            <td>
+                                           
+                                            {{$order->currency_sign}}{{ round($product['price'] * $order->currency_value , 2)+$order->extraCharges->sum('charge') }}</td>
 
                                     </tr>
                                 @endforeach

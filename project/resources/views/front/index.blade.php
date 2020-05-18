@@ -543,7 +543,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <iframe width="540" height="315"
-							src="https://www.youtube.com/embed/3pV8MRx1n3I">
+							src="{{$gs->home_youtube}}">
 						</iframe>
                     </div>
                     <div class="col-md-6">

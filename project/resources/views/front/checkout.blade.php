@@ -161,7 +161,7 @@
 													<select class="form-control" name="customer_country" required="">
 														@include('includes.countries')
 													</select>
-												</div>
+												</div> 
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="city"
 														placeholder="{{ $langg->lang158 }}" required=""

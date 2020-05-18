@@ -182,7 +182,7 @@ Route::prefix('admin')->group(function() {
   Route::get('/users/withdraws', 'Admin\UserController@withdraws')->name('admin-withdraw-index');
   Route::get('/user/withdraw/{id}/show', 'Admin\UserController@withdrawdetails')->name('admin-withdraw-show');
   Route::get('/users/withdraws/accept/{id}', 'Admin\UserController@accept')->name('admin-withdraw-accept');
-  Route::get('/user/withdraws/reject/{id}', 'Admin\UserController@reject')->name('admin-withdraw-reject');
+  Route::get('/user/withdraws/reject/{id}', 'Admin\UserController@reject')->name ('admin-withdraw-reject');
   // WITHDRAW SECTION ENDS
 
 
@@ -211,12 +211,13 @@ Route::prefix('admin')->group(function() {
   Route::get('/vendors/delete/{id}', 'Admin\VendorController@destroy')->name('admin-vendor-delete');
 
   Route::get('/vendors/withdraws/datatables', 'Admin\VendorController@withdrawdatatables')->name('admin-vendor-withdraw-datatables');  //JSON REQUEST 
+  Route::get('/vendors/withdraws/print', 'Admin\VendorController@printWithdraw')->name('print-withdraw');
   
   Route::get('/vendors/withdraws', 'Admin\VendorController@withdraws')->name('admin-vendor-withdraw-index');
   Route::get('/vendors/withdraw/{id}/show', 'Admin\VendorController@withdrawdetails')->name('admin-vendor-withdraw-show');
   Route::get('/vendors/withdraw/{id}/print', 'Admin\VendorController@withdrawPrint')->name('admin-vendor-withdraw-print'); 
   Route::get('/vendors/withdraws/accept/{id}', 'Admin\VendorController@accept')->name('admin-vendor-withdraw-accept');
-  Route::get('/vendors/withdraws/reject/{id}', 'Admin\VendorController@reject')->name('admin-vendor-withdraw-reject');
+  Route::get('/vendors/withdraws/reject/{id}', 'Admin\VendorController@reject')->name('admin-vendor-withdraw-reject'); 
 
   //  Vendor Registration Section
 
@@ -734,7 +735,10 @@ Route::prefix('admin')->group(function() {
   Route::get('/paymentgateway/edit/{id}', 'Admin\PaymentGatewayController@edit')->name('admin-payment-edit');
   Route::post('add-additional', 'Admin\PaymentGatewayController@addAdditional')->name('admin-payment-additional');
   Route::post('add-verification', 'Admin\PaymentGatewayController@addVerification')->name('admin-payment-verification');
+  Route::post('add-extra', 'Admin\PaymentGatewayController@addExtra')->name('admin-payment-extra');
+
   Route::get('delete-verification/{id}', 'Admin\PaymentGatewayController@deleteVerification')->name('admin-payment-verification-delete');
+  Route::get('delete-extra/{id}', 'Admin\PaymentGatewayController@deleteExtra')->name('admin-payment-extra-delete');
   Route::get('delete-additional/{id}', 'Admin\PaymentGatewayController@deleteAdditional')->name('admin-payment-additional-delete');
   Route::get('/paymentgateway/rule/{id}', 'Admin\PaymentGatewayController@rule')->name('admin-payment-rule');
 
@@ -1236,7 +1240,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::get('/withdraw/datatables', 'Vendor\WithdrawController@datatables')->name('vendor-wt-datatables');
   Route::get('/withdraw', 'Vendor\WithdrawController@index')->name('vendor-wt-index');
   Route::get('/vendor-get-additional', 'Vendor\WithdrawController@getAdditional')->name('vendor-get-additional'); 
-  Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create'); 
+  Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create');  
   Route::post('/withdraw/create', 'Vendor\WithdrawController@store')->name('vendor-wt-store');
 
   Route::get('/service/datatables', 'Vendor\ServiceController@datatables')->name('vendor-service-datatables');

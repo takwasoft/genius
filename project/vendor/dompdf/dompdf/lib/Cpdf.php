@@ -14,7 +14,7 @@
  * @author  Fabien Ménager <fabien.menager@gmail.com>
  * @license Public Domain http://creativecommons.org/licenses/publicdomain/
  * @package Cpdf
- */
+ */ 
 use FontLib\Font;
 use FontLib\BinaryStream;
 
@@ -2542,7 +2542,7 @@ EOT;
                             $width = floatval($dtmp['WX']);
 
                             if ($c >= 0) {
-                                if ($c != hexdec($n)) {
+                                if (ctype_xdigit($c) && ctype_xdigit($n) && $c != hexdec($n)) {
                                     $data['codeToName'][$c] = $n;
                                 }
                                 $data['C'][$c] = $width;

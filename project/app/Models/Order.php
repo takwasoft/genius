@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\OrderAdditional;
+use App\OrderExtraCharge;
 use App\OrderPaymentVerification;
 use App\PaymentVerification;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,9 @@ class Order extends Model
     }
     public function additionalFields(){
         return $this->hasMany(OrderAdditional::class);
+    }
+    public function extraCharges(){
+        return $this->hasMany(OrderExtraCharge::class);
     }
     public function paymentVerifications(){
         return $this->hasMany(OrderPaymentVerification::class);

@@ -16,16 +16,17 @@ class OrderController extends Controller
     }
 
     public function index()
-    {
+    {  
         $user = Auth::user();
         $orders = VendorOrder::where('user_id','=',$user->id)->orderBy('id','desc')->get()->groupBy('order_number');
         return view('vendor.order.index',compact('user','orders'));
     }
 
     public function show($slug)
-    {
+    { 
         $user = Auth::user();
         $order = Order::where('order_number','=',$slug)->first();
+        
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
         return view('vendor.order.details',compact('user','order','cart'));
     }
@@ -65,10 +66,14 @@ class OrderController extends Controller
         if ($mainorder->status == "completed"){
             return redirect()->back()->with('success','This Order is Already Completed');
         }else{
-
+        
         $user = Auth::user();
-        $order = VendorOrder::where('order_number','=',$slug)->where('user_id','=',$user->id)->update(['status' => $status]);
-        return redirect()->route('vendor-order-index')->with('success','Order Status Updated Successfully');
+        $order = VendorOrder::where('order_number','=',$slug)->where('user_id','=',$user->id)->first();
+        $order->update(['status' => $status]);
+        // $o=Order::find($order->order_id);
+       
+        // $o->update(['status' => $status]);
+         return redirect()->route('vendor-order-index')->with('success','Order Status Updated Successfully');
     }
     }
 

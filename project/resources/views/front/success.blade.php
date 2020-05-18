@@ -156,7 +156,33 @@
                                                                         @if($order->method=="Paypal")
                                                                         {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{ isset($_GET['tx']) ? $_GET['tx'] : '' }}</p>
                                                                         @else
-                                                                        {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{$order->txnid}}</p>
+                                                                        
+                                                                        @foreach($order->additionalFields as $field)
+              <tr>
+                 <th width="45%">{{$field->additionalField->title}}</th>
+                                                    <td width="10%">:</td>
+                                                    <td width="45%">{{$field->value}}</td>
+                                                    </tr>
+                                                    <br>
+                                            
+                                         @endforeach
+                                          @foreach($order->paymentVerifications as $field)
+                                          <tr>
+                                          <th width="45%">{{$field->paymentVerification->title}}</th>
+                                                    <td width="10%">:</td>
+                                                    <td width="45%">{{$field->value}}</td>
+                                                    </tr>
+                                                    <br>
+                                         @endforeach
+                                         @foreach($order->extraCgarges as $field) 
+                                          <tr>
+                                          <th width="45%">{{$field->extraChargeRule->title}}</th>
+                                                    <td width="10%">:</td>
+                                                    <td width="45%">{{$order->currency_sign}}{{$field->charge}}</td>
+                                                    </tr>
+                                                    <br>
+                                         @endforeach
+                                                                        </p>
                                                                         @endif
 
                                                                     @endif

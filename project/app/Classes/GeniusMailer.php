@@ -33,7 +33,7 @@ class GeniusMailer
     {
         $setup = Generalsetting::find(1);
 
-
+ 
 
 
         $temp = EmailTemplate::where('email_type','=',$mailData['type'])->first();
@@ -70,9 +70,9 @@ class GeniusMailer
 
             });
 
-        }
+        } 
         catch (\Exception $e){
-            //die("Not Sent!");
+            dd($e);
         }
 
         $files = glob('assets/prints/*'); //get all file names

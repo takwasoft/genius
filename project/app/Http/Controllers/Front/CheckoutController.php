@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front;
 
 use App\AdditionalField;
 use App\Classes\GeniusMailer;
+use App\ExtraChargeRule;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Coupon;
@@ -19,6 +20,7 @@ use App\Models\User;
 use App\Models\UserNotification;
 use App\Models\VendorOrder;
 use App\OrderAdditional;
+use App\OrderExtraCharge;
 use App\OrderPaymentVerification;
 use App\PaymentVerification;
 use Auth;
@@ -32,6 +34,7 @@ class CheckoutController extends Controller
 
     public function loadpayment($slug1,$slug2)
     {
+        $gs = Generalsetting::findOrFail(1);
         if (Session::has('currency')) {
             $curr = Currency::find(Session::get('currency'));
         }
@@ -45,8 +48,28 @@ class CheckoutController extends Controller
             $gateway = PaymentGateway::findOrFail($pay_id);
         }
         $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();
-        $verificationFields=PaymentVerification::where('payment_gateway_id','=',$gateway->id)->get();   
-        return view('load.payment',compact('payment','pay_id','gateway','curr','additionalFields','verificationFields'));
+        $verificationFields=PaymentVerification::where('payment_gateway_id','=',$gateway->id)->get();
+        $oldCart = Session::get('cart');
+        $cart = new Cart($oldCart);
+        $total = $cart->totalPrice;
+        $coupon = Session::has('coupon') ? Session::get('coupon') : 0;
+        if($gs->tax != 0)
+        {
+            $tax = ($total / 100) * $gs->tax;
+            $total = $total + $tax;
+        }
+        if(!Session::has('coupon_total'))
+        {
+        $total = $total - $coupon;     
+        $total = $total + 0;               
+        }
+        else {
+        $total = Session::get('coupon_total');  
+        $total = $total + round(0 * $curr->value, 2); 
+        }
+        
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$gateway->id)->get();    
+        return view('load.payment',compact('extraCharges','payment','pay_id','gateway','curr','additionalFields','verificationFields','total'));
     }
 
     public function checkout()
@@ -600,7 +623,7 @@ class CheckoutController extends Controller
             'onumber' => $order->order_number,
         ];
 
-        $mailer = new GeniusMailer();
+        $mailer = new GeniusMailer(); 
         $mailer->sendAutoOrderMail($data,$order->id);            
         }
         else
@@ -615,7 +638,7 @@ class CheckoutController extends Controller
         if($gs->is_smtp == 1)
         {
             $data = [
-                'to' => $gs->email,
+                'to' => $gs->admin_email,
                 'subject' => "New Order Recieved!!",
                 'body' => "Hello Admin!<br>Your store has received a new order.<br>Order Number is ".$order->order_number.".Please login to your panel to check. <br>Thank you.",
             ];
@@ -771,19 +794,39 @@ $validator = Validator::make($input, $rules, $messages);
             }
         $order->save();
         for($i=0;$i<count(array_keys($request->additional));$i++){
-            OrderAdditional::create([
-                "order_id"=>$order->id,
-                "additional_field_id"=>array_keys($request->additional)[$i],
-                "value"=>$request->additional[array_keys($request->additional)[$i]]
-            ]);
+            
+            if($request->additional[array_keys($request->additional)[$i]]){
+                OrderAdditional::create([
+                    "order_id"=>$order->id,
+                    "additional_field_id"=>array_keys($request->additional)[$i],
+                    "value"=>$request->additional[array_keys($request->additional)[$i]]
+                ]);
+            }
         }
         for($i=0;$i<count(array_keys($request->verification));$i++){
-            OrderPaymentVerification::create([
-                "order_id"=>$order->id,
-                "payment_verification_id"=>array_keys($request->verification)[$i],
-                "value"=>$request->verification[array_keys($request->verification)[$i]]
-            ]);
+            if($request->verification[array_keys($request->verification)[$i]])
+            {
+                OrderPaymentVerification::create([
+                    "order_id"=>$order->id,
+                    "payment_verification_id"=>array_keys($request->verification)[$i],
+                    "value"=>$request->verification[array_keys($request->verification)[$i]]
+                ]);
+            }
         }
+        $total=$request->total;
+        $payment=PaymentGateway::where('title','=',$request->method)->first();
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$payment->id)->get(); 
+        foreach($extraCharges as $extraCharge){
+            if($total>=$extraCharge->from&&$total<=$extraCharge->to){
+                OrderExtraCharge::create([
+                    "order_id"=>$order->id,
+                    "extra_charge_rule_id"=>$extraCharge->id,
+                    "charge"=>$extraCharge->fixed==1?$extraCharge->charge:$extraCharge->charge*$total*0.01
+                ]);
+            }
+        }
+            
+        
         $track = new OrderTrack;
         $track->title = 'Pending';
         $track->text = 'You have successfully placed your order.';
@@ -913,7 +956,7 @@ $validator = Validator::make($input, $rules, $messages);
         if($gs->is_smtp == 1)
         {
             $data = [
-                'to' => $gs->email,
+                'to' => $gs->admin_email,
                 'subject' => "New Order Recieved!!",
                 'body' => "Hello Admin!<br>Your store has received a new order.<br>Order Number is ".$order->order_number.".Please login to your panel to check. <br>Thank you.",
             ];

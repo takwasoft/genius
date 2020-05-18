@@ -26,7 +26,7 @@
                                     <div class="mr-table allproduct">
                                         @include('includes.form-success') 
 
-                                        <div class="table-responsiv">
+                                        <div class="table-responsive">
                                         <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
                                                 <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                                                     <thead>
@@ -35,6 +35,7 @@
                                                             <th>{{ $langg->lang535 }}</th>
                                                             <th>{{ $langg->lang536 }}</th>
                                                             <th>{{ $langg->lang537 }}</th>
+                                                            <th>Status</th>
                                                             <th>{{ $langg->lang538 }}</th>
                                                         </tr>
                                                     </thead>
@@ -64,17 +65,23 @@
                                           <td>{{$qty}}</td>
                                       <td>{{$order->order->currency_sign}}{{round($price * $order->order->currency_value, 2)}}</td>
                                       <td>{{$order->order->method}}</td>
+                                      <td>{{$order->status}}</td>
                                       <td>
 
                                         <div class="action-list">
 
                                         <a href="{{route('vendor-order-show',$order->order->order_number)}}" class="btn btn-primary product-btn"><i class="fa fa-eye"></i> {{ $langg->lang539 }}</a>
-                                            <select class="vendor-btn {{ $order->status }}">
-                                            <option value="{{ route('vendor-order-status',['slug' => $order->order->order_number, 'status' => 'pending']) }}" {{  $order->status == "pending" ? 'selected' : ''  }}>{{ $langg->lang540 }}</option>
-                                            <option value="{{ route('vendor-order-status',['slug' => $order->order->order_number, 'status' => 'processing']) }}" {{  $order->status == "processing" ? 'selected' : ''  }}>{{ $langg->lang541 }}</option>
-                                            <option value="{{ route('vendor-order-status',['slug' => $order->order->order_number, 'status' => 'completed']) }}" {{  $order->status == "completed" ? 'selected' : ''  }}>{{ $langg->lang542 }}</option>
-                                            <option value="{{ route('vendor-order-status',['slug' => $order->order->order_number, 'status' => 'declined']) }}" {{  $order->status == "declined" ? 'selected' : ''  }}>{{ $langg->lang543 }}</option>
+                                          
+
+                                            <select class="vendor-btn {{$order->status}} ">
+                                           <option>Update</option>
+                                            <option value="{{ route('vendor-order-status',['slug' => $order->order->order_number, 'status' => 'processing']) }}" {{  $order->status == "processing" ? '' : ''  }}>{{ $langg->lang541 }}</option>
+                                            <option value="{{ route('vendor-order-status',['slug' => $order->order->order_number, 'status' => 'declined']) }}" {{  $order->status == "declined" ? '' : ''  }}>D eclined</option>
+                                            
+                                            
                                             </select>
+                                           
+
 
                                         </div>
 

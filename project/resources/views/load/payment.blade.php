@@ -3,7 +3,10 @@
 @else
  @foreach($additionalFields as $field)
 <div class="item form-group">
-                                <label class="control-label col-sm-12" for="name">{{ $field->title }} {{$field->required==1?'*':''}}
+                                <label class="control-label col-sm-12" for="name">{{ $field->title }}
+                                <br>
+                                {{ $field->description }}
+                                {{$field->required==1?'*':''}}
 
                                     </label>
                                 <div class="col-sm-12">
@@ -11,13 +14,16 @@
                                     @if($field->required==1)
 												required
 												@endif
-                                     name="additional[{{$field->id}}]"  class="form-control" type="text"  required>
+                                     name="additional[{{$field->id}}]"  class="form-control" type="text"  {{$field->required==1?'required':''}}>
                                 </div>
                             </div>
 @endforeach
  @foreach($verificationFields as $field)
 <div class="item form-group">
-                                <label class="control-label col-sm-12" for="name">{{ $field->title }} {{$field->required==1?'*':''}}
+                                <label class="control-label col-sm-12" for="name">{{ $field->title }}
+                                <br>
+                                {{ $field->description }}
+                                {{$field->required==1?'*':''}}
 
                                     </label>
                                 <div class="col-sm-12">
@@ -25,9 +31,25 @@
                                     @if($field->required==1)
 												required
 												@endif
-                                     name="verification[{{$field->id}}]"  class="form-control" type="text"  required>
+                                     name="verification[{{$field->id}}]"  class="form-control" type="text"  {{$field->required==1?'required':''}}>
                                 </div>
                             </div>
+@endforeach
+ @foreach($extraCharges as $field)
+ @if($total>=$field->from && $total<=$field->to)
+<div class="item form-group">
+                                <label class="control-label col-sm-12" for="name">{{ $field->title }} 
+<br>
+                                {{ $field->description }}
+                                    </label>
+                                <div class="col-sm-12">
+                                    <input 
+                                   disabled
+                                   value="{{$field->fixed==1?$field->charge:$field->charge*$total*0.01}}"
+                                     name="extra[{{$field->id}}]"  class="form-control" type="text"  required>
+                                </div>
+                            </div>
+                            @endif
 @endforeach
 
 @endif

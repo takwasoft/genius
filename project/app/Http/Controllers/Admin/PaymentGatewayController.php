@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AdditionalField;
+use App\ExtraChargeRule;
 use App\HiddenCharge;
 use Datatables;
 use App\Models\PaymentGateway;
@@ -22,9 +23,10 @@ class PaymentGatewayController extends Controller
     public function rule($id){
         $payment=PaymentGateway::find($id);
         $additionalFields = AdditionalField::where('payment_gateway_id', '=', $id)->get();
+        $extraCharges =ExtraChargeRule::where('payment_gateway_id', '=', $id)->get();
         $hiddenCharges = HiddenCharge::where('payment_gateway_id', '=', $id)->get();
         $paymentVerifications = PaymentVerification::where('payment_gateway_id', '=', $id)->get();
-        return view('admin.payment.rules', ['fid' => $id, 'additionalFields' => $additionalFields, 'hiddenCharges' => $hiddenCharges, 'paymentVerifications' => $paymentVerifications]);
+        return view('admin.payment.rules', ['fid' => $id, 'additionalFields' => $additionalFields, 'extraCharges' => $extraCharges,'hiddenCharges' => $hiddenCharges, 'paymentVerifications' => $paymentVerifications]);
     }
     public function addAdditional(Request $request){
         if ($request->required) {
@@ -67,6 +69,43 @@ class PaymentGatewayController extends Controller
 
         ]);
         return redirect()->route('admin-payment-rule',$request->fid);
+    }
+    public function addExtra(Request $request){
+        if ($request->fixed) {
+            $f = 1;
+        } else {
+            $f = 0;
+        }
+        if ($request->cs) {
+            $cs = 1;
+        } else {
+            $cs = 0;
+        }
+        if ($request->cr) {
+            $cr = 1;
+        } else {
+            $cr = 0;
+        }
+        ExtraChargeRule::create([
+            'payment_gateway_id' => $request->fid,
+            'title' => $request->title,
+            'description' => $request->description,
+            'fixed' => $f,
+            'cs' => $cs,
+            'cr' => $cr,
+            'charge' => $request->charge,
+            'from' => $request->from,
+            'to' => $request->to,
+
+
+        ]);
+        return redirect()->route('admin-payment-rule',$request->fid);
+    }
+    public function deleteExtra($id){
+        $p=ExtraChargeRule::find($id);
+        $pid=$p->payment_gateway_id;
+        $p->delete();
+        return redirect()->route('admin-payment-rule',$pid);
     }
     //*** JSON Request
     public function datatables()

@@ -316,6 +316,20 @@
                                   </div>
                               </div>
                             </div>
+                                                      <div class="row justify-content-center">
+                              <div class="col-lg-3">
+                                <div class="left-area">
+                                  <h4 class="heading">
+                                      {{ __('Youtube') }} *
+                                  </h4>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                  <div class="tawk-area">
+                                    <textarea  name="home_youtube">{{$gs->home_youtube}}</textarea>
+                                  </div>
+                              </div>
+                            </div>
 
                           <div class="row justify-content-center">
                               <div class="col-lg-3">

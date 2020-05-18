@@ -27,9 +27,11 @@
                                     <div class="mr-table allproduct">
                                         @include('includes.admin.form-success') 
                                         <div class="table-responsive">
+                                        <button onclick="printWithdraw()" class="btn btn-success" style="float:right">Print</button>
                                                 <table id="geniustable" class="table table-hover " cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
+                                                        <th><input class="chk" id="checkAll" type="checkbox"> All</th>
                                                             <th>#</th>
                                                             <th>{{ __("Email") }}</th>
                                                             <th>{{ __("Name") }}</th>
@@ -44,6 +46,7 @@
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
+                                                        <th><input class="chk" id="checkAll" type="checkbox"></th>
                                                             <th>#</th>
                                                             <th>{{ __("Email") }}</th>
                                                             <th>{{ __("Name") }}</th>
@@ -161,6 +164,22 @@
 {{-- DATA TABLE --}}
 
     <script type="text/javascript">
+    printWithdraw=()=>{
+            let chklist = document.getElementsByClassName("chk");
+
+                                        let ids = [];
+                                        for (let i = 1; i < chklist.length; i++) {
+                                            if (chklist[i].checked) {
+                                                ids.push(chklist[i].value);
+                                            }
+                                        }
+                                        if (ids.length == 0) {
+                                            alert("choose at least one");
+                                        }
+                                        else {
+                                            window.location.href = "{{route('print-withdraw')}}?ids="+ JSON.stringify(ids)  ;
+                                        }
+    }
  $('#geniustable tfoot th').each(function () {
     {{--  if ($(this).index() != 0 && $(this).index() != 1 && $(this).index() != 8) {
         return;
@@ -174,6 +193,7 @@
                serverSide: true,
                ajax: '{{ route('admin-vendor-withdraw-datatables') }}',
                columns: [
+                   { data: 'check', name: 'check' },
                    { data: 'id', name: 'id' },
                         { data: 'email', name: 'email' },
                         { data: 'name', name: 'name' },
@@ -206,7 +226,14 @@
         $('#confirm-delete1').on('show.bs.modal', function(e) {
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         });
+$("#checkAll").click(function () {
+        let chklist = document.getElementsByClassName("chk");
+        let cheked = chklist[0].checked;
 
+        for (let i = 1; i < chklist.length; i++) {
+            chklist[i].checked = cheked;
+        }
+    });
     </script>
 
 {{-- DATA TABLE --}}

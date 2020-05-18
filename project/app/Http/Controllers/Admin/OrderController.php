@@ -24,6 +24,7 @@ class OrderController extends Controller
     {
         if($status == 'pending'){
             $datas = Order::where('status','=','pending')->get();
+           
         }
         elseif($status == 'processing') {
             $datas = Order::where('status','=','processing')->get();
@@ -80,18 +81,25 @@ class OrderController extends Controller
         $data = Order::findOrFail($id);
 
         $input = $request->all();
-        if ($data->status == "completed"){
+        if ($data->status == "completed" && $input['status'] != "completed"){
 
         // Then Save Without Changing it.
-            $input['status'] = "completed";
+            //$input['status'] = "completed";
             $data->update($input);
-            //--- Logic Section Ends
+            foreach($data->vendororders as $vorder)
+            {
+                $uprice = User::findOrFail($vorder->user_id);
+                $uprice->current_balance = $uprice->current_balance - $vorder->price;
+                $uprice->update();
+            }
+
+        //     //--- Logic Section Ends
     
 
-        //--- Redirect Section          
-        $msg = 'Status Updated Successfully.';
-        return response()->json($msg);    
-        //--- Redirect Section Ends     
+        // //--- Redirect Section          
+        // $msg = 'Status Updated Successfully.';
+        // return response()->json($msg);    
+        // //--- Redirect Section Ends     
 
     
             }else{
@@ -221,6 +229,15 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
+        //utf8_encode(bzcompress(serialize($cart), 9));
+        
+        
+        // foreach($cart->items as $key => $product){
+        //      $cart->items[$key]['qty']=2;
+        // }
+        // $order->update([
+        //     "cart"=>utf8_encode(bzcompress(serialize($cart), 9))
+        // ]);
         return view('admin.order.details',compact('order','cart'));
     }
     public function invoice($id)

@@ -202,7 +202,11 @@ class VendorController extends Controller
         return redirect()->route('vendor-dashboard');
     }
     
-
+    public function printWithdraw(Request $request){
+        $ids=json_decode($request->ids);
+        $withdraws=Withdraw::whereIn('id', $ids)->get();
+        return view('print.withdraw',compact('withdraws'));
+    }
 	//*** GET Request
     public function destroy($id)
     {
@@ -241,6 +245,10 @@ class VendorController extends Controller
                                 ->editColumn('method', function(Withdraw $data) {
                                     return $data->paymentGateway->title;
                                 }) 
+                                ->addColumn('check', function(Withdraw $data) {
+                                    
+                                    return '<input class="chk" name="withdraw_id" type="checkbox" value="'.$data->id.'">';
+                                })
                                 ->addColumn('name', function(Withdraw $data) {
                                     $name = $data->user->name;
                                     return '<a href="' . route('admin-vendor-show',$data->user->id) . '" target="_blank">'. $name .'</a>';
@@ -274,7 +282,7 @@ class VendorController extends Controller
                                     $action .= '</div>';
                                     return $action;
                                 }) 
-                                ->rawColumns(['name','action','print'])
+                                ->rawColumns(['name','action','print','check'])
                                 ->toJson(); //--- Returning Json Data To Client Side
         }
 
@@ -306,10 +314,10 @@ class VendorController extends Controller
 
         //*** GET Request   
         public function reject($id)
-        {
+        { 
             $withdraw = Withdraw::findOrFail($id);
             $account = User::findOrFail($withdraw->user->id);
-            $account->affilate_income = $account->affilate_income + $withdraw->amount + $withdraw->fee;
+            $account->current_balance = $account->current_balance + $withdraw->amount + $withdraw->fee;
             $account->update();
             $data['status'] = "rejected";
             $withdraw->update($data);

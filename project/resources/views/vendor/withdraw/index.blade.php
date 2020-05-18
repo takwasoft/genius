@@ -44,7 +44,10 @@
 								    <ul class="list-group">
 									@foreach($withdraw->additionalFields as $field)
                                                 <li class="list-group-item">
-                                                <span>{{$field->additionalField->title}}</span>
+                                                <span>
+                                                    @if($field->additionalField)
+                                                    {{$field->additionalField->title}}
+                                                    @endif</span>
                                                 <span>{{$field->value}}</span>
                                             </li>
                                             @endforeach
