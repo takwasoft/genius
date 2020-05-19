@@ -211,7 +211,7 @@ class ProductController extends Controller
 
     //*** GET Request
     public function createPhysical()
-    {  
+    {   
         $package = auth()->user()->subscribes()->orderBy('id','desc')->first(); 
         
         $cats = $package->subscription->categories;
@@ -221,7 +221,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
         $divisions=Division::all();
-        $districts=District::all();
+        $districts=District::orderBy('dis_serial')->limit(5)->get();
         $categories=Category::all();
       
         //every category has many subs. every subs has many childs

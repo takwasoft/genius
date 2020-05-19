@@ -285,6 +285,9 @@ Route::prefix('admin')->group(function() {
 
 
   Route::get('/division/serial', 'DivisionController@serial')->name('admin-div-serial');
+  Route::get('/all-dis/serial', 'DistrictController@serialAll')->name('admin-dis-all-serial');
+
+  Route::get('/district/serial-all/update', 'DistrictController@serialUpdateAll')->name('admin-dist-serial-update-all');
   Route::get('/division/serial/update', 'DivisionController@serialUpdate')->name('admin-div-serial-update');
 
 

@@ -106,7 +106,7 @@ class UserController extends Controller
         return view('user.package.index',compact('user','subs','package'));
     }
 
-
+ 
     public function vendorrequest($id)
     {
 
@@ -119,7 +119,7 @@ class UserController extends Controller
             return redirect()->back();
         }
         $divisions=Division::all();
-        $districts=District::all();
+        $districts=District::orderBy('dis_serial')->limit(5)->get();
 
         return view('user.package.details',compact('user','subs','package','divisions','districts'));
     }

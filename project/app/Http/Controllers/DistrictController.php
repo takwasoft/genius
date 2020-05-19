@@ -65,6 +65,10 @@ class DistrictController extends Controller
  
         return view('admin.district.create',["divisions"=>Division::all()]);
     }
+    public function serialAll(){
+        $districts=District::orderBy('dis_serial')->get();
+        return view('admin.district.serialAll',compact('districts'));
+    }
 
     public function serial(Division $division){
         $districts=District::where('division_id',$division->id)->orderBy('serial')->get();
@@ -78,6 +82,16 @@ class DistrictController extends Controller
             $district->save();
         }
         return redirect()->route('admin-dis-serial',$division->id);
+       // return view('admin.category.serial');
+    }
+    public function serialUpdateAll(Request $request){
+        $lists= json_decode($request->lists);
+        for($i=0;$i<count($lists);$i++){
+            $district=District::find($lists[$i]);
+            $district->dis_serial=$i;
+            $district->save();
+        }
+        return redirect()->route('admin-dis-all-serial',);
        // return view('admin.category.serial');
     }
 

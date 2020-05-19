@@ -1,6 +1,71 @@
 @extends('layouts.front')
 @section('styles')
 <style>
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-image: url('../assets/images/searchicon.png');
+  background-position: 14px 9px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 7px 20px 7px 45px;
+  border: 1px solid #ddd;
+  border-radius:4px;
+}
+#all_sub_category i{
+     padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    margin-top: -2px;
+}
+
+.all_sub_category_btn{
+    border: 1px solid #ddd;
+    margin-top: -4px;
+    margin-left: -5px;
+}
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 100%;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 9px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {    background: rgba(0,152,119,.05);
+    color: #149777!important;}
+
+.show {display: block;}
+
 /* #mg-menu{
     display:none;
 } */
@@ -326,8 +391,28 @@
                                     <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
                                         <ul class="sub-menu1 text-muted">
                                          <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
+                                         @php($i=1)
                                             @foreach($district->subdistricts as $subdistrict)
+                                                @if($i<6)
                                                 <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
+                                                @elseif($i==6)
+                                                    <div class="dropdown mt-4" id="all_sub_category">
+  
+    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
+    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    </i></button>
+  <div id="myDropdown" class="dropdown-content ">
+                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                
+                                                @else
+                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                @endif
+                                                @if($i>=6&&$i==$district->subdistricts->count())
+                                                   
+                                                    </div>
+                                                    </div>
+                                                    @endif
+                                                   @php($i++) 
                                             @endforeach
                                             
                                         </ul>
@@ -343,6 +428,7 @@
                         <div class="btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
+                            
                                @foreach($divisions as $division)
                                 <li>
                                     <a
@@ -353,10 +439,36 @@
                                         <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
                                         <ul class="sub-menu1 text-muted">
                                          <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                         @php($i=1)
                                             @foreach($division->districts as $district)
+                                                @if($i<6)
+
                                                 <li><a class="text-muted" href="#"
 												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
 												>{{$district->name}}</a></li>
+@elseif($i==6)
+                                                    <div class="dropdown mt-4" id="all_sub_category">
+  
+    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+    </i></button>
+  <div id="myDropdownDiv" class="dropdown-content ">
+                                                    <a class="text-muted" href="#"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
+												>{{$district->name}}</a>
+                                                
+                                                @else
+                                                    <a class="text-muted" href="#"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
+												>{{$district->name}}</a>
+                                                @endif
+                                                @if($i>=6&&$i==$district->subdistricts->count())
+                                                   
+                                                    </div>
+                                                    </div>
+                                                    @endif
+                                                   @php($i++) 
+
                                             @endforeach
                                             
                                         </ul>
@@ -403,6 +515,63 @@ closeModal=()=>{
 </script>
 <script>
 
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+  if($(".dist.fa-angle-up").length>0)
+  {
+    $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
+  }
+  else{
+    $(".fa-angle-down.dist").attr("class","dist fas fa-angle-up")
+  }
+}
+
+function filterFunction() {
+  if(document.getElementById("myDropdown").classList.length==1){
+    document.getElementById("myDropdown").classList.add("show")
+  }
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+function myFunctionDiv() {
+  document.getElementById("myDropdownDiv").classList.toggle("show");
+  if($(".fa-angle-up.div").length>0)
+  {
+    $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
+  }
+  else{
+    $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
+  }
+}
+function filterFunctionDiv() {
+  if(document.getElementById("myDropdownDiv").classList.length==1){
+    document.getElementById("myDropdownDiv").classList.add("show")
+  }
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInputDiv");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdownDiv");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
   $(document).ready(function() {
 
     // when dynamic attribute changes

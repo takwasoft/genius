@@ -81,16 +81,19 @@ class OrderController extends Controller
         $data = Order::findOrFail($id);
 
         $input = $request->all();
-        if ($data->status == "completed" && $input['status'] != "completed"){
+        if ($data->status == "completed" &&$data->payment_status == "Completed"){
 
         // Then Save Without Changing it.
             //$input['status'] = "completed";
-            $data->update($input);
+            if($input['status'] != "completed"|| $input['payment_status'] != "Completed")
+            {
+                $data->update($input);
             foreach($data->vendororders as $vorder)
             {
                 $uprice = User::findOrFail($vorder->user_id);
                 $uprice->current_balance = $uprice->current_balance - $vorder->price;
                 $uprice->update();
+            }
             }
 
         //     //--- Logic Section Ends
@@ -103,7 +106,7 @@ class OrderController extends Controller
 
     
             }else{
-            if ($input['status'] == "completed"){
+            if ($input['status'] == "completed"&&$input['payment_status'] == "Completed"){
     
                 foreach($data->vendororders as $vorder)
                 {

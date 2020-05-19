@@ -11,7 +11,7 @@ class Division extends Model
         ];
                      
         public function Districts(){
-            return $this->hasMany(District::class);
+            return $this->hasMany(District::class)->orderBy('serial');;
         }
         public function subDistricts()
         {

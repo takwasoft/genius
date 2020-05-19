@@ -179,6 +179,9 @@
                     <a href="{{ URL::to('/admin/division/serial')}}"><span>Division Serial</span></a>
                 </li>
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
+                    <a href="{{ URL::to('/admin/all-dis/serial')}}"><span>District Serial</span></a>
+                </li>
+                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
                     <a href="{{ URL::to('/admin/divisions')}}"><span>Division</span></a>
                 </li>
                 <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='district') active @endif">

@@ -70,6 +70,7 @@ class VendorController extends Controller
     //Send email to user
     public function vendorcontact(Request $request)
     {
+       
         $user = User::findOrFail($request->user_id);
         $vendor = User::findOrFail($request->vendor_id);
         $gs = Generalsetting::findOrFail(1);
@@ -87,23 +88,28 @@ class VendorController extends Controller
             ];
 
             $mailer = new GeniusMailer();
-            //$mailer->sendCustomMail($data);
+            $mailer->sendCustomMail($data);
         }
         else{
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-            //mail($to,$subject,$msg,$headers);
+            mail($to,$subject,$msg,$headers);
         }
 
 
     $conv = Conversation::where('sent_user','=',$user->id)->where('subject','=',$subject)->first();
+    
         if(isset($conv)){
+            
             $msg = new Message();
             $msg->conversation_id = $conv->id;
             $msg->message = $request->message;
+            $msg->recieved_user = $request->vendor_id;
             $msg->sent_user = $user->id;
+            
             $msg->save();
         }
         else{
+            
             $message = new Conversation();
             $message->subject = $subject;
             $message->sent_user= $request->user_id;
@@ -113,7 +119,8 @@ class VendorController extends Controller
             $msg = new Message();
             $msg->conversation_id = $message->id;
             $msg->message = $request->message;
-            $msg->sent_user = $request->user_id;;
+            $msg->sent_user = $request->user_id;
+            $msg->recieved_user = $request->vendor_id;
             $msg->save();
 
         }

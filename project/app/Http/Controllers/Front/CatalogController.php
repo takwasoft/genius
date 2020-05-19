@@ -243,7 +243,7 @@ class CatalogController extends Controller
 
                                                     }
                                                   }
-
+ 
                                                 }
                                               }
                                           });
@@ -262,7 +262,7 @@ class CatalogController extends Controller
       }
       $data['feature_products']= Product::where('status','=',1)->whereFeatured(1)->orderBy('id','desc')->take(8)->get();
       $data['divisions']=Division::all();
-      $data['districts']=District::all();
+      $data['districts']=District::orderBy('dis_serial')->limit(5)->get();
 
       return view('front.category', $data); 
     } 
