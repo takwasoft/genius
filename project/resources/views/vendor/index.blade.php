@@ -93,7 +93,9 @@
                                     <div class="mycard bg6">
                                         <div class="left">
                                             <h5 class="title">{{ $langg->lang470 }}</h5>
-                                            <span class="number">{{ App\Models\Product::vendorConvertPrice( App\Models\VendorOrder::where('user_id','=',$user->id)->where('status','=','completed')->sum('price') ) }}</span>
+                                            <span class="number">{{ App\Models\Product::vendorConvertPrice( App\Models\VendorOrder::with('order')->where('user_id','=',$user->id)->where('status','=','completed')->whereHas('order',function($q){
+                                                $q->where('payment_status','=', 'Completed');
+                                            })->sum('price') ) }}</span>
                                         </div>
                                         <div class="right d-flex align-self-center">
                                             <div class="icon">

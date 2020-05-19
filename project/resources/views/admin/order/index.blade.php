@@ -35,23 +35,36 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-area">
+                        <div class="">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="mr-table allproduct">
                                         @include('includes.admin.form-success') 
-                                        <div class="table-responsiv">
+                                        <div class="table-responsive">
                                         <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
-                                                <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                                                <table id="geniustable" class="table table-hover " cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th>{{ __('Customer Email') }}</th>
                                                             <th>{{ __('Order Number') }}</th>
                                                             <th>{{ __('Total Qty') }}</th>
                                                             <th>{{ __('Total Cost') }}</th>
+                                                            <th>{{ __('Status') }}</th>
+                                                            <th>{{ __('Payment') }}</th>
                                                             <th>{{ __('Options') }}</th>
                                                         </tr>
                                                     </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>{{ __('Customer Email') }}</th>
+                                                            <th>{{ __('Order Number') }}</th>
+                                                            <th>{{ __('Total Qty') }}</th>
+                                                            <th>{{ __('Total Cost') }}</th>
+                                                            <th>{{ __('Status') }}</th>
+                                                            <th>{{ __('Payment') }}</th>
+                                                            <th>{{ __('Options') }}</th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                         </div>
                                     </div>
@@ -177,17 +190,25 @@
 {{-- DATA TABLE --}}
 
     <script type="text/javascript">
-
+ $('#geniustable tfoot th').each(function () {
+    {{--  if ($(this).index() != 0 && $(this).index() != 1 && $(this).index() != 8) {
+        return;
+      }  --}}
+      var title = $(this).text();
+      $(this).html('<input style="width:70px" type="text" placeholder="Search ' + title + '" />');
+    });
         var table = $('#geniustable').DataTable({
                ordering: false,
                processing: true,
-               serverSide: true,
+               serverSide: true, 
                ajax: '{{ route('admin-order-datatables','none') }}',
                columns: [
                         { data: 'customer_email', name: 'customer_email' },
                         { data: 'id', name: 'id' },
                         { data: 'totalQty', name: 'totalQty' },
                         { data: 'pay_amount', name: 'pay_amount' },
+                        { data: 'status', name: 'status' },
+                        { data: 'payment_status', name: 'payment_status' },
                         { data: 'action', searchable: false, orderable: false }
                      ],
                language : {
@@ -197,6 +218,20 @@
                         $('.select').niceSelect();  
                 }
             });
+             table.columns().every(function () {
+      var that = this;
+      
+      $('input', this.footer()).on('keyup change clear', function () {
+        if (that.search() !== this.value) {
+           that
+                    .search( this.value.split(",").join("|"), true, false )
+                    .draw();
+        }
+      });
+    });
+    $('tfoot').each(function () {
+      $(this).insertAfter($(this).siblings('thead'));
+    });   
                                                                 
     </script>
 
