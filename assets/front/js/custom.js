@@ -1151,23 +1151,59 @@ $(function($) {
         // Adding Muliple Quantity Ends
 
         // Add By ONE
+        $(document).on("change", ".qttotal1", function() {
 
+            var quantity = $(this).parent().parent().find('.qttotal1').val();
+            var pid = $(this).parent().parent().find('.prodid').val();
+            var itemid = $(this).parent().parent().find('.itemid').val();
+            var size_qty = $(this).parent().parent().find('.size_qty').val();
+            var size_price = $(this).parent().parent().find('.size_price').val();
+            var stck = $("#stock" + itemid).val();
+            var qty = $("#qty" + itemid).val();
+            if (stck != "") {
+                var stk = parseInt(stck);
+                if (qty < stk) {
+                    qty++;
+                    // $("#qty" + itemid).val(qty);
+                }
+            } else {
+                qty++;
+                // $("#qty" + itemid).val(qty);
+            }
+            $.ajax({
+                type: "GET",
+                url: mainurl + "/setquantity",
+                data: { id: pid, itemid: itemid, size_qty: size_qty, size_price: size_price, quantity: quantity },
+                success: function(data) {
+                    if (data == 0) {} else {
+                        $(".discount").html($("#d-val").val());
+                        $(".cart-total").html(data[0]);
+                        $(".main-total").html(data[3]);
+                        $(".coupon-total").val(data[3]);
+                        $("#prc" + itemid).html(data[2]);
+                        $("#prct" + itemid).html(data[2]);
+                        $("#cqt" + itemid).html(data[1]);
+                        $("#qty" + itemid).val(data[1]);
+                    }
+                }
+            });
+        })
         $(document).on("click", ".adding", function() {
             var pid = $(this).parent().parent().find('.prodid').val();
             var itemid = $(this).parent().parent().find('.itemid').val();
             var size_qty = $(this).parent().parent().find('.size_qty').val();
             var size_price = $(this).parent().parent().find('.size_price').val();
             var stck = $("#stock" + itemid).val();
-            var qty = $("#qty" + itemid).html();
+            var qty = $("#qty" + itemid).val();
             if (stck != "") {
                 var stk = parseInt(stck);
                 if (qty < stk) {
                     qty++;
-                    $("#qty" + itemid).html(qty);
+                    $("#qty" + itemid).val(qty);
                 }
             } else {
                 qty++;
-                $("#qty" + itemid).html(qty);
+                $("#qty" + itemid).val(qty);
             }
             $.ajax({
                 type: "GET",
@@ -1182,7 +1218,7 @@ $(function($) {
                         $("#prc" + itemid).html(data[2]);
                         $("#prct" + itemid).html(data[2]);
                         $("#cqt" + itemid).html(data[1]);
-                        $("#qty" + itemid).html(data[1]);
+                        $("#qty" + itemid).val(data[1]);
                     }
                 }
             });
@@ -1196,12 +1232,12 @@ $(function($) {
             var size_qty = $(this).parent().parent().find('.size_qty').val();
             var size_price = $(this).parent().parent().find('.size_price').val();
             var stck = $("#stock" + itemid).val();
-            var qty = $("#qty" + itemid).html();
+            var qty = $("#qty" + itemid).val();
             qty--;
             if (qty < 1) {
-                $("#qty" + itemid).html("1");
+                $("#qty" + itemid).val("1");
             } else {
-                $("#qty" + itemid).html(qty);
+                $("#qty" + itemid).val(qty);
                 $.ajax({
                     type: "GET",
                     url: mainurl + "/reducebyone",
@@ -1214,7 +1250,7 @@ $(function($) {
                         $("#prc" + itemid).html(data[2]);
                         $("#prct" + itemid).html(data[2]);
                         $("#cqt" + itemid).html(data[1]);
-                        $("#qty" + itemid).html(data[1]);
+                        $("#qty" + itemid).val(data[1]);
                     }
                 });
             }

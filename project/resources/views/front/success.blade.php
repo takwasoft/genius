@@ -156,7 +156,7 @@
                                                                         @if($order->method=="Paypal")
                                                                         {{$order->method}} {{ $langg->lang296 }} <p id="ttn">{{ isset($_GET['tx']) ? $_GET['tx'] : '' }}</p>
                                                                         @else
-                                                                        
+                                                                         
                                                                         @foreach($order->additionalFields as $field)
               <tr>
                  <th width="45%">{{$field->additionalField->title}}</th>
@@ -174,7 +174,7 @@
                                                     </tr>
                                                     <br>
                                          @endforeach
-                                         @foreach($order->extraCgarges as $field) 
+                                         @foreach($order->extraCharges as $field) 
                                           <tr>
                                           <th width="45%">{{$field->extraChargeRule->title}}</th>
                                                     <td width="10%">:</td>

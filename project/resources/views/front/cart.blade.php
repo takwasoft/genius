@@ -95,7 +95,7 @@
                                   </span>
                                 </li>
                                 <li>
-                                  <span class="qttotal1" id="qty{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}">{{ $product['qty'] }}</span>
+                                  <input style="width:50px" min="1" type="number" class="qttotal1" id="qty{{$product['item']['id'].$product['size'].$product['color'].str_replace(str_split(' ,'),'',$product['values'])}}" value="{{ $product['qty'] }}">
                                 </li>
                                 <li>
                                   <span class="qtplus1 adding">

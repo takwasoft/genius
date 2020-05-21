@@ -70,7 +70,7 @@
 @endif
 
 
-
+ 
 	@yield('styles')
 
 </head>
@@ -266,7 +266,7 @@
             <div class="container">
                 <div class="row mb-3">
 					<div class="col-md-4">
-                    <a href="{{route('front.index')}}"><img src="{{ asset('assets/images/brand/logo.jpg')}}" alt="" width="90%" /></a>
+                    <a href="{{route('front.index')}}"><img src="{{ asset('assets/images/'.$gs->logo)}}"  alt="" width="90%" /></a>
                 </div>
                 <div class="col-md-4">
                     <img src="{{ asset('assets/images/brand/ad1.jpg')}}" alt="" width="100%" />

@@ -91,7 +91,7 @@ class DistrictController extends Controller
             $district->dis_serial=$i;
             $district->save();
         }
-        return redirect()->route('admin-dis-all-serial',);
+        return redirect()->route('admin-dis-all-serial');
        // return view('admin.category.serial');
     }
 

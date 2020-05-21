@@ -194,7 +194,7 @@ class Cart extends Model
 
 // **************** ADDING QUANTITY *******************
 
-    public function adding($item, $id, $size_qty, $size_price) {
+    public function adding($item, $id, $size_qty, $size_price) { 
         $storedItem = ['qty' => 0,'size_key' => 0, 'size_qty' =>  $item->size_qty,'size_price' => $item->size_price, 'size' => $item->size, 'color' => $item->color, 'stock' => $item->stock, 'price' => $item->price, 'item' => $item, 'license' => '', 'dp' => '0','keys' => '', 'values' => ''];
         if ($this->items) {
             if (array_key_exists($id, $this->items)) {
@@ -230,6 +230,43 @@ class Cart extends Model
         $storedItem['price'] = $item->price * $storedItem['qty'];
         $this->items[$id] = $storedItem;
         $this->totalQty++;
+    }
+    public function setQuantity($item, $id, $size_qty, $size_price,$qty) { 
+        $storedItem = ['qty' => 0,'size_key' => 0, 'size_qty' =>  $item->size_qty,'size_price' => $item->size_price, 'size' => $item->size, 'color' => $item->color, 'stock' => $item->stock, 'price' => $item->price, 'item' => $item, 'license' => '', 'dp' => '0','keys' => '', 'values' => ''];
+        if ($this->items) {
+            if (array_key_exists($id, $this->items)) {
+                $storedItem = $this->items[$id];
+            }
+        }
+        $storedItem['qty']=$qty;
+
+            if($item->stock != null){
+                $storedItem['stock']-=$qty;
+            }          
+        $item->price = (double)$size_price;   
+        if(!empty($item->whole_sell_qty))
+        {
+            foreach(array_combine($item->whole_sell_qty,$item->whole_sell_discount) as $whole_sell_qty => $whole_sell_discount)
+            {
+                if($storedItem['qty'] == $whole_sell_qty)
+                {   
+                    $whole_discount[$id] = $whole_sell_discount;
+                    Session::put('current_discount',$whole_discount);
+                    break;
+                }                  
+            }
+            if(Session::has('current_discount')) {
+                    $data = Session::get('current_discount');
+                if (array_key_exists($id, $data)) {
+                    $discount = $item->price * ($data[$id] / 100);
+                    $item->price = $item->price - $discount;
+                }
+            }
+        }
+
+        $storedItem['price'] = $item->price * $storedItem['qty'];
+        $this->items[$id] = $storedItem;
+        $this->totalQty=$qty;
     }
 
 // **************** ADDING QUANTITY ENDS *******************

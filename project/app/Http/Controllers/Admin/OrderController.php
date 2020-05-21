@@ -22,6 +22,7 @@ class OrderController extends Controller
     //*** JSON Request
     public function datatables($status)
     {
+
         if($status == 'pending'){
             $datas = Order::where('status','=','pending')->get();
            
@@ -52,7 +53,7 @@ class OrderController extends Controller
                                 return $id;
                             })
                             ->editColumn('pay_amount', function(Order $data) {
-                                return $data->currency_sign . round($data->pay_amount * $data->currency_value , 2);
+                                return $data->currency_sign . round($data->pay_amount * $data->currency_value+$data->extraCharges->sum('charge') , 2);
                             })
                             ->addColumn('action', function(Order $data) {
                                 $orders = '<a href="javascript:;" data-href="'. route('admin-order-edit',$data->id) .'" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> Delivery Status</a>';
@@ -229,7 +230,7 @@ class OrderController extends Controller
         return view('admin.order.declined');
     }
     public function show($id)
-    {
+    { 
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
         //utf8_encode(bzcompress(serialize($cart), 9));

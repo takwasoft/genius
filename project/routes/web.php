@@ -1358,6 +1358,7 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   Route::get('/addtocart/{id}','Front\CartController@addtocart')->name('product.cart.quickadd');
   Route::get('/addnumcart','Front\CartController@addnumcart');
   Route::get('/addbyone','Front\CartController@addbyone');
+  Route::get('/setquantity','Front\CartController@setquantity');
   Route::get('/reducebyone','Front\CartController@reducebyone');
   Route::get('/upcolor','Front\CartController@upcolor');
   Route::get('/removecart/{id}','Front\CartController@removecart')->name('product.cart.remove');

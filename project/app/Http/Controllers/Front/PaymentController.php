@@ -288,7 +288,6 @@ class PaymentController extends Controller
             $tempcart = '';
             return redirect()->back();
         }
-        
          return view('front.success',compact('tempcart','order'));
      }
 

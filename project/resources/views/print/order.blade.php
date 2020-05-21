@@ -1427,14 +1427,14 @@ table.dataTable thead .sorting_desc_disabled::after {
                                                 </p>
                                                 @endif
                                                 <p>
-                                                        Price : {{$order->currency_sign}}{{ round($product['item']['price'] * $order->currency_value , 2) }}
+                                                        Price : BDT{{ round($product['item']['price'] * $order->currency_value , 2) }}
                                                 </p>
                                                <p>
                                                     Qty : {{$product['qty']}} {{ $product['item']['measure'] }}
                                                </p>
                                             </td>
 
-                                            <td>{{$order->currency_sign}}{{ round($product['price'] * $order->currency_value , 2) }}
+                                            <td>BDT{{ round($product['price'] * $order->currency_value , 2) }}
                                             </td>
                                             @php
                                             $subtotal += round($product['price'] * $order->currency_value, 2);
@@ -1447,13 +1447,13 @@ table.dataTable thead .sorting_desc_disabled::after {
                                         <tr class="semi-border">
                                             <td colspan="1"></td>
                                             <td><strong>{{ __('Subtotal') }}</strong></td>
-                                            <td>{{$order->currency_sign}}{{ round($subtotal, 2) }}</td>
+                                            <td>BDT{{ round($subtotal, 2) }}</td>
 
                                         </tr>
                                         @if($order->shipping_cost != 0)
                                         <tr class="no-border">
                                             <td colspan="1"></td>
-                                            <td><strong>{{ __('Shipping Cost') }}({{$order->currency_sign}})</strong></td>
+                                            <td><strong>{{ __('Shipping Cost') }}(BDT)</strong></td>
                                             <td>{{ round($order->shipping_cost , 2) }}</td>
                                         </tr>
                                         @endif
@@ -1461,7 +1461,7 @@ table.dataTable thead .sorting_desc_disabled::after {
                                         @if($order->packing_cost != 0)
                                         <tr class="no-border">
                                             <td colspan="1"></td>
-                                            <td><strong>{{ __('Packaging Cost') }}({{$order->currency_sign}})</strong></td>
+                                            <td><strong>{{ __('Packaging Cost') }}(BDT)</strong></td>
                                             <td>{{ round($order->packing_cost , 2) }}</td>
                                         </tr>
                                         @endif
@@ -1469,7 +1469,7 @@ table.dataTable thead .sorting_desc_disabled::after {
                                         @if($order->tax != 0)
                                         <tr class="no-border">
                                             <td colspan="1"></td>
-                                            <td><strong>{{ __('TAX') }}({{$order->currency_sign}})</strong></td>
+                                            <td><strong>{{ __('TAX') }}(BDT)</strong></td>
 
                                             @php
                                             $tax = ($subtotal / 100) * $order->tax;
@@ -1482,14 +1482,14 @@ table.dataTable thead .sorting_desc_disabled::after {
                                         @if($order->coupon_discount != null)
                                         <tr class="no-border">
                                             <td colspan="1"></td>
-                                            <td><strong>{{ __('Coupon Discount') }}({{$order->currency_sign}})</strong></td>
-                                            <td>{{$order->currency_sign}}{{round($order->coupon_discount, 2)}}</td>
+                                            <td><strong>{{ __('Coupon Discount') }}(BDT)</strong></td>
+                                            <td>BDT{{round($order->coupon_discount, 2)}}</td>
                                         </tr>
                                         @endif
                                         <tr class="final-border">
                                             <td colspan="1"></td>
                                             <td><strong>{{ __('Total') }}</strong></td>
-                                            <td>{{$order->currency_sign}}{{ round($order->pay_amount * $order->currency_value , 2) }}
+                                            <td>BDT{{ round($order->pay_amount * $order->currency_value , 2) }}
                                             </td>
                                         </tr>
 

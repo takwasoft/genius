@@ -535,6 +535,125 @@ class CartController extends Controller
         }     
         return response()->json($data);          
     }  
+    public function setquantity()
+    {
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+        }
+        $gs = Generalsetting::findOrFail(1);
+        if (Session::has('currency')) 
+        {
+            $curr = Currency::find(Session::get('currency'));
+        }
+        else
+        {
+            $curr = Currency::where('is_default','=',1)->first();
+        }
+        $id = $_GET['id'];
+        $itemid = $_GET['itemid'];
+        $size_qty = $_GET['size_qty'];
+        $size_price = $_GET['size_price'];
+        $quantity=$_GET['quantity'];
+        $prod = Product::where('id','=',$id)->first(['id','user_id','slug','name','photo','size','size_qty','size_price','color','price','stock','type','file','link','license','license_qty','measure','whole_sell_qty','whole_sell_discount','attributes']);
+
+        if($prod->user_id != 0){
+        $gs = Generalsetting::findOrFail(1);
+        $prc = $prod->price + $gs->fixed_commission + ($prod->price/100) * $gs->percentage_commission ;
+        $prod->price = round($prc,2);
+        }
+
+            if (!empty($prod->attributes))
+            {
+                $attrArr = json_decode($prod->attributes, true);
+                $count = count($attrArr);
+                $j = 0; 
+                      if (!empty($attrArr))
+                      {
+                          foreach ($attrArr as $attrKey => $attrVal)
+                          {
+
+                            if (is_array($attrVal) && array_key_exists("details_status",$attrVal) && $attrVal['details_status'] == 1) {
+
+                                foreach($attrVal['values'] as $optionKey => $optionVal)
+                                {
+                                    $prod->price += $attrVal['prices'][$optionKey];
+                                    break;
+                                }
+
+                            }
+                          }
+
+                      }
+
+                }
+
+
+
+        if(!empty($prod->license_qty))
+        {
+        $lcheck = 1;
+            foreach($prod->license_qty as $ttl => $dtl)
+            {
+                if($dtl < 1)
+                {
+                    $lcheck = 0;
+                }
+                else
+                {
+                    $lcheck = 1;
+                    break;
+                }                    
+            }
+                if($lcheck == 0)
+                {
+                    return 0;            
+                }
+        }
+        $oldCart = Session::has('cart') ? Session::get('cart') : null;
+        $cart = new Cart($oldCart);
+        $cart->setQuantity($prod, $itemid,$size_qty,$size_price,$quantity);
+        if($cart->items[$itemid]['stock'] < 0)
+        {
+            return 0;
+        }
+        if(!empty($size_qty))
+        {
+            if($cart->items[$itemid]['qty'] > $cart->items[$itemid]['size_qty'])
+            {
+                return 0;
+            }            
+        }
+        $cart->totalPrice = 0;
+        foreach($cart->items as $data)
+        $cart->totalPrice += $data['price'];        
+        Session::put('cart',$cart);
+        $data[0] = $cart->totalPrice;
+
+        $data[3] = $data[0];
+        $tx = $gs->tax;
+        if($tx != 0)
+        {
+            $tax = ($data[0] / 100) * $tx;
+            $data[3] = $data[0] + $tax;
+        }  
+
+        $data[1] = $cart->items[$itemid]['qty']; 
+        $data[2] = $cart->items[$itemid]['price'];
+        $data[0] = round($data[0] * $curr->value,2);
+        $data[2] = round($data[2] * $curr->value,2);
+        $data[3] = round($data[3] * $curr->value,2);
+        if($gs->currency_format == 0){
+            $data[0] = $curr->sign.$data[0];
+            $data[2] = $curr->sign.$data[2];
+            $data[3] = $curr->sign.$data[3];
+        }
+        else{
+            $data[0] = $data[0].$curr->sign;
+            $data[2] = $data[2].$curr->sign;
+            $data[3] = $data[3].$curr->sign;
+        }     
+        return response()->json($data);          
+    }
 
     public function reducebyone()
     {
