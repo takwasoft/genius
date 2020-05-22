@@ -1,5 +1,8 @@
 @extends('layouts.vendor') 
+{{--  @section('styles')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
+@endsection  --}}
 @section('content')
 
 					<div class="content-area">
@@ -23,6 +26,55 @@
 								<div class="col-lg-12">
 									<div class="mr-table allproduct">
 										@include('includes.admin.form-success') 
+									<form method="post" action="{{route('filter-vendor-withdraw')}}">
+									 {{ csrf_field() }}  
+										<center>
+										<b>From</b>
+										<input
+										@if($from)
+											value="{{$from}}"
+										@endif
+										 name="start" type="date" >
+										<b>To</b>
+										<input
+										@if($from)
+											value="{{$to}}"
+										@endif
+										 name="end" type="date" >
+										</center>
+										<br>
+										<center>
+										<b>Method</b>
+												<select name="method" style="width:30%">
+												<option value="0">Select</option>
+													@foreach($gateways as $gateway)
+															<option 
+															@if($gateway->id==$method)
+																selected
+															@endif
+															value="{{$gateway->id}}">{{$gateway->title}}</option>
+													@endforeach
+												</select>
+										<b>Status</b>
+												<select name="status" style="width:30%">
+															<option value="0">Select</option>
+															<option
+															@if($status=="completed")
+																selected
+															@endif
+															 value="completed">Completed</option>
+															<option
+															@if($status=="rejected")
+																selected
+															@endif
+															 value="rejected">Rejected</option>
+													
+												</select>
+												<br>
+												<button class="add-btn">Filter Withdraw</button>
+												</center>
+												</form>
+												<br>
 										<div class="table-responsiv">
 												<table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
 													<thead>
@@ -95,3 +147,12 @@
 {{-- DATA TABLE --}}
     
 @endsection   
+
+{{--  @section('scripts')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
+@endsection  --}}

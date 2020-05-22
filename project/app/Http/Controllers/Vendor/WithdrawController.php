@@ -22,11 +22,44 @@ class WithdrawController extends Controller
 
   	public function index()
     {
+        
         $withdraws = Withdraw::where('user_id','=',Auth::guard('web')->user()->id)->where('type','=','vendor')->orderBy('id','desc')->get();
-        $sign = Currency::where('is_default','=',1)->first();        
-        return view('vendor.withdraw.index',compact('withdraws','sign'));
+        $sign = Currency::where('is_default','=',1)->first();  
+        $gateways=PaymentGateway::all();      
+        return view('vendor.withdraw.index',compact('withdraws','sign','gateways')); 
     }
-
+	public function filter(Request $request)
+    {
+        $from=null;
+        $to=null;
+        $method=null;
+        $status=$request->status;
+        if($request->start)
+        {
+            $from=$request->start;
+        }
+        if($request->end)
+        {
+            $to=$request->end;
+        }
+        if($request->method!="0")
+        {
+            $method=$request->method;
+        }
+        
+        $withdraws = Withdraw::where('user_id','=',Auth::guard('web')->user()->id)->where('type','=','vendor') ->when($from, function ($query, $from) {
+            return $query->where('created_at','>=', $from);
+        })->when($method, function ($query, $method) {
+            return $query->where('method','=', $method);
+        })->when($to, function ($query, $to) {
+            return $query->where('created_at','<=', $to);
+        })->when($status, function ($query, $status) {
+            return $query->where('status','=', $status);
+        })->orderBy('id','desc')->get();
+        $sign = Currency::where('is_default','=',1)->first();  
+        $gateways=PaymentGateway::all();      
+        return view('vendor.withdraw.index',compact('withdraws','sign','gateways','from','to','method','status')); 
+    }
     public function getAdditional(){
         $fields=AdditionalField::where('payment_gateway_id','=',request()->id)->get();
         return view('vendor.withdraw.additional' ,compact('fields'));

@@ -12,6 +12,7 @@ use App\Models\Category;
 use App\Models\Counter;
 use App\Models\Generalsetting; 
 use App\Models\Order;
+use App\Models\Pagesetting;
 use App\Models\Product;
 use App\Models\Subscriber; 
 use App\Models\User;
@@ -119,7 +120,8 @@ class FrontendController extends Controller
 
 	public function index(Request $request)
 	{
-
+        $homeNotice=Pagesetting::first()->notice;
+        
        
         $this->code_image();
          if(!empty($request->reff))
@@ -146,7 +148,7 @@ class FrontendController extends Controller
         // dd(Session::get('cart'));
         $brandCategories=BrandCategory::where('show_in_home',1)->get();
         $weekBrands=Brand::where('brand_week',1)->get();
-	    return view('front.index',compact('feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
+	    return view('front.index',compact('homeNotice','feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
 	}
     public function product(){
     

@@ -1090,7 +1090,7 @@ Route::get('/under-maintenance', 'Front\FrontendController@maintenance')->name('
 
 Route::prefix('vendor')->group(function() {
 
-
+ 
   Route::group(['middleware'=>'vendor'],function(){
   // Vendor Dashboard
   Route::get('/dashboard', 'Vendor\VendorController@index')->name('vendor-dashboard');
@@ -1242,6 +1242,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
 
   Route::get('/withdraw/datatables', 'Vendor\WithdrawController@datatables')->name('vendor-wt-datatables');
   Route::get('/withdraw', 'Vendor\WithdrawController@index')->name('vendor-wt-index');
+  Route::post('/filter-withdraw', 'Vendor\WithdrawController@filter')->name('filter-vendor-withdraw');
+
   Route::get('/vendor-get-additional', 'Vendor\WithdrawController@getAdditional')->name('vendor-get-additional'); 
   Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create');  
   Route::post('/withdraw/create', 'Vendor\WithdrawController@store')->name('vendor-wt-store');

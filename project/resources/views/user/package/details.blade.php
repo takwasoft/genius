@@ -289,7 +289,7 @@
                                              @php($i=1)
                                             @foreach($division->districts as $district)
                                                 @if($i<6)
-
+ 
                                                 <li><a class="text-muted" href="#"
 												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
 												>{{$district->name}}</a></li>
@@ -474,7 +474,7 @@ if(cm){
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="text" class="option" name="shop_address"
+                                        <input value="{{$user->address}}" type="text" class="option" name="shop_address"
                                             placeholder="{{ $langg->lang241 }}" required>
                                     </div>
                                 </div>

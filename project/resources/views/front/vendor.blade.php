@@ -14,7 +14,7 @@
             <!-- <div class="content float-left ml-3 pt-5 mt-2">
             <p class="sub-title">
               {{ $vendor->shop_name }}
-            </p>
+            </p> 
             
           </div> -->
           </div>
@@ -295,7 +295,7 @@
                 {{$vendor->district?$vendor->district->name:''}},
                 {{$vendor->division?$vendor->division->name:''}}
                 </h4>
-                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->address}},{{$vendor->city}}{{$vendor->zip}}</h5>
+                <h5 class="pb-3"><i class="fas fa-map-marker-alt mr-2" aria-hidden="true"></i>{{$vendor->shop_address}}</h5>
             </div>
        
       </div>

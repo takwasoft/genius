@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('content')
-
+ 
 <div class="breadcrumb-area">
   <div class="container">
     <div class="row">
@@ -558,114 +558,7 @@ PRODUCT END -->
 
 
 				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
-				<!-- end single product  --->
-				<!-- single product  --->
-				<div class="product-item">
-					<div class="thumbnail">
-          
-						<a href="product-details.html">
-							<div class="product-thum-img">
-								<a href="preview.html"><img src="{{ asset('assets/images/brand/product.jpg')}}" alt="" /></a>
-							</div>
-						</a>
-						<h4>Lorem Ipsum is simply </h4>
-            
-						<div class="price-details clearfix mt-3">
-							<div class="price-number float-left">
-								<p class="text-left" style="font-size:20px"><strong class="rupees">$679.87</strong></p>
-							</div>
-							<div class="add-cart float-right">
-								<h4><a href="preview.html">Add to Cart</a></h4>
-							</div>
-							<div class="clear"></div>
-						</div>
-					</div>
-				</div>
+			
 				<!-- end single product  --->
 			</div>
 		</div>
@@ -799,10 +692,7 @@ PRODUCT END -->
 			</div>
 		</div>
     <div class="card my-4">
-			<div class="card-body">
-				<h4> (35-60%) DISCOUNT</h4>
-				<img src="{{ asset('assets/images/brand/new-pic4.jpg')}}" alt="" width="100%">
-			</div>
+		
 		</div>
     <div class="card">
 			<div class="card-header">
@@ -824,19 +714,7 @@ PRODUCT END -->
 				<hr>
 			@endforeach
 		</div>
-    <div class="card mt-5">
-			<div class="card-header">
-				<h4>NEWSLETTERS </h4>
-			</div>
-			<div class="card-body">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-				</p>
-				<div class="form-group ">
-				<input type="email" class="form-control" placeholder="Email"><br>
-				<button type="button" class="btn btn-success text-left">Sign up</button>
-				</div>
-			</div>
-		</div>
+    
       </div>
 
 
@@ -851,7 +729,7 @@ PRODUCT END -->
     {{--  product  --}}
 
 	
-	<div class="container">
+	{{--  <div class="container">
 		<div id="top-heading">
 				<div class="row">
 					<div class="col-md-6 col-sm-6 col-xs-6">
@@ -872,7 +750,7 @@ PRODUCT END -->
 				@endforeach
 			</div>
 		</div>
-	</div>
+	</div>  --}}
 	<!-- end thum-product section  --->
   </div>
 </div>

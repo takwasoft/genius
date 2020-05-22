@@ -63,7 +63,7 @@
 			@include('includes.slider-style')
 		@endif
 	@endif
-
+	
 	@if($ps->slider == 1)
 		<!-- Hero Area Start -->
 		<section class="hero-area mt-4" >
@@ -610,11 +610,16 @@
 			<img src="{{asset('assets/images/'.$gs->loader)}}">
 		</div>
 	</section>  --}}
-
+	
 
 @endsection
 
 @section('scripts')
+	@if($homeNotice!='0')
+		<script>
+		alert('{{$homeNotice}}')
+		</script>
+	@endif
 	<script>
         $(window).on('load',function() {
 

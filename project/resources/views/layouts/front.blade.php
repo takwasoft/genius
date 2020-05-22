@@ -76,6 +76,11 @@
 </head>
 
 <body>
+  @if($gs->is_messenger == 1)
+    <!--Start of messenger Script-->
+      {!! $gs->messenger !!}
+    <!--End of messenger Script-->
+  @endif
 
 @if($gs->is_loader == 1)
 	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>

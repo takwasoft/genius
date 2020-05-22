@@ -72,12 +72,25 @@
             <li>
                 <a href="{{ route('admin-user-index') }}"><span>{{ __('Customers List') }}</span></a>
             </li>
-            <li>
-                <a href="{{ route('admin-withdraw-index') }}"><span>{{ __('Withdraws') }}</span></a>
-            </li>
+            
             <li>
                 <a href="{{ route('admin-user-image') }}"><span>{{ __('Customer Default Image') }}</span></a>
             </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#account" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
+            <i class="icofont-ui-user-group"></i>Accounts
+        </a>
+        <ul class="collapse list-unstyled" id="account" data-parent="#accordion">
+            <li>
+                <a href="{{ route('admin-vendor-withdraw-index') }}"><span>Vendor Withdraw</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-withdraw-index') }}"><span>Customer Withdraw</span></a>
+            </li>
+          
+
         </ul>
     </li>
 <li>
@@ -103,9 +116,7 @@
             <li>
                 <a href="{{ route('admin-vendor-index') }}"><span>{{ __('Vendors List') }}</span></a>
             </li>
-            <li>
-                <a href="{{ route('admin-vendor-withdraw-index') }}"><span>{{ __('Withdraws') }}</span></a>
-            </li>
+
             <li>
                 <a href="{{ route('admin-vendor-subs') }}"><span>{{ __('Vendor Subscriptions') }}</span></a>
             </li>
