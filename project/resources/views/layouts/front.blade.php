@@ -92,7 +92,7 @@
     <div style="display:none">
         <img src="{{asset('assets/images/'.$gs->popup_background)}}">
     </div>
-
+  
     <!--  Starting of subscribe-pre-loader Area   -->
     <div class="subscribe-preloader-wrap" id="subscriptionForm" style="display: none;">
         <div class="subscribePreloader__thumb" style="background-image: url({{asset('assets/images/'.$gs->popup_background)}});">

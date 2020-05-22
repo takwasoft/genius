@@ -55,7 +55,29 @@
 @endsection
 
 @section('content')
+<div class="modal" id="notice">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Notice</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {!!$homeNotice!!}
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 	@if($ps->slider == 1)
 
 		@if(count($sliders))
@@ -615,9 +637,10 @@
 @endsection
 
 @section('scripts')
-	@if($homeNotice!='0')
+	@if(count(explode("00",$homeNotice))<2)
 		<script>
-		alert('{{$homeNotice}}')
+		$('#notice').modal('show');
+		
 		</script>
 	@endif
 	<script>
