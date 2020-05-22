@@ -151,8 +151,13 @@ class ProductController extends Controller
                                 
                             })
                             ->addColumn('promotion', function(Product $data) {
-                                return $data->status==1? '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>':'<span class="badge badge-danger">Not Eligible</span>';
-                                 
+                                return '<div class="action-list"><select onchange="window.location.href=this.value" class="process select  drop-success">
+                                <option  >Promote Now</option>
+                                <option   value="'. route('vendor-prod-boost',$data->id).'" >Boost </option>
+                                <option  value="'. route('vendor-prod-boost',$data->id).'" >Top Ad</option>
+                                /select></div>';
+                                // return $data->status==1? '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>':'<span class="badge badge-danger">Not Eligible</span>';
+                                  
                              })
                             ->addColumn('action', function(Product $data) {
                                 return '<div class="action-list"><a href="' . route('vendor-prod-edit',$data->id) . '"> <i class="fas fa-edit"></i>'.$this->vendor_language->lang715.'</a><a href="javascript" class="set-gallery" data-toggle="modal" data-target="#setgallery"><input type="hidden" value="'.$data->id.'"><i class="fas fa-eye"></i> '.$this->vendor_language->lang716.'</a><a href="javascript:;" data-href="' . route('vendor-prod-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
@@ -192,7 +197,7 @@ class ProductController extends Controller
 
     //*** GET Request
     public function index()
-    {  
+    {   
         return view('vendor.product.index');
     }
 

@@ -352,7 +352,7 @@ class FrontendController extends Controller
         {
             return view('errors.404');
         }
-
+        
         return view('front.page',compact('page'));
     }
 // -------------------------------- PAGE SECTION ENDS----------------------------------------
@@ -365,7 +365,8 @@ class FrontendController extends Controller
         if(DB::table('generalsettings')->find(1)->is_contact== 0){
             return redirect()->back();
         }
-        $ps =  DB::table('pagesettings')->where('id','=',1)->first();
+        $ps =  DB::table('pagesettings')->find(1);
+        
 		return view('front.contact',compact('ps'));
 	}
 
