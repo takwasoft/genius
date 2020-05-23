@@ -2,7 +2,7 @@
 @section('content')
 
 <!-- Vendor Area Start -->
-<div class="container ">
+<div class="container" style="margin-top:15px">
   <div class="vendor-banner" style="background: url({{  $vendor->shop_image != null ? asset('assets/images/vendorbanner/'.$vendor->shop_image) : '' }}); background-repeat: no-repeat; background-size: cover;background-position: center;padding:0;{!! $vendor->shop_image != null ? '' : 'background-color:'.$gs->vendor_color !!} ">
     
       <div class="row align-items-end"  style="height:60vh;">
@@ -29,7 +29,7 @@
     <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4; border-radius:0">About</button>
     
     @if($contact_hide==0)
-<button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0">Contact</button>
+<button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0;margin-left:-4px;">Contact</button>
     @endif
     </div>
    </div>
@@ -349,8 +349,8 @@ sendEmail = () => {
     range: true,
     orientation: "horizontal",
     min: 0,
-    max: 10000000,
-    values: [{{ isset($_GET['min']) ? $_GET['min'] : '0' }}, {{ isset($_GET['max']) ? $_GET['max'] : '10000000' }}],
+    max: 50000,
+    values: [{{ isset($_GET['min']) ? $_GET['min'] : '10000' }}, {{ isset($_GET['max']) ? $_GET['max'] : '40000' }}],
     step: 5,
 
     slide: function (event, ui) {

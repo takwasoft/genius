@@ -126,6 +126,7 @@
 .price-range-block {
     text-align: center;
     margin-top: 15px;
+    padding:0 18px;
 }
 .price-range-block #slider-range {
     margin-bottom: 21px;
@@ -175,7 +176,7 @@
 </div> --}}
 <!-- Breadcrumb Area End -->
 <!-- SubCategori Area Start -->
-<div class="header-section">
+<div class="header-section" style="border-bottom: 1px solid #d4ded9;">
     <div class="top-add mt-3">
         <div class="container">
             <center><img src="{{ asset('assets/images/brand/gp.gif')}}"></center>
@@ -183,7 +184,7 @@
     </div>
 
     <div class="mt-4">
-        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:78%">
+        <div class="container" style="max-width:78%">
             <div class="row">
                 {{--  <div class="col-1 col-md-3" style="padding-left:0px;">
                     <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
@@ -208,8 +209,8 @@
         </div>
     </div>
 </div>
-<section class="sub-categori" style="padding:0px">
-   <div class="container" style="max-width:75%">
+<section class="sub-categori" style="padding:0px;background: #e7edee;">
+   <div class="container" style="max-width:75%;background:#fff;">
     <div class="row">
         <div class="col-md-3">
            
@@ -258,7 +259,7 @@
       <div class="row">
       
         <div class="col-md-3" style="positon:relative">
-            <div class="py-3" style="border-right: 1px solid #d4ded9;">
+            <div class="py-3" style="border-right: 1px solid #d4ded9;padding-left: 20px;">
                 <div class="pt-2">পোস্টকারীর প্রকার</div>
                 <div class="pb-3" style="border-bottom: 1px solid #d4ded9;">
                     <form action="">
@@ -294,8 +295,6 @@
                         @if (!empty(request()->input('sort')))
                           <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
                         @endif
-                    
-        
         
                         <div class="price-range-block">
                             <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
@@ -340,7 +339,7 @@
                             </div>
                         </div>
                             <div class="product-slide2">
-                                	@foreach ($feature_products as $product)
+                                	@foreach ($topAdProducts as $product)
 					@include('includes.product.sell')
 				@endforeach
                             </div>
@@ -706,8 +705,8 @@ function filterFunctionDiv() {
       range: true,
       orientation: "horizontal",
       min: 0,
-      max: 10000000,
-      values: [{{ isset($_GET['min']) ? $_GET['min'] : '0' }}, {{ isset($_GET['max']) ? $_GET['max'] : '10000000' }}],
+      max: 50000,
+      values: [{{ isset($_GET['min']) ? $_GET['min'] : '10000' }}, {{ isset($_GET['max']) ? $_GET['max'] : '40000' }}],
       step: 5,
 
       slide: function (event, ui) {

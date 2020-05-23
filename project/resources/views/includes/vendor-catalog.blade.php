@@ -9,26 +9,11 @@
             <div class="body-area">
 
                 <ul class="filter-list">
-                  @foreach ($categories as $element)
+                  @foreach ($vcategories as $element) 
                   <li>
                     <div class="content">
-                        <a href="{{route('front.category', $element->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="category-link"> <i class="fas fa-angle-double-right"></i> {{$element->name}}</a>
-                        @if(!empty($cat) && $cat->id == $element->id && !empty($cat->subs))
-                            @foreach ($cat->subs as $key => $subelement)
-                            <div class="sub-content open">
-                              <a href="{{route('front.category', [$cat->slug, $subelement->slug])}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="subcategory-link"><i class="fas fa-angle-right"></i>{{$subelement->name}}</a>
-                              @if(!empty($subcat) && $subcat->id == $subelement->id && !empty($subcat->childs))
-                                @foreach ($subcat->childs as $key => $childcat)
-                                <div class="child-content open">
-                                  <a href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="subcategory-link"><i class="fas fa-caret-right"></i>{{$childcat->name}}</a>
-                                </div>
-                                @endforeach
-                              @endif
-                            </div>
-                            @endforeach
-
-                          </div>
-                        @endif
+                        <a href="{{ route('front.vendor', Request::route('category')) }}/{{str_replace(' ', '-', $vendor->shop_name)}}?cat={{$element->slug}}" class="category-link"> <i class="fas fa-angle-double-right"></i> {{$element->name}}</a> 
+                       
 
 
                   </li>

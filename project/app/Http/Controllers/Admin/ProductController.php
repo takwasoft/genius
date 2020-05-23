@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Boost;
 use App\Models\Generalsetting;
+use App\TopAd;
 use Illuminate\Support\Facades\Input;
 use Validator;
 use Image;
@@ -224,24 +225,40 @@ class ProductController extends Controller
     public function boost(){
         return view('admin.product.boost');
     }
- 
-    public function boostDatatables(){ 
-        $datas = Boost::orderBy('id','desc')->with('product.user')->with('boostcategory')->get();
+    public function topAd(){
+        return view('admin.product.topAd');
+    }
+    public function topAdDatatables(){ 
+        $datas = TopAd::orderBy('id','desc')->with('product.user')->with('topadcategory')->get();
  
          //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
                             ->editColumn('id',function($data){
                                 return '#00'.$data->id;
+                            }) 
+                            ->addColumn('method', function(TopAd $data) {
+                                if($data->paymentGateway)
+                                {
+                                    return $data->paymentGateway->title;
+                                }
+                                else{
+                                    return "from balance";
+                                }
                             })
                             ->editColumn('status',function($data){
                                 if($data->paid == 1)
                                 {
-                                    return '<span class="badge badge-success">Paid</span>';
+                                    $class =   'drop-success';
                                 }
-                                else if($data->status == 0)
-                                {
-                                    return '<span class="badge badge-danger">Unpaid</span>';
+                                else{
+                                    $class =   'drop-danger';
                                 }
+                                
+
+                                $s = $data->paid == 1 ? 'selected' : '';
+                                $ns = $data->paid == 0 ? 'selected' : '';
+                              
+                                return '<div class="action-list"><select onchange="paid(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Paid</option><option data-val="0" value="0" '.$ns.'>Unpaid</option>/select></div>';
                                 
                             })
                             ->addColumn('action', function( $data) { 
@@ -261,7 +278,69 @@ class ProductController extends Controller
                                 $s = $data->status == 1 ? 'selected' : '';
                                 $ns = $data->status == 0 ? 'selected' : '';
                                 $cs = $data->status == 2 ? 'selected' : '';
-                                return '<div class="action-list"><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Confirm</option><option data-val="0" value="0" '.$ns.'>Pending</option><option data-val="2" value="2" '.$cs.'>Cancel</option>/select></div>';
+                                return '<div class="action-list"><a data-href="' . route('admin-top-show',$data->id) . '" class="view details-width" data-toggle="modal" data-target="#modal1"> <i class="fas fa-eye"></i> Details</a><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Confirm</option><option data-val="0" value="0" '.$ns.'>Pending</option><option data-val="2" value="2" '.$cs.'>Cancel</option>/select></div>';
+                            })
+                            ->addColumn('applied', function( $data) {
+                                return $data->created_at->diffForHumans();
+                            })
+                            ->addColumn('valid', function( $data) {
+                                //
+                                return $data->product->boost_expired->diff(Carbon::now())->format('%d day %h hour  %i min');
+                            })
+                            ->rawColumns(['status','action'])
+                            ->toJson();
+    }
+    public function boostDatatables(){ 
+        $datas = Boost::orderBy('id','desc')->with('product.user')->with('boostcategory')->get();
+ 
+         //--- Integrating This Collection Into Datatables
+         return Datatables::of($datas)
+                            ->editColumn('id',function($data){
+                                return '#00'.$data->id;
+                            }) 
+                            ->addColumn('method', function(Boost $data) {
+                                if($data->paymentGateway)
+                                {
+                                    return $data->paymentGateway->title;
+                                }
+                                else{
+                                    return "from balance";
+                                }
+                            })
+                            ->editColumn('status',function($data){
+                                if($data->paid == 1)
+                                {
+                                    $class =   'drop-success';
+                                }
+                                else{
+                                    $class =   'drop-danger';
+                                }
+                                
+
+                                $s = $data->paid == 1 ? 'selected' : '';
+                                $ns = $data->paid == 0 ? 'selected' : '';
+                              
+                                return '<div class="action-list"><select onchange="paid(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Paid</option><option data-val="0" value="0" '.$ns.'>Unpaid</option>/select></div>';
+                                
+                            })
+                            ->addColumn('action', function( $data) { 
+                                if($data->status == 1)
+                                {
+                                    $class =   'drop-success';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    $class =   'drop-warning';
+                                }
+                                else{
+                                    $class =   'drop-danger';
+                                }
+                                
+
+                                $s = $data->status == 1 ? 'selected' : '';
+                                $ns = $data->status == 0 ? 'selected' : '';
+                                $cs = $data->status == 2 ? 'selected' : '';
+                                return '<div class="action-list"><a data-href="' . route('admin-boost-show',$data->id) . '" class="view details-width" data-toggle="modal" data-target="#modal1"> <i class="fas fa-eye"></i> Details</a><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Confirm</option><option data-val="0" value="0" '.$ns.'>Pending</option><option data-val="2" value="2" '.$cs.'>Cancel</option>/select></div>';
                             })
                             ->addColumn('applied', function( $data) {
                                 return $data->created_at->diffForHumans();
@@ -319,10 +398,166 @@ class ProductController extends Controller
         return view('admin.product.create.license',compact('cats','sign'));
     }
     
+
+    public function boostShow($id) 
+        {
+            $sign = Currency::where('is_default','=',1)->first();
+            $boost = Boost::findOrFail($id);
+            return view('admin.product.boost-details',compact('boost','sign'));
+        }
+        public function topShow($id) 
+        {
+            $sign = Currency::where('is_default','=',1)->first();
+            $topAd = TopAd::findOrFail($id);
+            return view('admin.product.topAd-details',compact('topAd','sign'));
+        }
+
     //*** GET Request
     public function boostStatus($id1,$id2,$reason)
     {
         $boost=Boost::findOrFail($id1);
+        $product = $boost->product;
+
+        if($id2==2){
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Product has been deactivated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." boost has been canceled for ".$reason;
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        else if($id2==1){
+            $product->boost=1;
+            $product->boost_expired=Carbon::now()->addDays($boost->boostCategory->duration);
+            $product->update();
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Boost has been activated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." has been boosted successfully.";
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        
+        $boost->status = $id2;
+        $boost->update();
+         
+    }
+    public function boostPaidStatus($id1,$id2)
+    {
+        $boost=Boost::findOrFail($id1);
+
+        $boost->paid = $id2;
+        $boost->update();
+         
+    }
+
+
+
+    public function topStatus($id1,$id2,$reason)
+    {
+        $topAd=TopAd::findOrFail($id1);
+        $product = $topAd->product;
+
+        if($id2==2){
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Product has been deactivated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." boost has been canceled for ".$reason;
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        else if($id2==1){
+            $product->top_ad=1;
+            $product->top_ad_expired=Carbon::now()->addDays($topAd->topAdCategory->duration);
+            $product->update();
+            $gs = Generalsetting::findOrFail(1);
+            
+            $to = $product->user->email;
+            $subject = 'Boost has been activated'.$product->name;
+            $msg = "Dear ".$product->user->name." your product ".$product->name." has been added to top ad successfully.";
+            //Sending Email To Customer
+            if($gs->is_smtp == 1)
+            {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
+    
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+            }
+            else
+            {
+            $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+            mail($to,$subject,$msg,$headers);
+            }
+        }
+        
+        $topAd->status = $id2;
+        $topAd->update();
+         
+    }
+    public function topPaidStatus($id1,$id2)
+    {
+        $boost=TopAd::findOrFail($id1);
+
+        $boost->paid = $id2;
+        $boost->update();
+         
+    }
+
+    public function topAdStatus($id1,$id2,$reason)
+    {
+        $boost=TopAd::findOrFail($id1);
         $product = $boost->product;
 
         if($id2==2){

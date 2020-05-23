@@ -14,6 +14,7 @@ use App\Models\Generalsetting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Cartalyst\Stripe\Api\Products;
 use Illuminate\Support\Collection;
 
 
@@ -22,13 +23,27 @@ class VendorController extends Controller
 
     public function index(Request $request,$slug)
     {
+        $cat=null;
+        if($request->cat){
+            $cat=Category::where('slug','=',$request->cat)->first();
+            if(!$cat){
+                $cat=0;
+            }
+            else{
+                $cat=$cat->id;
+            }
+        }
         $this->code_image();  
         // $sort = "";
         $minprice = $request->min;
         $maxprice = $request->max;
         $sort = $request->sort;
+        $search = $request->search;
         $string = str_replace('-',' ', $slug);
         $vendor = User::where('shop_name','=',$string)->firstOrFail();
+        $ids=Product::where('user_id', $vendor->id)->select('category_id')->where('status', 1)->distinct()->get()->pluck('category_id')->toArray();
+        $vcategories=Category::whereIn('id',$ids)->get();
+        
         $package = $vendor->subscribes()->orderBy('id','desc')->first(); 
         $data['contact_hide']= $package->subscription->contact_hide; 
         $data['vendor'] = $vendor;
@@ -43,6 +58,12 @@ class VendorController extends Controller
                                     ->when($maxprice, function($query, $maxprice) {
                                       return $query->where('price', '<=', $maxprice);
                                     })
+                                    ->when($search, function($query, $search) {
+                                        return $query->where('name', 'like', '%'.$search.'%');
+                                      })
+                                    ->when($cat, function($query, $cat) {
+                                        return $query->where('category_id', '=', $cat);
+                                      })
                                      ->when($sort, function ($query, $sort) {
                                         if ($sort=='date_desc') {
                                           return $query->orderBy('id', 'DESC');
@@ -62,7 +83,8 @@ class VendorController extends Controller
                                     })->where('status', 1)->where('user_id', $vendor->id)->get();
                                     $vprods = (new Collection(Product::filterProducts($prods)))->paginate(9);
         $data['vprods'] = $vprods;
-                                 
+        $data['vcategories']=$vcategories;
+                       
 
         return view('front.vendor', $data);
     }

@@ -100,7 +100,12 @@ Route::prefix('admin')->group(function() {
   Route::get('/products/datatables', 'Admin\ProductController@datatables')->name('admin-prod-datatables'); //JSON REQUEST 
   Route::get('/products', 'Admin\ProductController@index')->name('admin-prod-index');
   Route::get('/products-boost', 'Admin\ProductController@boost')->name('admin-product-boost');
-  Route::get('/boosts/datatables', 'Admin\ProductController@boostDatatables')->name('admin-boost-datatables'); 
+  Route::get('/products-top-ad', 'Admin\ProductController@topAd')->name('admin-product-top-ad');
+  Route::get('/boosts/datatables', 'Admin\ProductController@boostDatatables')->name('admin-boost-datatables');  
+  Route::get('/top/datatables', 'Admin\ProductController@topAdDatatables')->name('admin-top-datatables'); 
+
+  Route::get('/top-ad/datatables', 'Admin\ProductController@topAdDatatables')->name('admin-top-ad-datatables'); 
+
   Route::post('/products/upload/update/{id}', 'Admin\ProductController@uploadUpdate')->name('admin-prod-upload-update');
 
   Route::get('/products/deactive/datatables', 'Admin\ProductController@deactivedatatables')->name('admin-prod-deactive-datatables'); //JSON REQUEST
@@ -215,6 +220,7 @@ Route::prefix('admin')->group(function() {
   
   Route::get('/vendors/withdraws', 'Admin\VendorController@withdraws')->name('admin-vendor-withdraw-index');
   Route::get('/vendors/withdraw/{id}/show', 'Admin\VendorController@withdrawdetails')->name('admin-vendor-withdraw-show');
+ 
   Route::get('/vendors/withdraw/{id}/print', 'Admin\VendorController@withdrawPrint')->name('admin-vendor-withdraw-print'); 
   Route::get('/vendors/withdraws/accept/{id}', 'Admin\VendorController@accept')->name('admin-vendor-withdraw-accept');
   Route::get('/vendors/withdraws/reject/{id}', 'Admin\VendorController@reject')->name('admin-vendor-withdraw-reject'); 
@@ -876,7 +882,16 @@ Route::prefix('admin')->group(function() {
 
   // STATUS SECTION
   Route::get('/products/status/{id1}/{id2}/{reason}', 'Admin\ProductController@status')->name('admin-prod-status');
-  Route::get('/boost/status/{id1}/{id2}/{reason}', 'Admin\ProductController@boostStatus')->name('admin-boost-status');  
+  Route::get('/boost/status/{id1}/{id2}/{reason}', 'Admin\ProductController@boostStatus')->name('admin-boost-status');
+  Route::get('/boost/paid-status/{id1}/{id2}', 'Admin\ProductController@boostPaidStatus')->name('admin-boost-paid-status');
+
+  Route::get('/top/status/{id1}/{id2}/{reason}', 'Admin\ProductController@topStatus')->name('admin-top-status');
+  Route::get('/top/paid-status/{id1}/{id2}', 'Admin\ProductController@topPaidStatus')->name('admin-top-paid-status');
+
+  Route::get('/admin/boost/{id}/show', 'Admin\ProductController@boostShow')->name('admin-boost-show'); 
+  
+  Route::get('/admin/top/{id}/show', 'Admin\ProductController@topShow')->name('admin-top-show'); 
+  Route::get('/top-ad/status/{id1}/{id2}/{reason}', 'Admin\ProductController@topAdStatus')->name('admin-top-ad-status');
   // STATUS SECTION ENDS
 
   // FEATURE SECTION
@@ -1136,12 +1151,16 @@ Route::prefix('vendor')->group(function() {
 
   Route::get('/products/datatables', 'Vendor\ProductController@datatables')->name('vendor-prod-datatables'); //JSON REQUEST
   Route::get('/products', 'Vendor\ProductController@index')->name('vendor-prod-index');
-
+ 
   Route::post('/products/upload/update/{id}', 'Vendor\ProductController@uploadUpdate')->name('vendor-prod-upload-update');
 
   // CREATE SECTION
-  Route::get('/products/boost', 'Vendor\ProductController@myBoost')->name('my-boost');
-  Route::get('/products/boost-datatable', 'Vendor\ProductController@boostDataTable')->name('vendor-boost-datatables');
+  Route::get('/products/boost', 'Vendor\ProductController@myBoost')->name('my-boost'); 
+  Route::get('/products/top-ad', 'Vendor\ProductController@myTopAd')->name('my-top-ad'); 
+  Route::get('/products/boost-datatable', 'Vendor\ProductController@boostDataTable')->name('vendor-boost-datatables'); 
+  Route::get('/products/top-datatable', 'Vendor\ProductController@topAdDataTable')->name('vendor-top-datatables'); 
+  Route::get('/products/top-ad-datatable', 'Vendor\ProductController@boostDataTable')->name('vendor-top-ad-datatables');
+ 
   Route::get('/products/select-area', 'Vendor\ProductController@types')->name('select-area');
   Route::get('/products/physical/create', 'Vendor\ProductController@createPhysical')->name('vendor-prod-physical-create');
   Route::get('/products/digital/create', 'Vendor\ProductController@createDigital')->name('vendor-prod-digital-create');
@@ -1159,7 +1178,10 @@ Route::prefix('vendor')->group(function() {
   // EDIT SECTION
   Route::get('/products/edit/{id}', 'Vendor\ProductController@edit')->name('vendor-prod-edit');
   Route::get('/products/boost/{product}', 'Vendor\ProductController@boostProduct')->name('vendor-prod-boost');
+  Route::get('/products/top/{product}', 'Vendor\ProductController@topProduct')->name('vendor-prod-top'); 
   Route::post('/products/boost/{product}', 'Vendor\ProductController@boostProductInsert')->name('vendor-product-boost');
+  Route::post('/products/top-ad/{product}', 'Vendor\ProductController@topAdProductInsert')->name('vendor-product-top-ad');
+
   Route::post('/products/edit/{id}', 'Vendor\ProductController@update')->name('vendor-prod-update');
 
   Route::get('/products/catalog/{id}', 'Vendor\ProductController@catalogedit')->name('vendor-prod-catalog-edit');
@@ -1371,6 +1393,7 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   // CHECKOUT SECTION
   Route::get('/checkout/','Front\CheckoutController@checkout')->name('front.checkout');
   Route::get('/checkout/payment/{slug1}/{slug2}','Front\CheckoutController@loadpayment')->name('front.load.payment');
+  Route::get('/checkout/payments/{slug1}/{slug2}','Front\CheckoutController@loadpayments')->name('front.load.payments');  
   Route::get('/order/track/{id}','Front\FrontendController@trackload')->name('front.track.search');
   Route::get('/checkout/payment/return', 'Front\PaymentController@payreturn')->name('payment.return');
   Route::get('/checkout/payment/cancle', 'Front\PaymentController@paycancle')->name('payment.cancle');
@@ -1451,6 +1474,8 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   
   Route::resource('/admin/divisions', 'DivisionController');
   Route::resource('/admin/boostcategories', 'BoostCategoryController');
+  Route::resource('/admin/topadcategories', 'TopAdCategoryController');
+
 
   Route::resource('/admin/brands', 'BrandController');
   Route::resource('/admin/brandcategories', 'BrandCategoryController');

@@ -122,7 +122,8 @@ class FrontendController extends Controller
 	{
         $homeNotice=Pagesetting::first()->notice;
         
-       
+        $about =  DB::table('pages')->where('slug','about-us')->first();
+        
         $this->code_image();
          if(!empty($request->reff))
          {
@@ -148,7 +149,7 @@ class FrontendController extends Controller
         // dd(Session::get('cart'));
         $brandCategories=BrandCategory::where('show_in_home',1)->get();
         $weekBrands=Brand::where('brand_week',1)->get();
-	    return view('front.index',compact('homeNotice','feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
+	    return view('front.index',compact('about','homeNotice','feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
 	}
     public function product(){
     
@@ -331,14 +332,20 @@ class FrontendController extends Controller
 
 
 // -------------------------------- FAQ SECTION ----------------------------------------
-	public function faq()
+	public function faq(Request $request)
 	{
+        $search=null;
+        if($request->search){
+            $search="%".$request->search."%";
+        }
         $this->code_image();
         if(DB::table('generalsettings')->find(1)->is_faq == 0){
             return redirect()->back();
         }
-        $faqs =  DB::table('faqs')->orderBy('id','desc')->get();
-		return view('front.faq',compact('faqs'));
+        $faqs =  DB::table('faqs')->when($search, function ($query, $search) {
+            return $query->where('title','like', $search)->orWhere('details','like', $search);
+        })->orderBy('id','desc')->get();
+		return view('front.faq',compact('faqs')); 
 	}
 // -------------------------------- FAQ SECTION ENDS----------------------------------------
 
@@ -366,8 +373,7 @@ class FrontendController extends Controller
             return redirect()->back();
         }
         $ps =  DB::table('pagesettings')->find(1);
-        
-		return view('front.contact',compact('ps'));
+		return view('front.contact',compact('ps')); 
 	}
 
 

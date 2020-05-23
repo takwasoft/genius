@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWithdrawExtraChargesTable extends Migration
+class CreateBoostExtraChargesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateWithdrawExtraChargesTable extends Migration
      */
     public function up()
     {
-        Schema::create('withdraw_extra_charges', function (Blueprint $table) {
+        Schema::create('boost_extra_charges', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('withdraw_id')->unsigned()->index();
-            $table->foreign('withdraw_id')->references('id')->on('withdraws')->onDelete('cascade');
+            $table->integer('boost_id')->unsigned()->index();
+            $table->foreign('boost_id')->references('id')->on('boosts')->onDelete('cascade');
             $table->integer('extra_charge_rule_id')->unsigned()->index();
             $table->foreign('extra_charge_rule_id')->references('id')->on('extra_charge_rules')->onDelete('cascade');
             $table->double('charge');
@@ -31,6 +31,6 @@ class CreateWithdrawExtraChargesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('withdraw_extra_charges');
+        Schema::dropIfExists('boost_extra_charges');
     }
 }

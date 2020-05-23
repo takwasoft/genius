@@ -11,7 +11,7 @@
 												<a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
 											</li>
 											<li>
-												<a href="javascript:;">Boost </a>
+												<a href="javascript:;">Top Ad </a>
 											</li>
 											
 										</ul>
@@ -68,7 +68,7 @@ var paid=(val,id)=>{
 	//loader
 		
 		
-		 $.ajax({url: "{{URL::to('/')}}/admin/boost/paid-status/"+id+"/"+val, success: function(result){
+		 $.ajax({url: "{{URL::to('/')}}/admin/top/paid-status/"+id+"/"+val, success: function(result){
 			  
  		 }});
 	}
@@ -78,7 +78,7 @@ var changed=(val,id)=>{
 		if(val==2){
 			reason=window.prompt('Enter note');
 		}
-		 $.ajax({url: "{{URL::to('/')}}/admin/boost/status/"+id+"/"+val+"/"+reason, success: function(result){
+		 $.ajax({url: "{{URL::to('/')}}/admin/top/status/"+id+"/"+val+"/"+reason, success: function(result){
 			  
  		 }});
 	}
@@ -86,13 +86,13 @@ var table = $('#geniustable').DataTable({
 			   ordering: false,
                processing: true,
                serverSide: true,
-               ajax: '{{ route('admin-boost-datatables') }}',
+               ajax: '{{ route('admin-top-datatables') }}',
                columns: [
                    { data: 'id', name: 'id' },
                         { data: 'product.user.name', name: 'product.user.name' },
                         { data: 'product.name', name: 'product.name' },
-                        { data: 'boostcategory.price', name: 'boostcategory.price' },
-                        { data: 'boostcategory.duration', name: 'boostcategory.duration' },
+                        { data: 'topadcategory.price', name: 'topadcategory.price' },
+                        { data: 'topadcategory.duration', name: 'topadcategory.duration' },
                         { data: 'applied', name: 'applied' }, 
                         { data: 'status', searchable: false, orderable: false},
 						{ data: 'method', name: 'method' },

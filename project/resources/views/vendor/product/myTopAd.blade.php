@@ -8,7 +8,7 @@
 										<h4 class="heading">{{ __("My Boosts") }}</h4>
 										<ul class="links">
 											<li>
-												<a href="{{ route('vendor-dashboard') }}" >{{ __("Dashboard") }} </a>
+												<a href="{{ route('vendor-dashboard') }}">{{ __("Dashboard") }} </a>
 											</li>
 											<li>
 												<a href="javascript:;">Boost </a>
@@ -56,13 +56,13 @@ var table = $('#geniustable').DataTable({
 			   ordering: false,
                processing: true,
                serverSide: true,
-               ajax: '{{ route('vendor-boost-datatables') }}',
+               ajax: '{{ route('vendor-top-datatables') }}',
                columns: [
                    { data: 'id', name: 'id' },
                      
                         { data: 'product.name', name: 'product.name' },
-                        { data: 'boostcategory.price', name: 'boostcategory.price' },
-                        { data: 'boostcategory.duration', name: 'boostcategory.duration' },
+                        { data: 'topadcategory.price', name: 'topadcategory.price' },
+                        { data: 'topadcategory.duration', name: 'topadcategory.duration' },
                         { data: 'applied', name: 'applied' },
                         { data: 'status', searchable: false, orderable: false},
 						 { data: 'paid', searchable: false, orderable: false},

@@ -31,7 +31,27 @@ use Validator;
 
 class CheckoutController extends Controller
 {
-
+    public function loadpayments($slug1,$slug2){
+        $gs = Generalsetting::findOrFail(1);
+        if (Session::has('currency')) {
+            $curr = Currency::find(Session::get('currency'));
+        }
+        else {
+            $curr = Currency::where('is_default','=',1)->first();
+        }
+        $payment = $slug1;
+        $pay_id = $slug2;
+        $gateway = '';
+        if($pay_id != 0) {
+            $gateway = PaymentGateway::findOrFail($pay_id);
+        }
+        $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();
+        $verificationFields=PaymentVerification::where('payment_gateway_id','=',$gateway->id)->get();
+       
+        
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$gateway->id)->get();    
+        return view('load.payments',compact('extraCharges','curr','additionalFields','verificationFields'));
+    }
     public function loadpayment($slug1,$slug2)
     {
         $gs = Generalsetting::findOrFail(1);

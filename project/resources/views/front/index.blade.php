@@ -567,12 +567,12 @@
                         <iframe width="540" height="315"
 							src="{{$gs->home_youtube}}">
 						</iframe>
+
                     </div>
                     <div class="col-md-6">
-                        <h2 style="font-size:30px">WHAT IS TMIWEB.CO </h2>
+                        <h2 style="font-size:30px">{!!$about->title!!} </h2>
                         <p style="font-size:15px;line-height:1.4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                            et tortor quis massa rutrum eleifend non nec dui. Praesent luctus convallis urna. Phasellus non tempor odio, sed faucibus arcu. Duis id convallis odio. Proin sit amet enim scelerisque, convallis metus mollis, varius turpis.
+                            {!!$about->details!!}
                         </p>
                         <button class="btn btn-success" type="button"style="font-size:13px" > Click Here</button>
                     </div>

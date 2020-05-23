@@ -107,6 +107,7 @@ class CatalogController extends Controller
     }
     public function category(Request $request, $slug=null, $slug1=null, $slug2=null)
     {
+
       $cat = null;
       $division_id = null;
       $district_id = null;
@@ -117,10 +118,14 @@ class CatalogController extends Controller
       $maxprice = $request->max;
       $sort = $request->sort;
       $search = $request->search;
- 
+      $boostProducts=[];
+      $topAdProducts=[];
       if (!empty($slug)) {
         $cat = Category::where('slug', $slug)->firstOrFail();
+        $boostProducts=$cat->boostProducts;
+        $topAdProducts=$cat->topAdProducts;
         $data['cat'] = $cat;
+        
       }
       if (!empty($slug1)) {
         $subcat = Subcategory::where('slug', $slug1)->firstOrFail();
@@ -140,7 +145,8 @@ class CatalogController extends Controller
         $sub_district_id= $request->subdistrict_id;
       }
       
-
+      $data['boostProducts']=$boostProducts;
+      $data['topAdProducts']=$topAdProducts;
       $prods = Product::when($cat, function ($query, $cat) {
                                       return $query->where('category_id', $cat->id);
                                   })
@@ -160,7 +166,7 @@ class CatalogController extends Controller
                                 return $query->where('sub_district_id', $sub_district_id);
                             })
                                   ->when($search, function ($query, $search) {
-                                      return $query->whereRaw('MATCH (name) AGAINST (? IN BOOLEAN MODE)' , array($search));
+                                      return $query->where('name','like','%'.$search.'%');
                                   })
                                   ->when($minprice, function($query, $minprice) {
                                     return $query->where('price', '>=', $minprice);
@@ -259,6 +265,7 @@ class CatalogController extends Controller
       $data['ajax_check'] = 1;
 
         return view('includes.product.filtered-products', $data);
+
       }
       $data['feature_products']= Product::where('status','=',1)->whereFeatured(1)->orderBy('id','desc')->take(8)->get();
       $data['divisions']=Division::all();

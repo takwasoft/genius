@@ -121,7 +121,7 @@
 					<!-- Side Menu Area Start -->
 					<nav id="sidebar" class="nav-sidebar">
 						<ul class="list-unstyled components" id="accordion">
-
+ 
 							<li>
 								<a target="_blank" href="{{ route('front.vendor',str_replace(' ', '-', Auth::user()->shop_name)) }}" class="wave-effect active"><i class="fas fa-eye mr-2"></i> {{ $langg->lang440 }}</a>
 							</li>
@@ -144,6 +144,9 @@
 								<ul class="collapse list-unstyled" id="menu52" data-parent="#accordion">
 									<li>
 										<a href="{{ route('my-boost') }}"><span>My Boosting</span></a>
+									</li>
+									<li>
+										<a href="{{ route('my-top-ad') }}"><span>My Top Ad</span></a>
 									</li>
 									
 								</ul>

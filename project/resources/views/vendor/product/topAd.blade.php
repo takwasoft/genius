@@ -18,19 +18,19 @@
 													<a href="javascript:;">{{ $langg->lang629 }}</a>
 												</li>
 												<li>
-													<a href="{{ route('vendor-prod-boost',$product->id) }}">Boost</a>
+													<a href="{{ route('vendor-prod-top',$product->id) }}">Top Ad</a>
 												</li>
 											</ul>
 									</div>
 								</div>
-							</div>
+							</div> 
                              <table class='table'>
                                     <tr>
                                         <th>Product</th>
                                         <td>{{$product->name}}</td>
                                     </tr>
                               </table>      
-                            <form method="post" action="{{route('vendor-product-boost',$product->id)}}" >
+                            <form method="post" action="{{route('vendor-product-top-ad',$product->id)}}" >
  
                             {{csrf_field()}}
 

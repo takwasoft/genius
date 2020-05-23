@@ -104,6 +104,12 @@
             <li>
                 <a href="{{ route('admin-product-boost') }}"><span>Boosts</span></a>
             </li>
+            <li>
+                <a href="{{ URL::to('/admin/topadcategories')}}"><span>Top Ad Category</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-product-top-ad') }}"><span>Top Ads</span></a>
+            </li>
           
 
         </ul>

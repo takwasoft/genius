@@ -72,10 +72,15 @@
 
                                     </label>
                                 <div class="col-sm-12">
-                                    <input name="amount" placeholder="{{ $langg->lang487 }}" class="form-control" type="text" value="{{ old('amount') }}" required>
+                                    <input name="amount" placeholder="{{ $langg->lang487 }}" max="{{round(Auth::user()->current_balance/(1+($gs->withdraw_charge/100)))}}" class="form-control" type="number" value="{{ old('amount') }}" required>
                                 </div>
                             </div>
-
+                            <div class="item form-group">
+                                <label class="control-label col-sm-12" for="name">Withdraw Charge {{$gs->withdraw_charge}}% 
+                                <br>
+                                You can withdraw up to {{round(Auth::user()->current_balance/(1+($gs->withdraw_charge/100)))}}
+                                    </label>
+                            </div>
 
 
                             <hr>

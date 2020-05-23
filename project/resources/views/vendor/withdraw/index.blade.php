@@ -31,15 +31,15 @@
 										<center>
 										<b>From</b>
 										<input
-										@if($from)
+										@isset($from)
 											value="{{$from}}"
-										@endif
+										@endisset
 										 name="start" type="date" >
 										<b>To</b>
 										<input
-										@if($from)
+										@isset($to)
 											value="{{$to}}"
-										@endif
+										@endisset
 										 name="end" type="date" >
 										</center>
 										<br>
@@ -49,9 +49,11 @@
 												<option value="0">Select</option>
 													@foreach($gateways as $gateway)
 															<option 
+															@isset($method)
 															@if($gateway->id==$method)
 																selected
 															@endif
+															@endisset
 															value="{{$gateway->id}}">{{$gateway->title}}</option>
 													@endforeach
 												</select>

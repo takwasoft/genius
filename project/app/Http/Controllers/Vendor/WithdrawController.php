@@ -26,7 +26,8 @@ class WithdrawController extends Controller
         $withdraws = Withdraw::where('user_id','=',Auth::guard('web')->user()->id)->where('type','=','vendor')->orderBy('id','desc')->get();
         $sign = Currency::where('is_default','=',1)->first();  
         $gateways=PaymentGateway::all();      
-        return view('vendor.withdraw.index',compact('withdraws','sign','gateways')); 
+        $status="";
+        return view('vendor.withdraw.index',compact('withdraws','sign','gateways','status')); 
     }
 	public function filter(Request $request)
     {
@@ -65,9 +66,9 @@ class WithdrawController extends Controller
         return view('vendor.withdraw.additional' ,compact('fields'));
     }
     public function create()
-    {
+    { 
         $sign = Currency::where('is_default','=',1)->first();
-        $gateways=PaymentGateway::all();
+        $gateways=PaymentGateway::all(); 
         return view('vendor.withdraw.create' ,compact('sign','gateways'));
     }
 
@@ -75,7 +76,7 @@ class WithdrawController extends Controller
     public function store(Request $request)
     {
 
-        
+         
         $from = User::findOrFail(Auth::guard('web')->user()->id);
 
         $withdrawcharge = Generalsetting::findOrFail(1);
@@ -90,7 +91,7 @@ class WithdrawController extends Controller
                 $finalamount = $amount - $fee;
                 $finalamount = number_format((float)$finalamount,2,'.','');
 
-                $from->current_balance = $from->current_balance - $amount;
+                $from->current_balance = $from->current_balance - $amount-$amount*$charge/100;
                 $from->update();
 
                 $newwithdraw = new Withdraw();

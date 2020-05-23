@@ -4586,7 +4586,7 @@ nav button {
 }
 
 .ui-slider-horizontal {
-    height: 5px;
+    height: 3px;
 }
 
 .ui-slider-horizontal {
@@ -4744,6 +4744,8 @@ nav button {
 .sub-categori .left-area .filter-result-area .body-area .price-range-block {
     text-align: center;
     margin-top: 34px;
+    padding:0 5px;
+    
 }
 
 .sub-categori .left-area .filter-result-area .body-area .price-range-block #slider-range {
@@ -9282,7 +9284,7 @@ input[type=checkbox]:checked:disabled+label:before {
 }
 
 .add-to-cart-a {
-    background: #B81D22 !important;
+    background: #024c0b !important;
     padding: 7px;
     color: white;
     font-size: 15px;
@@ -9290,8 +9292,9 @@ input[type=checkbox]:checked:disabled+label:before {
 }
 
 .add-to-cart-a:hover {
-    background: #024c0b!important;
+    background: #B81D22!important;
     color: white;
+    transition:1.3s;
 }
 
 .add-cart,
