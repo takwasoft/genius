@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Withdraw;
 use App\Models\Currency;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Input;
 use Validator;
 
@@ -386,40 +387,55 @@ class UserController extends Controller
             return response()->json($msg);      
             //--- Redirect Section Ends    
         }
-
+ 
         //*** JSON Request
-        public function withdrawdatatables()
+        public function withdrawdatatables() 
         {
-             $datas = Withdraw::where('type','=','user')->orderBy('id','desc')->get();
-             //--- Integrating This Collection Into Datatables
-             return Datatables::of($datas)
-                                ->addColumn('email', function(Withdraw $data) {
-                                    $email = $data->user->email;
-                                    return $email;
-                                }) 
-                                ->addColumn('phone', function(Withdraw $data) {
-                                    $phone = $data->user->phone;
-                                    return $phone;
-                                }) 
-                                ->editColumn('status', function(Withdraw $data) {
-                                    $status = ucfirst($data->status);
-                                    return $status;
-                                }) 
-                                ->editColumn('amount', function(Withdraw $data) {
-                                    $sign = Currency::where('is_default','=',1)->first();
-                                    $amount = $sign->sign.round($data->amount * $sign->value , 2);
-                                    return $amount;
-                                }) 
-                                ->addColumn('action', function(Withdraw $data) {
-                                    $action = '<div class="action-list"><a data-href="' . route('admin-withdraw-show',$data->id) . '" class="view details-width" data-toggle="modal" data-target="#modal1"> <i class="fas fa-eye"></i> Details</a>';
-                                    if($data->status == "pending") {
-                                    $action .= '<a data-href="' . route('admin-withdraw-accept',$data->id) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="fas fa-check"></i> Accept</a><a data-href="' . route('admin-withdraw-reject',$data->id) . '" data-toggle="modal" data-target="#confirm-delete1"> <i class="fas fa-trash-alt"></i> Reject</a>';
-                                    }
-                                    $action .= '</div>';
-                                    return $action;
-                                }) 
-                                ->rawColumns(['name','action'])
-                                ->toJson(); //--- Returning Json Data To Client Side
+            $datas = Withdraw::where('type','=','user')->orderBy('id','desc')->get(); 
+            //--- Integrating This Collection Into Datatables
+            return Datatables::of($datas)
+                               ->editColumn('method', function(Withdraw $data) {
+                                   return $data->paymentGateway->title;
+                               }) 
+                               ->addColumn('check', function(Withdraw $data) {
+                                   
+                                   return '<input class="chk" name="withdraw_id" type="checkbox" value="'.$data->id.'">';
+                               })
+                               ->addColumn('name', function(Withdraw $data) {
+                                   $name = $data->user->name;
+                                   return '<a href="' . route('admin-vendor-show',$data->user->id) . '" target="_blank">'. $name .'</a>';
+                               })
+                               ->addColumn('print', function(Withdraw $data) {
+                                   
+                                   return '<a class="btn btn-success" href="' . route('admin-vendor-withdraw-print',$data->id) . '" target="_blank">Print</a>';
+                               })  
+                               ->addColumn('email', function(Withdraw $data) {
+                                   $email = $data->user->email;
+                                   return $email;
+                               }) 
+                               ->addColumn('phone', function(Withdraw $data) {
+                                   $phone = $data->user->phone;
+                                   return $phone;
+                               }) 
+                               ->editColumn('status', function(Withdraw $data) {
+                                   $status = ucfirst($data->status);
+                                   return $status;
+                               }) 
+                               ->editColumn('amount', function(Withdraw $data) {
+                                   $sign = Currency::where('is_default','=',1)->first();
+                                   $amount = $sign->sign.round($data->amount * $sign->value , 2);
+                                   return $amount;
+                               }) 
+                               ->addColumn('action', function(Withdraw $data) {
+                                   $action = '<div class="action-list"><a data-href="' . route('admin-vendor-withdraw-show',$data->id) . '" class="view details-width" data-toggle="modal" data-target="#modal1"> <i class="fas fa-eye"></i> Details</a>';
+                                   if($data->status == "pending") {
+                                   $action .= '<a data-href="' . route('admin-withdraw-accept',$data->id) . '" data-toggle="modal" data-target="#confirm-delete"> <i class="fas fa-check"></i> Accept</a><a data-href="' . route('admin-withdraw-reject',$data->id) . '" data-toggle="modal" data-target="#confirm-delete1"> <i class="fas fa-trash-alt"></i> Reject</a>';
+                                   }
+                                   $action .= '</div>';
+                                   return $action;
+                               }) 
+                               ->rawColumns(['name','action','print','check'])
+                               ->toJson(); //--- Returning Json Data To Client Side
         }
 
         //*** GET Request
@@ -442,6 +458,12 @@ class UserController extends Controller
             $withdraw = Withdraw::findOrFail($id);
             $data['status'] = "completed";
             $withdraw->update($data);
+            Transaction::create([
+                "amount"=>$withdraw->amount,
+                "withdraw_id"=>$withdraw->id,
+                "type"=>"User Withdraw",
+                "collected"=>0
+            ]);
             //--- Redirect Section     
             $msg = 'Withdraw Accepted Successfully.';
             return response()->json($msg);      

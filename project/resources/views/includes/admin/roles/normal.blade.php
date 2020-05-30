@@ -5,46 +5,96 @@
 <li>
         <a href="#order" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-hand-holding-usd"></i>{{ __('Orders') }}</a>
         <ul class="collapse list-unstyled" id="order" data-parent="#accordion" >
-               <li>
-                <a href="{{route('admin-order-index')}}"> {{ __('All Orders') }}</a>
-            </li>
-            <li>
-                <a href="{{route('admin-order-pending')}}"> {{ __('Pending Orders') }}</a>
-            </li>
-            <li>
-                <a href="{{route('admin-order-processing')}}"> {{ __('Processing Orders') }}</a>
-            </li>
-            <li>
-                <a href="{{route('admin-order-completed')}}"> {{ __('Completed Orders') }}</a>
-            </li>
-            <li>
-                <a href="{{route('admin-order-declined')}}"> {{ __('Declined Orders') }}</a>
-            </li>  
+                <li>
+            <a href="{{route('admin-order-index')}}"> {{ __('All Orders') }}</a>
+        </li>
+        <li>
+            <a href="{{route('admin-order-pending')}}"> {{ __('Pending Orders') }}</a>
+        </li>
+        <li>
+            <a href="{{route('admin-order-processing')}}"> {{ __('Processing Orders') }}</a>
+        </li>
+        <li>
+            <a href="{{route('admin-order-delivery')}}"> {{ __('On Delivery') }}</a>
+        </li>
+        <li>
+            <a href="{{route('admin-order-completed')}}"> {{ __('Completed Orders') }}</a>
+        </li>
+        <li>
+            <a href="{{route('admin-order-declined')}}"> {{ __('Declined Orders') }}</a>
+        </li>
+        <li>
+            <a href="{{route('admin-order-paid')}}"> {{ __('Paid Orders') }}</a>
+        </li>
 
         </ul>
     </li>
 
 @endif
+@if(Auth::guard('admin')->user()->sectionCheck('accounts'))
+  <li>
+        <a href="#account" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
+            <i class="icofont-ui-user-group"></i>Accounts
+        </a>
+        <ul class="collapse list-unstyled" id="account" data-parent="#accordion">
+            <li>
+                <a href="{{ route('admin-vendor-withdraw-index') }}"><span>Vendor Withdraw</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-withdraw-index') }}"><span>Customer Withdraw</span></a>
+            </li>
+          
 
+        </ul>
+    </li>
+ @endif   
+ @if(Auth::guard('admin')->user()->sectionCheck('promotions'))
+  <li>
+        <a href="#promotion" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
+            <i class="icofont-ui-user-group"></i>Promotion
+        </a>
+        <ul class="collapse list-unstyled" id="promotion" data-parent="#accordion">
+            <li>
+                <a href="{{ URL::to('/admin/boostcategories')}}"><span>Boost Category</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-product-boost') }}"><span>Boosts</span></a>
+            </li>
+            <li>
+                <a href="{{ URL::to('/admin/topadcategories')}}"><span>Top Ad Category</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-product-top-ad') }}"><span>Top Ads</span></a>
+            </li>
+          
+
+        </ul>
+    </li> 
+ @endif   
 @if(Auth::guard('admin')->user()->sectionCheck('products'))
 
     <li>
         <a href="#menu2" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
-            <i class="icofont-cart"></i>{{ __('Products') }}
+            <i class="icofont-cart"></i>{{ __('Products') }}<span class="badge badge-danger"> {{$pendingCount}}</span>
         </a>
         <ul class="collapse list-unstyled" id="menu2" data-parent="#accordion">
-            <li>
-                <a href="{{ route('admin-prod-types') }}"><span>{{ __('Add New Product') }}</span></a>
-            </li>
-            <li>
-                <a href="{{ route('admin-prod-index') }}"><span>{{ __('All Products') }}</span></a>
-            </li>
-            <li>
-                <a href="{{ route('admin-prod-deactive') }}"><span>{{ __('Deactivated Product') }}</span></a>
-            </li>
-            <li>
-                <a href="{{ route('admin-prod-catalog-index') }}"><span>{{ __('Product Catalogs') }}</span></a>
-            </li>
+             <li>
+            <a href="{{ route('admin-prod-physical-create') }}"><span>{{ __('Add New Product') }}</span></a>
+        </li>
+        <li>
+            <a href="{{ route('admin-prod-index') }}"><span>{{ __('All Products') }}</span></a>
+        </li>
+        <li>
+            <a href="{{ route('admin-prod-pending') }}"><span>{{ __('Pending Product') }}
+                
+                </span></a>
+        </li>
+        <li>
+            <a href="{{ route('admin-prod-deactive') }}"><span>{{ __('Deactivated Product') }}</span></a>
+        </li>
+        <li>
+            <a href="{{ route('admin-prod-catalog-index') }}"><span>{{ __('Product Catalogs') }}</span></a>
+        </li>
         </ul>
     </li>
 
@@ -102,11 +152,11 @@
                 <a href="{{ route('admin-vendor-index') }}"><span>{{ __('Vendors List') }}</span></a>
             </li>
             <li>
-                <a href="{{ route('admin-vendor-withdraw-index') }}"><span>{{ __('Withdraws') }}</span></a>
-            </li>
-            <li>
                 <a href="{{ route('admin-vendor-subs') }}"><span>{{ __('Vendor Subscriptions') }}</span></a>
             </li>
+                    <li>
+            <a href="{{ route('admin-pend-subs') }}"><span>{{ __('Pending Vendor Subscriptions') }}</span></a>
+        </li>
             <li>
                 <a href="{{ route('admin-vendor-color') }}"><span>{{ __('Default Background') }}</span></a>
             </li>
@@ -141,30 +191,90 @@
 
 @if(Auth::guard('admin')->user()->sectionCheck('categories'))
 
-    <li>
-        <a href="#menu5" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Categories') }}</a>
-        <ul class="collapse list-unstyled
+<li>
+    <a href="#menu5" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Categories') }}</a>
+    <ul class="collapse list-unstyled
         @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category')
           show
         @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='subcategory')
           show
         @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='childcategory')
           show
-        @endif" id="menu5" data-parent="#accordion" >
-                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category') active @endif">
-                    <a href="{{ route('admin-cat-index') }}"><span>{{ __('Main Category') }}</span></a>
-                </li>
-                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='subcategory') active @endif">
-                    <a href="{{ route('admin-subcat-index') }}"><span>{{ __('Sub Category') }}</span></a>
-                </li>
-                <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='childcategory') active @endif">
-                    <a href="{{ route('admin-childcat-index') }}"><span>{{ __('Child Category') }}</span></a>
-                </li>
-        </ul>
-    </li>
+             @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='vendorcategory')
+          show
+        @endif" id="menu5" data-parent="#accordion">
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category') active @endif">
+            <a href="{{ route('admin-cat-serial') }}"><span>Category Serial</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='category') active @endif">
+            <a href="{{ route('admin-cat-index') }}"><span>{{ __('Main Category') }}</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='subcategory') active @endif">
+            <a href="{{ route('admin-subcat-index') }}"><span>{{ __('Sub Category') }}</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='childcategory') active @endif">
+            <a href="{{ route('admin-childcat-index') }}"><span>{{ __('Child Category') }}</span></a>
+        </li>
+
+    </ul>
+</li>
 
 @endif
+@if(Auth::guard('admin')->user()->sectionCheck('brands'))
+<li>
+    <a href="#menu30" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Brands') }}</a>
+    <ul class="collapse list-unstyled
+        @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brand')
+          show
+ @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='brandcategories')
+          show
+        @endif" id="menu30" data-parent="#accordion">
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brandcategories') active @endif">
+            <a href="{{ URL::to('/admin/brandcategories')}}"><span>Brand Category</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='brand') active @endif">
+            <a href="{{ URL::to('/admin/brands')}}"><span>Brands</span></a>
+        </li>
 
+
+    </ul>
+</li>
+@endif
+@if(Auth::guard('admin')->user()->sectionCheck('areas'))
+
+<li>
+    <a href="#menu29" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-sitemap"></i>{{ __('Manage Areas') }}</a>
+    <ul class="collapse list-unstyled
+        @if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division')
+          show 
+        @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='district')
+          show
+        @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='subdistrict')
+          show
+          @elseif(request()->is('admin/attribute/*/manage') && request()->input('type')=='area')
+          show
+        @endif" id="menu29" data-parent="#accordion">
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
+            <a href="{{ URL::to('/admin/division/serial')}}"><span>Division Serial</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
+            <a href="{{ URL::to('/admin/all-dis/serial')}}"><span>District Serial</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='division') active @endif">
+            <a href="{{ URL::to('/admin/divisions')}}"><span>Division</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='district') active @endif">
+            <a href="{{ URL::to('/admin/districts')}}"><span>District</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='subdistrict') active @endif">
+            <a href="{{ URL::to('/admin/subdistricts')}}"><span>Subdistrict</span></a>
+        </li>
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='area') active @endif">
+            <a href="{{ URL::to('/admin/areas')}}"><span>Area</span></a>
+        </li>
+    </ul>
+</li>
+@endif
 @if(Auth::guard('admin')->user()->sectionCheck('bulk_product_upload'))
 
     <li>

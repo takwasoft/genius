@@ -113,10 +113,10 @@ class Product extends Model
     }
     public function getAddress(){
        
-        if($this->subdistrict()){
+        if($this->sub_district_id){
            return $this->subdistrict(); 
-        }
-        if($this->district()){
+        } 
+        if($this->district_id){
             return $this->district(); 
          }
          if($this->division()){

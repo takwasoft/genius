@@ -40,7 +40,7 @@
                         <div class="local-main"><i class="fas fa-star local-star"></i></div>
                         <div class="local-content">Member</div>
                     </div>
-                    <div><span style="margin-left:5px;font-size:14px;">{{$prod->subdistrict?$prod->subdistrict->name:''}},</span></div>
+                    <div><span style="margin-left:5px;font-size:14px;">{{$prod->getAddress?$prod->getAddress->name:""}}</span></div>
                     <div><span style="margin-left:5px;font-size:14px;">{{$prod->category->name}}</span></div>
                     <div class="ml-auto mt-2" style="font-size:14px">
                         {{$prod->created_at->diffForHumans()}}

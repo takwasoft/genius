@@ -24,6 +24,7 @@ use App\Models\District;
 use App\Models\Division;
 use App\Models\PaymentGateway;
 use App\Models\SubDistrict;
+use App\Models\Transaction;
 use App\Models\User;
 use App\TopAd;
 use App\TopAdAdditional;
@@ -77,6 +78,19 @@ class ProductController extends Controller
                $user=User::find(auth()->user()->id);
                $user->current_balance-=$total;
                $user->save();
+               $boost= Boost::create([
+                "boost_category_id"=>$request->boost_category_id,
+                "payment_gateway_id"=>$request->method,
+                "product_id"=>$product->id,
+                "status"=>0,
+                "paid"=>$paid
+            ]);
+            Transaction::create([
+                "amount"=>$boost->topAdCategory->price,
+                "type"=>"Product Boosting",
+                "top_ad_id"=>$boost->id,
+                "collected"=>1
+            ]);
                return redirect()->route('my-boost');
            }
        }
@@ -87,16 +101,7 @@ class ProductController extends Controller
             "status"=>0,
             "paid"=>$paid
         ]);
-for($i=0;$i<count(array_keys($request->additional));$i++){
-            
-            if($request->additional[array_keys($request->additional)[$i]]){
-                BoostAdditional::create([
-                    "boost_id"=>$boost->id,
-                    "additional_field_id"=>array_keys($request->additional)[$i],
-                    "value"=>$request->additional[array_keys($request->additional)[$i]]
-                ]);
-            }
-        }
+
         for($i=0;$i<count(array_keys($request->verification));$i++){
             if($request->verification[array_keys($request->verification)[$i]])
             {
@@ -135,6 +140,19 @@ for($i=0;$i<count(array_keys($request->additional));$i++){
                $user=User::find(auth()->user()->id);
                $user->current_balance-=$total;
                $user->save();
+               $boost= TopAd::create([
+                "top_ad_category_id"=>$request->boost_category_id,
+                "payment_gateway_id"=>$request->method,
+                "product_id"=>$product->id,
+                "status"=>0,
+                "paid"=>$paid
+            ]);
+            Transaction::create([
+                "amount"=>$boost->topAdCategory->price,
+                "type"=>"Product Top Ad",
+                "top_ad_id"=>$boost->id,
+                "collected"=>1
+            ]);
                return redirect()->route('my-top-ad');
            }
        }
@@ -145,16 +163,7 @@ for($i=0;$i<count(array_keys($request->additional));$i++){
             "status"=>0,
             "paid"=>$paid
         ]);
-for($i=0;$i<count(array_keys($request->additional));$i++){
-            
-            if($request->additional[array_keys($request->additional)[$i]]){
-                TopAdAdditional::create([
-                    "top_ad_id"=>$boost->id,
-                    "additional_field_id"=>array_keys($request->additional)[$i],
-                    "value"=>$request->additional[array_keys($request->additional)[$i]]
-                ]);
-            }
-        }
+
         for($i=0;$i<count(array_keys($request->verification));$i++){
             if($request->verification[array_keys($request->verification)[$i]])
             {
@@ -329,7 +338,7 @@ for($i=0;$i<count(array_keys($request->additional));$i++){
     }
     public function boostProduct(Product $product){  
         $boostCategories=BoostCategory::where('status','=','1')->get();
-        $gateways=PaymentGateway::all();
+        $gateways=PaymentGateway::all(); 
         return view('vendor.product.boost',compact('product','gateways','boostCategories'));
     } 
     public function topProduct(Product $product){
@@ -445,7 +454,7 @@ for($i=0;$i<count(array_keys($request->additional));$i++){
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
         $divisions=Division::all();
-        $districts=District::orderBy('dis_serial')->limit(5)->get();
+        $districts=District::orderBy('dis_serial')->limit(8)->get();
         $categories=Category::all();
       
         //every category has many subs. every subs has many childs
@@ -932,8 +941,8 @@ if (!Product::where('sku',$line[0])->exists()){
              $jsonAttr = json_encode($attrArr);
              $input['attributes'] = $jsonAttr;
            }
-
-           if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id){
+           $input['sub_district_id']=$request["subdistrict_id"];
+           if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id&&!$request->district_id){
             $input['subdistrict_id']=$user->subdistrict_id;
             $input['sub_district_id']=$user->subdistrict_id;
             $input['district_id']=$user->district_id;
@@ -945,6 +954,7 @@ if (!Product::where('sku',$line[0])->exists()){
                 if(!$request->division_id){
                     $input['division_id']=District::find($request->district_id)->division_id; 
                 }
+                
             }
             if(!$request->brand_id){
                 $input['brand_id']=0;
@@ -1011,15 +1021,17 @@ if (!Product::where('sku',$line[0])->exists()){
         $cats = Category::all();
         $data = Product::findOrFail($id);
         $sign = Currency::where('is_default','=',1)->first();
-
-
+        $brands = Brand::all();
+        $divisions=Division::all();
+        $districts=District::orderBy('dis_serial')->limit(5)->get();
+        $categories=Category::all();
         if($data->type == 'Digital')
             return view('vendor.product.edit.digital',compact('cats','data','sign'));
         elseif($data->type == 'License')
             return view('vendor.product.edit.license',compact('cats','data','sign'));
-        else
-            return view('vendor.product.edit.physical',compact('cats','data','sign'));
-
+        else 
+            return view('vendor.product.edit.physical',compact('divisions','districts','categories','brands','cats','data','sign'));
+ 
     }
 
 
@@ -1047,9 +1059,9 @@ if (!Product::where('sku',$line[0])->exists()){
         $rules = [
                'file'       => 'mimes:zip'
                 ];
-
+                
         $validator = Validator::make(Input::all(), $rules);
-
+$user=auth()->user();
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -1310,8 +1322,25 @@ if (!Product::where('sku',$line[0])->exists()){
             else {
                 $data->slug = str_slug($data->name,'-').'-'.strtolower($data->sku);
             }
-
-         $data->update($input);
+            $input['sub_district_id']=$request["subdistrict_id"];
+            if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id&&!$request->district_id){
+                $input['subdistrict_id']=$user->subdistrict_id;
+                $input['sub_district_id']=$user->subdistrict_id;
+                $input['district_id']=$user->district_id;
+                
+                $input['division_id']=$user->division_id;
+                }
+                else{
+                    $input['area_id']=0;
+                    
+                    if(!$request->division_id){
+                        $input['division_id']=District::find($request->district_id)->division_id; 
+                    }
+                }
+                if(!$request->brand_id){
+                    $input['brand_id']=0;
+                }
+         $data->update($input); 
         //-- Logic Section Ends
 
         //--- Redirect Section

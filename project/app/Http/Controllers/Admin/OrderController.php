@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Generalsetting;
 use App\Models\Order;
 use App\Models\OrderTrack;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\VendorOrder;
 use Datatables;
@@ -82,6 +83,21 @@ class OrderController extends Controller
         $data = Order::findOrFail($id);
 
         $input = $request->all();
+        if($data->payment_status == "Completed"&&$input['payment_status'] != "Completed"){
+            $t=Transaction::where('order_id','=',$data->id)->first();
+            if($t){
+                $t->delete();
+            }
+        }
+        if($data->payment_status != "Completed"&&$input['payment_status'] == "Completed"){
+            Transaction::create([
+                "amount"=>$data->pay_amount,
+                "order_id"=>$data->id,
+                "type"=>"Order Payment",
+                "collected"=>1
+            ]);
+
+        }
         if ($data->status == "completed" &&$data->payment_status == "Completed"){
 
         // Then Save Without Changing it.

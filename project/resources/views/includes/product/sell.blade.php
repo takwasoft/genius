@@ -23,7 +23,7 @@
 									<i class="icofont-heart-alt"></i>
 								</span> 
 								@endif
-							</li>
+							</li> 
 						</ul>
     				 </div>
 						<a href="product-details.html">
@@ -33,7 +33,7 @@
 						</a>
 						<h5 class="mt-2">{{$product->name}}</h5>
 						<div class="local-info d-flex flex-row flex-wrap">
-							<div class="d-flex" style="margin-top:5px;"><div class="local-main"><i class="fas fa-star local-star"></i></div><div class="local-content">Member</div></div>
+							<div class="d-flex" style="margin-top:5px;"><div class="local-main"><i class="fas fa-star local-star"></i></div><div class="local-content">Member</div></div> 
 							<div><span style="margin-left:5px;font-size:14px;">{{$product->getAddress?$product->getAddress->name:""}} </span></div> 
 							<div><span style="margin-left:5px;font-size:14px;">{{$product->category->name}}</span></div>
 							<div class="ml-auto mt-2" style="font-size:14px">

@@ -1,5 +1,5 @@
 
- @foreach($additionalFields as $field)
+ {{--  @foreach($additionalFields as $field)
 <div class="item form-group">
                                 <label class="control-label col-sm-12" for="name">{{ $field->title }}
                                 <br>
@@ -15,7 +15,7 @@
                                      name="additional[{{$field->id}}]"  class="form-control" type="text"  {{$field->required==1?'required':''}}>
                                 </div>
                             </div>
-@endforeach
+@endforeach  --}}
  @foreach($verificationFields as $field)
 <div class="item form-group">
                                 <label class="control-label col-sm-12" for="name">{{ $field->title }}
@@ -49,9 +49,16 @@
                             </div>
                             
 @endforeach
-
-
-
+@if($amount>0)
+<div class="item form-group">
+                                <label class="control-label col-sm-12" for="name">You Need To Pay
+<b>{{$amount}} BDT</b>
+<br>
+                                
+                                    </label>
+                                
+                            </div>
+@endif
 
 {{--  @if($payment == 'paypal') 
                                 <input type="hidden" name="method" value="Paypal">

@@ -33,7 +33,6 @@
                                                             <th>{{ __("Vendor Name") }}</th>
                                                             <th>{{ __("Plan") }}</th>
                                                             <th>{{ __("Method") }}</th>
-                                                            <th>{{ __("Transcation ID") }}</th>
                                                             <th>{{ __("Purchase Time") }}</th>
                                                             <th>{{ __("Options") }}</th>
                                                         </tr>
@@ -90,7 +89,6 @@
                         { data: 'name', searchable: false, orderable: false },
                         { data: 'title', name: 'title' },
                         { data: 'method', name: 'method' },
-                        { data: 'txnid', name: 'txnid' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'action', searchable: false, orderable: false }
                      ],

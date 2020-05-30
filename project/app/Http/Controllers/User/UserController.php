@@ -16,6 +16,9 @@ use App\Models\Subscription;
 use App\Models\Generalsetting;
 use App\Models\UserSubscription;
 use App\Models\FavoriteSeller;
+use App\Models\PaymentGateway;
+use App\Models\Transaction;
+use App\UserSubscriptionPaymentVerification;
 
 class UserController extends Controller
 {
@@ -110,6 +113,7 @@ class UserController extends Controller
     public function vendorrequest($id)
     {
 
+
         $subs = Subscription::findOrFail($id);
         $gs = Generalsetting::findOrfail(1);
         $user = Auth::user();
@@ -119,9 +123,9 @@ class UserController extends Controller
             return redirect()->back();
         }
         $divisions=Division::all();
-        $districts=District::orderBy('dis_serial')->limit(5)->get();
-
-        return view('user.package.details',compact('user','subs','package','divisions','districts'));
+        $districts=District::orderBy('dis_serial')->limit(8)->get();
+        $gateways=PaymentGateway::all(); 
+        return view('user.package.details',compact('user','gateways','subs','package','divisions','districts'));
     }
 
     public function vendorrequestsub(Request $request)
@@ -132,14 +136,41 @@ class UserController extends Controller
            ],[ 
                'shop_name.unique' => 'This shop name has already been taken.'
             ]);
+            
         $user = Auth::user();
         $package = $user->subscribes()->where('status',1)->orderBy('id','desc')->first();
         $subs = Subscription::findOrFail($request->subs_id);
+        $status=2;
+        $method="Blance";
+
+        if($subs->price==0){
+            $method="Free";
+            $status=1;
+        }
+        else if($request->method==0){
+            if($subs->price>auth()->user()->current_balance){
+ 
+                return redirect()->back()->withErrors(["msg"=>"insufficient balance"]);
+            }
+            else{
+                $status=1;
+                
+                $user->current_balance-=$subs->price;
+                $user->is_vendor = 2;
+               $user->save();
+               
+            
+            }
+        }
+        else{
+        $method=PaymentGateway::find($request->method)->title;
+
+        }
         $settings = Generalsetting::findOrFail(1);
                     $today = Carbon::now()->format('Y-m-d');
                     $input = $request->all();  
 
-                    $user->is_vendor = 2;
+                    
                     $user->subdistrict_id = $request->subdistrict_id;
                     $user->district_id = $request->district_id;
                     if($request->district_id){
@@ -158,8 +189,8 @@ class UserController extends Controller
                     $sub->days = $subs->days;
                     $sub->allowed_products = $subs->allowed_products;
                     $sub->details = $subs->details;
-                    $sub->method = 'Free';
-                    $sub->status = 1;
+                    $sub->method = $method;
+                    $sub->status = $status;
                     $sub->save();
                     if($settings->is_smtp == 1)
                     {
@@ -180,7 +211,30 @@ class UserController extends Controller
                     $headers = "From: ".$settings->from_name."<".$settings->from_email.">";
                     mail($user->email,'Your Vendor Account Activated','Your Vendor Account Activated Successfully. Please Login to your account and build your own shop.',$headers);
                     }
-
+                    if($status==1){
+                        Transaction::create([
+                            "amount"=>$subs->price,
+                            "type"=>"subscription",
+                            "sub_id"=>$sub->id,
+                            "collected"=>1
+                        ]);
+                    }
+                    else if($status==2){
+                        if($request->verification)
+                        {
+                            for($i=0;$i<count(array_keys($request->verification));$i++){
+                                if($request->verification[array_keys($request->verification)[$i]])
+                                {
+                                    UserSubscriptionPaymentVerification::create([
+                                        "user_subscription_id"=>$sub->id,
+                                        "payment_verification_id"=>array_keys($request->verification)[$i],
+                                        "value"=>$request->verification[array_keys($request->verification)[$i]]
+                                    ]);
+                                }
+                            }
+                        }
+                        return redirect()->route('user-dashboard')->with('success','Subcription will be active after payment verification');
+                    }
                     return redirect()->route('user-dashboard')->with('success','Vendor Account Activated Successfully');
 
     }

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Boost;
 use App\Models\Generalsetting;
+use App\Models\Transaction;
 use App\TopAd;
 use Illuminate\Support\Facades\Input;
 use Validator;
@@ -477,9 +478,24 @@ class ProductController extends Controller
     public function boostPaidStatus($id1,$id2)
     {
         $boost=Boost::findOrFail($id1);
-
+        if($id2==1&&$boost->paid==0){
+            Transaction::create([
+                "amount"=>$boost->boostCategory->price,
+                "type"=>"Product Boosting",
+                "boost_id"=>$boost->id,
+                "collected"=>1
+            ]);
+        }
+        if($id2==0&&$boost->paid==1){
+            $t=Transaction::where('boost_id','=',$boost->id)->first();
+            if($t){
+                $t->delete();
+            }
+            
+        }
         $boost->paid = $id2;
         $boost->update();
+
          
     }
 
@@ -549,9 +565,25 @@ class ProductController extends Controller
     public function topPaidStatus($id1,$id2)
     {
         $boost=TopAd::findOrFail($id1);
-
+        if($id2==1&&$boost->paid==0){
+            Transaction::create([
+                "amount"=>$boost->topAdCategory->price,
+                "type"=>"Product Top Ad",
+                "top_ad_id"=>$boost->id,
+                "collected"=>1
+            ]);
+        }
+        if($id2==0&&$boost->paid==1){
+            $t=Transaction::where('top_ad_id','=',$boost->id)->first();
+            if($t){
+                $t->delete();
+            }
+            
+        }
         $boost->paid = $id2;
         $boost->update();
+        
+        
          
     }
 

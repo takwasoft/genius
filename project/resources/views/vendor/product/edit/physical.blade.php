@@ -4,9 +4,122 @@
 <link href="{{asset('assets/vendor/css/product.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin/css/jquery.Jcrop.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin/css/Jcrop-style.css')}}" rel="stylesheet"/>
+<style> 
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+ 
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #3e8e41;
+}
 
+#myInput {
+  box-sizing: border-box;
+  background-image: url('../assets/images/searchicon.png');
+  background-position: 14px 9px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  padding: 7px 20px 7px 45px;
+  border: 1px solid #ddd;
+  border-radius:4px;
+}
+#all_sub_category i{
+     padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    margin-top: -2px;
+}
+
+.all_sub_category_btn{
+    border: 1px solid #ddd;
+    margin-top: -4px;
+    margin-left: -5px;
+}
+#myInput:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 100%;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 1;
+
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 9px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {    background: rgba(0,152,119,.05);
+    color: #149777!important;}
+
+.show {display: block;}
+
+	.sub-cate-item{
+    top: 0%; 
+    position: absolute;
+    left: 100%;  
+    width: 90%; 
+    margin-left: 5px;
+    display: none;
+} 
+.close span {
+    font-size: 27px!important;
+}
+.main-cate-item li:hover .sub-cate-item{
+    display: block;
+}
+
+.categories-list-division li:hover .sub-cate-item-division{
+    display: block;
+}
+.model-item li {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: .7rem 0 .7rem .80rem;
+}
+.model-item li li {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: .6rem .5rem;
+}
+.model-item li:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+.model-item li:first-child {
+    border-top: none;
+}
+.model-item1 li:first-child {
+    border-top: 1px solid rgba(0, 0, 0, .125);
+}
+.model-item ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+	padding: 0;
+    list-style: none;
+}
+.model-item li a {
+    color: #0074ba;
+}
+.model-item li ul li a {
+    color: #0074ba!important;
+}
+</style>
 @endsection 
-@section('content')
+@section('content') 
 
 						<div class="content-area">
 							<div class="mr-breadcrumb">
@@ -94,69 +207,55 @@
 
 
 						                        </div>
+												<input value="{{$data->category_id}}" id="category_id" name="category_id" type="hidden">
+												<input value="{{$data->subcategory_id}}" id="subcategory_id" name="subcategory_id" type="hidden">
+												<input value="{{$data->division_id}}" id="division_id" name="division_id" type="hidden">
+												<input value="{{$data->district_id}}" id="district_id" name="district_id" type="hidden">
+												<input value="{{$data->subdistrict_id}}" id="subdistrict_id" name="subdistrict_id" type="hidden">
 
-												<div class="row">
+<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang637 }}*</h4>
+																<h4 class="heading">Brand</h4>
 														</div>
 													</div>
 													<div class="col-lg-7">
-															<select id="cat" name="category_id" required="">
-																	<option>{{ $langg->lang691 }}</option>
-
-                                              @foreach($cats as $cat)
-                                                  <option data-href="{{ route('vendor-subcat-load',$cat->id) }}" value="{{$cat->id}}" {{$cat->id == $data->category_id ? "selected":""}} >{{$cat->name}}</option>
-                                              @endforeach
-						                                     </select>
+															<select  name="brand_id" >
+																	<option value="">Select Brand</option>
+                                  @foreach($brands as $brand)
+                                  <option 
+								  @if($data->brand_id==$brand->id)
+										selected
+								  @endif
+								    value="{{ $brand->id }}">{{$brand->name}}</option>
+                                  @endforeach
+                             </select>
 													</div>
 												</div>
 
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang638 }}*</h4>
+																<h4 class="heading">Area</h4>
 														</div>
 													</div>
 													<div class="col-lg-7">
-															<select id="subcat" name="subcategory_id">
-																<option value="">{{ $langg->lang639 }}</option>
-	                                                  @if($data->subcategory_id == null)
-	                                                  @foreach($data->category->subs as $sub)
-	                                                  <option data-href="{{ route('vendor-childcat-load',$sub->id) }}" value="{{$sub->id}}" >{{$sub->name}}</option>
-	                                                  @endforeach
-	                                                  @else
-	                                                  @foreach($data->category->subs as $sub)
-	                                                  <option data-href="{{ route('vendor-childcat-load',$sub->id) }}" value="{{$sub->id}}" {{$sub->id == $data->subcategory_id ? "selected":""}} >{{$sub->name}}</option>
-	                                                  @endforeach
-	                                                  @endif
-
-
-															</select>
+															<div data-target="#my-modal" data-toggle="modal">
+															<span id="area_name">Choose Area</span>
+															
+															</div>
 													</div>
 												</div>
-
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang640 }}*</h4>
+																<h4 class="heading">Category</h4>
 														</div>
-													</div>
+													</div> 
 													<div class="col-lg-7">
-															<select id="childcat" name="childcategory_id" {{$data->subcategory_id == null ? "disabled":""}}>
-                                                  				<option value="">{{ $langg->lang641 }}</option>
-	                                                  @if($data->subcategory_id != null)
-	                                                  @if($data->childcategory_id == null)
-	                                                  @foreach($data->subcategory->childs as $child)
-	                                                  <option value="{{$child->id}}" >{{$child->name}}</option>
-	                                                  @endforeach
-	                                                  @else
-	                                                  @foreach($data->subcategory->childs as $child)
-	                                                  <option value="{{$child->id}} " {{$child->id == $data->childcategory_id ? "selected":""}}>{{$child->name}}</option>
-	                                                  @endforeach
-	                                                  @endif
-	                                                  @endif
-															</select>
+															<div data-target="#my-modal2" data-toggle="modal">
+															<span id="cat_name">Choose Category</span>
+															</div>
 													</div>
 												</div>
 
@@ -999,6 +1098,266 @@
 				</div>
 			</div>
 		</div>
+<div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
+                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
+                        <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
+                        
+                    </div>
+
+					
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item main-cate-item ">
+                            <ul>
+                                @foreach($districts as $district)
+
+                                    <li>
+                                    <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
+                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
+                                        <ul class="sub-menu1 text-muted">
+                                         <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li> 
+										 @php($i=1) 
+                                             @foreach($district->subdistricts as $subdistrict)
+                                                @if($i<6)
+                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
+                                                @elseif($i==6)
+                                                    <div class="dropdown mt-4" id="all_sub_category">
+  
+    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
+    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    </i></button>
+  <div id="myDropdown" class="dropdown-content ">
+                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                
+                                                @else
+                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                @endif
+                                                @if($i>=6&&$i==$district->subdistricts->count())
+                                                   
+                                                    </div>
+                                                    </div>
+                                                    @endif
+                                                   @php($i++) 
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </div>
+
+                                </li>
+                                @endforeach
+                              
+                            </ul>
+                        </div>
+
+                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <div class=" categories-list model-item categories-list-division">
+                            <ul>
+                               @foreach($divisions as $division) 
+                                <li>
+                                    <a
+									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
+									
+									 href="#" class="clearfix">
+                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <ul class="sub-menu1 text-muted">
+                                         <li><a class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                             @php($i=1)
+                                            @foreach($division->districts as $district)
+                                                @if($i<6)
+
+                                                <li><a class="text-muted" href="#"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
+												>{{$district->name}}</a></li>
+@elseif($i==6)
+                                                    <div class="dropdown mt-4" id="all_sub_category">
+   
+    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+    </i></button>
+  <div id="myDropdownDiv" class="dropdown-content ">
+                                                    <a class="text-muted" href="#"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
+												>{{$district->name}}</a>
+                                                
+                                                @else
+                                                    <a class="text-muted" href="#"
+												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
+												>{{$district->name}}</a>
+                                                @endif
+                                                @if($i>=6&&$i==$district->subdistricts->count())
+                                                   
+                                                    </div>
+                                                    </div>
+                                                    @endif
+                                                   @php($i++) 
+
+                                            @endforeach
+                                            
+                                        </ul>
+                                    </div>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+  if($(".dist.fa-angle-up").length>0)
+  {
+    $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
+  }
+  else{
+    $(".fa-angle-down.dist").attr("class","dist fas fa-angle-up")
+  }
+}
+
+function filterFunction() {
+  if(document.getElementById("myDropdown").classList.length==1){
+    document.getElementById("myDropdown").classList.add("show")
+  }
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+function myFunctionDiv() {
+  document.getElementById("myDropdownDiv").classList.toggle("show");
+  if($(".fa-angle-up.div").length>0)
+  {
+    $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
+  }
+  else{
+    $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
+  }
+}
+function filterFunctionDiv() {
+  if(document.getElementById("myDropdownDiv").classList.length==1){
+    document.getElementById("myDropdownDiv").classList.add("show")
+  }
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInputDiv");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdownDiv");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+		if(cm){
+
+		$(cm).modal('toggle');
+		}
+		toastr.success(hval+" selected");
+		document.getElementById(hid).innerHTML=hval;
+		console.log(r)
+		r.forEach(ri=>{
+			document.getElementById(ri).value="";
+		})
+		document.getElementById(sid).value=svalue;
+		$(cls2).hide();
+		id="#"+cls+id;
+		cls="."+cls;
+		$(cls).hide();
+		$(id).show();
+	}
+</script>
+						{{-- End Area model --}}
+
+							{{-- Start category modal  --}}
+<div class="modal fade" id="my-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content" style="overflow: scroll;height:90vh">
+
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-2">একটি শ্রেণী নির্বাচন করুন:</h6>
+                        <a href="" class="mb-3" style="color: #0074ba;display:inline-block">সকল শ্রেণী</a>
+                        
+                    </div>
+                    <div class="col-md-6">
+                        <h6>একটি উপ-শ্রেণী নির্বাচন করুন:</h6>
+                        <a href="#" class="mt-4" style="color: #0074ba">সকল ইলেকট্রনিক্স</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="categories-list model-item main-cate-item model-item1">
+                            <ul> 
+							@foreach($cats as $cat)
+                                <li>
+                                    <a onclick="showItem('sub-cat',{{$cat->id}},'.aos','category_id',{{$cat->id}},['subcategory_id'],'cat_name','{{$cat->name}}')" href="#" class="clearfix">
+                                        <span class="float-left">{{$cat->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-cat{{$cat->id}}" class="categories-list sub-cat sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+										@foreach($cat->subs as $sub)
+                                            <li><a
+											onclick="showItem('','','.aos','subcategory_id',{{$sub->id}},[],'cat_name','{{$sub->name}}','#my-modal2')"
+											 class="text-muted" href="#">{{$sub->name}}</a></li>
+											{{--  @foreach($sub->childs as $child)
+                                            <li><a class="text-muted" href="http://google.com">{{$child->name}}</a></li>
+											
+										@endforeach  --}}
+										@endforeach
+                                        </ul>
+                                    </div>
+                                </li>
+								@endforeach
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+						{{-- End Category model --}}
 
 @endsection
 

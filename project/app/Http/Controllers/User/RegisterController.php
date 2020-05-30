@@ -72,7 +72,8 @@ class RegisterController extends Controller
 			session(['rand'=>$rand]);
 			$url = "http://66.45.237.70/api.php";
 		$number=$request->phone;
-		$text = "Your Sellbazar Verification Code is $rand ";
+		$title=$gs->title;
+		$text = "Your $title  Verification Code is $rand ";
 		
 		$data= array(
 		'username'=>"01790581234",

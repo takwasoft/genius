@@ -166,7 +166,9 @@ class CatalogController extends Controller
                                 return $query->where('sub_district_id', $sub_district_id);
                             })
                                   ->when($search, function ($query, $search) {
-                                      return $query->where('name','like','%'.$search.'%');
+                                      return $query->where('name','like','%'.$search.'%')->orWhere('deal_code','like','%'.$search.'%')->orWhereHas('user', function($q) use($search) {
+                                        $q->where('shop_name','like','%'.$search.'%')->orWhere('phone','like','%'.$search.'%');
+                                    });
                                   })
                                   ->when($minprice, function($query, $minprice) {
                                     return $query->where('price', '>=', $minprice);
@@ -269,9 +271,9 @@ class CatalogController extends Controller
       }
       $data['feature_products']= Product::where('status','=',1)->whereFeatured(1)->orderBy('id','desc')->take(8)->get();
       $data['divisions']=Division::all();
-      $data['districts']=District::orderBy('dis_serial')->limit(5)->get();
+      $data['districts']=District::orderBy('dis_serial')->limit(8)->get();
 
-      return view('front.category', $data); 
+      return view('front.category', $data);  
     } 
 
 

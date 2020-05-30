@@ -24,7 +24,7 @@ class Category extends Model
     }
     public function products()
     {
-        return $this->hasMany('App\Models\Product')->orderBy('id','desc');;
+        return $this->hasMany('App\Models\Product')->orderBy('boost','desc')->orderBy('id','desc');
     }
  
     public function setSlugAttribute($value)

@@ -371,7 +371,7 @@
                         <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
                     </div>
                     <div class="col-md-6">
-                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
                         
                     </div>

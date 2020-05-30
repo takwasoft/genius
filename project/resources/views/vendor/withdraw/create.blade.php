@@ -33,7 +33,7 @@
                         <form id="geniusform" class="form-horizontal" action="{{route('vendor-wt-store')}}" method="POST" enctype="multipart/form-data">
 
                             {{ csrf_field() }}
-
+ 
 
                             <div class="item form-group">
                                 <label class="control-label col-sm-4" for="name"><b>{{ $langg->lang498 }} : {{ App\Models\Product::vendorConvertPrice(Auth::user()->current_balance) }}</b></label>

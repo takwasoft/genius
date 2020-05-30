@@ -375,66 +375,24 @@
                     <div class="col-lg-12">
                         <div class="info-big-box">
                             <div class="row">
+							@foreach($services as $service)
                                 <div class="col-6 col-xl-3 p-0">
                                     <div class="info-box">
                                         <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288944s1.png">
+                                            <img src="{{$service->photo ?url('assets/images/services/'.$service->photo):url('assets/images/noimage.png')}}"> 
                                         </div>
                                         <div class="info">
                                             <div class="details text-dark">
-                                                <h4 class="title">FREE SHIPPING</h4>
+                                                <h4 class="title">{{$service->title}}</h4>
                                                 <p class="text">
-                                                    Free Shipping All Order
+                                                    {{$service->details}}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 col-xl-3 p-0">
-                                    <div class="info-box">
-                                        <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288950s2.png">
-                                        </div>
-                                        <div class="info">
-                                            <div class="details">
-                                                <h4 class="title">PAYMENT METHOD</h4>
-                                                <p class="text">
-                                                    Secure Payment
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-xl-3 p-0">
-                                    <div class="info-box">
-                                        <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288955s3.png">
-                                        </div>
-                                        <div class="info">
-                                            <div class="details">
-                                                <h4 class="title">30 DAY RETURNS</h4>
-                                                <p class="text">
-                                                    30-Day Return Policy
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-xl-3 p-0">
-                                    <div class="info-box">
-                                        <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288959s4.png">
-                                        </div>
-                                        <div class="info">
-                                            <div class="details">
-                                                <h4 class="title">HELP CENTER</h4>
-                                                <p class="text">
-                                                    24/7 Support System
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+								@endforeach
                             </div>
                         </div>
                     </div>
@@ -467,12 +425,12 @@
 						<h3>New Products</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
-						<p><a href="{{route('front.new')}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						<p><a href="{{route('front.category')}}"">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div>
 				</div>
 		</div>
-
+ 
 		<div class="">
 			<div class="product-slide">
 
@@ -523,7 +481,7 @@
 		</div>
 	</div>
 	@if($j%2==0)
-	<section class="banner-section">
+	{{--  <section class="banner-section">
 		<div class="container">
 								<div class="row">
 												<div class="col-lg-6 d-none d-md-block" style="padding:10px">
@@ -542,7 +500,7 @@
 						</div>
 										</div>
 						</div>
-	</section>
+	</section>  --}}
 	@endif
 	@endforeach
 
@@ -560,51 +518,54 @@
 		{{--  about section  --}}
 
 		
-        <div id="about" class="mt-5 d-none d-sm-block">
+        <div id="about" class="mt-5 d-none d-sm-block"> 
+			
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <iframe width="540" height="315"
-							src="{{$gs->home_youtube}}">
+							src="{{$youtube}}">
 						</iframe>
 
                     </div>
                     <div class="col-md-6">
+						@if($about)
                         <h2 style="font-size:30px">{!!$about->title!!} </h2>
                         <p style="font-size:15px;line-height:1.4">
                             {!!$about->details!!}
-                        </p>
-                        <button class="btn btn-success" type="button"style="font-size:13px" > Click Here</button>
+						</p>
+						@endif
+                       
                     </div>
                 </div>
             </div>
-
+		
             <div class="container">
                 <div class="row padding mt-4">
+					@if($buy)
                     <div class="col-md-6  d-none d-md-block">
                         <div class="col-sm-12">
-                            <div class="icon-wrapper">
-                                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-center"> HOW TO BUY ? </h3>
+                           
+                            <h3 class="text-center"> {!!$buy->title!!} </h3>
                             <p style="font-size:15px;line-height:1.4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                                et tortor quis massa rutrum eleifend non nec dui. Etiam egestas gravida lorem at varius. Suspendisse et tortor quis massa rutrum eleifend non nec dui.
+                                {!!$buy->details!!}
                             </p>
                         </div>
-                    </div>
+					</div>
+					@endif
+					@if($sell)
                     <div class="col-md-6  d-none d-md-block">
                         <div class="col-sm-12">
-                            <div class="icon-wrapper">
-                                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-center"> HOW TO BUY ? </h3>
+                           
+                            <h3 class="text-center">                                 {!!$sell->title!!}
+							 </h3>
                             <p style="font-size:15px;line-height:1.4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                                et tortor quis massa rutrum eleifend non nec dui. Etiam egestas gravida lorem at varius. Suspendisse et tortor quis massa rutrum eleifend non nec dui.
+                                                                {!!$sell->details!!}
+
                             </p>
                         </div>
-                    </div>
+					</div>
+					@endif
                     <div class="clearfix"></div>
                     <hr class="bottom-hr" />
                 </div>

@@ -49,11 +49,11 @@
                                                 <td>{{$withdraw->paymentGateway->title}}</td>
                                             </tr>
                                             <tr>
-                                            <th>Additional Fields</th>
+                                            <th>Payment Verifications</th>
                                             </tr>
-                                            @foreach($withdraw->additionalFields as $field)
+                                            @foreach($withdraw->paymentVerifications as $field)
                                                 <tr>
-                                                <th>{{$field->additionalField->title}}</th>
+                                                <th>{{$field->paymentVerification->title}}</th>
                                                 <td>{{$field->value}}</td>
                                             </tr>
                                             @endforeach

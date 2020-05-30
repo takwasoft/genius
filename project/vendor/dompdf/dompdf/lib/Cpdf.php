@@ -3101,21 +3101,21 @@ EOT;
      */
     function setStrokeColor($color, $force = false)
     {
-        $new_color = array($color[0], $color[1], $color[2], isset($color[3]) ? $color[3] : null);
+        // $new_color = array($color[0], $color[1], $color[2], isset($color[3]) ? $color[3] : null);
 
-        if (!$force && $this->currentStrokeColor == $new_color) {
-            return;
-        }
+        // if (!$force && $this->currentStrokeColor == $new_color) {
+        //     return;
+        // }
 
-        if (isset($new_color[3])) {
-            $this->currentStrokeColor = $new_color;
-            $this->addContent(vsprintf("\n%.3F %.3F %.3F %.3F K", $this->currentStrokeColor));
-        } else {
-            if (isset($new_color[2])) {
-                $this->currentStrokeColor = $new_color;
-                $this->addContent(vsprintf("\n%.3F %.3F %.3F RG", $this->currentStrokeColor));
-            }
-        }
+        // if (isset($new_color[3])) {
+        //     $this->currentStrokeColor = $new_color;
+        //     $this->addContent(vsprintf("\n%.3F %.3F %.3F %.3F K", $this->currentStrokeColor));
+        // } else {
+        //     if (isset($new_color[2])) {
+        //         $this->currentStrokeColor = $new_color;
+        //         $this->addContent(vsprintf("\n%.3F %.3F %.3F RG", $this->currentStrokeColor));
+        //     }
+        // }
     }
 
     /**

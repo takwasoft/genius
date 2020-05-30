@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\UserSubscriptionPaymentVerification;
 use Illuminate\Database\Eloquent\Model;
 
 class UserSubscription extends Model
@@ -16,4 +17,7 @@ class UserSubscription extends Model
     {
         return $this->belongsTo('App\Models\Subscription');
     }
+    public function userSubscriptionPaymentVerifications(){
+        return $this->hasMany(UserSubscriptionPaymentVerification::class); 
+        }
 }

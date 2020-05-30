@@ -14,6 +14,7 @@ use App\Models\Generalsetting;
 use App\Models\Order;
 use App\Models\Pagesetting;
 use App\Models\Product;
+use App\Models\Service;
 use App\Models\Subscriber; 
 use App\Models\User;
 use Carbon\Carbon;
@@ -121,16 +122,19 @@ class FrontendController extends Controller
 	public function index(Request $request)
 	{
         $homeNotice=Pagesetting::first()->notice;
-        
+        $services = Service::where('user_id','=',0)->orderBy('id','desc')->get();
         $about =  DB::table('pages')->where('slug','about-us')->first();
-        
+        $buy =  DB::table('pages')->where('slug','buy')->first();
+        $sell =  DB::table('pages')->where('slug','sell')->first();
+
+        $gs = Generalsetting::findOrFail(1);
         $this->code_image();
          if(!empty($request->reff))
          {
             $affilate_user = User::where('affilate_code','=',$request->reff)->first();
             if(!empty($affilate_user))
             {
-                $gs = Generalsetting::findOrFail(1);
+                
                 if($gs->is_affilate == 1)
                 {
                     Session::put('affilate', $affilate_user->id);
@@ -149,7 +153,19 @@ class FrontendController extends Controller
         // dd(Session::get('cart'));
         $brandCategories=BrandCategory::where('show_in_home',1)->get();
         $weekBrands=Brand::where('brand_week',1)->get();
-	    return view('front.index',compact('about','homeNotice','feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
+         $youtube=$gs->home_youtube;
+         $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+     $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+     $youtube_id="";
+    if (preg_match($longUrlRegex, $youtube, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+
+    if (preg_match($shortUrlRegex, $youtube, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+    $youtube='https://www.youtube.com/embed/' . $youtube_id ;
+	    return view('front.index',compact('buy','sell','youtube','services','about','homeNotice','feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));   
 	}
     public function product(){
     
@@ -359,8 +375,23 @@ class FrontendController extends Controller
         {
             return view('errors.404');
         }
-        
-        return view('front.page',compact('page'));
+        $gs = Generalsetting::findOrFail(1);
+        $about =  DB::table('pages')->where('slug','about-us')->first();
+        $buy =  DB::table('pages')->where('slug','buy')->first();
+        $sell =  DB::table('pages')->where('slug','sell')->first();
+        $youtube=$gs->home_youtube;
+         $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+     $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+     $youtube_id="";
+    if (preg_match($longUrlRegex, $youtube, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+
+    if (preg_match($shortUrlRegex, $youtube, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+    $youtube='https://www.youtube.com/embed/' . $youtube_id ;
+        return view('front.page',compact('page','about','buy','sell','youtube'));
     }
 // -------------------------------- PAGE SECTION ENDS----------------------------------------
 

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Generalsetting;
 use App\Models\Withdraw;
 use App\Models\Currency;
+use App\Models\Transaction;
 use App\Models\UserSubscription;
 use Illuminate\Support\Facades\Input;
 use Validator;
@@ -83,6 +84,34 @@ class VendorController extends Controller
 
 
     }
+    public function subsdatatablesPend()
+    {
+         $datas = UserSubscription::where('status','=',2)->orderBy('id','desc')->get();
+         //--- Integrating This Collection Into Datatables
+         return Datatables::of($datas)
+                            ->addColumn('name', function(UserSubscription $data) {
+                                $name = isset($data->user->owner_name) ? $data->user->owner_name : 'Removed';
+                                return  $name;
+                            })
+
+                            ->editColumn('txnid', function(UserSubscription $data) {
+                                $txnid = $data->txnid == null ? 'Free' : $data->txnid;
+                                return $txnid;
+                            }) 
+                            ->editColumn('created_at', function(UserSubscription $data) {
+                                $date = $data->created_at->diffForHumans();
+                                return $date;
+                            }) 
+                            ->addColumn('action', function(UserSubscription $data) {
+                                return '<div class="action-list"><a data-href="' . route('admin-vendor-sub',$data->id) . '" class="view details-width" data-toggle="modal" data-target="#modal1"> <i class="fas fa-eye"></i>Details</a>
+                                <a href="' . route('admin-activate-sub',$data->id) . '" class="view details-width" > <i class="fas fa-eye"></i>Activate</a>
+                                </div>';
+                            }) 
+                            ->rawColumns(['action'])
+                            ->toJson(); //--- Returning Json Data To Client Side
+
+
+    }
 
 
 	//*** GET Request
@@ -91,12 +120,61 @@ class VendorController extends Controller
 
         return view('admin.vendor.subscriptions');
     }
+    public function subsPend()
+    {
+
+        return view('admin.vendor.subscriptionsPend');
+    }
 
 	//*** GET Request
     public function sub($id)
     {
         $subs = UserSubscription::findOrFail($id);
+        
         return view('admin.vendor.subscription-details',compact('subs'));
+    }
+    public function subActivate($id)
+    {
+        $subs = UserSubscription::findOrFail($id);
+        $user= $subs->user;
+        $user->is_vendor = 2;
+        $user->save();
+        $subs->update([
+            "status"=>1
+        ]);
+
+
+        Transaction::create([
+            "amount"=>$subs->price,
+            "sub_id"=>$subs->id,
+            "type"=>"subscription",
+            "collected"=>1
+        ]);   
+
+        $gs = Generalsetting::findOrFail(1);
+            
+        $to = $user->email;
+        $subject = 'Vendor subscription activation';
+        $msg = "Dear ".$user->name." your vendor subscription has been activated successfully";
+        //Sending Email To Customer
+        if($gs->is_smtp == 1)
+        {
+        $data = [
+            'to' => $to,
+            'subject' => $subject,
+            'body' => $msg,
+        ];
+
+        $mailer = new GeniusMailer();
+        $mailer->sendCustomMail($data);
+        }
+        else
+        {
+        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
+        mail($to,$subject,$msg,$headers);
+        }
+
+        return redirect()->back();
     }
 
 	//*** GET Request
@@ -303,9 +381,15 @@ class VendorController extends Controller
         //*** GET Request   
         public function accept($id)
         {
-            $withdraw = Withdraw::findOrFail($id);
+            $withdraw = Withdraw::findOrFail($id); 
             $data['status'] = "completed";
             $withdraw->update($data);
+            Transaction::create([
+                "amount"=>$withdraw->amount,
+                "withdraw_id"=>$withdraw->id,
+                "type"=>"Vendor Withdraw",
+                "collected"=>0
+            ]);
             //--- Redirect Section     
             $msg = 'Withdraw Accepted Successfully.';
             return response()->json($msg);      

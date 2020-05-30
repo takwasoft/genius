@@ -26,7 +26,7 @@
 								<div class="col-lg-12">
 									<div class="mr-table allproduct">
 										@include('includes.admin.form-success') 
-									<form method="post" action="{{route('filter-vendor-withdraw')}}">
+									<form method="post" action="{{route('filter-vendor-withdraw')}}"> 
 									 {{ csrf_field() }}  
 										<center>
 										<b>From</b>
@@ -97,14 +97,14 @@
                                   <td>
 								    <ul class="list-group">
 									@foreach($withdraw->additionalFields as $field)
-                                                <li class="list-group-item">
-                                                <span>
-                                                    @if($field->additionalField)
-                                                    {{$field->additionalField->title}}
-                                                    @endif</span>
-                                                <span>{{$field->value}}</span>
-                                            </li>
-                                            @endforeach
+											<li class="list-group-item">
+											<span>
+												@if($field->additionalField)
+												{{$field->additionalField->title}}
+												@endif</span>
+											<span>{{$field->value}}</span>
+										</li>
+										@endforeach
 									</ul>
 								  </td>
                                     <td>{{$sign->sign}}{{ round($withdraw->amount * $sign->value , 2) }}</td>

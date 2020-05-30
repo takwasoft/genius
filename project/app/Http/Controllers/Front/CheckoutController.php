@@ -45,15 +45,50 @@ class CheckoutController extends Controller
         if($pay_id != 0) {
             $gateway = PaymentGateway::findOrFail($pay_id);
         }
+        $amount=0;
         $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();
         $verificationFields=PaymentVerification::where('payment_gateway_id','=',$gateway->id)->get();
        
         
         $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$gateway->id)->get();    
-        return view('load.payments',compact('extraCharges','curr','additionalFields','verificationFields'));
+        return view('load.payments',compact('amount','extraCharges','curr','additionalFields','verificationFields'));
+    }
+    public function loadsubpayments($slug1,$slug2){
+        $gs = Generalsetting::findOrFail(1);
+        if (Session::has('currency')) {
+            $curr = Currency::find(Session::get('currency'));
+        }
+        else {
+            $curr = Currency::where('is_default','=',1)->first();
+        }
+        $amount = $slug1;
+        $pay_id = $slug2;
+        $gateway = '';
+        if($pay_id != 0) {
+            $gateway = PaymentGateway::findOrFail($pay_id);
+        }
+        $additionalFields=AdditionalField::where('payment_gateway_id','=',$gateway->id)->get();
+        $verificationFields=PaymentVerification::where('payment_gateway_id','=',$gateway->id)->get();
+       
+        
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$gateway->id)->get(); 
+        $chrg=0;
+        foreach($extraCharges as $charge){
+            if($charge->fixed==1){
+                $chrg+=$charge->charge;
+            }
+            else{
+                $chrg+=$charge->charge*$amount*0.01;
+
+            }
+        }
+        $amount+=$chrg;
+        $amount=round($amount,0);
+        return view('load.payments',compact('amount','extraCharges','curr','additionalFields','verificationFields'));
     }
     public function loadpayment($slug1,$slug2)
     {
+
         $gs = Generalsetting::findOrFail(1);
         if (Session::has('currency')) {
             $curr = Currency::find(Session::get('currency'));
@@ -813,28 +848,35 @@ $validator = Validator::make($input, $rules, $messages);
                 $order['affilate_charge'] = $sub;
             }
         $order->save();
-        for($i=0;$i<count(array_keys($request->additional));$i++){
+        if($request->additional){
+            for($i=0;$i<count(array_keys($request->additional));$i++){
             
-            if($request->additional[array_keys($request->additional)[$i]]){
-                OrderAdditional::create([
-                    "order_id"=>$order->id,
-                    "additional_field_id"=>array_keys($request->additional)[$i],
-                    "value"=>$request->additional[array_keys($request->additional)[$i]]
-                ]);
+                if($request->additional[array_keys($request->additional)[$i]]){
+                    OrderAdditional::create([
+                        "order_id"=>$order->id,
+                        "additional_field_id"=>array_keys($request->additional)[$i],
+                        "value"=>$request->additional[array_keys($request->additional)[$i]]
+                    ]);
+                }
             }
         }
-        for($i=0;$i<count(array_keys($request->verification));$i++){
-            if($request->verification[array_keys($request->verification)[$i]])
-            {
-                OrderPaymentVerification::create([
-                    "order_id"=>$order->id,
-                    "payment_verification_id"=>array_keys($request->verification)[$i],
-                    "value"=>$request->verification[array_keys($request->verification)[$i]]
-                ]);
+        if($request->verification){
+            for($i=0;$i<count(array_keys($request->verification));$i++){
+                if($request->verification[array_keys($request->verification)[$i]])
+                {
+                    OrderPaymentVerification::create([
+                        "order_id"=>$order->id,
+                        "payment_verification_id"=>array_keys($request->verification)[$i],
+                        "value"=>$request->verification[array_keys($request->verification)[$i]]
+                    ]);
+                }
             }
         }
+        
         $total=$request->total;
+      
         $payment=PaymentGateway::where('title','=',$request->method)->first();
+
         $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$payment->id)->get(); 
         foreach($extraCharges as $extraCharge){
             if($total>=$extraCharge->from&&$total<=$extraCharge->to){

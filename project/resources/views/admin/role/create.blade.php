@@ -42,11 +42,44 @@
                             <input type="text" class="input-field" name="name" placeholder="{{ __('Name') }}" required="" value="">
                           </div>
                         </div>
-
+ 
                         <hr>
                         <h5 class="text-center">{{ __('Permissions') }}</h5>
                         <hr>
-
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Accounts') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="accounts" >
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Promotions') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="promotions">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Areas') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="areas" >
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Brands') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="brands">
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                        </div>
                         <div class="row justify-content-center">
                             <div class="col-lg-4 d-flex justify-content-between">
                               <label class="control-label">{{ __('Orders') }} *</label>

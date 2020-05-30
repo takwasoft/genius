@@ -182,8 +182,8 @@ Route::prefix('admin')->group(function() {
   Route::get('/users/ban/{id1}/{id2}', 'Admin\UserController@ban')->name('admin-user-ban');
   Route::get('/user/default/image', 'Admin\UserController@image')->name('admin-user-image');
 
-  // WITHDRAW SECTION
-  Route::get('/users/withdraws/datatables', 'Admin\UserController@withdrawdatatables')->name('admin-withdraw-datatables'); //JSON REQUEST
+  // WITHDRAW SECTION 
+  Route::get('/users/withdraws/datatables', 'Admin\UserController@withdrawdatatables')->name('admin-withdraw-datatables'); //JSON REQUEST 
   Route::get('/users/withdraws', 'Admin\UserController@withdraws')->name('admin-withdraw-index');
   Route::get('/user/withdraw/{id}/show', 'Admin\UserController@withdrawdetails')->name('admin-withdraw-show');
   Route::get('/users/withdraws/accept/{id}', 'Admin\UserController@accept')->name('admin-withdraw-accept');
@@ -220,7 +220,10 @@ Route::prefix('admin')->group(function() {
   
   Route::get('/vendors/withdraws', 'Admin\VendorController@withdraws')->name('admin-vendor-withdraw-index');
   Route::get('/vendors/withdraw/{id}/show', 'Admin\VendorController@withdrawdetails')->name('admin-vendor-withdraw-show');
- 
+  Route::get('/statements', 'StatementController@index')->name('admin-statement-index');
+  Route::post('/filter-statements', 'StatementController@filter')->name('admin-statement-filter');
+  Route::get('/statements/datatable', 'StatementController@datatable')->name('admin-statement-datatable');
+
   Route::get('/vendors/withdraw/{id}/print', 'Admin\VendorController@withdrawPrint')->name('admin-vendor-withdraw-print'); 
   Route::get('/vendors/withdraws/accept/{id}', 'Admin\VendorController@accept')->name('admin-vendor-withdraw-accept');
   Route::get('/vendors/withdraws/reject/{id}', 'Admin\VendorController@reject')->name('admin-vendor-withdraw-reject'); 
@@ -273,8 +276,12 @@ Route::prefix('admin')->group(function() {
 
   Route::get('/vendors/subs/datatables', 'Admin\VendorController@subsdatatables')->name('admin-vendor-subs-datatables');
   Route::get('/vendors/subs', 'Admin\VendorController@subs')->name('admin-vendor-subs');
-  Route::get('/vendors/sub/{id}', 'Admin\VendorController@sub')->name('admin-vendor-sub');
 
+  Route::get('/vendors/subs/datatables/pend', 'Admin\VendorController@subsdatatablesPend')->name('admin-pend-subs-datatables');
+  Route::get('/vendors/subs/pend', 'Admin\VendorController@subsPend')->name('admin-pend-subs');
+
+  Route::get('/vendors/sub/{id}', 'Admin\VendorController@sub')->name('admin-vendor-sub');
+  Route::get('/activate/sub/{id}', 'Admin\VendorController@subActivate')->name('admin-activate-sub');
   });
 
   //------------ ADMIN SUBSCRIPTION SECTION ENDS ------------
@@ -1011,7 +1018,7 @@ Route::prefix('user')->group(function() {
 // User Subscription
 
   Route::get('/package', 'User\UserController@package')->name('user-package');
-  Route::get('/subscription/{id}', 'User\UserController@vendorrequest')->name('user-vendor-request');
+  Route::get('/subscription/{id}', 'User\UserController@vendorrequest')->name('user-vendor-request'); 
   Route::post('/vendor-request', 'User\UserController@vendorrequestsub')->name('user-vendor-request-submit');
 
   Route::post('/paypal/submit', 'User\PaypalController@store')->name('user.paypal.submit');
@@ -1071,8 +1078,10 @@ Route::prefix('user')->group(function() {
 
   Route::get('/affilate/code', 'User\WithdrawController@affilate_code')->name('user-affilate-code');
   Route::get('/affilate/withdraw', 'User\WithdrawController@index')->name('user-wwt-index');
+  Route::post('/filter-afwithdraw', 'User\WithdrawController@filter')->name('filter-af-withdraw');
+
   Route::get('/affilate/withdraw/create', 'User\WithdrawController@create')->name('user-wwt-create');
-  Route::post('/affilate/withdraw/create', 'User\WithdrawController@store')->name('user-wwt-store');
+  Route::post('/affilate/withdraw/create', 'User\WithdrawController@store')->name('user-wwt-store'); 
 
 // User Favorite Seller
 
@@ -1174,7 +1183,6 @@ Route::prefix('vendor')->group(function() {
   Route::get('/products/catalogs', 'Vendor\ProductController@catalogs')->name('admin-vendor-catalog-index');
 
   // CREATE SECTION
-
   // EDIT SECTION
   Route::get('/products/edit/{id}', 'Vendor\ProductController@edit')->name('vendor-prod-edit');
   Route::get('/products/boost/{product}', 'Vendor\ProductController@boostProduct')->name('vendor-prod-boost');
@@ -1265,6 +1273,7 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::get('/withdraw/datatables', 'Vendor\WithdrawController@datatables')->name('vendor-wt-datatables');
   Route::get('/withdraw', 'Vendor\WithdrawController@index')->name('vendor-wt-index');
   Route::post('/filter-withdraw', 'Vendor\WithdrawController@filter')->name('filter-vendor-withdraw');
+
 
   Route::get('/vendor-get-additional', 'Vendor\WithdrawController@getAdditional')->name('vendor-get-additional'); 
   Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create');  
@@ -1393,7 +1402,9 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   // CHECKOUT SECTION
   Route::get('/checkout/','Front\CheckoutController@checkout')->name('front.checkout');
   Route::get('/checkout/payment/{slug1}/{slug2}','Front\CheckoutController@loadpayment')->name('front.load.payment');
+  
   Route::get('/checkout/payments/{slug1}/{slug2}','Front\CheckoutController@loadpayments')->name('front.load.payments');  
+  Route::get('/checkout/subs/{slug1}/{slug2}','Front\CheckoutController@loadsubpayments')->name('front.sub.payments'); 
   Route::get('/order/track/{id}','Front\FrontendController@trackload')->name('front.track.search');
   Route::get('/checkout/payment/return', 'Front\PaymentController@payreturn')->name('payment.return');
   Route::get('/checkout/payment/cancle', 'Front\PaymentController@paycancle')->name('payment.cancle');
@@ -1473,6 +1484,7 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   Route::resource('/admin/districts', 'DistrictController');
   
   Route::resource('/admin/divisions', 'DivisionController');
+  Route::resource('/admin/adminwithdraws', 'AdminWithdrawController');
   Route::resource('/admin/boostcategories', 'BoostCategoryController');
   Route::resource('/admin/topadcategories', 'TopAdCategoryController');
 

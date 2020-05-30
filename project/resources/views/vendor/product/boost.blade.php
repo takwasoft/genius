@@ -23,7 +23,12 @@
 											</ul>
 									</div>
 								</div>
-							</div>
+							</div> 
+                            @foreach ($errors->all() as $error)
+
+  <div class="alert alert-danger">{{ $error }}</div>
+
+@endforeach
                              <table class='table'>
                                     <tr>
                                         <th>Product</th>
@@ -65,7 +70,7 @@
                                                 <option value="0">From Balance</option>
                                             @foreach($gateways as $gateway)
                                                 <option value="{{$gateway->id}}">{{$gateway->title}}</option>
-                                            @endforeach
+                                            @endforeach 
                                         </select>
                                 </div>
                             </div>

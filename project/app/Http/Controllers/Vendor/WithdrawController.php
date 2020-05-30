@@ -11,7 +11,9 @@ use App\Models\Currency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\PaymentGateway;
+use App\PaymentVerification;
 use App\WithdrawAdditional;
+use App\WithdrawPaymentVerification;
 
 class WithdrawController extends Controller
 {
@@ -26,7 +28,7 @@ class WithdrawController extends Controller
         $withdraws = Withdraw::where('user_id','=',Auth::guard('web')->user()->id)->where('type','=','vendor')->orderBy('id','desc')->get();
         $sign = Currency::where('is_default','=',1)->first();  
         $gateways=PaymentGateway::all();      
-        $status="";
+        $status=""; 
         return view('vendor.withdraw.index',compact('withdraws','sign','gateways','status')); 
     }
 	public function filter(Request $request)
@@ -61,14 +63,14 @@ class WithdrawController extends Controller
         $gateways=PaymentGateway::all();      
         return view('vendor.withdraw.index',compact('withdraws','sign','gateways','from','to','method','status')); 
     }
-    public function getAdditional(){
+    public function getAdditional(){ 
         $fields=AdditionalField::where('payment_gateway_id','=',request()->id)->get();
         return view('vendor.withdraw.additional' ,compact('fields'));
     }
     public function create()
     { 
         $sign = Currency::where('is_default','=',1)->first();
-        $gateways=PaymentGateway::all(); 
+        $gateways=PaymentGateway::all();  
         return view('vendor.withdraw.create' ,compact('sign','gateways'));
     }
 
@@ -76,11 +78,11 @@ class WithdrawController extends Controller
     public function store(Request $request)
     {
 
-         
+          
         $from = User::findOrFail(Auth::guard('web')->user()->id);
 
         $withdrawcharge = Generalsetting::findOrFail(1);
-        $charge = $withdrawcharge->withdraw_fee;
+        $charge = $withdrawcharge->withdraw_charge;
 
         if($request->amount > 0){
 
@@ -105,16 +107,19 @@ class WithdrawController extends Controller
                 $newwithdraw['swift'] = $request->swift;
                 $newwithdraw['reference'] = $request->reference;
                 $newwithdraw['amount'] = $finalamount;
-                $newwithdraw['fee'] = $fee;
+                $newwithdraw['fee'] = $amount*$charge/100;
                 $newwithdraw['type'] = 'vendor';
                 $newwithdraw->save();
-                for($i=0;$i<count(array_keys($request->additional));$i++){
+                if($request->additional){
+                    for($i=0;$i<count(array_keys($request->additional));$i++){
                     WithdrawAdditional::create([
                         "withdraw_id"=>$newwithdraw->id,
                         "additional_field_id"=>array_keys($request->additional)[$i],
                         "value"=>$request->additional[array_keys($request->additional)[$i]]
                     ]);
                 }
+                }
+                
                 return response()->json('Withdraw Request Sent Successfully.'); 
 
             }else{

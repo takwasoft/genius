@@ -14,7 +14,7 @@
 .dropbtn:hover, .dropbtn:focus {
   background-color: #3e8e41;
 }
-
+ 
 #myInput {
   box-sizing: border-box;
   background-image: url('../assets/images/searchicon.png');
@@ -446,7 +446,7 @@ if(cm){
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="text" class="option" name="owner_name"
+                                        <input value="{{$user->name}}" type="text" class="option" name="owner_name"
                                             placeholder="{{ $langg->lang239 }}" required>
                                     </div>
                                 </div>
@@ -523,35 +523,36 @@ if(cm){
                                     </div>
                                     <div class="col-lg-8">
 
-                                        <select name="method" id="option" onchange="meThods(this)" class="option"
+                                        <select name="method" id="option" onchange="getAdditional(this.value)"  class="option"
                                             required="">
-                                            <option value="">{{ $langg->lang419 }}</option>
-                                            @if($gs->paypal_check == 1)
-                                            <option value="Paypal">{{ $langg->lang420 }}</option>
-                                            @endif
-                                            @if($gs->stripe_check == 1)
-                                            <option value="Stripe">{{ $langg->lang421 }}</option>
-                                            @endif
-                                            @if($gs->is_instamojo == 1)
-                                            <option value="Instamojo">{{ $langg->lang763 }}</option>
-                                            @endif
-                                            @if($gs->is_paystack == 1)
-                                            <option value="Paystack">{{ $langg->lang764 }}</option>
-                                            @endif
-                                            @if($gs->is_molly == 1)
-                                            <option value="Molly">{{ $langg->lang802 }}</option>
-                                            @endif
-                                            @if($gs->is_paytm == 1)
-                                            <option value="Paytm">{{ $langg->paytm }}</option>
-                                            @endif
-                                            @if($gs->is_razorpay == 1)
-                                            <option value="Razorpay">{{ $langg->razorpay }}</option>
-                                            @endif
+                                        <option value="">Select Payment Method</option>
+                                                <option value="0">From Balance</option>
+                                            @foreach($gateways as $gateway)
+                                                <option value="{{$gateway->id}}">{{$gateway->title}}</option>
+                                            @endforeach 
                                         </select>
+                                 <div id="ad-field">
 
                                     </div>
+                                    </div>
+                                   
                                 </div>
-
+                            
+                            <script>
+                                getAdditional = (id) => {
+                                    if(id==0){
+                                        document.getElementById("ad-field").innerHTML="";
+                                    }
+                                    var xhttp = new XMLHttpRequest();
+                                    xhttp.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            document.getElementById("ad-field").innerHTML = this.responseText;
+                                        }
+                                    };
+                                    xhttp.open("GET", "{{URL::to('/checkout/subs/')}}/{{$subs->price}}/"+id, true);
+                                    xhttp.send();
+                                }
+                            </script>
 
                                 <div id="stripes" style="display: none;">
 

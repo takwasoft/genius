@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\AdditionalField;
 use App\WithdrawAdditional;
+use App\WithdrawPaymentVerification;
 use Illuminate\Database\Eloquent\Model;
 
 class Withdraw extends Model
@@ -20,5 +21,8 @@ class Withdraw extends Model
     }
     public function additionalFields(){
         return $this->hasMany(WithdrawAdditional::class);
+    }
+    public function paymentVerifications(){
+        return $this->hasMany(WithdrawPaymentVerification::class);
     }
 } 
