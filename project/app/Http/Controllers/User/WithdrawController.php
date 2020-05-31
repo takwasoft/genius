@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\AdditionalField;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -67,7 +68,10 @@ class WithdrawController extends Controller
         return view('user.withdraw.affilate_code',compact('user'));
     }
 
-
+    public function getAdditional(){ 
+        $fields=AdditionalField::where('payment_gateway_id','=',request()->id)->get();
+        return view('vendor.withdraw.additional' ,compact('fields'));
+    }
     public function create()
     {
 

@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
         
         view()->composer('*',function($settings){
             $settings->with('gs', DB::table('generalsettings')->find(1));
+            $settings->with('ps', DB::table('pagesettings')->find(1));
             $settings->with('seo', DB::table('seotools')->find(1));
             if(auth()->check()){
                 $settings->with('messageCount',Message::where('recieved_user','=',auth()->user()->id)->where('seen','=',0)->count());

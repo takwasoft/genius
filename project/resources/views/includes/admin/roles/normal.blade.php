@@ -573,5 +573,20 @@
     </li>
 
 @endif
+@if(Auth::guard('admin')->user()->sectionCheck('manage_roles'))
+<li>
+    <a href="{{ route('admin-role-index') }}" class=" wave-effect"><i class="fas fa-user-tag"></i>{{ __('Manage Roles') }}</a>
+</li>
 
+@endif
+@if(Auth::guard('admin')->user()->sectionCheck('admin_withdraws'))
+<li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='adminwithdraws') active @endif">
+            <a href="{{ URL::to('/admin/adminwithdraws')}}"><span>Admin Withdraw</span></a>
+        </li>
+@endif
+@if(Auth::guard('admin')->user()->sectionCheck('payment_statements'))
+        <li class="@if(request()->is('admin/attribute/*/manage') && request()->input('type')=='statements') active @endif">
+            <a href="{{ URL::to('/admin/statements')}}"><span>Payment Statement</span></a>
+        </li>
+@endif
 @endif

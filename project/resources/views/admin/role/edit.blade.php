@@ -63,6 +63,36 @@
                               </label>
                             </div>
                         </div>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Payment Statements') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="payment_statements" {{ $data->sectionCheck('payment_statements') ? 'checked' : '' }}>
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Admin Withdraws') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="admin_withdraws" {{ $data->sectionCheck('admin_withdraws') ? 'checked' : '' }}>
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              <label class="control-label">{{ __('Manage Roles') }} *</label>
+                              <label class="switch">
+                                <input type="checkbox" name="section[]" value="manage_roles" {{ $data->sectionCheck('manage_roles') ? 'checked' : '' }}>
+                                <span class="slider round"></span>
+                              </label>
+                            </div>
+                            <div class="col-lg-2"></div>
+                            <div class="col-lg-4 d-flex justify-content-between">
+                              
+                            </div>
+                        </div>
                            <div class="row justify-content-center">
                             <div class="col-lg-4 d-flex justify-content-between">
                               <label class="control-label">{{ __('Brands') }} *</label>

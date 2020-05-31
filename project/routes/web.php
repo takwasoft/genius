@@ -1081,6 +1081,7 @@ Route::prefix('user')->group(function() {
   Route::post('/filter-afwithdraw', 'User\WithdrawController@filter')->name('filter-af-withdraw');
 
   Route::get('/affilate/withdraw/create', 'User\WithdrawController@create')->name('user-wwt-create');
+  Route::get('/user-get-additional', 'User\WithdrawController@getAdditional')->name('user-get-additional');
   Route::post('/affilate/withdraw/create', 'User\WithdrawController@store')->name('user-wwt-store'); 
 
 // User Favorite Seller
@@ -1275,7 +1276,8 @@ Route::get('/package/delete/{id}', 'Vendor\PackageController@destroy')->name('ve
   Route::post('/filter-withdraw', 'Vendor\WithdrawController@filter')->name('filter-vendor-withdraw');
 
 
-  Route::get('/vendor-get-additional', 'Vendor\WithdrawController@getAdditional')->name('vendor-get-additional'); 
+  Route::get('/vendor-get-additional', 'Vendor\WithdrawController@getAdditional')->name('vendor-get-additional');
+
   Route::get('/withdraw/create', 'Vendor\WithdrawController@create')->name('vendor-wt-create');  
   Route::post('/withdraw/create', 'Vendor\WithdrawController@store')->name('vendor-wt-store');
 
@@ -1402,6 +1404,8 @@ Route::get('/category/{category?}/{subcategory?}/{childcategory?}','Front\Catalo
   // CHECKOUT SECTION
   Route::get('/checkout/','Front\CheckoutController@checkout')->name('front.checkout');
   Route::get('/checkout/payment/{slug1}/{slug2}','Front\CheckoutController@loadpayment')->name('front.load.payment');
+
+  Route::get('/checkout/extra/{slug1}/{slug2}','Front\CheckoutController@loadextra')->name('front.load.extra');
   
   Route::get('/checkout/payments/{slug1}/{slug2}','Front\CheckoutController@loadpayments')->name('front.load.payments');  
   Route::get('/checkout/subs/{slug1}/{slug2}','Front\CheckoutController@loadsubpayments')->name('front.sub.payments'); 

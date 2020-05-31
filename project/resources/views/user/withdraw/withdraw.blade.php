@@ -59,8 +59,8 @@
                                         if (this.readyState == 4 && this.status == 200) {
                                             document.getElementById("ad-field").innerHTML = this.responseText;
                                         }
-                                    };
-                                    xhttp.open("GET", "{{route('vendor-get-additional')}}?id=" + id, true);
+                                    }; 
+                                    xhttp.open("GET", "{{route('user-get-additional')}}?id=" + id, true);
                                     xhttp.send();
                                 }
                             </script>

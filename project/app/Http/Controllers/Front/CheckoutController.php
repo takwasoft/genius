@@ -86,6 +86,26 @@ class CheckoutController extends Controller
         $amount=round($amount,0);
         return view('load.payments',compact('amount','extraCharges','curr','additionalFields','verificationFields'));
     }
+    public function loadextra($slug1,$slug2)
+    {
+        $amount=$slug1;
+        $pay_id = $slug2;
+        $gateway = '';
+        if($pay_id != 0) {
+            $gateway = PaymentGateway::findOrFail($pay_id);
+        }
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$gateway->id)->get();   
+       $chr=0;
+        foreach($extraCharges as $charge){
+            if($charge->fixed==1){
+                $chr+=$charge->charge;
+            }
+            else{
+                $chr+=$charge->charge*$amount*0.01;
+            }
+        }
+        return $chr;
+    }
     public function loadpayment($slug1,$slug2)
     {
 
@@ -129,6 +149,7 @@ class CheckoutController extends Controller
 
     public function checkout()
     { 
+
         $this->code_image();
         if (!Session::has('cart')) {
             return redirect()->route('front.cart')->with('success',"You don't have any product to checkout.");

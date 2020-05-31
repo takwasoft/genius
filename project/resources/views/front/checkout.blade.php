@@ -227,10 +227,15 @@
 												</div>
 											</div>
 										</div>
+										<script>
+										vfvalue=()=>{
+											$(".vf").val("");
+										}
+										</script>
 										<div class="row">
 											<div class="col-lg-12  mt-3">
 												<div class="bottom-area paystack-area-btn">
-													<button type="submit"  class="mybtn1">{{ $langg->lang753 }}</button>
+													<button type="submit"   class="mybtn1">{{ $langg->lang753 }}</button>
 												</div>
 												
 											</div>
@@ -306,7 +311,7 @@
 											<div class="col-lg-12 mt-3">
 												<div class="bottom-area">
 													<a href="javascript:;" id="step1-btn"  class="mybtn1 mr-3">{{ $langg->lang757 }}</a>
-													<a href="javascript:;" id="step3-btn"  class="mybtn1">{{ $langg->lang753 }}</a>
+													<a onclick="vfvalue()"  href="javascript:;" id="step3-btn"  class="mybtn1">{{ $langg->lang753 }}</a>
 												</div>
 											</div>
 										</div>
@@ -506,10 +511,28 @@
   --}}
 @if($digital == 0)
 <input value="{{$gateways[0]->title}}" type="hidden" name="method" id="mt">
+<script>
+	loadP=(t,url)=>{
+		
+document.getElementById('mt').value=t;
+	   var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+		if(this.responseText!=0)
+		{
+			toastr.warning("Extra charge "+this.responseText+"BDT will be added for payment");
+		}
+      
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+	}
+</script> 
 
 @foreach($gateways as $gt)
  
-															<a onclick="document.getElementById('mt').value='{{$gt->title}}'" class="nav-link payment" data-val="" data-show="yes" data-form="{{route('gateway.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'other','slug2' => $gt->id]) }}" id="v-pills-tab{{ $gt->id }}-tab" data-toggle="pill" href="#v-pills-tab{{ $gt->id }}" role="tab" aria-controls="v-pills-tab{{ $gt->id }}" aria-selected="false">
+															<a onclick="loadP('{{$gt->title}}','{{ route('front.load.extra',['slug1' => $totalPrice,'slug2' => $gt->id]) }}')" class="nav-link payment" data-val="" data-show="yes" data-form="{{route('gateway.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'other','slug2' => $gt->id]) }}" id="v-pills-tab{{ $gt->id }}-tab" data-toggle="pill" href="#v-pills-tab{{ $gt->id }}" role="tab" aria-controls="v-pills-tab{{ $gt->id }}" aria-selected="false">
 																	<div class="icon">
 																			<span class="radio"></span>
 																	</div>

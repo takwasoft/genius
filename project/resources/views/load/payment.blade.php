@@ -28,10 +28,12 @@
                                     </label>
                                 <div class="col-sm-12">
                                     <input 
+
                                     @if($field->required==1)
 												required
 												@endif
-                                     name="verification[{{$field->id}}]"  class="form-control" type="text"  {{$field->required==1?'required':''}}>
+                        value=" "
+                                     name="verification[{{$field->id}}]"  class="vf form-control" type="text"  {{$field->required==1?'required':''}}>
                                 </div>
                             </div>
 @endforeach

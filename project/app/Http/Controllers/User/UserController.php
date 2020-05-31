@@ -146,6 +146,8 @@ class UserController extends Controller
         if($subs->price==0){
             $method="Free";
             $status=1;
+            $user->is_vendor = 2;
+               $user->save();
         }
         else if($request->method==0){
             if($subs->price>auth()->user()->current_balance){

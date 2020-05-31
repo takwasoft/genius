@@ -539,6 +539,22 @@ if(cm){
                                 </div>
                             
                             <script>
+                            getExtra = (id) => {
+                                    if(id==0){
+                                        document.getElementById("ad-field").innerHTML="";
+                                    }
+                                    var xhttp = new XMLHttpRequest();
+                                    xhttp.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                             if(this.responseText!=0)
+		{
+			toastr.warning("Extra charge "+this.responseText+"BDT will be added for payment");
+		}
+                                        }
+                                    };
+                                    xhttp.open("GET", "{{URL::to('/checkout/extra/')}}/{{$subs->price}}/"+id, true);
+                                    xhttp.send();
+                                }
                                 getAdditional = (id) => {
                                     if(id==0){
                                         document.getElementById("ad-field").innerHTML="";
@@ -547,6 +563,7 @@ if(cm){
                                     xhttp.onreadystatechange = function() {
                                         if (this.readyState == 4 && this.status == 200) {
                                             document.getElementById("ad-field").innerHTML = this.responseText;
+                                            getExtra(id)
                                         }
                                     };
                                     xhttp.open("GET", "{{URL::to('/checkout/subs/')}}/{{$subs->price}}/"+id, true);

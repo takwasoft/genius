@@ -124,7 +124,7 @@
 					<div class="content">
 						<div class="left-content">
 							<div class="list text-light"style="font-size:14px;padding-top: 2px;">
-								<span>Need help?</span> call us <span class="number">+8801860-130003</span>
+								<span>Need help?</span> call us <span class="number">{{$ps->phone}}</span>
 							</div>
 						</div>
 						<div class="right-content">
@@ -416,7 +416,7 @@
 			<div class="row">
 				<div class="col-md-6 col-lg-4">
 					
-						<h3 class="text-light">tmiweb.co</h3>
+						<h3 class="text-light">{{$gs->title}}</h3>
 						<p class="text-light">Our Address | The Rules Of Order</p>
 						<hr>
 						<h3 class="text-light">Payment Method</h3>
