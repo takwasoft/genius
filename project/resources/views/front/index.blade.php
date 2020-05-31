@@ -44,6 +44,9 @@
 	#home-menu-item li a:hover, #home-menu-item a.active {
     background: #024c0b;
 	}
+	 .mainmenu-bb .mainmenu-area-innner {
+        height:52px;
+    }
 	}
 	@media(max-width:991px){
 	#mg-menu{
@@ -211,17 +214,17 @@
 
 			@endif
 			<div class="row"style="background:#024c0b;margin:0;border-top:1px solid white">
-				<div class="col-md-4 col-sm-4 text-center slider-content" >
-					<h4 class="text-light mt-2">UP TO 70% OFF</h4>
-					<p class="text-light">On House Hold Items</p>
+				<div class="col-4 text-center slider-content" >
+					<h4 class="text-light mt-2  slide-d-head">UP TO 70% OFF</h4>
+					<p class="text-light slide-d-text">On House Hold Items</p>
 				</div>
-				<div class="col-md-4 col-sm-4 text-center slider-content ">
-					<h4 class="text-light mt-2">BUY ONE GET ONE</h4>
-					<p class="text-light">All Formal Shows</p>
+				<div class=" col-4 text-center slider-content ">
+					<h4 class="text-light mt-2 slide-d-head">BUY ONE GET ONE</h4>
+					<p class="text-light slide-d-text">All Formal Shows</p>
 				</div>
-				<div class="col-md-4 col-sm-4 text-center slider-content ">
-					<h4 class="text-light mt-2">UP TO 70% OFF</h4>
-					<p class="text-light">On Smart Phones</p>
+				<div class=" col-4 text-center slider-content ">
+					<h4 class="text-light mt-2 slide-d-head">UP TO 70% OFF</h4>
+					<p class="text-light slide-d-text">On Smart Phones</p>
 				</div>
 			</div>
 					</div>

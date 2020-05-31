@@ -226,13 +226,13 @@
 								  <div id="myInputautocomplete-list" class="autocomplete-items">
 								  </div>
 								</div>
-								<button type="submit" style='background: #e2dede;'><i class="icofont-search-1"></i> Search</button>
+								<button type="submit" style='background: #e2dede;'><i class="icofont-search-1"></i> <span class="d-none d-sm-inline-block">Search</span></button>
 							</form>
 						</div>
 					</div>
 				</div>
 				<div class="col-xl-4 col-md-5 col-12 mt-3 mt-md-0 remove-padding">
-				<div class="input-group" id="d-cart">
+				<div class="input-group cart-sm-item" id="d-cart">
 					<span class="input-group-btn"style=" border-radius: 50px;border-top-right-radius: 0; border-bottom-right-radius: 0;background: #e2dede;">
 						<button class="btn " type="button">
 							<a href="{{route('front.cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
@@ -273,10 +273,10 @@
 					<div class="col-md-4">
                     <a href="{{route('front.index')}}"><img src="{{ asset('assets/images/'.$gs->logo)}}"  alt="" width="90%" /></a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-none d-block-sm">
                     <img src="{{ asset('assets/images/brand/ad1.jpg')}}" alt="" width="100%" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-none d-block-sm">
                     <img src="{{ asset('assets/images/brand/ad2.jpg')}}" alt="" width="100%" />
                 </div>
 				</div>
@@ -1035,7 +1035,7 @@
 	@yield('scripts')
 
 </body>
-	<script>
+	{{-- <script>
 	
             setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
@@ -1043,5 +1043,5 @@
   }});
 			},3000)
 
-	</script>
+	</script> --}}
 </html>

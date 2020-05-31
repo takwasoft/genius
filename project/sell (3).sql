@@ -176,7 +176,7 @@ INSERT INTO `admin_user_messages` (`id`, `conversation_id`, `message`, `user_id`
 CREATE TABLE `admin_withdraws` (
   `id` int(10) UNSIGNED NOT NULL,
   `amount` double NOT NULL,
-  `note` text COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '  ',
+  `note` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

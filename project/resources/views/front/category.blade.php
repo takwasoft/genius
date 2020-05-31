@@ -34,10 +34,12 @@
 
 .all_sub_category_btn{
     border: 1px solid #ddd;
-    margin-top: -4px;
+    margin-top: -2px;
     margin-left: -5px;
+    padding: 0.26rem .7rem;
 }
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {outline: 0;
+box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 
 .dropdown {
   position: relative;
@@ -74,12 +76,12 @@
 } */
    .model-item li {
         border-top: 1px solid rgba(0, 0, 0, .125);
-        padding: .7rem .80rem;
+        padding: .7rem 0 .7rem .80rem;
     }
     
     .model-item li li {
         border-top: 1px solid rgba(0, 0, 0, .125);
-        padding: .7rem .5rem;
+        padding: .82rem .5rem;
     }
     
     .model-item li:first-child {
@@ -139,42 +141,7 @@
 <link rel="stylesheet" href="{{asset('assets/front/css/modify.css')}}">
 @endsection
 @section('content')
-<!-- Breadcrumb Area Start -->
-{{-- <div class="breadcrumb-area">
-   <div class="container">
-      <div class="row">
-         <div class="col-lg-12">
-            <ul class="pages">
-               <li>
-                  <a href="{{route('front.index')}}">{{ $langg->lang17 }}</a>
-               </li>
-               @if (!empty($cat))
-               <li>
-                  <a href="{{route('front.category', $cat->slug)}}">{{ $cat->name }}</a>
-               </li>
-               @endif
-               @if (!empty($subcat))
-               <li>
-                  <a href="{{route('front.category', [$cat->slug, $subcat->slug])}}">{{ $subcat->name }}</a>
-               </li>
-               @endif
-               @if (!empty($childcat))
-               <li>
-                  <a href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}">{{ $childcat->name }}</a>
-               </li>
-               @endif
-               @if (empty($childcat) && empty($subcat) && empty($cat))
-               <li>
-                  <a href="{{route('front.category')}}">{{ $langg->lang36 }}</a>
-               </li>
-               @endif
 
-            </ul>
-         </div>
-      </div>
-   </div>
-</div> --}}
-<!-- Breadcrumb Area End -->
 <!-- SubCategori Area Start -->
 <div class="header-section" style="border-bottom: 1px solid #d4ded9;">
     <div class="top-add mt-3">
@@ -190,10 +157,10 @@
                     <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
                   
                 </div>  --}}
-                <div class="col-6">
-                    <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> <span id="area_name">অবস্থান নির্বাচন করুন</span></button>
+                <div class="col-sm-6 col-2 rm-padding-sm">
+                    <button onclick="dModal()" data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> <span id="area_name" class="d-none d-sm-inline-block">অবস্থান নির্বাচন করুন</span></button>
                 </div>
-                <div class="col-6 pr-4">
+                <div class="col-sm-6 col-10 pr-sm-4 rm-padding-sm-rg">
                     <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
                         <div class="form-group input-group">
                             <input value="{{ request()->input('search') }}" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
@@ -210,56 +177,12 @@
     </div>
 </div>
 <section class="sub-categori" style="padding:0px;background: #e7edee;">
-   <div class="container" style="max-width:75%;background:#fff;">
-    <div class="row">
-        <div class="col-md-3">
-           
-            <div style="display:none" class="list-group list-unstyled categories-list megamenu" id="myDIV">
-                <ul class="list-group">
-                    <a class="list-group-item active text-light">
-                        <i class="fa fa-bars" aria-hidden="true"></i>Categories
-                    </a>
-                    <li>
-                        <a href="#" class="list-group-item megamenu-caret">
-                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>Clothing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <span class="float-left"><i class="fa fa-paw" aria-hidden="true"></i>Shoes </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <span class="float-left"><i class="fa fa-clock-o" aria-hidden="true"></i>Watches </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-paper-plane" aria-hidden="true"></i>Kids and babies</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-heart" aria-hidden="true"></i>Health and beauty</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-envira" aria-hidden="true"></i>House Hold</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-bullhorn" aria-hidden="true"></i>Others</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+   <div class="container sm-container" style="max-width:75%;background:#fff;">
+    
       <div class="row">
       
-        <div class="col-md-3" style="positon:relative">
-            <div class="py-3" style="border-right: 1px solid #d4ded9;padding-left: 20px;">
+        <div class="col-md-3 " style="positon:relative">
+            <div class="py-3 " style="border-right: 1px solid #d4ded9;padding-left: 20px;">
                 <div class="pt-2">পোস্টকারীর প্রকার</div>
                 <div class="pb-3" style="border-bottom: 1px solid #d4ded9;">
                     <form action="">
@@ -310,12 +233,12 @@
                       </div>
                 </div>
             </div>
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 d-none d-sm-block">
                 <img src="{{ asset('assets/images/brand/sidead.gif')}}" alt="">
             </div>
                 
         </div>
-         <div class="col-md-9 order-first order-lg-last ajax-loader-parent">
+         <div class="col-md-9 ajax-loader-parent">
             <div class="right-area" id="app">
 
                @include('includes.filter')
@@ -384,11 +307,13 @@
                             <ul>
                                 @foreach($districts as $district)
 
-                                    <li>
+                                    <li class="brn">
                                     <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
-                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
+                                        <span class="dnn float-left">{{$district->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis{{$district->id}}" class="lft sub-dis categories-list sub-cate-item" >
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
+
                                          <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
                                          @php($i=1)
                                             @foreach($district->subdistricts as $subdistrict)
@@ -424,18 +349,20 @@
                         </div>
                         <input type="hidden" id="area_key" >
                         <input type="hidden" id="area_value" >
-                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <div class="dnn btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
                             
                                @foreach($divisions as $division)
-                                <li>
+                                <li class="brn">
                                     <a
 									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
 									
 									 href="#" class="clearfix">
-                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                        <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <span class="dnn float-left">{{$division->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div id="dis{{$division->id}}" class="lft dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
+
                                         <ul class="sub-menu1 text-muted">
                                          <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
                                          @php($i=1)
@@ -493,6 +420,18 @@
 closeModal=()=>{
   $("#my-modal").modal('toggle');
 }
+dModal=()=>{
+  if(screen.width<576){
+        
+        $(".dnn").css("display","inline-block");
+        $(".lft").css("left","100%");
+
+         $(".brn").css("border-top","1px solid rgba(0, 0, 0, .125)");
+        $(".brn:first-child").css("border","none");
+        
+
+      }
+}
 	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
     document.getElementById("area_key").value=sid;
     document.getElementById("area_value").value=svalue;
@@ -501,7 +440,9 @@ closeModal=()=>{
 		$(cm).modal('toggle');
 		}
 		toastr.success(hval+" selected");
-		document.getElementById(hid).innerHTML=hval;
+		if(document.getElementById(hid)){
+      document.getElementById(hid).innerHTML=hval;
+    }
 
 		$(cls2).hide();
 		id="#"+cls+id;
@@ -510,6 +451,12 @@ closeModal=()=>{
 		$(id).show();
      $("#ajaxLoader").show();
       filter(); 
+      if(screen.width<576){
+        $(".brn").css("border","none");
+        $(".dnn").css("display","none");
+        $(".lft").css("left","18px");
+
+      }
 	} 
 </script>
 <script>

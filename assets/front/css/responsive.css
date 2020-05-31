@@ -355,13 +355,13 @@ nav .menu li a{
   -moz-overflow: hidden;
   overflow: hidden;
 }
-.cartpage .left-area .cart-table{
+/* .cartpage .left-area .cart-table{
  max-width: 767px;
   overflow-x: scroll;
 }
 .cartpage .left-area .cart-table .table{
   width: 700px;
-}
+} */
 .hero-area .hero-area-slider .intro-carousel .intro-content .slider-content .layer-1 .title {
   font-size: 34px;
 }
@@ -392,12 +392,30 @@ nav .menu li a{
 
 
 @media only screen and (max-width: 575px) {
+
+  .cart-tbl td, .cart-tbl th {
+    padding: 10px 21px;
+    font-size: 14px;
+}
+.cartpage .left-area .table tbody tr td.product-img {
+  width: 120px;
+  
+}
+.cartpage .left-area .table tbody tr td.product-img p {
+  font-size: 14px;
+}
+.cartpage .left-area .table tbody tr td.total-price p {
+  font-size: 14px;
+}
   .flash-deals .flas-deal-slider .item .deal-counter {
     padding: 8px;
 }
   .sub-categori .modal .modal-dialog {
     width: 280px;
   }
+  .logo-header .search-box {
+    border-radius: 50px;   
+}
   .vendor-banner .sub-title {
     font-size: 18px;
     line-height: 28px;
@@ -421,14 +439,24 @@ nav .menu li a{
   .logo-header .search-box {
     width: 80%;
     margin-top: 1px;
+    margin: auto;
+}
+.cart-sm-item{
+  justify-content: center;
 }
 .cart-text {
-  width: 62% !important;
+  width: 50% !important;
 }
 .logo-header .search-box .search-form button{
-  height:38px;
+  height:36px;
 }
-
+.logo-header .search-box .search-form button{
+  width:40px;
+  right: -2px;
+}
+.price-range-block {  
+  padding: 0 75px !important;
+}
 .top-header .sign-log {
   position: relative;
   top: -2px;
@@ -822,7 +850,21 @@ div#myInputautocomplete-list {
 
 
 }
-
+@media(max-width:465px){
+  .cart-tbl td, .cart-tbl th {
+    padding: 10px 18px;
+    font-size: 13px;
+}
+.cartpage .left-area .table tbody tr td.product-img p {
+  font-size: 13px;
+}
+.cartpage .left-area .table tbody tr td.total-price p {
+  font-size: 13px;
+}
+.cartpage .left-area .table tbody tr td.product-img {
+  width: 80px; 
+}
+}
 
 @media only screen and (max-width: 450px) {
   .trending .item .info .price {
@@ -884,7 +926,21 @@ div#myInputautocomplete-list {
 }
 
 }
-
+@media(max-width:427px){
+  .cart-tbl td, .cart-tbl th {
+    padding: 10px 14px;
+    font-size: 12px;
+}
+.cartpage .left-area .table tbody tr td.product-img {
+  width: 50px; 
+}
+.cartpage .left-area .table tbody tr td.product-img p {
+  font-size: 12px;
+}
+.cartpage .left-area .table tbody tr td.total-price p {
+  font-size: 12px;
+}
+}
 
 @media only screen and (max-width: 414px) {
   .categorimenu-wrapper {

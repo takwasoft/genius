@@ -31,12 +31,12 @@
       <div class="col-lg-8">
         <div class="left-area">
           <div class="cart-table">
-            <table class="table">
+            <table class="table cart-tbl">
               @include('includes.form-success')
                 <thead>
                     <tr>
                       <th>{{ $langg->lang122 }}</th>
-                      <th width="30%">{{ $langg->lang539 }}</th>
+                      <th>{{ $langg->lang539 }}</th>
                       <th>{{ $langg->lang125 }}</th>
                       <th>{{ $langg->lang126 }}</th>
                       <th><i class="icofont-close-squared-alt"></i></th>
