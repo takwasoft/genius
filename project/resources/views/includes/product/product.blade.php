@@ -9,7 +9,7 @@
                         <span class="quick-view add-new-cart  " rel-toggle="tooltip" title="" href="javascript:;" data-href="{{route('product.cart.add',$prod->id)}}" data-original-title="Add To Cart"> <i class="icofont-cart"></i>
 													</span>
 
-                    </li>
+                    </li> 
                     <li>
                         <span href="javascript:;" class="add-to-compare" data-href="{{route('product.compare.add',$prod->id)}}" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare">
 														<i class="icofont-exchange"></i>
@@ -36,8 +36,8 @@
                 <div class="d-flex" style="margin-top:5px;">
                     <div class="local-main"><i class="fas fa-star local-star"></i></div>
                     <div class="local-content">Member</div>
-                </div>
-                <div><span style="margin-left:5px;font-size:14px;">{{$prod->area?$prod->area->name:''}},</span></div>
+                </div>  
+                <div><span style="margin-left:5px;font-size:14px;">{{$prod->getAddress?$prod->getAddress->name:""}}</span></div>
                 <div><span style="margin-left:5px;font-size:14px;">{{$prod->category->name}}</span></div>
                 <div class="ml-auto mt-2" style="font-size:14px">
                     {{$prod->created_at->diffForHumans()}}

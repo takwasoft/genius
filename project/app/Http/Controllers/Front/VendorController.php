@@ -86,7 +86,7 @@ class VendorController extends Controller
         $data['vcategories']=$vcategories;
                        
 
-        return view('front.vendor', $data);
+        return view('front.vendor', $data); 
     }
 
     //Send email to user

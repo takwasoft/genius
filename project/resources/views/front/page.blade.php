@@ -54,7 +54,9 @@
             @if($buy)
             <div class="col-md-6  d-none d-md-block">
                 <div class="col-sm-12">
-                   
+                   <div class="icon-wrapper">
+                    <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                </div>
                     <h3 class="text-center"> {!!$buy->title!!} </h3>
                     <p style="font-size:15px;line-height:1.4">
                         {!!$buy->details!!}
@@ -65,7 +67,9 @@
             @if($sell)
             <div class="col-md-6  d-none d-md-block">
                 <div class="col-sm-12">
-                   
+                   <div class="icon-wrapper">
+                    <i class="fa fa-search fa-2x" aria-hidden="true"></i>
+                </div>
                     <h3 class="text-center">                                 {!!$sell->title!!}
                      </h3>
                     <p style="font-size:15px;line-height:1.4">
@@ -81,36 +85,7 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="row padding mt-4">
-        <div class="col-md-6">
-            <div class="col-sm-12">
-                <div class="icon-wrapper">
-                    <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                </div>
-                <h3 class="text-center"> HOW TO BUY ? </h3>
-                <p style="font-size:15px;line-height:1.4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                    et tortor quis massa rutrum eleifend non nec dui. Etiam egestas gravida lorem at varius. Suspendisse et tortor quis massa rutrum eleifend non nec dui.
-                </p>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="col-sm-12">
-                <div class="icon-wrapper">
-                    <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                </div>
-                <h3 class="text-center"> HOW TO BUY ? </h3>
-                <p style="font-size:15px;line-height:1.4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                    et tortor quis massa rutrum eleifend non nec dui. Etiam egestas gravida lorem at varius. Suspendisse et tortor quis massa rutrum eleifend non nec dui.
-                </p>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <hr class="bottom-hr" />
-    </div>
-</div>
+
 </div>
 <!-- end about  --->
 

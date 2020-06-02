@@ -94,7 +94,7 @@ class RegisterController extends Controller
 		}
 
         if($request->code!=session('rand')){
-			return response()->json('Invalid Code');
+			// return response()->json('Invalid Code');
 		}
         //--- Validation Section Ends
 

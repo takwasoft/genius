@@ -41,20 +41,7 @@
 	<link rel="stylesheet" href="{{asset('assets/front/jquery-ui/jquery-ui.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/front/jquery-ui/jquery-ui.structure.min.css')}}">
 
-@if($langg->rtl == "1")
 
-	<!-- stylesheet -->
-	<link rel="stylesheet" href="{{asset('assets/front/css/rtl/style.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/front/css/rtl/custom.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/front/css/common.css')}}">
-	<!-- responsive -->
-	<link rel="stylesheet" href="{{asset('assets/front/css/rtl/responsive.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/front/css/common-responsive.css')}}">
-
-    <!--Updated CSS-->
- <link rel="stylesheet" href="{{ asset('assets/front/css/rtl/styles.php?color='.str_replace('#','',$gs->colors).'&amp;'.'header_color='.str_replace('#','',$gs->header_color).'&amp;'.'footer_color='.str_replace('#','',$gs->footer_color).'&amp;'.'copyright_color='.str_replace('#','',$gs->copyright_color).'&amp;'.'menu_color='.str_replace('#','',$gs->menu_color).'&amp;'.'menu_hover_color='.str_replace('#','',$gs->menu_hover_color)) }}">
-
-@else
 
 	<!-- stylesheet -->
 	<link rel="stylesheet" href="{{asset('assets/front/css/style.css')}}">
@@ -67,7 +54,7 @@
     <!--Updated CSS-->
  <link rel="stylesheet" href="{{ asset('assets/front/css/styles.php?color='.str_replace('#','',$gs->colors).'&amp;'.'header_color='.str_replace('#','',$gs->header_color).'&amp;'.'footer_color='.str_replace('#','',$gs->footer_color).'&amp;'.'copyright_color='.str_replace('#','',$gs->copyright_color).'&amp;'.'menu_color='.str_replace('#','',$gs->menu_color).'&amp;'.'menu_hover_color='.str_replace('#','',$gs->menu_hover_color)) }}">
 
-@endif
+
 
 
  
@@ -82,9 +69,9 @@
     <!--End of messenger Script-->
   @endif
 
-@if($gs->is_loader == 1)
-	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>
-@endif
+<!--@if($gs->is_loader == 1)-->
+<!--	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>-->
+<!--@endif-->
 
 @if($gs->is_popup== 1)
 
@@ -226,13 +213,13 @@
 								  <div id="myInputautocomplete-list" class="autocomplete-items">
 								  </div>
 								</div>
-								<button type="submit" style='background: #e2dede;'><i class="icofont-search-1"></i> Search</button>
+								<button type="submit" style='background: #e2dede;'><i class="icofont-search-1"></i> <span class="d-none d-sm-inline-block">Search</span></button>
 							</form>
 						</div>
 					</div>
 				</div>
 				<div class="col-xl-4 col-md-5 col-12 mt-3 mt-md-0 remove-padding">
-				<div class="input-group" id="d-cart">
+				<div class="input-group cart-sm-item" id="d-cart">
 					<span class="input-group-btn"style=" border-radius: 50px;border-top-right-radius: 0; border-bottom-right-radius: 0;background: #e2dede;">
 						<button class="btn " type="button">
 							<a href="{{route('front.cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
@@ -273,10 +260,10 @@
 					<div class="col-md-4">
                     <a href="{{route('front.index')}}"><img src="{{ asset('assets/images/'.$gs->logo)}}"  alt="" width="90%" /></a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-none d-block-sm">
                     <img src="{{ asset('assets/images/brand/ad1.jpg')}}" alt="" width="100%" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-none d-block-sm">
                     <img src="{{ asset('assets/images/brand/ad2.jpg')}}" alt="" width="100%" />
                 </div>
 				</div>
@@ -1023,6 +1010,8 @@
 	<script src="{{asset('assets/front/js/main.js')}}"></script>
 	<!-- custom -->
 	<script src="{{asset('assets/front/js/custom.js')}}"></script>
+	    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script
 
     {!! $seo->google_analytics !!}
 
@@ -1035,7 +1024,13 @@
 	@yield('scripts')
 
 </body>
-	<script>
+<script>
+    $(function() {
+        $('.lazy').Lazy();
+    });
+           
+</script>
+	{{-- <script>
 	
             setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
@@ -1043,5 +1038,5 @@
   }});
 			},3000)
 
-	</script>
+	</script> --}}
 </html>

@@ -28,7 +28,7 @@
     				 </div>
 						<a href="product-details.html">
 							<div class="product-thum-img">
-								<a href="{{URL::to('/item/'.$product->slug)}}"><img src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
+								<a href="{{URL::to('/item/'.$product->slug)}}"><img class="lazy" data-src="{{ $product->photo ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="" /></a>
 							</div>
 						</a>
 						<h5 class="mt-2">{{$product->name}}</h5>

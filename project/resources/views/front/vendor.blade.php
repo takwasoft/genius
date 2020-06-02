@@ -102,7 +102,7 @@
                 <div class="row">
 
                   @foreach($vprods as $prod)
-                    @include('includes.product.product')
+                    @include('includes.product.product') 
                   @endforeach
 
                 </div>
