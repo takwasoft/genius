@@ -161,6 +161,31 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 .btn-back:hover {
     color: rgb(0, 152, 119);
 }
+@media(max-width:475px){
+	#landscape{
+		width: 350px!important;
+		height: 350px!important;
+	}
+}
+
+@media(max-width:430px){
+	#landscape{
+		width: 300px!important;
+		height: 300px!important;
+	}
+}
+@media(max-width:375px){
+	#landscape{
+		width: 250px!important;
+		height: 250px!important;
+	}
+}
+@media(max-width:330px){
+	#landscape{
+		width: 200px!important;
+		height: 200px!important;
+	}
+}
 </style>
 @endsection
 @section('content')
