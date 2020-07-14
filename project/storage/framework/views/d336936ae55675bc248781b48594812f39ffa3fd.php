@@ -247,13 +247,13 @@
                         ?>
                       <?php endif; ?>
                       <?php if(!empty($attrArr)): ?>
-                        <div class="product-attributes my-4">
+                        <div class="my-4 product-attributes">
                           <div class="row">
                           <?php $__currentLoopData = $attrArr; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attrKey => $attrVal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php if(array_key_exists("details_status",$attrVal) && $attrVal['details_status'] == 1): ?>
 
                           <div class="col-lg-6">
-                              <div class="form-group mb-2">
+                              <div class="mb-2 form-group">
                                 <strong for="" class="text-capitalize"><?php echo e(str_replace("_", " ", $attrKey)); ?> :</strong>
                                 <div class="">
                                 <?php $__currentLoopData = $attrVal['values']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $optionKey => $optionVal): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -323,6 +323,22 @@
                           data-href="<?php echo e(route('product.compare.add',$productt->id)); ?>"><i class="icofont-exchange"></i></a>
                       </li>
                     </ul>
+
+
+                   
+
+                    <ul class="call_sms_btn">
+                    <li class="callnow">
+                        <a  href="tel:<?php echo e($productt->user->shop_number); ?>" id="call_now_btn"><i class="fas fa-phone-volume"></i> Call Now</a>
+                      </li>
+                      <li class="smsnow">
+                        <a href="sms://<?php echo e($productt->user->shop_number); ?>" id="sms_now_btn"><i class="fas fa-comments"></i> sms</a>
+                      </li>
+                    </ul>
+
+                    
+
+                    
                   </div>
                   <div class="social-links social-sharing a2a_kit a2a_kit_size_32">
                     <ul class="link-list social-links">
@@ -356,6 +372,7 @@
                   <br>
                   <p class="p-sku">
                     Deal Code: <span class="idno"><?php echo e($productt->deal_code); ?></span>
+          
                   </p>
                   <?php endif; ?>
       <?php if($gs->is_report): ?>
@@ -413,6 +430,7 @@
                             <?php echo e($langg->lang96); ?>
 
                           </h4>
+                          
                           <div class="reating-area">
                             <div class="stars"><span id="star-rating"><?php echo e(App\Models\Rating::rating($productt->id)); ?></span> <i
                                 class="fas fa-star"></i></div>
@@ -523,7 +541,7 @@
                             <div class="col-lg-12">
                               <br>
                               <h5 class="text-center"><a href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"
-                                  class="btn login-btn mr-1"><?php echo e($langg->lang101); ?></a> <?php echo e($langg->lang102); ?></h5>
+                                  class="mr-1 btn login-btn"><?php echo e($langg->lang101); ?></a> <?php echo e($langg->lang102); ?></h5>
                               <br>
                             </div>
                           </div>
@@ -602,7 +620,7 @@ PRODUCT END -->
       <?php endif; ?>
 
 
-      <div class="seller-info mt-3">
+      <div class="mt-3 seller-info">
         
         <div class="card" >
 			<div class="card-header">
@@ -644,12 +662,12 @@ PRODUCT END -->
                     </div>
                 </div>
 				<div class="row seller-quick-opt" style="margin-top:6px;">
-					<div class="col-4 text-center">
+					<div class="text-center col-4">
 						<a href="<?php echo e(route('front.vendor',str_replace(' ', '-', $productt->user->shop_name))); ?>"><i class="fa fa-gift fa-3x" style="font-size:1.8em" aria-hidden="true"></i>
 							<p>Seller Shop</p> 
 						</a>
 					</div>
-					<div class="col-4 text-center">
+					<div class="text-center col-4">
           <?php if(Auth::guard('web')->check()): ?>
 					
 
@@ -662,7 +680,7 @@ PRODUCT END -->
 						</a>
             <?php endif; ?>
 					</div>
-					<div class="col-4 text-center">
+					<div class="text-center col-4">
            <?php if(Auth::guard('web')->check()): ?>
             <?php if(
                         Auth::guard('web')->user()->favorites()->where('vendor_id','=',$productt->user->id)->get()->count() >
@@ -694,7 +712,7 @@ PRODUCT END -->
 				</div>
 			</div>
 		</div>
-    <div class="card my-4">
+    <div class="my-4 card">
 		
 		</div>
     <div class="card">
@@ -754,7 +772,7 @@ PRODUCT END -->
           </button>
         </div>
         <div class="modal-body">
-          <div class="container-fluid p-0">
+          <div class="p-0 container-fluid">
             <div class="row">
               <div class="col-md-12">
                 <div class="contact-form">
@@ -803,7 +821,7 @@ PRODUCT END -->
           </button>
         </div>
         <div class="modal-body">
-          <div class="container-fluid p-0">
+          <div class="p-0 container-fluid">
             <div class="row">
               <div class="col-md-12">
                 <div class="contact-form">

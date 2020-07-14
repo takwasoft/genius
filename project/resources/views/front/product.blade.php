@@ -245,13 +245,13 @@
                         @endphp
                       @endif
                       @if (!empty($attrArr))
-                        <div class="product-attributes my-4">
+                        <div class="my-4 product-attributes">
                           <div class="row">
                           @foreach ($attrArr as $attrKey => $attrVal)
                             @if (array_key_exists("details_status",$attrVal) && $attrVal['details_status'] == 1)
 
                           <div class="col-lg-6">
-                              <div class="form-group mb-2">
+                              <div class="mb-2 form-group">
                                 <strong for="" class="text-capitalize">{{ str_replace("_", " ", $attrKey) }} :</strong>
                                 <div class="">
                                 @foreach ($attrVal['values'] as $optionKey => $optionVal)
@@ -319,6 +319,22 @@
                           data-href="{{ route('product.compare.add',$productt->id) }}"><i class="icofont-exchange"></i></a>
                       </li>
                     </ul>
+
+
+                   {{-- call & sms btn  --}}
+
+                    <ul class="call_sms_btn">
+                    <li class="callnow">
+                        <a  href="tel:{{$productt->user->shop_number}}" id="call_now_btn"><i class="fas fa-phone-volume"></i> Call Now</a>
+                      </li>
+                      <li class="smsnow">
+                        <a href="sms://{{$productt->user->shop_number}}" id="sms_now_btn"><i class="fas fa-comments"></i> sms</a>
+                      </li>
+                    </ul>
+
+                    {{-- end call & sms btn  --}}
+
+                    
                   </div>
                   <div class="social-links social-sharing a2a_kit a2a_kit_size_32">
                     <ul class="link-list social-links">
@@ -352,6 +368,7 @@
                   <br>
                   <p class="p-sku">
                     Deal Code: <span class="idno">{{ $productt->deal_code }}</span>
+          
                   </p>
                   @endif
       @if($gs->is_report)
@@ -408,6 +425,7 @@
                           <h4 class="title">
                             {{ $langg->lang96 }}
                           </h4>
+                          
                           <div class="reating-area">
                             <div class="stars"><span id="star-rating">{{App\Models\Rating::rating($productt->id)}}</span> <i
                                 class="fas fa-star"></i></div>
@@ -515,7 +533,7 @@
                             <div class="col-lg-12">
                               <br>
                               <h5 class="text-center"><a href="javascript:;" data-toggle="modal" data-target="#comment-log-reg"
-                                  class="btn login-btn mr-1">{{ $langg->lang101 }}</a> {{ $langg->lang102 }}</h5>
+                                  class="mr-1 btn login-btn">{{ $langg->lang101 }}</a> {{ $langg->lang102 }}</h5>
                               <br>
                             </div>
                           </div>
@@ -594,7 +612,7 @@ PRODUCT END -->
       @endif
 
 
-      <div class="seller-info mt-3">
+      <div class="mt-3 seller-info">
         
         <div class="card" >
 			<div class="card-header">
@@ -641,12 +659,12 @@ PRODUCT END -->
                     </div>
                 </div>
 				<div class="row seller-quick-opt" style="margin-top:6px;">
-					<div class="col-4 text-center">
+					<div class="text-center col-4">
 						<a href="{{ route('front.vendor',str_replace(' ', '-', $productt->user->shop_name)) }}"><i class="fa fa-gift fa-3x" style="font-size:1.8em" aria-hidden="true"></i>
 							<p>Seller Shop</p> 
 						</a>
 					</div>
-					<div class="col-4 text-center">
+					<div class="text-center col-4">
           @if(Auth::guard('web')->check())
 					
 
@@ -659,7 +677,7 @@ PRODUCT END -->
 						</a>
             @endif
 					</div>
-					<div class="col-4 text-center">
+					<div class="text-center col-4">
            @if(Auth::guard('web')->check())
             @if(
                         Auth::guard('web')->user()->favorites()->where('vendor_id','=',$productt->user->id)->get()->count() >
@@ -691,7 +709,7 @@ PRODUCT END -->
 				</div>
 			</div>
 		</div>
-    <div class="card my-4">
+    <div class="my-4 card">
 		
 		</div>
     <div class="card">
@@ -735,7 +753,7 @@ PRODUCT END -->
 					<div class="col-md-6 col-sm-6 col-xs-6">
 						<h3>New Products</h3>
 					</div>
-					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
+					<div class="text-right col-md-6 col-sm-6 col-xs-6 see-all">
 						<p><a href="{{route('front.new')}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div> 
@@ -772,7 +790,7 @@ PRODUCT END -->
           </button>
         </div>
         <div class="modal-body">
-          <div class="container-fluid p-0">
+          <div class="p-0 container-fluid">
             <div class="row">
               <div class="col-md-12">
                 <div class="contact-form">
@@ -820,7 +838,7 @@ PRODUCT END -->
           </button>
         </div>
         <div class="modal-body">
-          <div class="container-fluid p-0">
+          <div class="p-0 container-fluid">
             <div class="row">
               <div class="col-md-12">
                 <div class="contact-form">

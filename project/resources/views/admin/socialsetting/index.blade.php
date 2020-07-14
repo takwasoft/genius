@@ -41,7 +41,7 @@
                   </div>
                 </div>
 
-                <div class="row">
+                <div class="row" style="display:none">
                   <label class="control-label col-sm-3" for="gplus">{{ __('Google Plus') }} *</label>
                   <div class="col-sm-6">
                     <input class="form-control" name="gplus" id="gplus" placeholder="{{ __('http://google.com/') }}" required="" type="text" value="{{$data->gplus}}">
@@ -82,7 +82,7 @@
 
 
                 <div class="row">
-                  <label class="control-label col-sm-3" for="dribble">{{ __('Dribble') }} *</label>
+                  <label class="control-label col-sm-3" for="youtube">{{ __('Youtube') }} *</label>
                   <div class="col-sm-6">
                     <input class="form-control" name="dribble" id="dribble" placeholder="{{ __('https://dribbble.com/') }}" required="" type="text" value="{{$data->dribble}}">
                   </div>

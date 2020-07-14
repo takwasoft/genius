@@ -11,6 +11,9 @@ Route::get('app-list', function () {
 Route::get('/sell', function () {
   return redirect("/");
 });
+Route::get('/market', function () {
+  return redirect("/");
+});
 Route::prefix('admin')->group(function () {
 
   //------------ ADMIN LOGIN SECTION ------------

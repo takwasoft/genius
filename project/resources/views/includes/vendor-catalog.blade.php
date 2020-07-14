@@ -26,6 +26,7 @@
                   @if (!empty(request()->input('sort')))
                     <input type="hidden" name="sort" value="{{ request()->input('sort') }}" />
                   @endif
+                  <h2 class="filter-title-2">filter by price</h2>
                   <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
                   <div class="livecount">
                     <input type="number" min=0  name="min"  id="min_price" class="price-range-field" />
@@ -44,7 +45,7 @@
               <div class="tags-area">
                 <div class="header-area">
                   <h4 class="title">
-                      Filters
+                      Filter
                   </h4>
                 </div>
                 <div class="body-area">
