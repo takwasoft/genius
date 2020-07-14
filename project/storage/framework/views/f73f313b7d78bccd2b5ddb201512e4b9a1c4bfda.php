@@ -1,6 +1,4 @@
-@extends('layouts.front')
-
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 
 <style type="text/css">
 	
@@ -9,11 +7,11 @@
     }
 </style>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <input type="hidden" id="extraCharge" value="0">
 <input type="hidden" id="totalBill">
 
@@ -24,13 +22,15 @@
 			<div class="col-lg-12">
 				<ul class="pages">
 					<li>
-						<a href="{{ route('front.index') }}">
-							{{ $langg->lang17 }}
+						<a href="<?php echo e(route('front.index')); ?>">
+							<?php echo e($langg->lang17); ?>
+
 						</a>
 					</li>
 					<li>
-						<a href="{{ route('front.checkout') }}">
-							{{ $langg->lang136 }}
+						<a href="<?php echo e(route('front.checkout')); ?>">
+							<?php echo e($langg->lang136); ?>
+
 						</a>
 					</li>
 				</ul>
@@ -50,19 +50,21 @@
 							<ul class="nav"  role="tablist">
 								<li class="nav-item">
 									<a class="nav-link active" id="pills-step1-tab" data-toggle="pill" href="#pills-step1" role="tab" aria-controls="pills-step1" aria-selected="true">
-									<span>1</span> {{ $langg->lang743 }}
+									<span>1</span> <?php echo e($langg->lang743); ?>
+
 									<i class="far fa-address-card"></i>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link disabled" id="pills-step2-tab" data-toggle="pill" href="#pills-step2" role="tab" aria-controls="pills-step2" aria-selected="false" >
-										<span>2</span> {{ $langg->lang744 }} 
+										<span>2</span> <?php echo e($langg->lang744); ?> 
 										<i class="fas fa-dolly"></i>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link disabled" id="pills-step3-tab" data-toggle="pill" href="#pills-step3" role="tab" aria-controls="pills-step3" aria-selected="false">
-											<span>3</span> {{ $langg->lang745 }}
+											<span>3</span> <?php echo e($langg->lang745); ?>
+
 											<i class="far fa-credit-card"></i>
 									</a>
 								</li>
@@ -79,10 +81,11 @@
 
 		<form id="" action="" method="POST" class="checkoutform">
 
-			@include('includes.form-success')
-			@include('includes.form-error')
+			<?php echo $__env->make('includes.form-success', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			<?php echo $__env->make('includes.form-error', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-			{{ csrf_field() }}
+			<?php echo e(csrf_field()); ?>
+
 
 					<div class="checkout-area">
 						<div class="tab-content" id="pills-tabContent">
@@ -92,131 +95,133 @@
 									<div class="content">
 										<div class="personal-info">
 											<h5 class="title">
-												{{ $langg->lang746 }} :
+												<?php echo e($langg->lang746); ?> :
 											</h5>
 											<div class="row">
 												<div class="col-lg-6">
-													<input type="text" id="personal-name" class="form-control" name="personal_name" placeholder="{{ $langg->lang747 }}" value="{{ Auth::check() ? Auth::user()->name : '' }}" {!! Auth::check() ? 'readonly' : '' !!}>
+													<input type="text" id="personal-name" class="form-control" name="personal_name" placeholder="<?php echo e($langg->lang747); ?>" value="<?php echo e(Auth::check() ? Auth::user()->name : ''); ?>" <?php echo Auth::check() ? 'readonly' : ''; ?>>
 												</div>
 												<div class="col-lg-6">
-													<input type="email" id="personal-email" class="form-control" name="personal_email" placeholder="{{ $langg->lang748 }}" value="{{ Auth::check() ? Auth::user()->email : '' }}"  {!! Auth::check() ? 'readonly' : '' !!}>
+													<input type="email" id="personal-email" class="form-control" name="personal_email" placeholder="<?php echo e($langg->lang748); ?>" value="<?php echo e(Auth::check() ? Auth::user()->email : ''); ?>"  <?php echo Auth::check() ? 'readonly' : ''; ?>>
 												</div>
 											</div>
-											@if(!Auth::check())
+											<?php if(!Auth::check()): ?>
 											<div class="row">
 												<div class="col-lg-12 mt-3">
 														<input class="styled-checkbox" id="open-pass" type="checkbox" value="1" name="pass_check">
-														<label for="open-pass">{{ $langg->lang749 }}</label>
+														<label for="open-pass"><?php echo e($langg->lang749); ?></label>
 												</div>
 											</div>
 											<div class="row set-account-pass d-none">
 												<div class="col-lg-6">
-													<input type="password" name="personal_pass" id="personal-pass" class="form-control" placeholder="{{ $langg->lang750 }}">
+													<input type="password" name="personal_pass" id="personal-pass" class="form-control" placeholder="<?php echo e($langg->lang750); ?>">
 												</div>
 												<div class="col-lg-6">
-													<input type="password" name="personal_confirm" id="personal-pass-confirm" class="form-control" placeholder="{{ $langg->lang751 }}">
+													<input type="password" name="personal_confirm" id="personal-pass-confirm" class="form-control" placeholder="<?php echo e($langg->lang751); ?>">
 												</div>
 											</div>
-											@endif
+											<?php endif; ?>
 										</div>
 										<div class="billing-address">
 											<h5 class="title">
-												{{ $langg->lang147 }}
+												<?php echo e($langg->lang147); ?>
+
 											</h5>
 											<div class="row">
-												<div class="col-lg-6 {{ $digital == 1 ? 'd-none' : '' }}">
+												<div class="col-lg-6 <?php echo e($digital == 1 ? 'd-none' : ''); ?>">
 													<select class="form-control" id="shipop" name="shipping" required="">
-														<option value="shipto">{{ $langg->lang149 }}</option>
-														<option value="pickup">{{ $langg->lang150 }}</option>
+														<option value="shipto"><?php echo e($langg->lang149); ?></option>
+														<option value="pickup"><?php echo e($langg->lang150); ?></option>
 													</select>
 												</div>
 		
 												<div class="col-lg-6 d-none" id="shipshow">
 													<select class="form-control nice" name="pickup_location">
-														@foreach($pickups as $pickup)
-														<option value="{{$pickup->location}}">{{$pickup->location}}</option>
-														@endforeach
+														<?php $__currentLoopData = $pickups; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $pickup): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+														<option value="<?php echo e($pickup->location); ?>"><?php echo e($pickup->location); ?></option>
+														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 													</select>
 												</div>
 		
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="name"
-														placeholder="{{ $langg->lang152 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->name : '' }}">
+														placeholder="<?php echo e($langg->lang152); ?>" required=""
+														value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->name : ''); ?>">
 												</div>
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="phone"
-														placeholder="{{ $langg->lang153 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->phone : '' }}">
+														placeholder="<?php echo e($langg->lang153); ?>" required=""
+														value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->phone : ''); ?>">
 												</div>
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="email"
-														placeholder="{{ $langg->lang154 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->email : '' }}">
+														placeholder="<?php echo e($langg->lang154); ?>" required=""
+														value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->email : ''); ?>">
 												</div>
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="address"
-														placeholder="{{ $langg->lang155 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->address : '' }}">
+														placeholder="<?php echo e($langg->lang155); ?>" required=""
+														value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->address : ''); ?>">
 												</div>
 												<div class="col-lg-6">
 													<select class="form-control" name="customer_country" required="">
-														@include('includes.countries')
+														<?php echo $__env->make('includes.countries', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 													</select>
 												</div> 
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="city"
-														placeholder="{{ $langg->lang158 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->city : '' }}">
+														placeholder="<?php echo e($langg->lang158); ?>" required=""
+														value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->city : ''); ?>">
 												</div>
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="zip"
-														placeholder="{{ $langg->lang159 }}" required=""
-														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->zip : '' }}">
+														placeholder="<?php echo e($langg->lang159); ?>" required=""
+														value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->zip : ''); ?>">
 												</div>
 											</div>
 										</div>
-										<div class="row {{ $digital == 1 ? 'd-none' : '' }}">
+										<div class="row <?php echo e($digital == 1 ? 'd-none' : ''); ?>">
 											<div class="col-lg-12 mt-3">
 													<input class="styled-checkbox" id="ship-diff-address" type="checkbox" value="value1" >
-													<label for="ship-diff-address">{{ $langg->lang160 }}</label>
+													<label for="ship-diff-address"><?php echo e($langg->lang160); ?></label>
 											</div>
 										</div>
 										<div class="ship-diff-addres-area d-none">
 												<h5 class="title">
-														{{ $langg->lang752 }}
+														<?php echo e($langg->lang752); ?>
+
 												</h5>
 											<div class="row">
 												<div class="col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_name"
-														id="shippingFull_name" placeholder="{{ $langg->lang152 }}">
+														id="shippingFull_name" placeholder="<?php echo e($langg->lang152); ?>">
 														<input type="hidden" name="shipping_email" value="">
 												</div>
 												<div class="col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_phone"
-														id="shipingPhone_number" placeholder="{{ $langg->lang153 }}">
+														id="shipingPhone_number" placeholder="<?php echo e($langg->lang153); ?>">
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_address"
-														id="shipping_address" placeholder="{{ $langg->lang155 }}">
+														id="shipping_address" placeholder="<?php echo e($langg->lang155); ?>">
 												</div>
 
 												<div class="col-lg-6">
 													<select class="form-control ship_input" name="shipping_country">
-														@include('includes.countries')
+														<?php echo $__env->make('includes.countries', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 													</select>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_city"
-														id="shipping_city" placeholder="{{ $langg->lang158 }}">
+														id="shipping_city" placeholder="<?php echo e($langg->lang158); ?>">
 												</div>
 												<div class="col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_zip"
-														id="shippingPostal_code" placeholder="{{ $langg->lang159 }}">
+														id="shippingPostal_code" placeholder="<?php echo e($langg->lang159); ?>">
 												</div>
 
 											</div>
@@ -225,7 +230,7 @@
 										<div class="order-note mt-3">
 											<div class="row">
 												<div class="col-lg-12">
-												<input type="text" id="Order_Note" class="form-control" name="order_notes" placeholder="{{ $langg->lang217 }} ({{ $langg->lang218 }})">
+												<input type="text" id="Order_Note" class="form-control" name="order_notes" placeholder="<?php echo e($langg->lang217); ?> (<?php echo e($langg->lang218); ?>)">
 												</div>
 											</div>
 										</div>
@@ -237,7 +242,7 @@
 										<div class="row">
 											<div class="col-lg-12  mt-3">
 												<div class="bottom-area paystack-area-btn">
-													<button type="submit"   class="mybtn1">{{ $langg->lang753 }}</button>
+													<button type="submit"   class="mybtn1"><?php echo e($langg->lang753); ?></button>
 												</div>
 												
 											</div>
@@ -250,60 +255,61 @@
 									<div class="content">
 										
 										<div class="order-area">
-											@foreach($products as $product)
+											<?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 											<div class="order-item">
 												<div class="product-img">
 													<div class="d-flex">
-														<img src=" {{ asset('assets/images/products/'.$product['item']['photo']) }}"
+														<img src=" <?php echo e(asset('assets/images/products/'.$product['item']['photo'])); ?>"
 															height="80" width="80" class="p-1">
 
 													</div>
 												</div>
 												<div class="product-content">
 													<p class="name"><a
-															href="{{ route('front.product', $product['item']['slug']) }}"
-															target="_blank">{{ $product['item']['name'] }}</a></p>
+															href="<?php echo e(route('front.product', $product['item']['slug'])); ?>"
+															target="_blank"><?php echo e($product['item']['name']); ?></a></p>
 													<div class="unit-price">
-														<h5 class="label">{{ $langg->lang754 }} : </h5>
-														<p>{{ App\Models\Product::convertPrice($product['item']['price']) }}</p>
+														<h5 class="label"><?php echo e($langg->lang754); ?> : </h5>
+														<p><?php echo e(App\Models\Product::convertPrice($product['item']['price'])); ?></p>
 													</div>
-													@if(!empty($product['size']))
+													<?php if(!empty($product['size'])): ?>
 													<div class="unit-price">
-														<h5 class="label">{{ $langg->lang312 }} : </h5>
-														<p>{{ $product['size'] }}</p>
+														<h5 class="label"><?php echo e($langg->lang312); ?> : </h5>
+														<p><?php echo e($product['size']); ?></p>
 													</div>
-													@endif
-													@if(!empty($product['color']))
+													<?php endif; ?>
+													<?php if(!empty($product['color'])): ?>
 													<div class="unit-price">
-														<h5 class="label">{{ $langg->lang313 }} : </h5>
-														<span id="color-bar" style="border: 10px solid {{$product['color'] == "" ? "white" : '#'.$product['color']}};"></span>
+														<h5 class="label"><?php echo e($langg->lang313); ?> : </h5>
+														<span id="color-bar" style="border: 10px solid <?php echo e($product['color'] == "" ? "white" : '#'.$product['color']); ?>;"></span>
 													</div>
-													@endif
-													@if(!empty($product['keys']))
+													<?php endif; ?>
+													<?php if(!empty($product['keys'])): ?>
 
-													@foreach( array_combine(explode(',', $product['keys']), explode(',', $product['values']))  as $key => $value)
+													<?php $__currentLoopData = array_combine(explode(',', $product['keys']), explode(',', $product['values'])); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
 														<div class="quantity">
-															<h5 class="label">{{ ucwords(str_replace('_', ' ', $key))  }} : </h5>
-															<span class="qttotal">{{ $value }} </span>
+															<h5 class="label"><?php echo e(ucwords(str_replace('_', ' ', $key))); ?> : </h5>
+															<span class="qttotal"><?php echo e($value); ?> </span>
 														</div>
-													@endforeach
+													<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-													@endif
+													<?php endif; ?>
 													<div class="quantity">
-														<h5 class="label">{{ $langg->lang755 }} : </h5>
-														<span class="qttotal">{{ $product['qty'] }} </span>
+														<h5 class="label"><?php echo e($langg->lang755); ?> : </h5>
+														<span class="qttotal"><?php echo e($product['qty']); ?> </span>
 													</div>
 													<div class="total-price">
-														<h5 class="label">{{ $langg->lang756 }} : </h5>
-														<p>{{ App\Models\Product::convertPrice($product['price']) }}
+														<h5 class="label"><?php echo e($langg->lang756); ?> : </h5>
+														<p><?php echo e(App\Models\Product::convertPrice($product['price'])); ?>
+
 														</p>
 													</div>
 												</div>
 											</div>
 
 
-											@endforeach
+											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 										</div>
 
@@ -312,8 +318,8 @@
 										<div class="row">
 											<div class="col-lg-12 mt-3">
 												<div class="bottom-area">
-													<a href="javascript:;" id="step1-btn"  class="mybtn1 mr-3">{{ $langg->lang757 }}</a>
-													<a onclick="vfvalue()"  href="javascript:;" id="step3-btn"  class="mybtn1">{{ $langg->lang753 }}</a>
+													<a href="javascript:;" id="step1-btn"  class="mybtn1 mr-3"><?php echo e($langg->lang757); ?></a>
+													<a onclick="vfvalue()"  href="javascript:;" id="step3-btn"  class="mybtn1"><?php echo e($langg->lang753); ?></a>
 												</div>
 											</div>
 										</div>
@@ -324,9 +330,10 @@
 								<div class="content-box">
 									<div class="content">
 
-											<div class="billing-info-area {{ $digital == 1 ? 'd-none' : '' }}">
+											<div class="billing-info-area <?php echo e($digital == 1 ? 'd-none' : ''); ?>">
 															<h4 class="title">
-																	{{ $langg->lang758 }}
+																	<?php echo e($langg->lang758); ?>
+
 															</h4>
 													<ul class="info-list">
 														<li>
@@ -345,174 +352,38 @@
 											</div>
 											<div class="payment-information">
 													<h4 class="title">
-														{{ $langg->lang759 }}
+														<?php echo e($langg->lang759); ?>
+
 													</h4>
 												<div class="row">
 													<div class="col-lg-12">
 														<div class="nav flex-column"  role="tablist" aria-orientation="vertical">
-																												@if($gs->cod_check == 1)
-														 @if($digital == 0)
-															<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('cash.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'cod','slug2' => 0]) }}" id="v-pills-tab3-tab" data-toggle="pill" href="#v-pills-tab3" role="tab" aria-controls="v-pills-tab3" aria-selected="false">
+																												<?php if($gs->cod_check == 1): ?>
+														 <?php if($digital == 0): ?>
+															<a class="nav-link payment" data-val="" data-show="no" data-form="<?php echo e(route('cash.submit')); ?>" data-href="<?php echo e(route('front.load.payment',['slug1' => 'cod','slug2' => 0])); ?>" id="v-pills-tab3-tab" data-toggle="pill" href="#v-pills-tab3" role="tab" aria-controls="v-pills-tab3" aria-selected="false">
 																	<div class="icon">
 																			<span class="radio"></span>
 																	</div>
 																	<p>
-																			{{ $langg->lang762 }}
+																			<?php echo e($langg->lang762); ?>
 
-																		@if($gs->cod_text != null)
+
+																		<?php if($gs->cod_text != null): ?>
 
 																		<small>
-																				{{ $gs->cod_text }}
+																				<?php echo e($gs->cod_text); ?>
+
 																		</small>
 
-																		@endif
+																		<?php endif; ?>
 
 																	</p>
 															</a>
-														 @endif
-														@endif
-														{{--  @if($gs->paypal_check == 1)
-															<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('paypal.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'paypal','slug2' => 0]) }}" id="v-pills-tab1-tab" data-toggle="pill" href="#v-pills-tab1" role="tab" aria-controls="v-pills-tab1" aria-selected="true">
-																	<div class="icon">
-																			<span class="radio"></span>
-																	</div>
-																<p>
-																		{{ $langg->lang760 }}
-
-																	@if($gs->paypal_text != null)
-
-																	<small>
-																			{{ $gs->paypal_text }}
-																	</small>
-
-																	@endif
-
-																</p>
-															</a>
-														@endif
-														@if($gs->stripe_check == 1)
-															<a class="nav-link payment" data-val="" data-show="yes" data-form="{{route('stripe.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'stripe','slug2' => 0]) }}" id="v-pills-tab2-tab" data-toggle="pill" href="#v-pills-tab2" role="tab" aria-controls="v-pills-tab2" aria-selected="false">
-																	<div class="icon">
-																			<span class="radio"></span>
-																	</div>
-																	<p>
-																	{{ $langg->lang761 }}
-
-																		@if($gs->stripe_text != null)
-
-																		<small>
-																			{{ $gs->stripe_text }}
-																		</small>
-
-																		@endif
-
-																	</p>
-															</a>
-														@endif
-
-														@if($gs->is_instamojo == 1)
-															<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('instamojo.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'instamojo','slug2' => 0]) }}"  id="v-pills-tab4-tab" data-toggle="pill" href="#v-pills-tab4" role="tab" aria-controls="v-pills-tab4" aria-selected="false">
-																	<div class="icon">
-																			<span class="radio"></span>
-																	</div>
-																	<p>
-																			{{ $langg->lang763 }}
-
-																		@if($gs->instamojo_text != null)
-
-																		<small>
-																				{{ $gs->instamojo_text }}
-																		</small>
-
-																		@endif
-
-																	</p>
-															</a>
-															@endif
-															@if($gs->is_paytm == 1)
-																<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('paytm.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'paytm','slug2' => 0]) }}"  id="v-pills-tab5-tab" data-toggle="pill" href="#v-pills-tab5" role="tab" aria-controls="v-pills-tab5" aria-selected="false">
-																		<div class="icon">
-																				<span class="radio"></span>
-																		</div>
-																		<p>
-																				{{ $langg->paytm }}
-	
-																			@if($gs->paytm_text != null)
-	
-																			<small>
-																					{{ $gs->paytm_text }}
-																			</small>
-	
-																			@endif
-	
-																		</p>
-																</a>
-																@endif
-																@if($gs->is_razorpay == 1)
-																	<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('razorpay.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'razorpay','slug2' => 0]) }}"  id="v-pills-tab6-tab" data-toggle="pill" href="#v-pills-tab6" role="tab" aria-controls="v-pills-tab6" aria-selected="false">
-																			<div class="icon">
-																					<span class="radio"></span>
-																			</div>
-																			<p>
-																					
-																				{{ $langg->razorpay }}
-		
-																				@if($gs->razorpay_text != null)
-		
-																				<small>
-																						{{ $gs->razorpay_text }}
-																				</small>
-		
-																				@endif
-		
-																			</p>
-																	</a>
-																	@endif
-															@if($gs->is_paystack == 1)
-
-															<a class="nav-link payment" data-val="paystack" data-show="no" data-form="{{route('paystack.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'paystack','slug2' => 0]) }}" id="v-pills-tab7-tab" data-toggle="pill" href="#v-pills-tab7" role="tab" aria-controls="v-pills-tab7" aria-selected="false">
-																	<div class="icon">
-																			<span class="radio"></span>
-																	</div>
-																	<p>
-																			{{ $langg->lang764 }}
-
-																		@if($gs->paystack_text != null)
-
-																		<small>
-																				{{ $gs->paystack_text }}
-																		</small>
-
-																		@endif
-																	</p>
-															</a>
-
-															@endif
-
-
-															@if($gs->is_molly == 1)
-															<a class="nav-link payment" data-val="" data-show="no" data-form="{{route('molly.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'molly','slug2' => 0]) }}" id="v-pills-tab8-tab" data-toggle="pill" href="#v-pills-tab8" role="tab" aria-controls="v-pills-tab8" aria-selected="false">
-																	<div class="icon">
-																			<span class="radio"></span>
-																	</div>
-																	<p>
-																			{{ $langg->lang802 }}
-
-																		@if($gs->molly_text != null)
-
-																		<small>
-																				{{ $gs->molly_text }}
-																		</small>
-
-																		@endif
-																	</p>
-															</a>
-
-															@endif
-
-  --}}
-@if($digital == 0)
-<input value="{{$gateways[0]->title}}" type="hidden" name="method" id="mt">
+														 <?php endif; ?>
+														<?php endif; ?>
+														
+<?php if($digital == 0): ?>
+<input value="<?php echo e($gateways[0]->title); ?>" type="hidden" name="method" id="mt">
 <script>
 	loadP=(t,url)=>{
 		
@@ -532,82 +403,84 @@ document.getElementById('mt').value=t;
 	}
 </script> 
 
-@foreach($gateways as $gt)
+<?php $__currentLoopData = $gateways; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
  
-															<a onclick="loadP('{{$gt->title}}','{{ route('front.load.extra',['slug1' => $totalPrice,'slug2' => $gt->id]) }}')" class="nav-link payment" data-val="" data-show="yes" data-form="{{route('gateway.submit')}}" data-href="{{ route('front.load.payment',['slug1' => 'other','slug2' => $gt->id]) }}" id="v-pills-tab{{ $gt->id }}-tab" data-toggle="pill" href="#v-pills-tab{{ $gt->id }}" role="tab" aria-controls="v-pills-tab{{ $gt->id }}" aria-selected="false">
+															<a onclick="loadP('<?php echo e($gt->title); ?>','<?php echo e(route('front.load.extra',['slug1' => $totalPrice,'slug2' => $gt->id])); ?>')" class="nav-link payment" data-val="" data-show="yes" data-form="<?php echo e(route('gateway.submit')); ?>" data-href="<?php echo e(route('front.load.payment',['slug1' => 'other','slug2' => $gt->id])); ?>" id="v-pills-tab<?php echo e($gt->id); ?>-tab" data-toggle="pill" href="#v-pills-tab<?php echo e($gt->id); ?>" role="tab" aria-controls="v-pills-tab<?php echo e($gt->id); ?>" aria-selected="false">
 																	<div class="icon">
 																			<span class="radio"></span>
 																	</div>
 																	<p>
-																			{{ $gt->title }}
+																			<?php echo e($gt->title); ?>
 
-																		@if($gt->subtitle != null)
+
+																		<?php if($gt->subtitle != null): ?>
 
 																		<small>
-																				{{ $gt->subtitle }}
+																				<?php echo e($gt->subtitle); ?>
+
 																		</small>
 
-																		@endif
+																		<?php endif; ?>
 
 																	</p>
 															</a>
 
 
 
-@endforeach
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-@endif
+<?php endif; ?>
 
 														</div>
 													</div>
 													<div class="col-lg-12">
 													  <div class="pay-area d-none">
 														<div class="tab-content" id="v-pills-tabContent">
-															@if($gs->paypal_check == 1)
+															<?php if($gs->paypal_check == 1): ?>
 															<div class="tab-pane fade" id="v-pills-tab1" role="tabpanel" aria-labelledby="v-pills-tab1-tab">
 
 															</div>
-															@endif
-															@if($gs->stripe_check == 1)
+															<?php endif; ?>
+															<?php if($gs->stripe_check == 1): ?>
 															<div class="tab-pane fade" id="v-pills-tab2" role="tabpanel" aria-labelledby="v-pills-tab2-tab">
 															</div>
-															@endif
-															@if($gs->cod_check == 1)
-															@if($digital == 0)
+															<?php endif; ?>
+															<?php if($gs->cod_check == 1): ?>
+															<?php if($digital == 0): ?>
 															<div class="tab-pane fade" id="v-pills-tab3" role="tabpanel" aria-labelledby="v-pills-tab3-tab">
 															</div>
-															@endif
-															@endif
-															@if($gs->is_instamojo == 1)
+															<?php endif; ?>
+															<?php endif; ?>
+															<?php if($gs->is_instamojo == 1): ?>
 																<div class="tab-pane fade" id="v-pills-tab4" role="tabpanel" aria-labelledby="v-pills-tab4-tab">
 																</div>
-															@endif
-															@if($gs->is_paytm == 1)
+															<?php endif; ?>
+															<?php if($gs->is_paytm == 1): ?>
 																<div class="tab-pane fade" id="v-pills-tab5" role="tabpanel" aria-labelledby="v-pills-tab5-tab">
 																</div>
-															@endif
-															@if($gs->is_razorpay == 1)
+															<?php endif; ?>
+															<?php if($gs->is_razorpay == 1): ?>
 																<div class="tab-pane fade" id="v-pills-tab6" role="tabpanel" aria-labelledby="v-pills-tab6-tab">
 																</div>
-															@endif
-															@if($gs->is_paystack == 1)
+															<?php endif; ?>
+															<?php if($gs->is_paystack == 1): ?>
 																<div class="tab-pane fade" id="v-pills-tab7" role="tabpanel" aria-labelledby="v-pills-tab7-tab">
 																</div>
-															@endif
-															@if($gs->is_molly == 1)
+															<?php endif; ?>
+															<?php if($gs->is_molly == 1): ?>
 																<div class="tab-pane fade" id="v-pills-tab8" role="tabpanel" aria-labelledby="v-pills-tab8-tab">
 																</div>
-															@endif
+															<?php endif; ?>
 
-													@if($digital == 0)
-														@foreach($gateways as $gt)
+													<?php if($digital == 0): ?>
+														<?php $__currentLoopData = $gateways; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $gt): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-															<div class="tab-pane fade" id="v-pills-tab{{ $gt->id }}" role="tabpanel" aria-labelledby="v-pills-tab{{ $gt->id }}-tab">
+															<div class="tab-pane fade" id="v-pills-tab<?php echo e($gt->id); ?>" role="tabpanel" aria-labelledby="v-pills-tab<?php echo e($gt->id); ?>-tab">
 
 															</div>
 
-														@endforeach		
-													@endif												
+														<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>		
+													<?php endif; ?>												
 													</div>
 														</div>
 													</div>
@@ -618,8 +491,8 @@ document.getElementById('mt').value=t;
 												<div class="col-lg-12 mt-3">
 													<div class="bottom-area">
 
-															<a href="javascript:;" id="step2-btn" class="mybtn1 mr-3">{{ $langg->lang757 }}</a>
-															<button type="submit" id="final-btn" class="mybtn1">{{ $langg->lang753 }}</button>
+															<a href="javascript:;" id="step2-btn" class="mybtn1 mr-3"><?php echo e($langg->lang757); ?></a>
+															<button type="submit" id="final-btn" class="mybtn1"><?php echo e($langg->lang753); ?></button>
 													</div>
 
 												</div>
@@ -633,30 +506,30 @@ document.getElementById('mt').value=t;
 
                             <input type="hidden" id="shipping-cost" name="shipping_cost" value="0">
                             <input type="hidden" id="packing-cost" name="packing_cost" value="0">
-                            <input type="hidden" name="dp" value="{{$digital}}">
-                            <input type="hidden" name="tax" value="{{$gs->tax}}">
-                            <input type="hidden" name="totalQty" value="{{$totalQty}}">
+                            <input type="hidden" name="dp" value="<?php echo e($digital); ?>">
+                            <input type="hidden" name="tax" value="<?php echo e($gs->tax); ?>">
+                            <input type="hidden" name="totalQty" value="<?php echo e($totalQty); ?>">
 
-                            <input type="hidden" name="vendor_shipping_id" value="{{ $vendor_shipping_id }}">
-                            <input type="hidden" name="vendor_packing_id" value="{{ $vendor_packing_id }}">
-
-
-							@if(Session::has('coupon_total'))
-                            	<input type="hidden" name="total" id="grandtotal" value="{{ $totalPrice }}">
-                            	<input type="hidden" id="tgrandtotal" value="{{ $totalPrice }}">
-							@elseif(Session::has('coupon_total1'))
-								<input type="hidden" name="total" id="grandtotal" value="{{ preg_replace("/[^0-9,.]/", "", Session::get('coupon_total1') ) }}">
-								<input type="hidden" id="tgrandtotal" value="{{ preg_replace("/[^0-9,.]/", "", Session::get('coupon_total1') ) }}">
-							@else
-                            	<input type="hidden" name="total" id="grandtotal" value="{{round($totalPrice * $curr->value,2)}}">
-                            	<input type="hidden" id="tgrandtotal" value="{{round($totalPrice * $curr->value,2)}}">
-							@endif
+                            <input type="hidden" name="vendor_shipping_id" value="<?php echo e($vendor_shipping_id); ?>">
+                            <input type="hidden" name="vendor_packing_id" value="<?php echo e($vendor_packing_id); ?>">
 
 
-                            <input type="hidden" name="coupon_code" id="coupon_code" value="{{ Session::has('coupon_code') ? Session::get('coupon_code') : '' }}">
-                            <input type="hidden" name="coupon_discount" id="coupon_discount" value="{{ Session::has('coupon') ? Session::get('coupon') : '' }}">
-                            <input type="hidden" name="coupon_id" id="coupon_id" value="{{ Session::has('coupon') ? Session::get('coupon_id') : '' }}">
-                            <input type="hidden" name="user_id" id="user_id" value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->id : '' }}">
+							<?php if(Session::has('coupon_total')): ?>
+                            	<input type="hidden" name="total" id="grandtotal" value="<?php echo e($totalPrice); ?>">
+                            	<input type="hidden" id="tgrandtotal" value="<?php echo e($totalPrice); ?>">
+							<?php elseif(Session::has('coupon_total1')): ?>
+								<input type="hidden" name="total" id="grandtotal" value="<?php echo e(preg_replace("/[^0-9,.]/", "", Session::get('coupon_total1') )); ?>">
+								<input type="hidden" id="tgrandtotal" value="<?php echo e(preg_replace("/[^0-9,.]/", "", Session::get('coupon_total1') )); ?>">
+							<?php else: ?>
+                            	<input type="hidden" name="total" id="grandtotal" value="<?php echo e(round($totalPrice * $curr->value,2)); ?>">
+                            	<input type="hidden" id="tgrandtotal" value="<?php echo e(round($totalPrice * $curr->value,2)); ?>">
+							<?php endif; ?>
+
+
+                            <input type="hidden" name="coupon_code" id="coupon_code" value="<?php echo e(Session::has('coupon_code') ? Session::get('coupon_code') : ''); ?>">
+                            <input type="hidden" name="coupon_discount" id="coupon_discount" value="<?php echo e(Session::has('coupon') ? Session::get('coupon') : ''); ?>">
+                            <input type="hidden" name="coupon_id" id="coupon_id" value="<?php echo e(Session::has('coupon') ? Session::get('coupon_id') : ''); ?>">
+                            <input type="hidden" name="user_id" id="user_id" value="<?php echo e(Auth::guard('web')->check() ? Auth::guard('web')->user()->id : ''); ?>">
 							
 
 
@@ -664,70 +537,72 @@ document.getElementById('mt').value=t;
 
 				</div>
 
-				@if(Session::has('cart'))
+				<?php if(Session::has('cart')): ?>
 				<div class="col-lg-4">
 					<div class="right-area">
 						<div class="order-box">
-						<h4 class="title">{{ $langg->lang127 }}</h4>
+						<h4 class="title"><?php echo e($langg->lang127); ?></h4>
 						<ul class="order-list">
 							<li>
 							<p>
-								{{ $langg->lang128 }}
+								<?php echo e($langg->lang128); ?>
+
 							</p>
 							<P>
 								<b
-								class="cart-total">{{ Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00' }}</b>
+								class="cart-total"><?php echo e(Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00'); ?></b>
 							</P>
 							</li>
 
-							@if($gs->tax != 0)
+							<?php if($gs->tax != 0): ?>
 
 							<li>
 							<p>
-								{{ $langg->lang144 }}
+								<?php echo e($langg->lang144); ?>
+
 							</p>
 							<P>
-								<b> {{$gs->tax}}% </b>
+								<b> <?php echo e($gs->tax); ?>% </b>
 								
 							</P>
 							</li>
 
-							@endif
+							<?php endif; ?>
 
 
 
 
-												@if(Session::has('coupon'))
+												<?php if(Session::has('coupon')): ?>
 
 
 							<li class="discount-bar">
 							<p>
-								{{ $langg->lang145 }} <span class="dpercent">{{ Session::get('coupon_percentage') == 0 ? '' : '('.Session::get('coupon_percentage').')' }}</span>
+								<?php echo e($langg->lang145); ?> <span class="dpercent"><?php echo e(Session::get('coupon_percentage') == 0 ? '' : '('.Session::get('coupon_percentage').')'); ?></span>
 							</p>
 							<P>
-								@if($gs->currency_format == 0)
-									<b id="discount">{{ $curr->sign }}{{ Session::get('coupon') }}</b>
-								@else 
-									<b id="discount">{{ Session::get('coupon') }}{{ $curr->sign }}</b>
-								@endif
+								<?php if($gs->currency_format == 0): ?>
+									<b id="discount"><?php echo e($curr->sign); ?><?php echo e(Session::get('coupon')); ?></b>
+								<?php else: ?> 
+									<b id="discount"><?php echo e(Session::get('coupon')); ?><?php echo e($curr->sign); ?></b>
+								<?php endif; ?>
 							</P>
 							</li>
 
 
-												@else 
+												<?php else: ?> 
 
 
 							<li class="discount-bar d-none">
 							<p>
-								{{ $langg->lang145 }} <span class="dpercent"></span>
+								<?php echo e($langg->lang145); ?> <span class="dpercent"></span>
 							</p>
 							<P>
-								<b id="discount">{{ $curr->sign }}{{ Session::get('coupon') }}</b>
+								<b id="discount"><?php echo e($curr->sign); ?><?php echo e(Session::get('coupon')); ?></b>
 							</P>
 							</li>
 
 
-												@endif
+												<?php endif; ?>
 
 
 
@@ -736,22 +611,23 @@ document.getElementById('mt').value=t;
 
 		            <div class="total-price">
 		              <p>
-		                {{ $langg->lang131 }}
+		                <?php echo e($langg->lang131); ?>
+
 		              </p>
 		              <p>
 
-						@if(Session::has('coupon_total'))
-							@if($gs->currency_format == 0)
-								<span id="total-cost">{{ $curr->sign }}{{ $totalPrice }}</span>
-							@else 
-								<span id="total-cost">{{ $totalPrice }}{{ $curr->sign }}</span>
-							@endif
+						<?php if(Session::has('coupon_total')): ?>
+							<?php if($gs->currency_format == 0): ?>
+								<span id="total-cost"><?php echo e($curr->sign); ?><?php echo e($totalPrice); ?></span>
+							<?php else: ?> 
+								<span id="total-cost"><?php echo e($totalPrice); ?><?php echo e($curr->sign); ?></span>
+							<?php endif; ?>
 
-						@elseif(Session::has('coupon_total1'))
-							<span id="total-cost"> {{ Session::get('coupon_total1') }}</span>
-							@else
-							<span id="total-cost">{{ App\Models\Product::convertPrice($totalPrice) }}</span>
-						@endif
+						<?php elseif(Session::has('coupon_total1')): ?>
+							<span id="total-cost"> <?php echo e(Session::get('coupon_total1')); ?></span>
+							<?php else: ?>
+							<span id="total-cost"><?php echo e(App\Models\Product::convertPrice($totalPrice)); ?></span>
+						<?php endif; ?>
 
 		              </p>
 		            </div>
@@ -760,106 +636,109 @@ document.getElementById('mt').value=t;
 						<div class="cupon-box">
 
 							<div id="coupon-link">
-							<img src="{{ asset('assets/front/images/tag.png') }}">
-							{{ $langg->lang132 }}
+							<img src="<?php echo e(asset('assets/front/images/tag.png')); ?>">
+							<?php echo e($langg->lang132); ?>
+
 							</div>
 
 						    <form id="check-coupon-form" class="coupon">
-						        <input type="text" placeholder="{{ $langg->lang133 }}" id="code" required="" autocomplete="off">
-						        <button type="submit">{{ $langg->lang134 }}</button>
+						        <input type="text" placeholder="<?php echo e($langg->lang133); ?>" id="code" required="" autocomplete="off">
+						        <button type="submit"><?php echo e($langg->lang134); ?></button>
 						    </form>
 
 
 						</div>
 
-						@if($digital == 0)
+						<?php if($digital == 0): ?>
 
-						{{-- Shipping Method Area Start --}}
+						
 						<div class="packeging-area">
-								<h4 class="title">{{ $langg->lang765 }}</h4>
+								<h4 class="title"><?php echo e($langg->lang765); ?></h4>
 
-							@foreach($shipping_data as $data)
+							<?php $__currentLoopData = $shipping_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						
 								<div class="radio-design">
-										<input type="radio" class="shipping" id="free-shepping{{ $data->id }}" name="shipping" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
+										<input type="radio" class="shipping" id="free-shepping<?php echo e($data->id); ?>" name="shipping" value="<?php echo e(round($data->price * $curr->value,2)); ?>" <?php echo e(($loop->first) ? 'checked' : ''); ?>> 
 										<span class="checkmark"></span>
-										<label for="free-shepping{{ $data->id }}"> 
-												{{ $data->title }}
-												@if($data->price != 0)
-												+ {{ $curr->sign }}{{ round($data->price * $curr->value,2) }}
-												@endif
-												<small>{{ $data->subtitle }}</small>
+										<label for="free-shepping<?php echo e($data->id); ?>"> 
+												<?php echo e($data->title); ?>
+
+												<?php if($data->price != 0): ?>
+												+ <?php echo e($curr->sign); ?><?php echo e(round($data->price * $curr->value,2)); ?>
+
+												<?php endif; ?>
+												<small><?php echo e($data->subtitle); ?></small>
 										</label>
 								</div>
 
-							@endforeach		
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>		
 
 						</div>
-						{{-- Shipping Method Area End --}}
+						
 
-						{{-- Packeging Area Start --}}
+						
 						<div class="packeging-area">
 								<h4 class="title">Extra Charge</h4>
 								<span id="extraField"></span>
 						</div>
 						<div class="packeging-area">
-								<h4 class="title">{{ $langg->lang766 }}</h4>
+								<h4 class="title"><?php echo e($langg->lang766); ?></h4>
 
-							@foreach($package_data as $data)	
+							<?php $__currentLoopData = $package_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>	
 
 								<div class="radio-design">
-										<input type="radio" class="packing" id="free-package{{ $data->id }}" name="packeging" value="{{ round($data->price * $curr->value,2) }}" {{ ($loop->first) ? 'checked' : '' }}> 
+										<input type="radio" class="packing" id="free-package<?php echo e($data->id); ?>" name="packeging" value="<?php echo e(round($data->price * $curr->value,2)); ?>" <?php echo e(($loop->first) ? 'checked' : ''); ?>> 
 										<span class="checkmark"></span>
-										<label for="free-package{{ $data->id }}"> 
-												{{ $data->title }}
-												@if($data->price != 0)
-												+ {{ $curr->sign }}{{ round($data->price * $curr->value,2) }}
-												@endif
-												<small>{{ $data->subtitle }}</small>
+										<label for="free-package<?php echo e($data->id); ?>"> 
+												<?php echo e($data->title); ?>
+
+												<?php if($data->price != 0): ?>
+												+ <?php echo e($curr->sign); ?><?php echo e(round($data->price * $curr->value,2)); ?>
+
+												<?php endif; ?>
+												<small><?php echo e($data->subtitle); ?></small>
 										</label>
 								</div>
 
-							@endforeach	
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>	
 
 						</div>
-						{{-- Packeging Area End Start--}}
+						
 
-						{{-- Final Price Area Start--}}
+						
 						<div class="final-price">
-							<span>{{ $langg->lang767 }} :</span>
-						@if(Session::has('coupon_total'))
-							@if($gs->currency_format == 0)
-								<span id="final-cost">{{ $curr->sign }}{{ $totalPrice }}</span>
-							@else 
-								<span id="final-cost">{{ $totalPrice }}{{ $curr->sign }}</span>
-							@endif
+							<span><?php echo e($langg->lang767); ?> :</span>
+						<?php if(Session::has('coupon_total')): ?>
+							<?php if($gs->currency_format == 0): ?>
+								<span id="final-cost"><?php echo e($curr->sign); ?><?php echo e($totalPrice); ?></span>
+							<?php else: ?> 
+								<span id="final-cost"><?php echo e($totalPrice); ?><?php echo e($curr->sign); ?></span>
+							<?php endif; ?>
 
-						@elseif(Session::has('coupon_total1'))
-							<span id="final-cost"> {{ Session::get('coupon_total1') }}</span>
-							@else
-							<span id="final-cost">{{ App\Models\Product::convertPrice($totalPrice) }}</span>
-						@endif
+						<?php elseif(Session::has('coupon_total1')): ?>
+							<span id="final-cost"> <?php echo e(Session::get('coupon_total1')); ?></span>
+							<?php else: ?>
+							<span id="final-cost"><?php echo e(App\Models\Product::convertPrice($totalPrice)); ?></span>
+						<?php endif; ?>
 
 
 
 						</div>
-						{{-- Final Price Area End --}}
+						
 
-						@endif
+						<?php endif; ?>
 
-{{-- 						<a href="{{ route('front.checkout') }}" class="order-btn mt-4">
-							{{ $langg->lang135 }}
-						</a> --}}
+
 						</div>
 					</div>
 				</div>
-				@endif
+				<?php endif; ?>
 			</div>
 		</div>
 	</section>
 		<!-- Check Out Area End-->
 
-@if(isset($checked))
+<?php if(isset($checked)): ?>
 
 <!-- LOGIN MODAL -->
 <div class="modal fade" id="comment-log-reg1" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="comment-log-reg-Title" aria-hidden="true">
@@ -867,17 +746,19 @@ document.getElementById('mt').value=t;
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" aria-label="Close">
-          <a href="{{ url()->previous() }}"><span aria-hidden="true">&times;</span></a>
+          <a href="<?php echo e(url()->previous()); ?>"><span aria-hidden="true">&times;</span></a>
         </button>
       </div>
       <div class="modal-body">
 				<nav class="comment-log-reg-tabmenu">
 					<div class="nav nav-tabs" id="nav-tab" role="tablist">
 						<a class="nav-item nav-link login active" id="nav-log-tab" data-toggle="tab" href="#nav-log" role="tab" aria-controls="nav-log" aria-selected="true">
-							{{ $langg->lang197 }}
+							<?php echo e($langg->lang197); ?>
+
 						</a>
 						<a class="nav-item nav-link" id="nav-reg-tab" data-toggle="tab" href="#nav-reg" role="tab" aria-controls="nav-reg" aria-selected="false">
-							{{ $langg->lang198 }}
+							<?php echo e($langg->lang198); ?>
+
 						</a>
 					</div>
 				</nav>
@@ -885,56 +766,58 @@ document.getElementById('mt').value=t;
 					<div class="tab-pane fade show active" id="nav-log" role="tabpanel" aria-labelledby="nav-log-tab">
 				        <div class="login-area">
 				          <div class="header-area">
-				            <h4 class="title">{{ $langg->lang172 }}</h4>
+				            <h4 class="title"><?php echo e($langg->lang172); ?></h4>
 				          </div>
 				          <div class="login-form signin-form">
-				                @include('includes.admin.form-login')
-				            <form id="loginform" action="{{ route('user.login.submit') }}" method="POST">
-				              {{ csrf_field() }}
+				                <?php echo $__env->make('includes.admin.form-login', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+				            <form id="loginform" action="<?php echo e(route('user.login.submit')); ?>" method="POST">
+				              <?php echo e(csrf_field()); ?>
+
 				              <div class="form-input">
-				                <input type="email" name="email" placeholder="{{ $langg->lang173 }}" required="">
+				                <input type="email" name="email" placeholder="<?php echo e($langg->lang173); ?>" required="">
 				                <i class="icofont-user-alt-5"></i>
 				              </div>
 				              <div class="form-input">
-				                <input type="password" class="Password" name="password" placeholder="{{ $langg->lang174 }}" required="">
+				                <input type="password" class="Password" name="password" placeholder="<?php echo e($langg->lang174); ?>" required="">
 				                <i class="icofont-ui-password"></i>
 				              </div>
 				              <div class="form-forgot-pass">
 				                <div class="left">
 				              <input type="hidden" name="modal" value="1">
-				                  <input type="checkbox" name="remember"  id="mrp" {{ old('remember') ? 'checked' : '' }}>
-				                  <label for="mrp">{{ $langg->lang175 }}</label>
+				                  <input type="checkbox" name="remember"  id="mrp" <?php echo e(old('remember') ? 'checked' : ''); ?>>
+				                  <label for="mrp"><?php echo e($langg->lang175); ?></label>
 				                </div>
 				                <div class="right">
-				                  <a href="{{ route('user-forgot') }}">
-				                    {{ $langg->lang176 }}
+				                  <a href="<?php echo e(route('user-forgot')); ?>">
+				                    <?php echo e($langg->lang176); ?>
+
 				                  </a>
 				                </div>
 				              </div>
-				              <input id="authdata" type="hidden"  value="{{ $langg->lang177 }}">
-				              <button type="submit" class="submit-btn">{{ $langg->lang178 }}</button>
-					              @if(App\Models\Socialsetting::find(1)->f_check == 1 || App\Models\Socialsetting::find(1)->g_check == 1)
+				              <input id="authdata" type="hidden"  value="<?php echo e($langg->lang177); ?>">
+				              <button type="submit" class="submit-btn"><?php echo e($langg->lang178); ?></button>
+					              <?php if(App\Models\Socialsetting::find(1)->f_check == 1 || App\Models\Socialsetting::find(1)->g_check == 1): ?>
 					              <div class="social-area">
-					                  <h3 class="title">{{ $langg->lang179 }}</h3>
-					                  <p class="text">{{ $langg->lang180 }}</p>
+					                  <h3 class="title"><?php echo e($langg->lang179); ?></h3>
+					                  <p class="text"><?php echo e($langg->lang180); ?></p>
 					                  <ul class="social-links">
-					                    @if(App\Models\Socialsetting::find(1)->f_check == 1)
+					                    <?php if(App\Models\Socialsetting::find(1)->f_check == 1): ?>
 					                    <li>
-					                      <a href="{{ route('social-provider','facebook') }}"> 
+					                      <a href="<?php echo e(route('social-provider','facebook')); ?>"> 
 					                        <i class="fab fa-facebook-f"></i>
 					                      </a>
 					                    </li>
-					                    @endif
-					                    @if(App\Models\Socialsetting::find(1)->g_check == 1)
+					                    <?php endif; ?>
+					                    <?php if(App\Models\Socialsetting::find(1)->g_check == 1): ?>
 					                    <li>
-					                      <a href="{{ route('social-provider','google') }}">
+					                      <a href="<?php echo e(route('social-provider','google')); ?>">
 					                        <i class="fab fa-google-plus-g"></i>
 					                      </a>
 					                    </li>
-					                    @endif
+					                    <?php endif; ?>
 					                  </ul>
 					              </div>
-					              @endif
+					              <?php endif; ?>
 				            </form>
 				          </div>
 				        </div>
@@ -942,59 +825,60 @@ document.getElementById('mt').value=t;
 					<div class="tab-pane fade" id="nav-reg" role="tabpanel" aria-labelledby="nav-reg-tab">
                 <div class="login-area signup-area">
                     <div class="header-area">
-                        <h4 class="title">{{ $langg->lang181 }}</h4>
+                        <h4 class="title"><?php echo e($langg->lang181); ?></h4>
                     </div>
                     <div class="login-form signup-form">
-                       @include('includes.admin.form-login')
-                        <form id="registerform" action="{{route('user-register-submit')}}" method="POST">
-                          {{ csrf_field() }}
+                       <?php echo $__env->make('includes.admin.form-login', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                        <form id="registerform" action="<?php echo e(route('user-register-submit')); ?>" method="POST">
+                          <?php echo e(csrf_field()); ?>
+
 
                             <div class="form-input">
-                                <input type="text" class="User Name" name="name" placeholder="{{ $langg->lang182 }}" required="">
+                                <input type="text" class="User Name" name="name" placeholder="<?php echo e($langg->lang182); ?>" required="">
                                 <i class="icofont-user-alt-5"></i>
                             </div>
                             <div class="form-input">
-                                <input type="email" class="User Name" name="email" placeholder="{{ $langg->lang183 }}" required="">
+                                <input type="email" class="User Name" name="email" placeholder="<?php echo e($langg->lang183); ?>" required="">
                                 <i class="icofont-email"></i>
                             </div>
 
                             <div class="form-input">
-                                <input type="text" class="User Name" name="phone" placeholder="{{ $langg->lang184 }}" required="">
+                                <input type="text" class="User Name" name="phone" placeholder="<?php echo e($langg->lang184); ?>" required="">
                                 <i class="icofont-phone"></i>
                             </div>
 
                             <div class="form-input">
-                                <input type="text" class="User Name" name="address" placeholder="{{ $langg->lang185 }}" required="">
+                                <input type="text" class="User Name" name="address" placeholder="<?php echo e($langg->lang185); ?>" required="">
                                 <i class="icofont-location-pin"></i>
                             </div>
 
                             <div class="form-input">
-                                <input type="password" class="Password" name="password" placeholder="{{ $langg->lang186 }}" required="">
+                                <input type="password" class="Password" name="password" placeholder="<?php echo e($langg->lang186); ?>" required="">
                                 <i class="icofont-ui-password"></i>
                             </div>
 
                             <div class="form-input">
-                                <input type="password" class="Password" name="password_confirmation" placeholder="{{ $langg->lang187 }}" required="">
+                                <input type="password" class="Password" name="password_confirmation" placeholder="<?php echo e($langg->lang187); ?>" required="">
                                 <i class="icofont-ui-password"></i>
                             </div>
 
-@if($gs->is_capcha == 1)
+<?php if($gs->is_capcha == 1): ?>
 
                                     <ul class="captcha-area">
                                         <li>
-                                            <p><img class="codeimg1" src="{{asset("assets/images/capcha_code.png")}}" alt=""> <i class="fas fa-sync-alt pointer refresh_code "></i></p>
+                                            <p><img class="codeimg1" src="<?php echo e(asset("assets/images/capcha_code.png")); ?>" alt=""> <i class="fas fa-sync-alt pointer refresh_code "></i></p>
                                         </li>
                                     </ul>
 
                             <div class="form-input">
-                                <input type="text" class="Password" name="codes" placeholder="{{ $langg->lang51 }}" required="">
+                                <input type="text" class="Password" name="codes" placeholder="<?php echo e($langg->lang51); ?>" required="">
                                 <i class="icofont-refresh"></i>
                             </div>
 
-@endif
+<?php endif; ?>
 
-                            <input id="processdata" type="hidden"  value="{{ $langg->lang188 }}">
-                            <button type="submit" class="submit-btn">{{ $langg->lang189 }}</button>
+                            <input id="processdata" type="hidden"  value="<?php echo e($langg->lang188); ?>">
+                            <button type="submit" class="submit-btn"><?php echo e($langg->lang189); ?></button>
                         
                         </form>
                     </div>
@@ -1007,11 +891,11 @@ document.getElementById('mt').value=t;
 </div>
 <!-- LOGIN MODAL ENDS -->
 
-@endif
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
@@ -1036,13 +920,13 @@ document.getElementById('mt').value=t;
 <script type="text/javascript">
 
 var coup = 0;
-var pos = {{ $gs->currency_format }};
+var pos = <?php echo e($gs->currency_format); ?>;
 
-@if(isset($checked))
+<?php if(isset($checked)): ?>
 
 	$('#comment-log-reg1').modal('show');
 
-@endif
+<?php endif; ?>
 
 var mship = $('.shipping').length > 0 ? $('.shipping').first().val() : 0;
 var mpack = $('.packing').length > 0 ? $('.packing').first().val() : 0;
@@ -1059,10 +943,10 @@ ftotal = parseFloat(ftotal);
       }
 	  $("#totalBill").val(ftotal)
 		if(pos == 0){
-			$('#final-cost').html('{{ $curr->sign }}'+'<span id="totalAmount">'+ftotal+'</span>')
+			$('#final-cost').html('<?php echo e($curr->sign); ?>'+'<span id="totalAmount">'+ftotal+'</span>')
 		}
 		else{
-			$('#final-cost').html('<span id="totalAmount">'+ftotal+'</span>'+'{{ $curr->sign }}')
+			$('#final-cost').html('<span id="totalAmount">'+ftotal+'</span>'+'<?php echo e($curr->sign); ?>')
 		}
 
 $('#grandtotal').val(ftotal);
@@ -1097,10 +981,10 @@ ttotal = parseFloat(ttotal);
         ttotal = ttotal.toFixed(2);
       }
 		if(pos == 0){
-			$('#final-cost').html('{{ $curr->sign }}'+ttotal);
+			$('#final-cost').html('<?php echo e($curr->sign); ?>'+ttotal);
 		}
 		else{
-			$('#final-cost').html(ttotal+'{{ $curr->sign }}');
+			$('#final-cost').html(ttotal+'<?php echo e($curr->sign); ?>');
 		}
 	
 $('#grandtotal').val(ttotal);
@@ -1118,10 +1002,10 @@ ttotal = parseFloat(ttotal);
       }
 
 		if(pos == 0){
-			$('#final-cost').html('{{ $curr->sign }}'+ttotal);
+			$('#final-cost').html('<?php echo e($curr->sign); ?>'+ttotal);
 		}
 		else{
-			$('#final-cost').html(ttotal+'{{ $curr->sign }}');
+			$('#final-cost').html(ttotal+'<?php echo e($curr->sign); ?>');
 		}	
 
 
@@ -1154,12 +1038,12 @@ $('#grandtotal').val(ttotal);
                             $(".discount-bar").removeClass('d-none');
 
 							if(pos == 0){
-								$('#total-cost').html('{{ $curr->sign }}'+data[0]);
-								$('#discount').html('{{ $curr->sign }}'+data[2]);
+								$('#total-cost').html('<?php echo e($curr->sign); ?>'+data[0]);
+								$('#discount').html('<?php echo e($curr->sign); ?>'+data[2]);
 							}
 							else{
-								$('#total-cost').html(data[0]+'{{ $curr->sign }}');
-								$('#discount').html(data[2]+'{{ $curr->sign }}');
+								$('#total-cost').html(data[0]+'<?php echo e($curr->sign); ?>');
+								$('#discount').html(data[2]+'<?php echo e($curr->sign); ?>');
 							}
 								$('#grandtotal').val(data[0]);
 								$('#tgrandtotal').val(data[0]);
@@ -1181,10 +1065,10 @@ ttotal = parseFloat(ttotal);
       }
 
 		if(pos == 0){
-			$('#final-cost').html('{{ $curr->sign }}'+ttotal)
+			$('#final-cost').html('<?php echo e($curr->sign); ?>'+ttotal)
 		}
 		else{
-			$('#final-cost').html(ttotal+'{{ $curr->sign }}')
+			$('#final-cost').html(ttotal+'<?php echo e($curr->sign); ?>')
 		}	
 
                         	toastr.success(langg.coupon_found);
@@ -1337,10 +1221,10 @@ var ck = 0;
                 if(val == 0)
                 {
                 var handler = PaystackPop.setup({
-                  key: '{{$gs->paystack_key}}',
+                  key: '<?php echo e($gs->paystack_key); ?>',
                   email: $('input[name=email]').val(),
                   amount: total * 100,
-                  currency: "{{$curr->name}}",
+                  currency: "<?php echo e($curr->name); ?>",
                   ref: ''+Math.floor((Math.random() * 1000000000) + 1),
                   callback: function(response){
                     $('#ref_id').val(response.reference);
@@ -1374,4 +1258,5 @@ var ck = 0;
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.front', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

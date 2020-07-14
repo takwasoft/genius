@@ -412,9 +412,9 @@
 				<div class="col-md-6 col-lg-4 ">
 					<h3 class="text-light">Website Views</h3>
                     <hr>
-                    <p class="text-light">Today : 991 Views <br> Previous Day : 6389 Views <br> Total : 190189 Views</p>
+                    <p class="text-light">Today : {{$todayCount}} Views <br> Previous Day : {{$previousDayCount}} Views <br> Total : {{$totalCount}} Views</p>
                     <hr>
-                    <p class="text-light">Your IP : 103.63.159.122 </p>
+                    <p class="text-light">Your IP : {{$ip}} </p>
 				</div>
 				<div class="col-md-6 col-lg-4">
 					<h4 class="text-light">1000+ products are being added every day on our website.</h4>
@@ -1020,16 +1020,16 @@
     <!--End of Tawk.to Script-->
   @endif
 
-	@yield('scripts')
 
 </body>
+	@yield('scripts')
 <script>
     $(function() {
         $('.lazy').Lazy();
     });
            
 </script>
-	{{-- <script>
+	<script>
 	
             setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
@@ -1037,5 +1037,5 @@
   }});
 			},3000)
 
-	</script> --}}
+	</script>
 </html>

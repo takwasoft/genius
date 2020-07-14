@@ -1,9 +1,8 @@
-@extends('layouts.vendor')
-@section('styles')
+<?php $__env->startSection('styles'); ?>
 
-<link href="{{asset('assets/vendor/css/product.css')}}" rel="stylesheet"/>
-<link href="{{asset('assets/admin/css/jquery.Jcrop.css')}}" rel="stylesheet"/>
-<link href="{{asset('assets/admin/css/Jcrop-style.css')}}" rel="stylesheet"/> 
+<link href="<?php echo e(asset('assets/vendor/css/product.css')); ?>" rel="stylesheet"/>
+<link href="<?php echo e(asset('assets/admin/css/jquery.Jcrop.css')); ?>" rel="stylesheet"/>
+<link href="<?php echo e(asset('assets/admin/css/Jcrop-style.css')); ?>" rel="stylesheet"/> 
 <style> 
 .dropbtn {
   background-color: #4CAF50;
@@ -83,13 +82,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 .close span {
     font-size: 27px!important;
 }
-{{-- .main-cate-item li:hover .sub-cate-item{
-    display: block;
-}
 
-.categories-list-division li:hover .sub-cate-item-division{
-    display: block;
-} --}}
 .model-item li {
     border-top: 1px solid rgba(0, 0, 0, .125);
     padding: .7rem 0 .7rem .80rem;
@@ -187,29 +180,29 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 	}
 }
 </style>
-@endsection
-@section('content')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
 
 						<div class="content-area">
 							<div class="mr-breadcrumb">
 								<div class="row">
 									<div class="col-lg-12">
-											<h4 class="heading">{{ $langg->lang629 }} <a class="add-btn" href="{{ route('vendor-dashboard') }}"><i class="fas fa-arrow-left"></i> {{ $langg->lang550 }}</a></h4>
+											<h4 class="heading"><?php echo e($langg->lang629); ?> <a class="add-btn" href="<?php echo e(route('vendor-dashboard')); ?>"><i class="fas fa-arrow-left"></i> <?php echo e($langg->lang550); ?></a></h4>
 											<ul class="links">
                       <li>
-                        <a href="{{ route('vendor-dashboard') }}">{{ $langg->lang441 }}</a>
+                        <a href="<?php echo e(route('vendor-dashboard')); ?>"><?php echo e($langg->lang441); ?></a>
                       </li>
                       <li>
-                        <a href="javascript:;">{{ $langg->lang444 }} </a>
+                        <a href="javascript:;"><?php echo e($langg->lang444); ?> </a>
                       </li>
                       <li>
-                        <a href="{{ route('vendor-prod-index') }}">{{ $langg->lang446 }}</a>
+                        <a href="<?php echo e(route('vendor-prod-index')); ?>"><?php echo e($langg->lang446); ?></a>
                       </li>
                       <li>
-                        <a href="{{ route('select-area') }}">{{ $langg->lang445 }}</a>
+                        <a href="<?php echo e(route('select-area')); ?>"><?php echo e($langg->lang445); ?></a>
                       </li>
 												<li>
-													<a href="{{ route('vendor-prod-physical-create') }}">{{ $langg->lang629 }}</a>
+													<a href="<?php echo e(route('vendor-prod-physical-create')); ?>"><?php echo e($langg->lang629); ?></a>
 												</li>
 											</ul>
 									</div>
@@ -221,24 +214,25 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 										<div class="product-description">
 											<div class="body-area">
 
-	                      <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
-	                      <form id="geniusform" action="{{route('vendor-prod-store')}}" method="POST" enctype="multipart/form-data">
-	                        {{csrf_field()}}
-							@if(request()->area)
-								<input type="hidden" name="area_id" value="{{request()->area}}">
-							@endif
-                        @include('includes.vendor.form-both')
+	                      <div class="gocover" style="background: url(<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
+	                      <form id="geniusform" action="<?php echo e(route('vendor-prod-store')); ?>" method="POST" enctype="multipart/form-data">
+	                        <?php echo e(csrf_field()); ?>
+
+							<?php if(request()->area): ?>
+								<input type="hidden" name="area_id" value="<?php echo e(request()->area); ?>">
+							<?php endif; ?>
+                        <?php echo $__env->make('includes.vendor.form-both', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang632 }}* </h4>
-																<p class="sub-heading">{{ $langg->lang517 }}</p>
+																<h4 class="heading"><?php echo e($langg->lang632); ?>* </h4>
+																<p class="sub-heading"><?php echo e($langg->lang517); ?></p>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input type="text" class="input-field" placeholder="{{ $langg->lang632 }}" name="name" required="">
+														<input type="text" class="input-field" placeholder="<?php echo e($langg->lang632); ?>" name="name" required="">
 													</div>
 												</div>
 
@@ -246,15 +240,15 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 style="display:none" class="heading">{{ $langg->lang793 }}* </h4>
+																<h4 style="display:none" class="heading"><?php echo e($langg->lang793); ?>* </h4>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input style="display:none" type="text" class="input-field" placeholder="{{ $langg->lang794 }}" name="sku" required="" value="{{ str_random(3).substr(time(), 6,8).str_random(3) }}">
+														<input style="display:none" type="text" class="input-field" placeholder="<?php echo e($langg->lang794); ?>" name="sku" required="" value="<?php echo e(str_random(3).substr(time(), 6,8).str_random(3)); ?>">
 
                             <div class="checkbox-wrapper">
                               <input type="checkbox" name="product_condition_check" class="checkclick" id="conditionCheck" value="1">
-                              <label for="conditionCheck">{{ $langg->lang633 }}</label>
+                              <label for="conditionCheck"><?php echo e($langg->lang633); ?></label>
                             </div>
 
 													</div>
@@ -265,13 +259,13 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang634 }}*</h4>
+																<h4 class="heading"><?php echo e($langg->lang634); ?>*</h4>
 														</div>
 													</div>
 													<div class="col-lg-7">
 															<select name="product_condition">
-				                                                  <option value="2">{{ $langg->lang635 }}</option>
-				                                                  <option value="1">{{ $langg->lang636 }}</option>
+				                                                  <option value="2"><?php echo e($langg->lang635); ?></option>
+				                                                  <option value="1"><?php echo e($langg->lang636); ?></option>
 															</select>
 													</div>
 
@@ -289,9 +283,9 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 													<div class="col-lg-7">
 															<select  name="brand_id" >
 																	<option value="">Select Brand</option>
-                                  @foreach($brands as $brand)
-                                  <option  value="{{ $brand->id }}">{{$brand->name}}</option>
-                                  @endforeach
+                                  <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                  <option  value="<?php echo e($brand->id); ?>"><?php echo e($brand->name); ?></option>
+                                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                              </select>
 													</div>
 												</div>
@@ -333,14 +327,13 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 							                     <div class="row">
 							                        <div class="col-lg-4">
 							                          <div class="left-area">
-							                              <h4 class="heading">{{ $langg->lang642 }} *</h4>
+							                              <h4 class="heading"><?php echo e($langg->lang642); ?> *</h4>
 							                          </div>
 							                        </div>
 							                        <div class="col-lg-7">
 	<div class="row">
 	<div class="panel panel-body">
-		  {{--  <div class="span4 cropme text-center" id="landscape" style="width: 400px; height: 400px; border: 1px dashed black;"> 
-		</div>   --}}
+		  
 			<input required class="form-control-file upload" type="file" id="feature_photo" name="pht" value="">
  
 		</div>
@@ -360,13 +353,14 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 													<div class="col-lg-4">
 														<div class="left-area">
 																<h4 class="heading">
-																		{{ $langg->lang644 }} *
+																		<?php echo e($langg->lang644); ?> *
 																</h4>
 														</div>
 													</div>
 													<div class="col-lg-7">
 														<a href="#" class="set-gallery"  data-toggle="modal" data-target="#setgallery">
-																<i class="icofont-plus"></i> {{ $langg->lang645 }}
+																<i class="icofont-plus"></i> <?php echo e($langg->lang645); ?>
+
 														</a>
 													</div>
 												</div>
@@ -382,7 +376,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 														<ul class="list">
 															<li>
 																<input class="checkclick1" name="shipping_time_check" type="checkbox" id="check1" value="1">
-																<label for="check1">{{ $langg->lang646 }}</label>
+																<label for="check1"><?php echo e($langg->lang646); ?></label>
 															</li>
 														</ul>
 													</div>
@@ -395,11 +389,11 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang647 }}* </h4>
+																<h4 class="heading"><?php echo e($langg->lang647); ?>* </h4>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input type="text" class="input-field" placeholder="{{ $langg->lang647 }}" name="ship">
+														<input type="text" class="input-field" placeholder="<?php echo e($langg->lang647); ?>" name="ship">
 													</div>
 												</div>
 
@@ -416,7 +410,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 														<ul class="list">
 															<li>
 																<input name="size_check" type="checkbox" id="size-check" value="1">
-																<label for="size-check">{{ $langg->lang648 }}</label>
+																<label for="size-check"><?php echo e($langg->lang648); ?></label>
 															</li>
 														</ul>
 													</div>
@@ -432,27 +426,30 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 																		<div  class="row">
 																				<div class="col-md-4 col-sm-6">
 																					<label>
-																						{{ $langg->lang649 }} :
+																						<?php echo e($langg->lang649); ?> :
 																						<span>
-																							{{ $langg->lang650 }}
+																							<?php echo e($langg->lang650); ?>
+
 																						</span>
 																					</label>
-																					<input type="text" name="size[]" class="input-field" placeholder="{{ $langg->lang649 }}">
+																					<input type="text" name="size[]" class="input-field" placeholder="<?php echo e($langg->lang649); ?>">
 																				</div>
 																				<div class="col-md-4 col-sm-6">
 																						<label>
-																							{{ $langg->lang651 }} :
+																							<?php echo e($langg->lang651); ?> :
 																							<span>
-																								{{ $langg->lang652 }}
+																								<?php echo e($langg->lang652); ?>
+
 																							</span>
 																						</label>
 																					<input type="number" name="size_qty[]" class="input-field" placeholder="Size Qty" value="1" min="1">
 																				</div>
 																				<div class="col-md-4 col-sm-6">
 																						<label>
-																							{{ $langg->lang653 }} :
+																							<?php echo e($langg->lang653); ?> :
 																							<span>
-																								{{ $langg->lang654 }}
+																								<?php echo e($langg->lang654); ?>
+
 																							</span>
 																						</label>
 																					<input type="number" name="size_price[]" class="input-field" placeholder="Size Price" value="0" min="0">
@@ -461,7 +458,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 																		</div>
 																</div>
 
-																<a href="javascript:;" id="size-btn" class="add-more"><i class="fas fa-plus"></i>{{ $langg->lang655 }} </a>
+																<a href="javascript:;" id="size-btn" class="add-more"><i class="fas fa-plus"></i><?php echo e($langg->lang655); ?> </a>
 															</div>
 													</div>
 													</div>
@@ -475,7 +472,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 														<ul class="list">
 															<li>
 																<input class="checkclick1" name="color_check" type="checkbox" id="check3" value="1">
-																<label for="check3">{{ $langg->lang656 }}</label>
+																<label for="check3"><?php echo e($langg->lang656); ?></label>
 															</li>
 														</ul>
 													</div>
@@ -489,10 +486,11 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 															<div  class="col-lg-4">
 																<div class="left-area">
 																	<h4 class="heading">
-																		{{ $langg->lang657 }}*
+																		<?php echo e($langg->lang657); ?>*
 																	</h4>
 																	<p class="sub-heading">
-																		{{ $langg->lang658 }}
+																		<?php echo e($langg->lang658); ?>
+
 																	</p>
 																</div>
 															</div>
@@ -506,7 +504,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 											                                </div>
 											                         	</div>
 											                         </div>
-																	<a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i class="fas fa-plus"></i>{{ $langg->lang659 }} </a>
+																	<a href="javascript:;" id="color-btn" class="add-more mt-4 mb-3"><i class="fas fa-plus"></i><?php echo e($langg->lang659); ?> </a>
 															</div>
 														</div>
 
@@ -522,7 +520,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 														<ul class="list">
 															<li>
 																<input class="checkclick1" name="whole_check" type="checkbox" id="whole_check" value="1">
-																<label for="whole_check">{{ $langg->lang660 }}</label>
+																<label for="whole_check"><?php echo e($langg->lang660); ?></label>
 															</li>
 														</ul>
 													</div>
@@ -542,17 +540,17 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 																	<span class="remove whole-remove"><i class="fas fa-times"></i></span>
 																	<div class="row">
 																		<div class="col-lg-6">
-																		<input type="number" name="whole_sell_qty[]" class="input-field" placeholder="{{ $langg->lang661 }}" min="0">
+																		<input type="number" name="whole_sell_qty[]" class="input-field" placeholder="<?php echo e($langg->lang661); ?>" min="0">
 																		</div>
 
 																		<div class="col-lg-6">
-											                            <input type="number" name="whole_sell_discount[]" class="input-field" placeholder="{{ $langg->lang662 }}" min="0" />
+											                            <input type="number" name="whole_sell_discount[]" class="input-field" placeholder="<?php echo e($langg->lang662); ?>" min="0" />
 																		</div>
 																	</div>
 																</div>
 															</div>
 
-															<a href="javascript:;" id="whole-btn" class="add-fild-btn"><i class="icofont-plus"></i> {{ $langg->lang663 }}</a>
+															<a href="javascript:;" id="whole-btn" class="add-fild-btn"><i class="icofont-plus"></i> <?php echo e($langg->lang663); ?></a>
 														</div>
 													</div>
 												</div>
@@ -562,49 +560,49 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 													<div class="col-lg-4">
 														<div class="left-area">
 															<h4 class="heading">
-																{{ $langg->lang664 }}*
+																<?php echo e($langg->lang664); ?>*
 															</h4>
 															<p class="sub-heading">
 															
-																({{ $langg->lang665 }} {{$sign->name}})
-																@if($maxPrice!=-1)
+																(<?php echo e($langg->lang665); ?> <?php echo e($sign->name); ?>)
+																<?php if($maxPrice!=-1): ?>
 																<br>
 																<span class="text text-danger">
-																You can set the price maximum {{$maxPrice}} {{$sign->name}} in your current package
+																You can set the price maximum <?php echo e($maxPrice); ?> <?php echo e($sign->name); ?> in your current package
 																</span>
-															@endif 
+															<?php endif; ?> 
 															</p>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input max="{{$maxPrice}}" name="price" step="0.1" type="number" class="input-field" placeholder="{{ $langg->lang666 }}" required="" min="0">
+														<input max="<?php echo e($maxPrice); ?>" name="price" step="0.1" type="number" class="input-field" placeholder="<?php echo e($langg->lang666); ?>" required="" min="0">
 													</div>
 												</div>
 
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang667 }}*</h4>
-																<p class="sub-heading">{{ $langg->lang668 }}</p>
+																<h4 class="heading"><?php echo e($langg->lang667); ?>*</h4>
+																<p class="sub-heading"><?php echo e($langg->lang668); ?></p>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input name="previous_price" step="0.1" type="number" class="input-field" placeholder="{{ $langg->lang666 }}" min="0">
+														<input name="previous_price" step="0.1" type="number" class="input-field" placeholder="<?php echo e($langg->lang666); ?>" min="0">
 													</div>
 												</div>
 
 												<div class="row" id="stckprod">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang669 }}*</h4>
-																<p class="sub-heading">{{ $langg->lang670 }}</p>
+																<h4 class="heading"><?php echo e($langg->lang669); ?>*</h4>
+																<p class="sub-heading"><?php echo e($langg->lang670); ?></p>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input name="stock" type="text" class="input-field" placeholder="{{ $langg->lang666 }}">
+														<input name="stock" type="text" class="input-field" placeholder="<?php echo e($langg->lang666); ?>">
 														<div class="checkbox-wrapper">
 															<input type="checkbox" name="measure_check" class="checkclick" id="allowProductMeasurement" value="1">
-															<label for="allowProductMeasurement">{{ $langg->lang671 }}</label>
+															<label for="allowProductMeasurement"><?php echo e($langg->lang671); ?></label>
 														</div>
 													</div>
 												</div>
@@ -616,22 +614,22 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang672 }}*</h4>
+																<h4 class="heading"><?php echo e($langg->lang672); ?>*</h4>
 														</div>
 													</div>
 													<div class="col-lg-3">
 															<select id="product_measure">
-			                                                  <option value="">{{ $langg->lang673 }}</option>
-			                                                  <option value="Gram">{{ $langg->lang674 }}</option>
-			                                                  <option value="Kilogram">{{ $langg->lang675 }}</option>
-			                                                  <option value="Litre">{{ $langg->lang676 }}</option>
-			                                                  <option value="Pound">{{ $langg->lang677 }}</option>
-			                                                  <option value="Custom">{{ $langg->lang678 }}</option>
+			                                                  <option value=""><?php echo e($langg->lang673); ?></option>
+			                                                  <option value="Gram"><?php echo e($langg->lang674); ?></option>
+			                                                  <option value="Kilogram"><?php echo e($langg->lang675); ?></option>
+			                                                  <option value="Litre"><?php echo e($langg->lang676); ?></option>
+			                                                  <option value="Pound"><?php echo e($langg->lang677); ?></option>
+			                                                  <option value="Custom"><?php echo e($langg->lang678); ?></option>
 						                                     </select>
 													</div>
 													<div class="col-lg-1"></div>
 													<div class="col-lg-3 hidden" id="measure">
-														<input name="measure" type="text" id="measurement" class="input-field" placeholder="{{ $langg->lang679 }}">
+														<input name="measure" type="text" id="measurement" class="input-field" placeholder="<?php echo e($langg->lang679); ?>">
 													</div>
 												</div>
 
@@ -642,7 +640,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 													<div class="col-lg-4">
 														<div class="left-area">
 															<h4 class="heading">
-																	{{ $langg->lang680 }}*
+																	<?php echo e($langg->lang680); ?>*
 															</h4>
 														</div>
 													</div>
@@ -659,7 +657,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 													<div class="col-lg-4">
 														<div class="left-area">
 															<h4 class="heading">
-																	{{ $langg->lang681 }}*
+																	<?php echo e($langg->lang681); ?>*
 															</h4>
 														</div>
 													</div>
@@ -674,15 +672,15 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang682 }}*</h4>
-																<p class="sub-heading">{{ $langg->lang668 }}</p>
+																<h4 class="heading"><?php echo e($langg->lang682); ?>*</h4>
+																<p class="sub-heading"><?php echo e($langg->lang668); ?></p>
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<input  name="youtube" type="text" class="input-field" placeholder="{{ $langg->lang682 }}">
+														<input  name="youtube" type="text" class="input-field" placeholder="<?php echo e($langg->lang682); ?>">
 							                            <div class="checkbox-wrapper">
 							                              <input type="checkbox" name="seo_check" value="1" class="checkclick" id="allowProductSEO" value="1">
-							                              <label for="allowProductSEO">{{ $langg->lang683 }}</label>
+							                              <label for="allowProductSEO"><?php echo e($langg->lang683); ?></label>
 							                            </div>
 													</div>
 												</div>
@@ -693,7 +691,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 						                          <div class="row">
 						                            <div class="col-lg-4">
 						                              <div class="left-area">
-						                                  <h4 class="heading">{{ $langg->lang684 }} *</h4>
+						                                  <h4 class="heading"><?php echo e($langg->lang684); ?> *</h4>
 						                              </div>
 						                            </div>
 						                            <div class="col-lg-7">
@@ -706,13 +704,13 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 						                            <div class="col-lg-4">
 						                              <div class="left-area">
 						                                <h4 class="heading">
-						                                    {{ $langg->lang685 }} *
+						                                    <?php echo e($langg->lang685); ?> *
 						                                </h4>
 						                              </div>
 						                            </div>
 						                            <div class="col-lg-7">
 						                              <div class="text-editor">
-						                                <textarea name="meta_description" class="input-field" placeholder="{{ $langg->lang685 }}"></textarea>
+						                                <textarea name="meta_description" class="input-field" placeholder="<?php echo e($langg->lang685); ?>"></textarea>
 						                              </div>
 						                            </div>
 						                          </div>
@@ -727,7 +725,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 													<div class="col-lg-7">
 														<div class="featured-keyword-area">
 															<div class="heading-area">
-																<h4 class="title">{{ $langg->lang686 }}</h4>
+																<h4 class="title"><?php echo e($langg->lang686); ?></h4>
 															</div>
 
 															<div class="feature-tag-top-filds" id="feature-section">
@@ -735,7 +733,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 																	<span class="remove feature-remove"><i class="fas fa-times"></i></span>
 																	<div class="row">
 																		<div class="col-lg-6">
-																		<input type="text" name="features[]" class="input-field" placeholder="{{ $langg->lang687 }}">
+																		<input type="text" name="features[]" class="input-field" placeholder="<?php echo e($langg->lang687); ?>">
 																		</div>
 
 																		<div class="col-lg-6">
@@ -748,7 +746,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 																</div>
 															</div>
 
-															<a href="javascript:;" id="feature-btn" class="add-fild-btn"><i class="icofont-plus"></i> {{ $langg->lang688 }}</a>
+															<a href="javascript:;" id="feature-btn" class="add-fild-btn"><i class="icofont-plus"></i> <?php echo e($langg->lang688); ?></a>
 														</div>
 													</div>
 												</div>
@@ -757,7 +755,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 						                        <div class="row">
 						                          <div class="col-lg-4">
 						                            <div class="left-area">
-						                                <h4 class="heading">{{ $langg->lang689 }} *</h4>
+						                                <h4 class="heading"><?php echo e($langg->lang689); ?> *</h4>
 						                            </div>
 						                          </div>
 						                          <div class="col-lg-7">
@@ -773,7 +771,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 														</div>
 													</div>
 													<div class="col-lg-7 text-center">
-														<button class="addProductSubmit-btn" type="submit">{{ $langg->lang690 }}</button>
+														<button class="addProductSubmit-btn" type="submit"><?php echo e($langg->lang690); ?></button>
 													</div>
 												</div>
 											</form>
@@ -811,45 +809,45 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                     <div class="col-md-6">
                         <div class="categories-list model-item main-cate-item ">
                             <ul>
-                                @foreach($districts as $district)
+                                <?php $__currentLoopData = $districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
  
                                     <li class="brn">
-                                    <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
-                                        <span class="dnn float-left">{{$district->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-dis{{$district->id}}" class="lft sub-dis categories-list sub-cate-item" >
+                                    <a onclick="showItem('sub-dis',<?php echo e($district->id); ?>,'.dis','district_id',<?php echo e($district->id); ?>,['division_id','subdistrict_id'],'area_name','<?php echo e($district->name); ?>')" href="#" class="clearfix">
+                                        <span class="dnn float-left"><?php echo e($district->name); ?></span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis<?php echo e($district->id); ?>" class="lft sub-dis categories-list sub-cate-item" >
                                         <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
 
-                                         <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
-                                         @php($i=1)
-                                            @foreach($district->subdistricts as $subdistrict)
-                                                @if($i<6)
-                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
-                                                @elseif($i==6)
+                                         <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)"><?php echo e($district->name); ?> এর সবগুলো</a></li>
+                                         <?php ($i=1); ?>
+                                            <?php $__currentLoopData = $district->subdistricts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subdistrict): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php if($i<6): ?>
+                                                <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',<?php echo e($subdistrict->id); ?>,[],'area_name','<?php echo e($subdistrict->name); ?>','#my-modal')"><?php echo e($subdistrict->name); ?></a></li>
+                                                <?php elseif($i==6): ?>
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
     <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
     <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
-                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',<?php echo e($subdistrict->id); ?>,[],'area_name','<?php echo e($subdistrict->name); ?>','#my-modal')"><?php echo e($subdistrict->name); ?></a>
                                                 
-                                                @else
-                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
-                                                @endif
-                                                @if($i>=6&&$i==$district->subdistricts->count())
+                                                <?php else: ?>
+                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',<?php echo e($subdistrict->id); ?>,[],'area_name','<?php echo e($subdistrict->name); ?>','#my-modal')"><?php echo e($subdistrict->name); ?></a>
+                                                <?php endif; ?>
+                                                <?php if($i>=6&&$i==$district->subdistricts->count()): ?>
                                                    
                                                     </div>
                                                     </div>
-                                                    @endif
-                                                   @php($i++) 
-                                            @endforeach
+                                                    <?php endif; ?>
+                                                   <?php ($i++); ?> 
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             
                                         </ul>
                                     </div>
 
                                 </li>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                               
                             </ul>
                         </div>
@@ -859,26 +857,26 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
                             
-                               @foreach($divisions as $division)
+                               <?php $__currentLoopData = $divisions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $division): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li class="brn">
                                     <a
-									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
+									 onclick="showItem('dis',<?php echo e($division->id); ?>,'.sub-dis','division_id',<?php echo e($division->id); ?>,['district_id','subdistrict_id'],'area_name','<?php echo e($division->name); ?>')"
 									
 									 href="#" class="clearfix">
-                                        <span class="dnn float-left">{{$division->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                        <div id="dis{{$division->id}}" class="lft dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <span class="dnn float-left"><?php echo e($division->name); ?></span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div id="dis<?php echo e($division->id); ?>" class="lft dis categories-list sub-cate-item sub-cate-item-division" style="">
                                         <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
 
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
-                                         @php($i=1)
-                                            @foreach($division->districts as $district)
-                                                @if($i<6)
+                                         <li><a onclick="closeModal()" class="text-muted" href="#"><?php echo e($division->name); ?> বিভাগ এর সবগুলো</a></li>
+                                         <?php ($i=1); ?>
+                                            <?php $__currentLoopData = $division->districts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $district): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <?php if($i<6): ?>
 
                                                 <li><a class="text-muted" href="#"
-												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
-												>{{$district->name}}</a></li>
-@elseif($i==6)
+												onclick="showItem('','','','district_id',<?php echo e($district->id); ?>,[],'area_name','<?php echo e($district->name); ?>','#my-modal')"
+												><?php echo e($district->name); ?></a></li>
+<?php elseif($i==6): ?>
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
     <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
@@ -886,27 +884,27 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
-												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
-												>{{$district->name}}</a>
+												onclick="showItem('','','','district_id',<?php echo e($district->id); ?>,[],'area_name','<?php echo e($district->name); ?>','#my-modal')"
+												><?php echo e($district->name); ?></a>
                                                 
-                                                @else
+                                                <?php else: ?>
                                                     <a class="text-muted" href="#"
-												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
-												>{{$district->name}}</a>
-                                                @endif
-                                                @if($i>=6&&$i==$district->subdistricts->count())
+												onclick="showItem('','','','district_id',<?php echo e($district->id); ?>,[],'area_name','<?php echo e($district->name); ?>','#my-modal')"
+												><?php echo e($district->name); ?></a>
+                                                <?php endif; ?>
+                                                <?php if($i>=6&&$i==$district->subdistricts->count()): ?>
                                                    
                                                     </div>
                                                     </div>
-                                                    @endif
-                                                   @php($i++) 
+                                                    <?php endif; ?>
+                                                   <?php ($i++); ?> 
 
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             
                                         </ul>
                                     </div>
                                 </li>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
                     </div>
@@ -1044,9 +1042,9 @@ dModal=()=>{
       }
 	}
 </script>
-						{{-- End Area model --}}
+						
 
-							{{-- Start category modal  --}} 
+							 
 <div class="modal fade" id="my-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">
@@ -1070,27 +1068,24 @@ dModal=()=>{
                     <div class="col-md-6">
                         <div class="categories-list model-item main-cate-item model-item1">
                             <ul> 
-							@foreach($cats as $cat)
+							<?php $__currentLoopData = $cats; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li class="brn1">
-                                    <a onclick="showItem('sub-cat',{{$cat->id}},'.aos','category_id',{{$cat->id}},['subcategory_id'],'cat_name','{{$cat->name}}')" href="#" class="clearfix">
-                                        <span class="dnn float-left">{{$cat->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-cat{{$cat->id}}" class="lft categories-list sub-cat sub-cate-item" style="">
+                                    <a onclick="showItem('sub-cat',<?php echo e($cat->id); ?>,'.aos','category_id',<?php echo e($cat->id); ?>,['subcategory_id'],'cat_name','<?php echo e($cat->name); ?>')" href="#" class="clearfix">
+                                        <span class="dnn float-left"><?php echo e($cat->name); ?></span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-cat<?php echo e($cat->id); ?>" class="lft categories-list sub-cat sub-cate-item" style="">
                                         <ul class="sub-menu1 text-muted">
 										<button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
-										@foreach($cat->subs as $sub)
+										<?php $__currentLoopData = $cat->subs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li><a
-											onclick="showItem('','','.aos','subcategory_id',{{$sub->id}},[],'cat_name','{{$sub->name}}','#my-modal2')"
-											 class="text-muted" href="#">{{$sub->name}}</a></li>
-											{{--  @foreach($sub->childs as $child)
-                                            <li><a class="text-muted" href="http://google.com">{{$child->name}}</a></li>
+											onclick="showItem('','','.aos','subcategory_id',<?php echo e($sub->id); ?>,[],'cat_name','<?php echo e($sub->name); ?>','#my-modal2')"
+											 class="text-muted" href="#"><?php echo e($sub->name); ?></a></li>
 											
-										@endforeach  --}}
-										@endforeach
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </ul>
                                     </div>
                                 </li>
-								@endforeach
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
                     </div>
@@ -1101,13 +1096,13 @@ dModal=()=>{
         </div>
     </div>
 </div>
-						{{-- End Category model --}}
+						
 
 		<div class="modal fade" id="setgallery" tabindex="-1" role="dialog" aria-labelledby="setgallery" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered  modal-lg" role="document">
 				<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">{{ $langg->lang619 }}</h5>
+					<h5 class="modal-title" id="exampleModalCenterTitle"><?php echo e($langg->lang619); ?></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 					</button>
@@ -1117,13 +1112,13 @@ dModal=()=>{
 						<div class="row">
 							<div class="col-sm-6 text-right">
 								<div class="upload-img-btn">
-											<label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i>{{ $langg->lang620 }}</label>
+											<label for="image-upload" id="prod_gallery"><i class="icofont-upload-alt"></i><?php echo e($langg->lang620); ?></label>
 								</div>
 							</div>
 							<div class="col-sm-6">
-								<a href="javascript:;" class="upload-done" data-dismiss="modal"> <i class="fas fa-check"></i> {{ $langg->lang621 }}</a>
+								<a href="javascript:;" class="upload-done" data-dismiss="modal"> <i class="fas fa-check"></i> <?php echo e($langg->lang621); ?></a>
 							</div>
-							<div class="col-sm-12 text-center">( <small>{{ $langg->lang622 }}</small> )</div>
+							<div class="col-sm-12 text-center">( <small><?php echo e($langg->lang622); ?></small> )</div>
 						</div>
 					</div>
 					<div class="gallery-images">
@@ -1139,12 +1134,12 @@ dModal=()=>{
 			</div>
 		</div>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 
-		<script src="{{asset('assets/admin/js/jquery.Jcrop.js')}}"></script>
-		<script src="{{asset('assets/admin/js/jquery.SimpleCropper.js')}}"></script>
+		<script src="<?php echo e(asset('assets/admin/js/jquery.Jcrop.js')); ?>"></script>
+		<script src="<?php echo e(asset('assets/admin/js/jquery.SimpleCropper.js')); ?>"></script>
 
 <script type="text/javascript">
 
@@ -1197,7 +1192,7 @@ $('.cropme').click();
 </script>
 
 
-<script src="{{asset('assets/admin/js/product.js')}}"></script>
+<script src="<?php echo e(asset('assets/admin/js/product.js')); ?>"></script>
 <script>
  $(".upload").on("change", function() {
             var imgpath = $(this).parent().parent().prev().find('img');
@@ -1217,4 +1212,6 @@ $('.cropme').click();
             }
         }
 		</script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.vendor', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

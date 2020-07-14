@@ -18,6 +18,7 @@ use App\Models\AdminUserMessage;
 use App\Models\FavoriteSeller;
 use App\Models\Message;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,7 +37,14 @@ class AppServiceProvider extends ServiceProvider
             $settings->with('gs', DB::table('generalsettings')->find(1));
             $settings->with('ps', DB::table('pagesettings')->find(1));
             $settings->with('seo', DB::table('seotools')->find(1));
-            //  $todayCount=DailyCount::
+            $todayCount = DailyCount::whereDate('created_at', Carbon::today())->get()->count();
+            $previousDayCount = DailyCount::whereDate('created_at', Carbon::today()->subDays(1))->get()->count();
+            $totalCount = DailyCount::get()->count();
+            $settings->with('todayCount', $todayCount);
+            $settings->with('totalCount', $totalCount);
+            $settings->with('previousDayCount', $previousDayCount);
+            $settings->with('ip', \Request::getClientIp(true));
+
             if (auth()->check()) {
                 $settings->with('messageCount', Message::where('recieved_user', '=', auth()->user()->id)->where('seen', '=', 0)->count());
                 $settings->with('favCount', FavoriteSeller::where('user_id', '=', auth()->user()->id)->count());

@@ -255,7 +255,7 @@
                                 <ul>
                                     <li><strong><a href="mailto:">{{$ps->email}}</a></strong>
                                     </li> 
-                                    <li><strong><a href="{{route('user-message-index')}}">Ticketio</a></strong> - our ticketing support platform</li>
+                                    
                                 </ul>
                             </div>
                             <!-- /.col-sm-4 -->

@@ -45,9 +45,15 @@
 								<p class="text-left" style="font-size:20px"><strong class="rupees">{{$product->price}} BDT</strong></p>
 							</div>
 							<div class="add-cart float-right">
+								@if(!$product->emptyStock())
 								<a style="background: red;" class="add-to-cart-a " href="{{ route('product.cart.quickadd',$product->id) }}">
 																	Buy Now
 																</a>
+								@else
+								<a style="background: red;" class="add-to-cart-a " href="javascript::void(0)">
+																	Out Of Stock
+																</a>
+								@endif
 							</div>
 							<div class="clear"></div>
 						</div>

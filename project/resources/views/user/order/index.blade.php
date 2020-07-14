@@ -44,7 +44,7 @@
 															</div>
 														</td>
 														<td>
-															<a href="{{route('user-order',$order->id)}}">
+															<a class="btn btn-primary btn-sm" href="{{route('user-order',$order->id)}}">
 																	{{ $langg->lang283 }}
 															</a>
 														</td>

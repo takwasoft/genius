@@ -45,9 +45,15 @@
 								<p class="text-left" style="font-size:20px"><strong class="rupees"><?php echo e($product->price); ?> BDT</strong></p>
 							</div>
 							<div class="add-cart float-right">
+								<?php if(!$product->emptyStock()): ?>
 								<a style="background: red;" class="add-to-cart-a " href="<?php echo e(route('product.cart.quickadd',$product->id)); ?>">
 																	Buy Now
 																</a>
+								<?php else: ?>
+								<a style="background: red;" class="add-to-cart-a " href="javascript::void(0)">
+																	Out Of Stock
+																</a>
+								<?php endif; ?>
 							</div>
 							<div class="clear"></div>
 						</div>

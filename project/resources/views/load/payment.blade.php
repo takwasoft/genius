@@ -37,6 +37,7 @@
                                 </div>
                             </div>
 @endforeach
+@php($extraTotal=0)
  @foreach($extraCharges as $field)
  @if($total>=$field->from && $total<=$field->to)
 <div class="item form-group">
@@ -51,9 +52,19 @@
                                      name="extra[{{$field->id}}]"  class="form-control" type="text"  required>
                                 </div>
                             </div>
+                            @php($extraTotal+=$field->fixed==1?$field->charge:$field->charge*$total*0.01)
+                            
+                            
+                            
                             @endif
-@endforeach
 
+@endforeach
+<script>
+                              if(document.getElementById("extraCharge")){
+                                document.getElementById("extraCharge").value="{{$extraTotal}}";
+                                document.getElementById("extraField").innerHTML="{{$subtitle}} ৳{{$extraTotal}} "
+                              }
+                            </script>
 @endif
 
 
