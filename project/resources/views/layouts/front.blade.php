@@ -85,7 +85,7 @@
     <div class="subscribe-preloader-wrap" id="subscriptionForm" style="display: none;">
         <div class="subscribePreloader__thumb" style="background-image: url({{asset('assets/images/'.$gs->popup_background)}});">
             <span class="preload-close"><i class="fas fa-times"></i></span>
-            <div class="subscribePreloader__text text-center">
+            <div class="text-center subscribePreloader__text">
                 <h1>{{$gs->popup_title}}</h1>
                 <p>{{$gs->popup_text}}</p>
                 <form action="{{route('front.subscribe')}}" id="subscribeform" method="POST">
@@ -185,7 +185,7 @@
 	<!-- Logo Header Area Start -->
 	<section class="logo-header">
 		<div class="container">
-			<div class="row mt-3 mt-sm-0">
+			<div class="mt-3 row mt-sm-0">
 				
 				<div class="col-xl-8 col-md-7 col-12 remove-padding">
 					<div class="search-box-wrapper">
@@ -219,7 +219,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-md-5 col-12 mt-3 mt-md-0 remove-padding">
+				<div class="mt-3 col-xl-4 col-md-5 col-12 mt-md-0 remove-padding">
 				<div class="input-group cart-sm-item" id="d-cart">
 					<span class="input-group-btn"style=" border-radius: 50px;border-top-right-radius: 0; border-bottom-right-radius: 0;background: #e2dede;">
 						<button class="btn " type="button">
@@ -257,7 +257,7 @@
 	<!-- start brand area  --->
 	 <div id="brand-area mb-2">
             <div class="container">
-                <div class="row mb-3">
+                <div class="mb-3 row">
 					<div class="col-md-4">
                     <a href="{{route('front.index')}}"><img src="{{ asset('assets/images/'.$gs->logo)}}"  alt="" width="90%" /></a>
                 </div>
@@ -425,46 +425,40 @@
                         Subscribe
                     </button>
 					</form>
-					<div class="fotter-social-links mt-2">
+					<div class="mt-2 fotter-social-links">
 						<h5 class="text-light">Or, keep eye on</h5>
 						<ul>
 
                                	     @if(App\Models\Socialsetting::find(1)->f_status == 1)
                                       <li>
-                                        <a href="{{ App\Models\Socialsetting::find(1)->facebook }}" class="facebook" target="_blank">
-                                            <i class="fab fa-facebook-f"></i>
+                                        <a href="{{ App\Models\Socialsetting::find(1)->facebook }}" class="facebook fb_social_icon" target="_blank">
+                                            <i class="fab fa-facebook-square fa-3x" aria-hidden="true"></i>
                                         </a>
                                       </li>
                                       @endif
 
-                                      @if(App\Models\Socialsetting::find(1)->g_status == 1)
-                                      <li>
-                                        <a href="{{ App\Models\Socialsetting::find(1)->gplus }}" class="google-plus" target="_blank">
-                                            <i class="fab fa-google-plus-g"></i>
-                                        </a>
-                                      </li>
-                                      @endif
+
 
                                       @if(App\Models\Socialsetting::find(1)->t_status == 1)
                                       <li>
-                                        <a href="{{ App\Models\Socialsetting::find(1)->twitter }}" class="twitter" target="_blank">
-                                            <i class="fab fa-twitter"></i>
+                                        <a href="{{ App\Models\Socialsetting::find(1)->twitter }}" class="twitter tw_social_icon" target="_blank">
+                                            <i class="fab fa-twitter-square fa-3x" aria-hidden="true"></i>
                                         </a>
                                       </li>
                                       @endif
 
                                       @if(App\Models\Socialsetting::find(1)->l_status == 1)
                                       <li>
-                                        <a href="{{ App\Models\Socialsetting::find(1)->linkedin }}" class="linkedin" target="_blank">
-                                            <i class="fab fa-linkedin-in"></i>
+                                        <a href="{{ App\Models\Socialsetting::find(1)->linkedin }}" class="linkedin lk_social_icon" target="_blank">
+                                            <i class="fab fa-linkedin fa-3x" aria-hidden="true"></i>
                                         </a>
                                       </li>
                                       @endif
 
                                       @if(App\Models\Socialsetting::find(1)->d_status == 1)
                                       <li>
-                                        <a href="{{ App\Models\Socialsetting::find(1)->dribble }}" class="dribbble" target="_blank">
-                                            <i class="fab fa-dribbble"></i>
+                                        <a href="{{ App\Models\Socialsetting::find(1)->dribble }}" class="youtube yt_social_icon" target="_blank">
+                                           <i class="fab fa-youtube-square fa-3x" aria-hidden="true"></i>
                                         </a>
                                       </li>
                                       @endif
@@ -500,7 +494,7 @@
 	<!-- LOGIN MODAL -->
 	<div class="modal fade" id="comment-log-reg" tabindex="-1" role="dialog" aria-labelledby="comment-log-reg-Title"
 		aria-hidden="true"> 
-		<div class="modal-dialog  modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -660,7 +654,7 @@
 	<!-- FORGOT MODAL -->
 	<div class="modal fade" id="forgot-modal" tabindex="-1" role="dialog" aria-labelledby="comment-log-reg-Title"
 		aria-hidden="true">
-		<div class="modal-dialog  modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -703,7 +697,7 @@
 
 <!-- VENDOR LOGIN MODAL -->
 	<div class="modal fade" id="vendor-login" tabindex="-1" role="dialog" aria-labelledby="vendor-login-Title" aria-hidden="true">
-  <div class="modal-dialog  modal-dialog-centered" style="transition: .5s;" role="document">
+  <div class="modal-dialog modal-dialog-centered" style="transition: .5s;" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -948,7 +942,7 @@
 
 <!-- Order Tracking modal Start-->
     <div class="modal fade" id="track-order-modal" tabindex="-1" role="dialog" aria-labelledby="order-tracking-modal" aria-hidden="true">
-        <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
             <div class="modal-header">
                 <h6 class="modal-title"> <b>{{ $langg->lang772 }}</b> </h6>

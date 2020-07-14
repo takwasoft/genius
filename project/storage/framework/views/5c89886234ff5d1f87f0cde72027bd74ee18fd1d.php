@@ -214,12 +214,15 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                         <?php if(!empty(request()->input('sort'))): ?>
                           <input type="hidden" name="sort" value="<?php echo e(request()->input('sort')); ?>">
                         <?php endif; ?>
-        
+        <h2 class="filter-title-2 filter-title-2-cate">filter by price</h2>
                         <div class="price-range-block">
                             <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                            
                             <div class="livecount">
                               <input type="number" min=0  name="min"  id="min_price" class="price-range-field" />
+                              <br>
                               <span><?php echo e($langg->lang62); ?></span>
+                              <br>
                               <input type="number" min=0  name="max" id="max_price" class="price-range-field" />
                             </div>
                           </div>
@@ -240,23 +243,23 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                <?php echo $__env->make('includes.filter', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                <div class="categori-item-area category-slide">
                     <div class="col" style="padding-left:10px;padding-right:10px;">
-                        <div class="product-slide4 mb-4">
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="<?php echo e(asset('assets/images/brand/cropped.jpg')); ?>" alt="" />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="<?php echo e(asset('assets/images/brand/cropped1.jpg')); ?>" alt="" />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="<?php echo e(asset('assets/images/brand/cropped3.jpg')); ?>" alt="" />
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="product-slide4 mb-4">-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="<?php echo e(asset('assets/images/brand/cropped.jpg')); ?>" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="<?php echo e(asset('assets/images/brand/cropped1.jpg')); ?>" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="<?php echo e(asset('assets/images/brand/cropped3.jpg')); ?>" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--</div>-->
                             <div class="product-slide2">
                                 	<?php $__currentLoopData = $topAdProducts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<?php echo $__env->make('includes.product.sell', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -318,14 +321,14 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                                                 <?php elseif($i==6): ?>
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
-    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
                                                     <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',<?php echo e($subdistrict->id); ?>,[],'area_name','<?php echo e($subdistrict->name); ?>','#my-modal')"><?php echo e($subdistrict->name); ?></a>
                                                 
                                                 <?php else: ?>
-                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',<?php echo e($subdistrict->id); ?>,[],'area_name','<?php echo e($subdistrict->name); ?>','#my-modal')"><?php echo e($subdistrict->name); ?></a>
+                                                    <a class="text-muted " href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',<?php echo e($subdistrict->id); ?>,[],'area_name','<?php echo e($subdistrict->name); ?>','#my-modal')"><?php echo e($subdistrict->name); ?></a>
                                                 <?php endif; ?>
                                                 <?php if($i>=6&&$i==$district->subdistricts->count()): ?>
                                                    
@@ -371,8 +374,8 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 <?php elseif($i==6): ?>
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
-    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+    <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv(this)"><i class="div fas fa-angle-down ">
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
@@ -412,6 +415,9 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 
 
 <?php $__env->startSection('scripts'); ?>
+<script>
+
+</script>
 <script>
 closeModal=()=>{
   $("#my-modal").modal('toggle');
@@ -454,11 +460,9 @@ dModal=()=>{
 
       }
 	} 
-</script>
-<script>
-
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function myFunction(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdown").classList.toggle("show");
   if($(".dist.fa-angle-up").length>0)
   {
     $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
@@ -468,14 +472,14 @@ function myFunction() {
   }
 }
 
-function filterFunction() {
-  if(document.getElementById("myDropdown").classList.length==1){
-    document.getElementById("myDropdown").classList.add("show")
+function filterFunction(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -486,8 +490,9 @@ function filterFunction() {
     }
   }
 }
-function myFunctionDiv() {
-  document.getElementById("myDropdownDiv").classList.toggle("show");
+function myFunctionDiv(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdownDiv").classList.toggle("show");
   if($(".fa-angle-up.div").length>0)
   {
     $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
@@ -496,14 +501,14 @@ function myFunctionDiv() {
     $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
   }
 }
-function filterFunctionDiv() {
-  if(document.getElementById("myDropdownDiv").classList.length==1){
-    document.getElementById("myDropdownDiv").classList.add("show")
+function filterFunctionDiv(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInputDiv");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdownDiv");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -648,8 +653,8 @@ function filterFunctionDiv() {
       range: true,
       orientation: "horizontal",
       min: 0,
-      max: 50000,
-      values: [<?php echo e(isset($_GET['min']) ? $_GET['min'] : '10000'); ?>, <?php echo e(isset($_GET['max']) ? $_GET['max'] : '40000'); ?>],
+      max: 10000000,
+      values: [<?php echo e(isset($_GET['min']) ? $_GET['min'] : '0'); ?>, <?php echo e(isset($_GET['max']) ? $_GET['max'] : '10000000'); ?>],
       step: 5,
 
       slide: function (event, ui) {

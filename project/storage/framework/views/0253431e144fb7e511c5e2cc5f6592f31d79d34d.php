@@ -1,8 +1,12 @@
 						<div class="item-filter" style="display:inline">
 							<div class="row">
 							<div class="col-7">
-							 <form action="<?php echo e(route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')])); ?>">
-                        <div class="form-group input-group">
+							 <form action="<?php echo e(route('front.vendor', Request::route('category'))); ?>/<?php echo e(str_replace(' ', '-', $vendor->shop_name)); ?>">
+							 <?php if(!empty(request()->input('sort'))): ?>
+                    <input type="hidden" name="sort" value="<?php echo e(request()->input('sort')); ?>" />
+                  <?php endif; ?>
+				  		
+                        <div class="form-group input-group"> 
                             <input value="<?php echo e(request()->input('search')); ?>" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
                             <div class="input-group-append">
                                 <input

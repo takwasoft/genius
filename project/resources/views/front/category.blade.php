@@ -218,9 +218,10 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                         @if (!empty(request()->input('sort')))
                           <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
                         @endif
-        
+        <h2 class="filter-title-2 filter-title-2-cate">filter by price</h2>
                         <div class="price-range-block">
                             <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
+                            
                             <div class="livecount">
                               <input type="number" min=0  name="min"  id="min_price" class="price-range-field" />
                               <br>

@@ -26,7 +26,7 @@
   <section class="bg-muted">
     <div class="container">
    <div style="border:1px solid #e6e4e4;">
-    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4; border-radius:0">About</button>
+    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4;border-left:1px solid  #e6e4e4; border-radius:0">About</button>
     
     <?php if($contact_hide==0): ?>
 <button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0;margin-left:-4px;">Contact</button>
@@ -64,7 +64,7 @@
                 <div class="row">
 
                   <?php $__currentLoopData = $vprods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $prod): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <?php echo $__env->make('includes.product.product', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    <?php echo $__env->make('includes.product.product', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> 
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 </div>
@@ -275,7 +275,9 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-
+<script>
+    
+</script>
 <script type="text/javascript">
 sendEmail = () => {
           if(!$("#name").val()){
@@ -317,8 +319,8 @@ sendEmail = () => {
     range: true,
     orientation: "horizontal",
     min: 0,
-    max: 50000,
-    values: [<?php echo e(isset($_GET['min']) ? $_GET['min'] : '10000'); ?>, <?php echo e(isset($_GET['max']) ? $_GET['max'] : '40000'); ?>],
+    max: 10000000,
+    values: [<?php echo e(isset($_GET['min']) ? $_GET['min'] : '0'); ?>, <?php echo e(isset($_GET['max']) ? $_GET['max'] : '10000000'); ?>],
     step: 5,
 
     slide: function (event, ui) {

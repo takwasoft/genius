@@ -26,7 +26,7 @@
   <section class="bg-muted">
     <div class="container">
    <div style="border:1px solid #e6e4e4;">
-    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4; border-radius:0">About</button>
+    <div class="offset-3"><button data-toggle="modal" data-target=".bd-example-modal-lg" class="btn vendor-btn" style="border-right:1px solid  #e6e4e4;border-left:1px solid  #e6e4e4; border-radius:0">About</button>
     
     @if($contact_hide==0)
 <button  class="btn vendor-btn" data-toggle="modal" data-target=".bd-example-modal-lg1" style="border-right:1px solid  #e6e4e4; border-radius:0;margin-left:-4px;">Contact</button>
