@@ -141,8 +141,8 @@ class GeniusMailer
             });
         }
         catch (\Exception $e){
-            die($e->getMessage());
-            // return $e->getMessage();
+           // die($e->getMessage());
+             return $e->getMessage();
         }
         return true;
     }

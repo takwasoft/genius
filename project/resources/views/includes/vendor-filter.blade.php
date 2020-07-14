@@ -1,8 +1,12 @@
 						<div class="item-filter" style="display:inline">
 							<div class="row">
 							<div class="col-7">
-							 <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
-                        <div class="form-group input-group">
+							 <form action="{{ route('front.vendor', Request::route('category')) }}/{{str_replace(' ', '-', $vendor->shop_name)}}">
+							 @if (!empty(request()->input('sort')))
+                    <input type="hidden" name="sort" value="{{ request()->input('sort') }}" />
+                  @endif
+				  		
+                        <div class="form-group input-group"> 
                             <input value="{{ request()->input('search') }}" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
                             <div class="input-group-append">
                                 <input

@@ -23,7 +23,14 @@ class Subcategory extends Model
     {
         return $this->hasMany('App\Models\Product');
     }
-
+    public function boostProducts()
+    {
+        return $this->hasMany('App\Models\Product')->where('boost','=','1')->where('boost_expired','>',\Carbon\Carbon::now())->orderBy('id','desc');
+    }
+    public function topAdProducts()
+    {
+        return $this->hasMany('App\Models\Product')->where('top_ad','=','1')->where('top_ad_expired','>',\Carbon\Carbon::now())->orderBy('id','desc');
+    }
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = str_replace(' ', '-', $value);

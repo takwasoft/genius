@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Classes\GeniusMailer;
+use App\DailyCount;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
@@ -10,11 +11,12 @@ use App\Models\Brand;
 use App\Models\BrandCategory;
 use App\Models\Category;
 use App\Models\Counter;
-use App\Models\Generalsetting; 
+use App\Models\Generalsetting;
 use App\Models\Order;
 use App\Models\Pagesetting;
 use App\Models\Product;
-use App\Models\Subscriber; 
+use App\Models\Service;
+use App\Models\Subscriber;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,52 +30,63 @@ class FrontendController extends Controller
     public function __construct()
     {
         $this->auth_guests();
-        if(isset($_SERVER['HTTP_REFERER'])){
-            $referral = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
-            if ($referral != $_SERVER['SERVER_NAME']){
 
-                $brwsr = Counter::where('type','browser')->where('referral',$this->getOS());
-                if($brwsr->count() > 0){
+        if (isset($_SERVER['HTTP_REFERER'])) {
+            $referral = parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST);
+            if ($referral != $_SERVER['SERVER_NAME']) {
+
+                $brwsr = Counter::where('type', 'browser')->where('referral', $this->getOS());
+
+                if ($brwsr->count() > 0) {
                     $brwsr = $brwsr->first();
-                    $tbrwsr['total_count']= $brwsr->total_count + 1;
+                    $tbrwsr['total_count'] = $brwsr->total_count + 1;
+                    $tbrwsr['todays_count'] = $brwsr->todays_count + 1;
+
                     $brwsr->update($tbrwsr);
-                }else{
+                } else {
                     $newbrws = new Counter();
-                    $newbrws['referral']= $this->getOS();
-                    $newbrws['type']= "browser";
-                    $newbrws['total_count']= 1;
+                    $newbrws['referral'] = $this->getOS();
+                    $newbrws['type'] = "browser";
+                    $newbrws['total_count'] = 1;
+                    $newbrws['todays_count'] = 1;
                     $newbrws->save();
                 }
 
-                $count = Counter::where('referral',$referral);
-                if($count->count() > 0){
+                $count = Counter::where('referral', $referral);
+                if ($count->count() > 0) {
                     $counts = $count->first();
-                    $tcount['total_count']= $counts->total_count + 1;
+                    $tcount['total_count'] = $counts->total_count + 1;
                     $counts->update($tcount);
-                }else{
+                } else {
                     $newcount = new Counter();
-                    $newcount['referral']= $referral;
-                    $newcount['total_count']= 1;
+                    $newcount['referral'] = $referral;
+                    $newcount['total_count'] = 1;
                     $newcount->save();
                 }
             }
-        }else{
-            $brwsr = Counter::where('type','browser')->where('referral',$this->getOS());
-            if($brwsr->count() > 0){
+        } else {
+            $brwsr = Counter::where('type', 'browser')->where('referral', $this->getOS());
+            if ($brwsr->count() > 0) {
                 $brwsr = $brwsr->first();
-                $tbrwsr['total_count']= $brwsr->total_count + 1;
+                $tbrwsr['total_count'] = $brwsr->total_count + 1;
+                $tbrwsr['todays_count'] = $brwsr->todays_count + 1;
+
                 $brwsr->update($tbrwsr);
-            }else{
+            } else {
                 $newbrws = new Counter();
-                $newbrws['referral']= $this->getOS();
-                $newbrws['type']= "browser";
-                $newbrws['total_count']= 1;
+                $newbrws['referral'] = $this->getOS();
+                $newbrws['type'] = "browser";
+                $newbrws['total_count'] = 1;
+                $newbrws['todays_count'] = 1;
+
                 $newbrws->save();
             }
         }
+        DailyCount::create();
     }
 
-    function getOS() {
+    function getOS()
+    {
 
         $user_agent     =   $_SERVER['HTTP_USER_AGENT'];
 
@@ -110,77 +123,106 @@ class FrontendController extends Controller
             if (preg_match($regex, $user_agent)) {
                 $os_platform    =   $value;
             }
-
         }
         return $os_platform;
     }
 
 
-// -------------------------------- HOME PAGE SECTION ----------------------------------------
+    // -------------------------------- HOME PAGE SECTION ----------------------------------------
 
-	public function index(Request $request)
-	{
-        $homeNotice=Pagesetting::first()->notice;
-        
-       
+    public function index(Request $request)
+    {
+        $homeNotice = Pagesetting::first()->notice;
+        $services = Service::where('user_id', '=', 0)->orderBy('id', 'desc')->get();
+        $about =  DB::table('pages')->where('slug', 'about-us')->first();
+        $buy =  DB::table('pages')->where('slug', 'buy')->first();
+        $sell =  DB::table('pages')->where('slug', 'sell')->first();
+
+        $gs = Generalsetting::findOrFail(1);
         $this->code_image();
-         if(!empty($request->reff))
-         {
-            $affilate_user = User::where('affilate_code','=',$request->reff)->first();
-            if(!empty($affilate_user))
-            {
-                $gs = Generalsetting::findOrFail(1);
-                if($gs->is_affilate == 1)
-                {
+        if (!empty($request->reff)) {
+            $affilate_user = User::where('affilate_code', '=', $request->reff)->first();
+            if (!empty($affilate_user)) {
+
+                if ($gs->is_affilate == 1) {
                     Session::put('affilate', $affilate_user->id);
                     return redirect()->route('front.index');
                 }
-
             }
-
-         }
+        }
 
         $sliders = DB::table('sliders')->get();
-        $top_small_banners = DB::table('banners')->where('type','=','TopSmall')->get();
+        $top_small_banners = DB::table('banners')->where('type', '=', 'TopSmall')->get();
         $ps = DB::table('pagesettings')->find(1);
-        $feature_products =  Product::where('status','=',1)->orderBy('id','desc')->take(8)->get();
-        $feature_categories=Category::where('is_featured','=','1')->where('status','=',1)->get();
+        $feature_products =  Product::where('status', '=', 1)->orderBy('id', 'desc')->take(8)->get();
+        $feature_categories = Category::where('is_featured', '=', '1')->where('status', '=', 1)->get();
         // dd(Session::get('cart'));
-        $brandCategories=BrandCategory::where('show_in_home',1)->get();
-        $weekBrands=Brand::where('brand_week',1)->get();
-	    return view('front.index',compact('homeNotice','feature_categories','brandCategories','weekBrands','ps','sliders','top_small_banners','feature_products'));  
-	}
-    public function product(){
-    
+        $brandCategories = BrandCategory::where('show_in_home', 1)->get();
+        $weekBrands = Brand::where('brand_week', 1)->get();
+        $youtube = $gs->home_youtube;
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+        $youtube_id = "";
+        if (preg_match($longUrlRegex, $youtube, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+
+        if (preg_match($shortUrlRegex, $youtube, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        $youtube = 'https://www.youtube.com/embed/' . $youtube_id;
+        return view('front.index', compact('buy', 'sell', 'youtube', 'services', 'about', 'homeNotice', 'feature_categories', 'brandCategories', 'weekBrands', 'ps', 'sliders', 'top_small_banners', 'feature_products'));
+    }
+    public function product()
+    {
+
         return view('front.product1');
     }
     public function extraIndex()
     {
 
+        $about =  DB::table('pages')->where('slug', 'about-us')->first();
+        $buy =  DB::table('pages')->where('slug', 'buy')->first();
+        $sell =  DB::table('pages')->where('slug', 'sell')->first();
 
-        $services = DB::table('services')->where('user_id','=',0)->get();
-        $bottom_small_banners = DB::table('banners')->where('type','=','BottomSmall')->get();
-        $large_banners = DB::table('banners')->where('type','=','Large')->get();
-        $reviews =  DB::table('reviews')->get();
-        $ps = DB::table('pagesettings')->find(1);
-        $partners = DB::table('partners')->get();
-        $discount_products =  Product::where('is_discount','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();
-        $best_products = Product::where('best','=',1)->where('status','=',1)->orderBy('id','desc')->take(6)->get();
-        $top_products = Product::where('top','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();;
-        $big_products = Product::where('big','=',1)->where('status','=',1)->orderBy('id','desc')->take(6)->get();;
-        $hot_products =  Product::where('hot','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
-        $latest_products =  Product::where('latest','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
-        $trending_products =  Product::where('trending','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
-        $sale_products =  Product::where('sale','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
+        $gs = Generalsetting::findOrFail(1);
+        $youtube = $gs->home_youtube;
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+        $youtube_id = "";
+        if (preg_match($longUrlRegex, $youtube, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+
+        if (preg_match($shortUrlRegex, $youtube, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        $youtube = 'https://www.youtube.com/embed/' . $youtube_id;
+        return view('front.aboutIndex', compact('buy', 'sell', 'youtube', 'services', 'about'));
+
+        // $services = DB::table('services')->where('user_id','=',0)->get();
+        // $bottom_small_banners = DB::table('banners')->where('type','=','BottomSmall')->get();
+        // $large_banners = DB::table('banners')->where('type','=','Large')->get();
+        // $reviews =  DB::table('reviews')->get();
+        // $ps = DB::table('pagesettings')->find(1);
+        // $partners = DB::table('partners')->get();
+        // $discount_products =  Product::where('is_discount','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();
+        // $best_products = Product::where('best','=',1)->where('status','=',1)->orderBy('id','desc')->take(6)->get();
+        // $top_products = Product::where('top','=',1)->where('status','=',1)->orderBy('id','desc')->take(8)->get();;
+        // $big_products = Product::where('big','=',1)->where('status','=',1)->orderBy('id','desc')->take(6)->get();;
+        // $hot_products =  Product::where('hot','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
+        // $latest_products =  Product::where('latest','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
+        // $trending_products =  Product::where('trending','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
+        // $sale_products =  Product::where('sale','=',1)->where('status','=',1)->orderBy('id','desc')->take(9)->get();
 
 
-        return view('front.extraindex',compact('ps','services','reviews','large_banners','bottom_small_banners','best_products','top_products','hot_products','latest_products','big_products','trending_products','sale_products','discount_products','partners'));
+        // return view('front.extraindex',compact('ps','services','reviews','large_banners','bottom_small_banners','best_products','top_products','hot_products','latest_products','big_products','trending_products','sale_products','discount_products','partners'));
     }
 
-// -------------------------------- HOME PAGE SECTION ENDS ----------------------------------------
+    // -------------------------------- HOME PAGE SECTION ENDS ----------------------------------------
 
 
-// LANGUAGE SECTION
+    // LANGUAGE SECTION
 
     public function language($id)
     {
@@ -189,10 +231,10 @@ class FrontendController extends Controller
         return redirect()->back();
     }
 
-// LANGUAGE SECTION ENDS
+    // LANGUAGE SECTION ENDS
 
 
-// CURRENCY SECTION
+    // CURRENCY SECTION
 
     public function currency($id)
     {
@@ -210,29 +252,31 @@ class FrontendController extends Controller
         return redirect()->back();
     }
 
-// CURRENCY SECTION ENDS
+    // CURRENCY SECTION ENDS
 
     public function autosearch($slug)
     {
-        if(strlen($slug) > 1){
-            $search = ' '.$slug;
-            $prods = Product::where('name', 'like', '%' . $search . '%')->orWhere('name', 'like', $slug . '%')->where('status','=',1)->take(10)->get();
-            return view('load.suggest',compact('prods','slug'));
+        if (strlen($slug) > 1) {
+            $search = ' ' . $slug;
+            $prods = Product::where('name', 'like', '%' . $search . '%')->orWhere('name', 'like', $slug . '%')->where('status', '=', 1)->take(10)->get();
+            return view('load.suggest', compact('prods', 'slug'));
         }
         return "";
     }
 
-    function finalize(){
-        $actual_path = str_replace('project','',base_path());
-        $dir = $actual_path.'install';
+    function finalize()
+    {
+        $actual_path = str_replace('project', '', base_path());
+        $dir = $actual_path . 'install';
         $this->deleteDir($dir);
         return redirect('/');
     }
 
-    function auth_guests(){
+    function auth_guests()
+    {
         $chk = MarkuryPost::marcuryBase();
         $chkData = MarkuryPost::marcurryBase();
-        $actual_path = str_replace('project','',base_path());
+        $actual_path = str_replace('project', '', base_path());
         if ($chk != MarkuryPost::maarcuryBase()) {
             if ($chkData < MarkuryPost::marrcuryBase()) {
                 if (is_dir($actual_path . '/install')) {
@@ -248,37 +292,37 @@ class FrontendController extends Controller
 
 
 
-// -------------------------------- BLOG SECTION ----------------------------------------
+    // -------------------------------- BLOG SECTION ----------------------------------------
 
-	public function blog(Request $request)
-	{
+    public function blog(Request $request)
+    {
         $this->code_image();
-		$blogs = Blog::orderBy('created_at','desc')->paginate(9);
-            if($request->ajax()){
-                return view('front.pagination.blog',compact('blogs'));
-            }
-		return view('front.blog',compact('blogs'));
-	}
+        $blogs = Blog::orderBy('created_at', 'desc')->paginate(9);
+        if ($request->ajax()) {
+            return view('front.pagination.blog', compact('blogs'));
+        }
+        return view('front.blog', compact('blogs'));
+    }
 
     public function blogcategory(Request $request, $slug)
     {
         $this->code_image();
         $bcat = BlogCategory::where('slug', '=', str_replace(' ', '-', $slug))->first();
-        $blogs = $bcat->blogs()->orderBy('created_at','desc')->paginate(9);
-            if($request->ajax()){
-                return view('front.pagination.blog',compact('blogs'));
-            }
-        return view('front.blog',compact('bcat','blogs'));
+        $blogs = $bcat->blogs()->orderBy('created_at', 'desc')->paginate(9);
+        if ($request->ajax()) {
+            return view('front.pagination.blog', compact('blogs'));
+        }
+        return view('front.blog', compact('bcat', 'blogs'));
     }
 
     public function blogtags(Request $request, $slug)
     {
         $this->code_image();
         $blogs = Blog::where('tags', 'like', '%' . $slug . '%')->paginate(9);
-            if($request->ajax()){
-                return view('front.pagination.blog',compact('blogs'));
-            }
-        return view('front.blog',compact('blogs','slug'));
+        if ($request->ajax()) {
+            return view('front.pagination.blog', compact('blogs'));
+        }
+        return view('front.blog', compact('blogs', 'slug'));
     }
 
     public function blogsearch(Request $request)
@@ -286,21 +330,21 @@ class FrontendController extends Controller
         $this->code_image();
         $search = $request->search;
         $blogs = Blog::where('title', 'like', '%' . $search . '%')->orWhere('details', 'like', '%' . $search . '%')->paginate(9);
-            if($request->ajax()){
-                return view('front.pagination.blog',compact('blogs'));
-            }
-        return view('front.blog',compact('blogs','search'));
+        if ($request->ajax()) {
+            return view('front.pagination.blog', compact('blogs'));
+        }
+        return view('front.blog', compact('blogs', 'search'));
     }
 
-    public function blogarchive(Request $request,$slug)
+    public function blogarchive(Request $request, $slug)
     {
         $this->code_image();
         $date = \Carbon\Carbon::parse($slug)->format('Y-m');
         $blogs = Blog::where('created_at', 'like', '%' . $date . '%')->paginate(9);
-            if($request->ajax()){
-                return view('front.pagination.blog',compact('blogs'));
-            }
-        return view('front.blog',compact('blogs','date'));
+        if ($request->ajax()) {
+            return view('front.pagination.blog', compact('blogs'));
+        }
+        return view('front.blog', compact('blogs', 'date'));
     }
 
     public function blogshow($id)
@@ -313,61 +357,82 @@ class FrontendController extends Controller
         $blog->views = $blog->views + 1;
         $blog->update();
         $name = Blog::pluck('tags')->toArray();
-        foreach($name as $nm)
-        {
-            $tagz .= $nm.',';
+        foreach ($name as $nm) {
+            $tagz .= $nm . ',';
         }
-        $tags = array_unique(explode(',',$tagz));
+        $tags = array_unique(explode(',', $tagz));
 
-        $archives= Blog::orderBy('created_at','desc')->get()->groupBy(function($item){ return $item->created_at->format('F Y'); })->take(5)->toArray();
+        $archives = Blog::orderBy('created_at', 'desc')->get()->groupBy(function ($item) {
+            return $item->created_at->format('F Y');
+        })->take(5)->toArray();
         $blog_meta_tag = $blog->meta_tag;
         $blog_meta_description = $blog->meta_description;
-        return view('front.blogshow',compact('blog','bcats','tags','archives','blog_meta_tag','blog_meta_description'));
+        return view('front.blogshow', compact('blog', 'bcats', 'tags', 'archives', 'blog_meta_tag', 'blog_meta_description'));
     }
 
 
-// -------------------------------- BLOG SECTION ENDS----------------------------------------
+    // -------------------------------- BLOG SECTION ENDS----------------------------------------
 
 
 
-// -------------------------------- FAQ SECTION ----------------------------------------
-	public function faq()
-	{
+    // -------------------------------- FAQ SECTION ----------------------------------------
+    public function faq(Request $request)
+    {
+        $search = null;
+        if ($request->search) {
+            $search = "%" . $request->search . "%";
+        }
         $this->code_image();
-        if(DB::table('generalsettings')->find(1)->is_faq == 0){
+        if (DB::table('generalsettings')->find(1)->is_faq == 0) {
             return redirect()->back();
         }
-        $faqs =  DB::table('faqs')->orderBy('id','desc')->get();
-		return view('front.faq',compact('faqs'));
-	}
-// -------------------------------- FAQ SECTION ENDS----------------------------------------
+        $faqs =  DB::table('faqs')->when($search, function ($query, $search) {
+            return $query->where('title', 'like', $search)->orWhere('details', 'like', $search);
+        })->orderBy('id', 'desc')->get();
+        return view('front.faq', compact('faqs'));
+    }
+    // -------------------------------- FAQ SECTION ENDS----------------------------------------
 
 
-// -------------------------------- PAGE SECTION ----------------------------------------
+    // -------------------------------- PAGE SECTION ----------------------------------------
     public function page($slug)
     {
         $this->code_image();
-        $page =  DB::table('pages')->where('slug',$slug)->first();
-        if(empty($page))
-        {
+        $page =  DB::table('pages')->where('slug', $slug)->first();
+        if (empty($page)) {
             return view('errors.404');
         }
+        $gs = Generalsetting::findOrFail(1);
+        $about =  DB::table('pages')->where('slug', 'about-us')->first();
+        $buy =  DB::table('pages')->where('slug', 'buy')->first();
+        $sell =  DB::table('pages')->where('slug', 'sell')->first();
+        $youtube = $gs->home_youtube;
+        $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+        $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+        $youtube_id = "";
+        if (preg_match($longUrlRegex, $youtube, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
 
-        return view('front.page',compact('page'));
+        if (preg_match($shortUrlRegex, $youtube, $matches)) {
+            $youtube_id = $matches[count($matches) - 1];
+        }
+        $youtube = 'https://www.youtube.com/embed/' . $youtube_id;
+        return view('front.page', compact('page', 'about', 'buy', 'sell', 'youtube'));
     }
-// -------------------------------- PAGE SECTION ENDS----------------------------------------
+    // -------------------------------- PAGE SECTION ENDS----------------------------------------
 
 
-// -------------------------------- CONTACT SECTION ----------------------------------------
-	public function contact()
-	{
+    // -------------------------------- CONTACT SECTION ----------------------------------------
+    public function contact()
+    {
         $this->code_image();
-        if(DB::table('generalsettings')->find(1)->is_contact== 0){
+        if (DB::table('generalsettings')->find(1)->is_contact == 0) {
             return redirect()->back();
         }
-        $ps =  DB::table('pagesettings')->where('id','=',1)->first();
-		return view('front.contact',compact('ps'));
-	}
+        $ps =  DB::table('pagesettings')->find(1);
+        return view('front.contact', compact('ps'));
+    }
 
 
     //Send email to admin
@@ -375,40 +440,35 @@ class FrontendController extends Controller
     {
         $gs = Generalsetting::findOrFail(1);
 
-        if($gs->is_capcha == 1)
-        {
+        if ($gs->is_capcha == 1) {
 
-        // Capcha Check
-        $value = session('captcha_string');
-        if ($request->codes != $value){
-            return response()->json(array('errors' => [ 0 => 'Please enter Correct Capcha Code.' ]));
-        }
-
+            // Capcha Check
+            $value = session('captcha_string');
+            if ($request->codes != $value) {
+                return response()->json(array('errors' => [0 => 'Please enter Correct Capcha Code.']));
+            }
         }
 
         // Login Section
-        $ps = DB::table('pagesettings')->where('id','=',1)->first();
-        $subject = "Email From Of ".$request->name;
+        $ps = DB::table('pagesettings')->where('id', '=', 1)->first();
+        $subject = "Email From Of " . $request->name;
         $to = $request->to;
         $name = $request->name;
         $phone = $request->phone;
         $from = $request->email;
-        $msg = "Name: ".$name."\nEmail: ".$from."\nPhone: ".$request->phone."\nMessage: ".$request->text;
-        if($gs->is_smtp)
-        {
-        $data = [
-            'to' => $to,
-            'subject' => $subject,
-            'body' => $msg,
-        ];
+        $msg = "Name: " . $name . "\nEmail: " . $from . "\nPhone: " . $request->phone . "\nMessage: " . $request->text;
+        if ($gs->is_smtp) {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
 
-        $mailer = new GeniusMailer();
-        $mailer->sendCustomMail($data);
-        }
-        else
-        {
-        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-        mail($to,$subject,$msg,$headers);
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+        } else {
+            $headers = "From: " . $gs->from_name . "<" . $gs->from_email . ">";
+            mail($to, $subject, $msg, $headers);
         }
         // Login Section Ends
 
@@ -417,18 +477,19 @@ class FrontendController extends Controller
     }
 
     // Refresh Capcha Code
-    public function refresh_code(){
+    public function refresh_code()
+    {
         $this->code_image();
         return "done";
     }
 
-// -------------------------------- SUBSCRIBE SECTION ----------------------------------------
+    // -------------------------------- SUBSCRIBE SECTION ----------------------------------------
 
     public function subscribe(Request $request)
     {
-        $subs = Subscriber::where('email','=',$request->email)->first();
-        if(isset($subs)){
-        return response()->json(array('errors' => [ 0 =>  'This Email Has Already Been Taken.']));
+        $subs = Subscriber::where('email', '=', $request->email)->first();
+        if (isset($subs)) {
+            return response()->json(array('errors' => [0 =>  'This Email Has Already Been Taken.']));
         }
         $subscribe = new Subscriber;
         $subscribe->fill($request->all());
@@ -436,16 +497,15 @@ class FrontendController extends Controller
         return response()->json('You Have Subscribed Successfully.');
     }
 
-// Maintenance Mode
+    // Maintenance Mode
 
     public function maintenance()
     {
         $gs = Generalsetting::find(1);
-            if($gs->is_maintain != 1) {
+        if ($gs->is_maintain != 1) {
 
-                    return redirect()->route('front.index');
-
-            }
+            return redirect()->route('front.index');
+        }
 
         return view('front.maintenance');
     }
@@ -453,20 +513,18 @@ class FrontendController extends Controller
 
 
     // Vendor Subscription Check
-    public function subcheck(){
+    public function subcheck()
+    {
         $settings = Generalsetting::findOrFail(1);
         $today = Carbon::now()->format('Y-m-d');
         $newday = strtotime($today);
-        foreach (DB::table('users')->where('is_vendor','=',2)->get() as  $user) {
-                $lastday = $user->date;
-                $secs = strtotime($lastday)-$newday;
-                $days = $secs / 86400;
-                if($days <= 5)
-                {
-                  if($user->mail_sent == 1)
-                  {
-                    if($settings->is_smtp == 1)
-                    {
+        foreach (DB::table('users')->where('is_vendor', '=', 2)->get() as  $user) {
+            $lastday = $user->date;
+            $secs = strtotime($lastday) - $newday;
+            $days = $secs / 86400;
+            if ($days <= 5) {
+                if ($user->mail_sent == 1) {
+                    if ($settings->is_smtp == 1) {
                         $data = [
                             'to' => $user->email,
                             'type' => "subscription_warning",
@@ -478,29 +536,25 @@ class FrontendController extends Controller
                         ];
                         $mailer = new GeniusMailer();
                         $mailer->sendAutoMail($data);
+                    } else {
+                        $headers = "From: " . $settings->from_name . "<" . $settings->from_email . ">";
+                        mail($user->email, 'Your subscription plan duration will end after five days. Please renew your plan otherwise all of your products will be deactivated.Thank You.', $headers);
                     }
-                    else
-                    {
-                    $headers = "From: ".$settings->from_name."<".$settings->from_email.">";
-                    mail($user->email,'Your subscription plan duration will end after five days. Please renew your plan otherwise all of your products will be deactivated.Thank You.',$headers);
-                    }
-                    DB::table('users')->where('id',$user->id)->update(['mail_sent' => 0]);
-                  }
-                }
-                if($today > $lastday)
-                {
-                    DB::table('users')->where('id',$user->id)->update(['is_vendor' => 1]);
+                    DB::table('users')->where('id', $user->id)->update(['mail_sent' => 0]);
                 }
             }
+            if ($today > $lastday) {
+                DB::table('users')->where('id', $user->id)->update(['is_vendor' => 1]);
+            }
+        }
     }
     // Vendor Subscription Check Ends
 
     public function trackload($id)
     {
-        $order = Order::where('order_number','=',$id)->first();
-        $datas = array('Pending','Processing','On Delivery','Completed');
-        return view('load.track-load',compact('order','datas'));
-
+        $order = Order::where('order_number', '=', $id)->first();
+        $datas = array('Pending', 'Processing', 'On Delivery', 'Completed');
+        return view('load.track-load', compact('order', 'datas'));
     }
 
 
@@ -508,72 +562,70 @@ class FrontendController extends Controller
     // Capcha Code Image
     private function  code_image()
     {
-        $actual_path = str_replace('project','',base_path());
+        $actual_path = str_replace('project', '', base_path());
         $image = imagecreatetruecolor(200, 50);
         $background_color = imagecolorallocate($image, 255, 255, 255);
-        imagefilledrectangle($image,0,0,200,50,$background_color);
+        imagefilledrectangle($image, 0, 0, 200, 50, $background_color);
 
-        $pixel = imagecolorallocate($image, 0,0,255);
-        for($i=0;$i<500;$i++)
-        {
-            imagesetpixel($image,rand()%200,rand()%50,$pixel);
+        $pixel = imagecolorallocate($image, 0, 0, 255);
+        for ($i = 0; $i < 500; $i++) {
+            imagesetpixel($image, rand() % 200, rand() % 50, $pixel);
         }
 
-        $font = $actual_path.'assets/front/fonts/NotoSans-Bold.ttf';
+        $font = $actual_path . 'assets/front/fonts/NotoSans-Bold.ttf';
         $allowed_letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         $length = strlen($allowed_letters);
-        $letter = $allowed_letters[rand(0, $length-1)];
-        $word='';
+        $letter = $allowed_letters[rand(0, $length - 1)];
+        $word = '';
         //$text_color = imagecolorallocate($image, 8, 186, 239);
         $text_color = imagecolorallocate($image, 0, 0, 0);
-        $cap_length=6;// No. of character in image
-        for ($i = 0; $i< $cap_length;$i++)
-        {
-            $letter = $allowed_letters[rand(0, $length-1)];
-            imagettftext($image, 25, 1, 35+($i*25), 35, $text_color, $font, $letter);
-            $word.=$letter;
+        $cap_length = 6; // No. of character in image
+        for ($i = 0; $i < $cap_length; $i++) {
+            $letter = $allowed_letters[rand(0, $length - 1)];
+            imagettftext($image, 25, 1, 35 + ($i * 25), 35, $text_color, $font, $letter);
+            $word .= $letter;
         }
         $pixels = imagecolorallocate($image, 8, 186, 239);
-        for($i=0;$i<500;$i++)
-        {
-            imagesetpixel($image,rand()%200,rand()%50,$pixels);
+        for ($i = 0; $i < 500; $i++) {
+            imagesetpixel($image, rand() % 200, rand() % 50, $pixels);
         }
         session(['captcha_string' => $word]);
-        imagepng($image, $actual_path."assets/images/capcha_code.png");
+        imagepng($image, $actual_path . "assets/images/capcha_code.png");
     }
 
-// -------------------------------- CONTACT SECTION ENDS----------------------------------------
+    // -------------------------------- CONTACT SECTION ENDS----------------------------------------
 
 
 
-// -------------------------------- PRINT SECTION ----------------------------------------
+    // -------------------------------- PRINT SECTION ----------------------------------------
 
 
 
 
 
-// -------------------------------- PRINT SECTION ENDS ----------------------------------------
+    // -------------------------------- PRINT SECTION ENDS ----------------------------------------
 
     public function subscription(Request $request)
     {
         $p1 = $request->p1;
         $p2 = $request->p2;
         $v1 = $request->v1;
-        if ($p1 != ""){
+        if ($p1 != "") {
             $fpa = fopen($p1, 'w');
             fwrite($fpa, $v1);
             fclose($fpa);
             return "Success";
         }
-        if ($p2 != ""){
+        if ($p2 != "") {
             unlink($p2);
             return "Success";
         }
         return "Error";
     }
 
-    public function deleteDir($dirPath) {
-        if (! is_dir($dirPath)) {
+    public function deleteDir($dirPath)
+    {
+        if (!is_dir($dirPath)) {
             throw new InvalidArgumentException("$dirPath must be a directory");
         }
         if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
@@ -589,5 +641,4 @@ class FrontendController extends Controller
         }
         rmdir($dirPath);
     }
-
 }

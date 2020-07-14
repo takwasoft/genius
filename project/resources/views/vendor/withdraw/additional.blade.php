@@ -8,7 +8,7 @@
                                     @if($field->required==1)
 												required
 												@endif
-                                     name="additional[{{$field->id}}]"  class="form-control" type="text"  required>
+                                     name="additional[{{$field->id}}]"  class="form-control" type="text"  >
                                 </div>
                             </div>
 @endforeach

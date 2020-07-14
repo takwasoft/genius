@@ -39,7 +39,7 @@
                                 <input disabled type="checkbox" @if($af->required==1) checked @endif >
                             </td>
                             <td>
-                                <a href="edit-additional?id={{$af->id}}" class="btn btn-sm btn-outline-success">Edit</a>
+                                <a href="{{route('admin-payment-additional-edit',$af->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
                                 <a onclick="return confirm('Are you sure you want to delete this item?');" href="{{route('admin-payment-additional-delete',$af->id)}}" class="btn btn-outline-danger btn-sm">Delete</a>
 
 
@@ -110,7 +110,7 @@
                                 <input type="checkbox" disabled @if($pv->required==1) checked @endif >
                             </td>
                             <td>
-                                <a href="edit-payment-verification?id={{$pv->id}}" class="btn btn-sm btn-outline-success">Edit</a>
+                                 <a href="{{route('admin-payment-payment-edit',$pv->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
                                 <a onclick="return confirm('Are you sure you want to delete this item?');" href="{{route('admin-payment-verification-delete',$pv->id)}}" class="btn btn-outline-danger btn-sm">Delete</a>
 
                             </td>
@@ -195,7 +195,7 @@
                                 <input type="checkbox" disabled @if($ec->cr==1) checked @endif >
                             </td>
                             <td>
-                                <a href="edit-extra-charge?id={{$ec->id}}" class="btn btn-sm btn-outline-success">Edit</a>
+                                <a href="{{route('admin-payment-extra-edit',$ec->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
                                 <a onclick="return confirm('Are you sure you want to delete this item?');" href="{{route('admin-payment-extra-delete',$ec->id)}}" class="btn btn-outline-danger btn-sm">Delete</a>
 
                             </td>

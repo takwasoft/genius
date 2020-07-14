@@ -1199,4 +1199,4 @@ $(document).on('click', function(e)
 // **************************************  AJAX REQUESTS SECTION ENDS *****************************************
 
 
-})(jQuery);
+})(jQuery); 

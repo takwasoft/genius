@@ -50,7 +50,7 @@
                                     <div class="left-area">
                                         <h4 class="heading">
                                             {{ __('Notice') }} *
-                                            <p class="sub-heading">{{ __('(Give 0 not to show)') }}</p>
+                                            <p class="sub-heading">{{ __('(Give 00 not to show)') }}</p>
                                         </h4>
                                     </div>
                                 </div>

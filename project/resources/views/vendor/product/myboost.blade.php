@@ -5,10 +5,10 @@
 						<div class="mr-breadcrumb">
 							<div class="row">
 								<div class="col-lg-12">
-										<h4 class="heading">{{ __("Products") }}</h4>
+										<h4 class="heading">{{ __("My Boosts") }}</h4>
 										<ul class="links">
 											<li>
-												<a href="{{ route('admin.dashboard') }}">{{ __("Dashboard") }} </a>
+												<a href="{{ route('vendor-dashboard') }}" >{{ __("Dashboard") }} </a>
 											</li>
 											<li>
 												<a href="javascript:;">Boost </a>
@@ -28,7 +28,9 @@
 									                        <th>Price</th>
                                                             <th>Day</th>
 									                        <th>Applied At</th>
+															<th>Status</th>
 									                        <th>Paid</th>
+															<th>Method</th>
                                                             <th>Valid Till</th>
 									                   
 														</tr>
@@ -63,6 +65,8 @@ var table = $('#geniustable').DataTable({
                         { data: 'boostcategory.duration', name: 'boostcategory.duration' },
                         { data: 'applied', name: 'applied' },
                         { data: 'status', searchable: false, orderable: false},
+						 { data: 'paid', searchable: false, orderable: false},
+						{ data: 'method', name: 'method' },
                         { data: 'valid', name: 'valid'},
             		
 

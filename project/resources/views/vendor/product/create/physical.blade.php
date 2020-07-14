@@ -3,7 +3,7 @@
 
 <link href="{{asset('assets/vendor/css/product.css')}}" rel="stylesheet"/>
 <link href="{{asset('assets/admin/css/jquery.Jcrop.css')}}" rel="stylesheet"/>
-<link href="{{asset('assets/admin/css/Jcrop-style.css')}}" rel="stylesheet"/>
+<link href="{{asset('assets/admin/css/Jcrop-style.css')}}" rel="stylesheet"/> 
 <style> 
 .dropbtn {
   background-color: #4CAF50;
@@ -19,14 +19,15 @@
 }
 
 #myInput {
-  box-sizing: border-box;
-  background-image: url('../assets/images/searchicon.png');
-  background-position: 14px 9px;
-  background-repeat: no-repeat;
-  font-size: 16px;
-  padding: 7px 20px 7px 45px;
-  border: 1px solid #ddd;
-  border-radius:4px;
+    box-sizing: border-box;
+	background-image: url('../assets/images/searchicon.png');
+	background-position: 14px 9px;
+	background-repeat: no-repeat;
+	font-size: 16px;
+	padding: 7px 20px 5px 45px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 0px;
 }
 #all_sub_category i{
      padding-left: 2px;
@@ -41,7 +42,8 @@
     margin-top: -4px;
     margin-left: -5px;
 }
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {outline: 0;
+box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 
 .dropdown {
   position: relative;
@@ -81,13 +83,13 @@
 .close span {
     font-size: 27px!important;
 }
-.main-cate-item li:hover .sub-cate-item{
+{{-- .main-cate-item li:hover .sub-cate-item{
     display: block;
 }
 
 .categories-list-division li:hover .sub-cate-item-division{
     display: block;
-}
+} --}}
 .model-item li {
     border-top: 1px solid rgba(0, 0, 0, .125);
     padding: .7rem 0 .7rem .80rem;
@@ -117,6 +119,73 @@
 .model-item li ul li a {
     color: #0074ba!important;
 }
+.btn-back {
+    display: block;
+    width: auto;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: 900;
+    font-family: helvetica, sans-serif;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background-color: #efefef;
+    background-size: 100%;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(60%, #efefef), color-stop(100%, #e1dfe2));
+    background-image: -moz-linear-gradient(top, #ffffff 0%, #efefef 60%, #e1dfe2 100%);
+    background-image: -webkit-linear-gradient(top, #ffffff 0%, #efefef 60%, #e1dfe2 100%);
+    background-image: linear-gradient(to bottom, #ffffff 0%, #efefef 60%, #e1dfe2 100%);
+    -moz-box-shadow: 0 1px 3px #cfcfcf;
+    -webkit-box-shadow: 0 1px 3px #cfcfcf;
+    box-shadow: 0 1px 3px #cfcfcf;
+    border: 1px solid #bcbcbc;
+        border-left-color: rgb(188, 188, 188);
+        border-left-style: solid;
+        border-left-width: 1px;
+    border-left-color: rgb(188, 188, 188);
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left: 0;
+    color: #888;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);
+    -moz-transition: color 0.1s 0;
+    -o-transition: color 0.1s 0;
+    -webkit-transition: color 0.1s 0;
+    transition: color 0.1s 0;
+    margin: 10px 5px;
+}
+
+.btn-back:hover {
+    color: rgb(0, 152, 119);
+}
+@media(max-width:475px){
+	#landscape{
+		width: 350px!important;
+		height: 350px!important;
+	}
+}
+
+@media(max-width:430px){
+	#landscape{
+		width: 300px!important;
+		height: 300px!important;
+	}
+}
+@media(max-width:375px){
+	#landscape{
+		width: 250px!important;
+		height: 250px!important;
+	}
+}
+@media(max-width:330px){
+	#landscape{
+		width: 200px!important;
+		height: 200px!important;
+	}
+}
 </style>
 @endsection
 @section('content')
@@ -125,7 +194,7 @@
 							<div class="mr-breadcrumb">
 								<div class="row">
 									<div class="col-lg-12">
-											<h4 class="heading">{{ $langg->lang629 }} <a class="add-btn" href="{{ route('select-area') }}"><i class="fas fa-arrow-left"></i> {{ $langg->lang550 }}</a></h4>
+											<h4 class="heading">{{ $langg->lang629 }} <a class="add-btn" href="{{ route('vendor-dashboard') }}"><i class="fas fa-arrow-left"></i> {{ $langg->lang550 }}</a></h4>
 											<ul class="links">
                       <li>
                         <a href="{{ route('vendor-dashboard') }}">{{ $langg->lang441 }}</a>
@@ -233,9 +302,8 @@
 														</div>
 													</div>
 													<div class="col-lg-7">
-															<div data-target="#my-modal" data-toggle="modal">
-															<span id="area_name">Choose Area</span>
-															
+															<div onclick="dModal()" data-target="#my-modal" data-toggle="modal">
+															<span id="area_name">Choose Area</span>								
 															</div>
 													</div>
 												</div>
@@ -257,49 +325,7 @@
 												<input id="division_id" name="division_id" type="hidden">
 												<input id="district_id" name="district_id" type="hidden">
 												<input id="subdistrict_id" name="subdistrict_id" type="hidden">
-												{{--  <div class="row">
-													<div class="col-lg-4">
-														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang637 }}*</h4>
-														</div>
-													</div>
-													<div class="col-lg-7">
-															<select id="cat" name="category_id" required="">
-																	<option value="">{{ $langg->lang691 }}</option>
-                                  @foreach($cats as $cat)
-                                  <option data-href="{{ route('vendor-subcat-load',$cat->id) }}" value="{{ $cat->id }}">{{$cat->name}}</option>
-                                  @endforeach
-                             </select>
-													</div>
-												</div>  --}}
-
-												{{--  <div class="row">
-													<div class="col-lg-4">
-														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang638 }}*</h4>
-														</div>
-													</div>
-													<div class="col-lg-7">
-															<select id="subcat" name="subcategory_id" disabled="">
-                                  <option value="">{{ $langg->lang639 }}</option>
-															</select>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-lg-4">
-														<div class="left-area">
-																<h4 class="heading">{{ $langg->lang640 }}*</h4>
-														</div>
-													</div>
-													<div class="col-lg-7">
-															<select id="childcat" name="childcategory_id" disabled="">
-                                                  				<option value="">{{ $langg->lang641 }}</option>
-															</select>
-													</div>
-												</div>  --}}
-
-
+												
 												<div id="catAttributes"></div>
 												<div id="subcatAttributes"></div>
 												<div id="childcatAttributes"></div>
@@ -313,20 +339,19 @@
 							                        <div class="col-lg-7">
 	<div class="row">
 	<div class="panel panel-body">
-		<div class="span4 cropme text-center" id="landscape" style="width: 400px; height: 400px; border: 1px dashed black;">
-		</div>
+		  {{--  <div class="span4 cropme text-center" id="landscape" style="width: 400px; height: 400px; border: 1px dashed black;"> 
+		</div>   --}}
+			<input required class="form-control-file upload" type="file" id="feature_photo" name="pht" value="">
+ 
 		</div>
 	</div>
 
-			<a href="javascript:;" id="crop-image" class="d-inline-block mybtn1">
-				<i class="icofont-upload-alt"></i> {{ $langg->lang643 }}
-			</a>
 
 
 							                        </div>
 							                      </div>
 
-							                      <input type="hidden" id="feature_photo" name="photo" value="">
+							                      
 
 
 
@@ -759,154 +784,6 @@
 							</div>
 						</div>
 
-						{{-- Start Area modal  --}}
-{{-- <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="overflow: scroll;height:90vh">
-
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h6 class="mb-3">শহর বা বিভাগ নির্বাচন করুন</h6>
-                        <a href="" style="color: #0074ba;">বাংলাদেশ-এর সবগুলো</a>
-                        <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
-                    </div>
-                    <div class="col-md-6">
-                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
-                        <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
-                        <h6 class="mt-4" style="color: #0074ba">খুলনা-এর সবগুলো</h6>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="categories-list model-item main-cate-item">
-                            <ul>
-
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                         <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Chittagong 1</a></li>
-                                            <li><a href="#" class="text-muted">Chittagong 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Chittagong 3</a></li>
-                                            <li><a href="#" class=" text-muted">Chittagong 4</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                       <div class="categories-list sub-cate-item" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Barisal 1</a></li>
-                                            <li><a href="#" class="text-muted">Barisal 2</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Barisal 3</a></li>
-                                            <li><a href="#" class=" text-muted">Barisal 4</a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="btn text-muted mt-3">বিভাগ</div>
-                        <div class=" categories-list model-item categories-list-division">
-                            <ul>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Dhaka</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                     <div class="categories-list sub-cate-item sub-cate-item-division" >
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Dhaka 5</a></li>
-                                            <li><a href="#" class="text-muted">Ghazipur 5</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Kishoreganj 5</a></li>
-                                            <li><a href="#" class=" text-muted">Manikganj 5</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Chittagong</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                    <div class="categories-list sub-cate-item sub-cate-item-division" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Chittagong 100</a></li>
-                                            <li><a href="#" class="text-muted">Chittagong 100</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Chittagong 100</a></li>
-                                            <li><a href="#" class=" text-muted">Chittagong 100</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Barisal</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-
-                                        <div class="categories-list sub-cate-item sub-cate-item-division" style="">
-                                        <ul class="sub-menu1 text-muted">
-                                            <li><a class="text-muted" href="http://google.com">Barisal 420</a></li>
-                                            <li><a href="#" class="text-muted">Barisal 420</a>
-                                            </li>
-                                            <li><a href="#" class="text-muted">Barisal 420</a></li>
-                                            <li><a href="#" class=" text-muted">Barisal 420</a></li>
-                                        </ul>
-                                    </div>
-
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Khulna</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Mymensingh</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Sylhet</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="clearfix">
-                                        <span class="float-left">Rajshahi</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div> --}}
 
 <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
@@ -923,7 +800,7 @@
                         <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
                     </div>
                     <div class="col-md-6">
-                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
                         
                     </div>
@@ -935,22 +812,24 @@
                         <div class="categories-list model-item main-cate-item ">
                             <ul>
                                 @foreach($districts as $district)
-
-                                    <li>
+ 
+                                    <li class="brn">
                                     <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
-                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
+                                        <span class="dnn float-left">{{$district->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis{{$district->id}}" class="lft sub-dis categories-list sub-cate-item" >
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li> 
-										 @php($i=1) 
-                                             @foreach($district->subdistricts as $subdistrict)
+
+                                         <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
+                                         @php($i=1)
+                                            @foreach($district->subdistricts as $subdistrict)
                                                 @if($i<6)
                                                 <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
                                                 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
-    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
                                                     <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
@@ -974,21 +853,25 @@
                               
                             </ul>
                         </div>
-
-                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <input type="hidden" id="area_key" >
+                        <input type="hidden" id="area_value" >
+                        <div class="dnn btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
-                               @foreach($divisions as $division) 
-                                <li>
+                            
+                               @foreach($divisions as $division)
+                                <li class="brn">
                                     <a
 									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
 									
 									 href="#" class="clearfix">
-                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                        <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <span class="dnn float-left">{{$division->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div id="dis{{$division->id}}" class="lft dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
+
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
-                                             @php($i=1)
+                                         <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                         @php($i=1)
                                             @foreach($division->districts as $district)
                                                 @if($i<6)
 
@@ -997,9 +880,9 @@
 												>{{$district->name}}</a></li>
 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
-   
-    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
-    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+  
+    <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv(this)"><i class="div fas fa-angle-down ">
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
@@ -1036,8 +919,9 @@
 </div>
 
 <script>
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function myFunction(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdown").classList.toggle("show");
   if($(".dist.fa-angle-up").length>0)
   {
     $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
@@ -1047,14 +931,14 @@ function myFunction() {
   }
 }
 
-function filterFunction() {
-  if(document.getElementById("myDropdown").classList.length==1){
-    document.getElementById("myDropdown").classList.add("show")
+function filterFunction(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -1065,8 +949,9 @@ function filterFunction() {
     }
   }
 }
-function myFunctionDiv() {
-  document.getElementById("myDropdownDiv").classList.toggle("show");
+function myFunctionDiv(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdownDiv").classList.toggle("show");
   if($(".fa-angle-up.div").length>0)
   {
     $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
@@ -1075,14 +960,14 @@ function myFunctionDiv() {
     $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
   }
 }
-function filterFunctionDiv() {
-  if(document.getElementById("myDropdownDiv").classList.length==1){
-    document.getElementById("myDropdownDiv").classList.add("show")
+function filterFunctionDiv(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInputDiv");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdownDiv");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -1092,6 +977,20 @@ function filterFunctionDiv() {
       a[i].style.display = "none";
     }
   }
+}
+dModal=()=>{
+  if(screen.width<576){
+        
+        $(".dnn").css("display","inline-block");
+        $(".lft").css("left","100%");
+
+         $(".brn").css("border-top","1px solid rgba(0, 0, 0, .125)");
+        $(".brn:first-child").css("border","none");
+		$(".brn1").css("border-top","1px solid rgba(0, 0, 0, .125)");
+        $(".brn1:first-child").css("border","none");
+        
+ 
+      }
 }
 	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
 		if(cm){
@@ -1110,11 +1009,44 @@ function filterFunctionDiv() {
 		cls="."+cls;
 		$(cls).hide();
 		$(id).show();
+
+		 if(screen.width<576){
+        $(".brn").css("border","none");
+		$(".brn1").css("border","none");
+        $(".dnn").css("display","none");
+        $(".lft").css("left","18px");
+
+      }
+	}
+	showItem1=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+		if(cm){
+
+		$(cm).modal('toggle');
+		}
+		toastr.success(hval+" selected");
+		document.getElementById(hid).innerHTML=hval;
+		console.log(r)
+		r.forEach(ri=>{
+			document.getElementById(ri).value="";
+		})
+		document.getElementById(sid).value=svalue;
+		$(cls2).hide();
+		id="#"+cls+id;
+		cls="."+cls;
+		$(cls).hide();
+		$(id).show();
+
+		 if(screen.width<576){
+        $(".brn").css("border","none");
+        $(".dnn").css("display","none");
+        $(".lft").css("left","18px");
+
+      }
 	}
 </script>
 						{{-- End Area model --}}
 
-							{{-- Start category modal  --}}
+							{{-- Start category modal  --}} 
 <div class="modal fade" id="my-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">
@@ -1139,10 +1071,12 @@ function filterFunctionDiv() {
                         <div class="categories-list model-item main-cate-item model-item1">
                             <ul> 
 							@foreach($cats as $cat)
-                                <li>
+                                <li class="brn1">
                                     <a onclick="showItem('sub-cat',{{$cat->id}},'.aos','category_id',{{$cat->id}},['subcategory_id'],'cat_name','{{$cat->name}}')" href="#" class="clearfix">
-                                        <span class="float-left">{{$cat->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-cat{{$cat->id}}" class="categories-list sub-cat sub-cate-item" style="">
+                                        <span class="dnn float-left">{{$cat->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-cat{{$cat->id}}" class="lft categories-list sub-cat sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+										<button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
 										@foreach($cat->subs as $sub)
                                             <li><a
@@ -1264,4 +1198,23 @@ $('.cropme').click();
 
 
 <script src="{{asset('assets/admin/js/product.js')}}"></script>
+<script>
+ $(".upload").on("change", function() {
+            var imgpath = $(this).parent().parent().prev().find('img');
+            var file = $(this);
+
+            readURL(this, imgpath);
+        });
+
+        function readURL(input, imgpath) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#landscape").attr('src', e.target.result);
+					//document.getElementById('feature_photo').value=e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+		</script>
 @endsection

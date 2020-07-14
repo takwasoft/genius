@@ -34,10 +34,12 @@
 
 .all_sub_category_btn{
     border: 1px solid #ddd;
-    margin-top: -4px;
+    margin-top: -2px;
     margin-left: -5px;
+    padding: 0.26rem .7rem;
 }
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {outline: 0;
+box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 
 .dropdown {
   position: relative;
@@ -74,12 +76,12 @@
 } */
    .model-item li {
         border-top: 1px solid rgba(0, 0, 0, .125);
-        padding: .7rem .80rem;
+        padding: .7rem 0 .7rem .80rem;
     }
     
     .model-item li li {
         border-top: 1px solid rgba(0, 0, 0, .125);
-        padding: .7rem .5rem;
+        padding: .82rem .5rem;
     }
     
     .model-item li:first-child {
@@ -126,6 +128,7 @@
 .price-range-block {
     text-align: center;
     margin-top: 15px;
+    padding:0 18px;
 }
 .price-range-block #slider-range {
     margin-bottom: 21px;
@@ -138,44 +141,9 @@
 <link rel="stylesheet" href="{{asset('assets/front/css/modify.css')}}">
 @endsection
 @section('content')
-<!-- Breadcrumb Area Start -->
-{{-- <div class="breadcrumb-area">
-   <div class="container">
-      <div class="row">
-         <div class="col-lg-12">
-            <ul class="pages">
-               <li>
-                  <a href="{{route('front.index')}}">{{ $langg->lang17 }}</a>
-               </li>
-               @if (!empty($cat))
-               <li>
-                  <a href="{{route('front.category', $cat->slug)}}">{{ $cat->name }}</a>
-               </li>
-               @endif
-               @if (!empty($subcat))
-               <li>
-                  <a href="{{route('front.category', [$cat->slug, $subcat->slug])}}">{{ $subcat->name }}</a>
-               </li>
-               @endif
-               @if (!empty($childcat))
-               <li>
-                  <a href="{{route('front.category', [$cat->slug, $subcat->slug, $childcat->slug])}}">{{ $childcat->name }}</a>
-               </li>
-               @endif
-               @if (empty($childcat) && empty($subcat) && empty($cat))
-               <li>
-                  <a href="{{route('front.category')}}">{{ $langg->lang36 }}</a>
-               </li>
-               @endif
 
-            </ul>
-         </div>
-      </div>
-   </div>
-</div> --}}
-<!-- Breadcrumb Area End -->
 <!-- SubCategori Area Start -->
-<div class="header-section">
+<div class="header-section" style="border-bottom: 1px solid #d4ded9;">
     <div class="top-add mt-3">
         <div class="container">
             <center><img src="{{ asset('assets/images/brand/gp.gif')}}"></center>
@@ -183,16 +151,16 @@
     </div>
 
     <div class="mt-4">
-        <div class="container" style="border-bottom: 1px solid #d4ded9; max-width:78%">
+        <div class="container" style="max-width:78%">
             <div class="row">
                 {{--  <div class="col-1 col-md-3" style="padding-left:0px;">
                     <button onclick="myFunction()" class="btn"><i class="fas fa-bars manu-bar"></i></button>
                   
                 </div>  --}}
-                <div class="col-6">
-                    <button data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> <span id="area_name">অবস্থান নির্বাচন করুন</span></button>
+                <div class="col-sm-6 col-2 rm-padding-sm">
+                    <button onclick="dModal()" data-target="#my-modal" data-toggle="modal" class="btn "><i class="fas fa-map-marker-alt map-marker"></i> <span id="area_name" class="d-none d-sm-inline-block">অবস্থান নির্বাচন করুন</span></button>
                 </div>
-                <div class="col-6 pr-4">
+                <div class="col-sm-6 col-10 pr-sm-4 rm-padding-sm-rg">
                     <form action="{{ route('front.category', [Request::route('category'), Request::route('subcategory'), Request::route('childcategory')]) }}">
                         <div class="form-group input-group">
                             <input value="{{ request()->input('search') }}" name="search" type="text" class="form-control" placeholder="আপনি কি খুঁজছেন">
@@ -208,57 +176,13 @@
         </div>
     </div>
 </div>
-<section class="sub-categori" style="padding:0px">
-   <div class="container" style="max-width:75%">
-    <div class="row">
-        <div class="col-md-3">
-           
-            <div style="display:none" class="list-group list-unstyled categories-list megamenu" id="myDIV">
-                <ul class="list-group">
-                    <a class="list-group-item active text-light">
-                        <i class="fa fa-bars" aria-hidden="true"></i>Categories
-                    </a>
-                    <li>
-                        <a href="#" class="list-group-item megamenu-caret">
-                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>Clothing</a>
-                    </li>
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <span class="float-left"><i class="fa fa-paw" aria-hidden="true"></i>Shoes </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <span class="float-left"><i class="fa fa-clock-o" aria-hidden="true"></i>Watches </span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-paper-plane" aria-hidden="true"></i>Kids and babies</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-heart" aria-hidden="true"></i>Health and beauty</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-envira" aria-hidden="true"></i>House Hold</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="list-group-item clearfix">
-                            <i class="fa fa-bullhorn" aria-hidden="true"></i>Others</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<section class="sub-categori" style="padding:0px;background: #e7edee;">
+   <div class="container sm-container" style="max-width:75%;background:#fff;">
+    
       <div class="row">
       
-        <div class="col-md-3" style="positon:relative">
-            <div class="py-3" style="border-right: 1px solid #d4ded9;">
+        <div class="col-md-3 " style="positon:relative">
+            <div class="py-3 " style="border-right: 1px solid #d4ded9;padding-left: 20px;">
                 <div class="pt-2">পোস্টকারীর প্রকার</div>
                 <div class="pb-3" style="border-bottom: 1px solid #d4ded9;">
                     <form action="">
@@ -294,14 +218,14 @@
                         @if (!empty(request()->input('sort')))
                           <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
                         @endif
-                    
-        
         
                         <div class="price-range-block">
                             <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
                             <div class="livecount">
                               <input type="number" min=0  name="min"  id="min_price" class="price-range-field" />
+                              <br>
                               <span>{{$langg->lang62}}</span>
+                              <br>
                               <input type="number" min=0  name="max" id="max_price" class="price-range-field" />
                             </div>
                           </div>
@@ -311,36 +235,36 @@
                       </div>
                 </div>
             </div>
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 d-none d-sm-block">
                 <img src="{{ asset('assets/images/brand/sidead.gif')}}" alt="">
             </div>
                 
         </div>
-         <div class="col-md-9 order-first order-lg-last ajax-loader-parent">
+         <div class="col-md-9 ajax-loader-parent">
             <div class="right-area" id="app">
 
                @include('includes.filter')
                <div class="categori-item-area category-slide">
                     <div class="col" style="padding-left:10px;padding-right:10px;">
-                        <div class="product-slide4 mb-4">
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="{{ asset('assets/images/brand/cropped.jpg')}}" alt="" />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="{{ asset('assets/images/brand/cropped1.jpg')}}" alt="" />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="{{ asset('assets/images/brand/cropped3.jpg')}}" alt="" />
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="product-slide4 mb-4">-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="{{ asset('assets/images/brand/cropped.jpg')}}" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="{{ asset('assets/images/brand/cropped1.jpg')}}" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="{{ asset('assets/images/brand/cropped3.jpg')}}" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--</div>-->
                             <div class="product-slide2">
-                                	@foreach ($feature_products as $product)
+                                	@foreach ($topAdProducts as $product)
 					@include('includes.product.sell')
 				@endforeach
                             </div>
@@ -372,7 +296,7 @@
                         <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
                     </div>
                     <div class="col-md-6">
-                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
                         
                     </div>
@@ -385,11 +309,13 @@
                             <ul>
                                 @foreach($districts as $district)
 
-                                    <li>
+                                    <li class="brn">
                                     <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
-                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
+                                        <span class="dnn float-left">{{$district->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis{{$district->id}}" class="lft sub-dis categories-list sub-cate-item" >
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
+
                                          <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
                                          @php($i=1)
                                             @foreach($district->subdistricts as $subdistrict)
@@ -398,14 +324,14 @@
                                                 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
-    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
                                                     <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
                                                 
                                                 @else
-                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                    <a class="text-muted " href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
                                                 @endif
                                                 @if($i>=6&&$i==$district->subdistricts->count())
                                                    
@@ -425,18 +351,20 @@
                         </div>
                         <input type="hidden" id="area_key" >
                         <input type="hidden" id="area_value" >
-                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <div class="dnn btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
                             
                                @foreach($divisions as $division)
-                                <li>
+                                <li class="brn">
                                     <a
 									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
 									
 									 href="#" class="clearfix">
-                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                        <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <span class="dnn float-left">{{$division->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div id="dis{{$division->id}}" class="lft dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
+
                                         <ul class="sub-menu1 text-muted">
                                          <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
                                          @php($i=1)
@@ -449,8 +377,8 @@
 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
-    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+    <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv(this)"><i class="div fas fa-angle-down ">
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
@@ -491,8 +419,23 @@
 
 @section('scripts')
 <script>
+
+</script>
+<script>
 closeModal=()=>{
   $("#my-modal").modal('toggle');
+}
+dModal=()=>{
+  if(screen.width<576){
+        
+        $(".dnn").css("display","inline-block");
+        $(".lft").css("left","100%");
+
+         $(".brn").css("border-top","1px solid rgba(0, 0, 0, .125)");
+        $(".brn:first-child").css("border","none");
+        
+
+      }
 }
 	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
     document.getElementById("area_key").value=sid;
@@ -502,7 +445,9 @@ closeModal=()=>{
 		$(cm).modal('toggle');
 		}
 		toastr.success(hval+" selected");
-		document.getElementById(hid).innerHTML=hval;
+		if(document.getElementById(hid)){
+      document.getElementById(hid).innerHTML=hval;
+    }
 
 		$(cls2).hide();
 		id="#"+cls+id;
@@ -511,12 +456,16 @@ closeModal=()=>{
 		$(id).show();
      $("#ajaxLoader").show();
       filter(); 
-	} 
-</script>
-<script>
+      if(screen.width<576){
+        $(".brn").css("border","none");
+        $(".dnn").css("display","none");
+        $(".lft").css("left","18px");
 
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+      }
+	} 
+function myFunction(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdown").classList.toggle("show");
   if($(".dist.fa-angle-up").length>0)
   {
     $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
@@ -526,14 +475,14 @@ function myFunction() {
   }
 }
 
-function filterFunction() {
-  if(document.getElementById("myDropdown").classList.length==1){
-    document.getElementById("myDropdown").classList.add("show")
+function filterFunction(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -544,8 +493,9 @@ function filterFunction() {
     }
   }
 }
-function myFunctionDiv() {
-  document.getElementById("myDropdownDiv").classList.toggle("show");
+function myFunctionDiv(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdownDiv").classList.toggle("show");
   if($(".fa-angle-up.div").length>0)
   {
     $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
@@ -554,14 +504,14 @@ function myFunctionDiv() {
     $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
   }
 }
-function filterFunctionDiv() {
-  if(document.getElementById("myDropdownDiv").classList.length==1){
-    document.getElementById("myDropdownDiv").classList.add("show")
+function filterFunctionDiv(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInputDiv");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdownDiv");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;

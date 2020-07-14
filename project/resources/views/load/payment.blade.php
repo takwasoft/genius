@@ -1,7 +1,7 @@
 @if($payment == 'cod') 
                                 <input type="hidden" name="method" value="Cash On Delivery">
 @else
- @foreach($additionalFields as $field)
+ {{--  @foreach($additionalFields as $field)
 <div class="item form-group">
                                 <label class="control-label col-sm-12" for="name">{{ $field->title }}
                                 <br>
@@ -17,7 +17,7 @@
                                      name="additional[{{$field->id}}]"  class="form-control" type="text"  {{$field->required==1?'required':''}}>
                                 </div>
                             </div>
-@endforeach
+@endforeach  --}}
  @foreach($verificationFields as $field)
 <div class="item form-group">
                                 <label class="control-label col-sm-12" for="name">{{ $field->title }}
@@ -28,10 +28,12 @@
                                     </label>
                                 <div class="col-sm-12">
                                     <input 
+
                                     @if($field->required==1)
 												required
 												@endif
-                                     name="verification[{{$field->id}}]"  class="form-control" type="text"  {{$field->required==1?'required':''}}>
+                        value=" "
+                                     name="verification[{{$field->id}}]"  class="vf form-control" type="text"  {{$field->required==1?'required':''}}>
                                 </div>
                             </div>
 @endforeach

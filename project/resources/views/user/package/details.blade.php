@@ -14,14 +14,14 @@
 .dropbtn:hover, .dropbtn:focus {
   background-color: #3e8e41;
 }
-
+ 
 #myInput {
   box-sizing: border-box;
   background-image: url('../assets/images/searchicon.png');
   background-position: 14px 9px;
   background-repeat: no-repeat;
   font-size: 16px;
-  padding: 7px 20px 7px 45px;
+  padding: 8px 20px 8px 45px;
   border: 1px solid #ddd;
   border-radius:4px;
 }
@@ -29,16 +29,18 @@
      padding-left: 2px;
     padding-right: 2px;
     padding-top: 6px;
-    padding-bottom: 4px;
+    padding-bottom: 5px;
     margin-top: -2px;
 }
 
 .all_sub_category_btn{
     border: 1px solid #ddd;
-    margin-top: -4px;
+    margin-top: -2px;
     margin-left: -5px;
+    padding: 0.26rem .7rem;
 }
-#myInput:focus {outline: 3px solid #ddd;}
+#myInput:focus {outline: 0;
+box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 
 .dropdown {
   position: relative;
@@ -84,7 +86,7 @@
 }
 .model-item li li {
     border-top: 1px solid rgba(0, 0, 0, .125);
-    padding: .6rem .5rem; 
+    padding: .82rem .5rem; 
 }
 .model-item li:last-child {
     border-bottom: 1px solid rgba(0, 0, 0, .125);
@@ -206,6 +208,7 @@
 												<input id="subdistrict_id" name="subdistrict_id" type="hidden">
                                                 <input id="district_id" name="district_id" type="hidden">
                                                 <input id="division_id" name="division_id" type="hidden">
+
 <div class="modal fade" id="my-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">
@@ -221,7 +224,7 @@
                         <h6 class="text-muted" style="margin-top: 19px;border-top: 1px solid rgba(0, 0, 0, .125);; padding-top: 10px;">শহর</h6>
                     </div>
                     <div class="col-md-6">
-                        <h6>খুলনা-এর মধ্যে একটি স্থানীয় এলাকা নির্বাচন করুন</h6>
+                        
                         <h6 class="mt-3 text-muted">জনপ্রিয় এলাকাসমূহ</h6>
                         
                     </div>
@@ -234,21 +237,23 @@
                             <ul>
                                 @foreach($districts as $district)
 
-                                    <li>
+                                    <li class="brn">
                                     <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
-                                        <span class="float-left">{{$district->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-dis{{$district->id}}" class="sub-dis categories-list sub-cate-item" >
+                                        <span class="dnn float-left">{{$district->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-dis{{$district->id}}" class="lft sub-dis categories-list sub-cate-item" >
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li> 
-										 @php($i=1) 
-                                             @foreach($district->subdistricts as $subdistrict)
+
+                                         <li><a onclick="closeModal()" class="text-muted" href="javascript:void(0)">{{$district->name}} এর সবগুলো</a></li>
+                                         @php($i=1)
+                                            @foreach($district->subdistricts as $subdistrict)
                                                 @if($i<6)
                                                 <li><a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a></li>
                                                 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
-    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
                                                     <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
@@ -272,32 +277,36 @@
                               
                             </ul>
                         </div>
-
-                        <div class="btn text-muted mt-3">বিভাগ</div>
+                        <input type="hidden" id="area_key" >
+                        <input type="hidden" id="area_value" >
+                        <div class="dnn btn text-muted mt-3">বিভাগ</div>
                         <div class=" categories-list model-item categories-list-division">
                             <ul>
-                               @foreach($divisions as $division) 
-                                <li>
+                            
+                               @foreach($divisions as $division)
+                                <li class="brn">
                                     <a
 									 onclick="showItem('dis',{{$division->id}},'.sub-dis','division_id',{{$division->id}},['district_id','subdistrict_id'],'area_name','{{$division->name}}')"
 									
 									 href="#" class="clearfix">
-                                        <span class="float-left">{{$division->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                        <div id="dis{{$division->id}}" class="dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <span class="dnn float-left">{{$division->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        <div id="dis{{$division->id}}" class="lft dis categories-list sub-cate-item sub-cate-item-division" style="">
+                                        <button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
+
                                         <ul class="sub-menu1 text-muted">
-                                         <li><a class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
-                                             @php($i=1)
+                                         <li><a onclick="closeModal()" class="text-muted" href="#">{{$division->name}} বিভাগ এর সবগুলো</a></li>
+                                         @php($i=1)
                                             @foreach($division->districts as $district)
                                                 @if($i<6)
- 
+
                                                 <li><a class="text-muted" href="#"
 												onclick="showItem('','','','district_id',{{$district->id}},[],'area_name','{{$district->name}}','#my-modal')"
 												>{{$district->name}}</a></li>
 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
-   
-    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
-    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+  
+    <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv(this)"><i class="div fas fa-angle-down ">
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
@@ -334,8 +343,9 @@
 </div>
                     
                     <script>
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function myFunction(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdown").classList.toggle("show");
   if($(".dist.fa-angle-up").length>0)
   {
     $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
@@ -345,14 +355,14 @@ function myFunction() {
   }
 }
 
-function filterFunction() {
-  if(document.getElementById("myDropdown").classList.length==1){
-    document.getElementById("myDropdown").classList.add("show")
+function filterFunction(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -363,8 +373,9 @@ function filterFunction() {
     }
   }
 }
-function myFunctionDiv() {
-  document.getElementById("myDropdownDiv").classList.toggle("show");
+function myFunctionDiv(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdownDiv").classList.toggle("show");
   if($(".fa-angle-up.div").length>0)
   {
     $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
@@ -373,14 +384,14 @@ function myFunctionDiv() {
     $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
   }
 }
-function filterFunctionDiv() {
-  if(document.getElementById("myDropdownDiv").classList.length==1){
-    document.getElementById("myDropdownDiv").classList.add("show")
+function filterFunctionDiv(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInputDiv");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdownDiv");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -390,6 +401,19 @@ function filterFunctionDiv() {
       a[i].style.display = "none";
     }
   }
+}
+
+dModal=()=>{
+  if(screen.width<576){
+        
+        $(".dnn").css("display","inline-block");
+        $(".lft").css("left","100%");
+
+         $(".brn").css("border-top","1px solid rgba(0, 0, 0, .125)");
+        $(".brn:first-child").css("border","none");
+        
+
+      }
 }
 	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
 if(cm){
@@ -408,6 +432,13 @@ if(cm){
 		cls="."+cls;
 		$(cls).hide();
 		$(id).show();
+
+        if(screen.width<576){
+        $(".brn").css("border","none");
+        $(".dnn").css("display","none");
+        $(".lft").css("left","18px");
+
+      }
 	}
 </script>
                                 @if($user->is_vendor == 0)
@@ -418,7 +449,7 @@ if(cm){
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">
-                                       <div data-target="#my-modal" data-toggle="modal">
+                                       <div onclick="dModal()" data-target="#my-modal"  data-toggle="modal">
                                             <span id="area_name">Choose Area*</span>
                                     
                                         </div>
@@ -446,7 +477,7 @@ if(cm){
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="text" class="option" name="owner_name"
+                                        <input value="{{$user->name}}" type="text" class="option" name="owner_name"
                                             placeholder="{{ $langg->lang239 }}" required>
                                     </div>
                                 </div>
@@ -523,35 +554,53 @@ if(cm){
                                     </div>
                                     <div class="col-lg-8">
 
-                                        <select name="method" id="option" onchange="meThods(this)" class="option"
+                                        <select name="method" id="option" onchange="getAdditional(this.value)"  class="option"
                                             required="">
-                                            <option value="">{{ $langg->lang419 }}</option>
-                                            @if($gs->paypal_check == 1)
-                                            <option value="Paypal">{{ $langg->lang420 }}</option>
-                                            @endif
-                                            @if($gs->stripe_check == 1)
-                                            <option value="Stripe">{{ $langg->lang421 }}</option>
-                                            @endif
-                                            @if($gs->is_instamojo == 1)
-                                            <option value="Instamojo">{{ $langg->lang763 }}</option>
-                                            @endif
-                                            @if($gs->is_paystack == 1)
-                                            <option value="Paystack">{{ $langg->lang764 }}</option>
-                                            @endif
-                                            @if($gs->is_molly == 1)
-                                            <option value="Molly">{{ $langg->lang802 }}</option>
-                                            @endif
-                                            @if($gs->is_paytm == 1)
-                                            <option value="Paytm">{{ $langg->paytm }}</option>
-                                            @endif
-                                            @if($gs->is_razorpay == 1)
-                                            <option value="Razorpay">{{ $langg->razorpay }}</option>
-                                            @endif
+                                        <option value="">Select Payment Method</option>
+                                                <option value="0">From Balance</option>
+                                            @foreach($gateways as $gateway)
+                                                <option value="{{$gateway->id}}">{{$gateway->title}}</option>
+                                            @endforeach 
                                         </select>
+                                 <div id="ad-field">
 
                                     </div>
+                                    </div>
+                                   
                                 </div>
-
+                            
+                            <script>
+                            getExtra = (id) => {
+                                    if(id==0){
+                                        document.getElementById("ad-field").innerHTML="";
+                                    }
+                                    var xhttp = new XMLHttpRequest();
+                                    xhttp.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                             if(this.responseText!=0)
+		{
+			toastr.warning("Extra charge "+this.responseText+"BDT will be added for payment");
+		}
+                                        }
+                                    };
+                                    xhttp.open("GET", "{{URL::to('/checkout/extra/')}}/{{$subs->price}}/"+id, true);
+                                    xhttp.send();
+                                }
+                                getAdditional = (id) => {
+                                    if(id==0){
+                                        document.getElementById("ad-field").innerHTML="";
+                                    }
+                                    var xhttp = new XMLHttpRequest();
+                                    xhttp.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            document.getElementById("ad-field").innerHTML = this.responseText;
+                                            getExtra(id)
+                                        }
+                                    };
+                                    xhttp.open("GET", "{{URL::to('/checkout/subs/')}}/{{$subs->price}}/"+id, true);
+                                    xhttp.send();
+                                }
+                            </script>
 
                                 <div id="stripes" style="display: none;">
 

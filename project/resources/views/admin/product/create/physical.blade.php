@@ -670,10 +670,10 @@
 
 <script type="text/javascript">
 
-$('.cropme').simpleCropper();
+{{--  $('.cropme').simpleCropper();
 $('#crop-image').on('click',function(){
 $('.cropme').click();
-});
+});  --}}
 </script>
 
 

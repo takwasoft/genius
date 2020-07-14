@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Generalsetting;
 use App\Models\Order;
 use App\Models\OrderTrack;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\VendorOrder;
 use Datatables;
@@ -24,23 +25,23 @@ class OrderController extends Controller
     {
 
         if($status == 'pending'){
-            $datas = Order::where('status','=','pending')->get();
+            $datas = Order::where('status','=','pending')->orderBy('id','desc')->get();
            
         }
         elseif($status == 'processing') {
-            $datas = Order::where('status','=','processing')->get();
+            $datas = Order::where('status','=','processing')->orderBy('id','desc')->get();
         }
         elseif($status == 'delivery') {
-            $datas = Order::where('status','=','on delivery')->get();
+            $datas = Order::where('status','=','on delivery')->orderBy('id','desc')->get();
         }
         elseif($status == 'paid') {
-            $datas = Order::where('payment_status','=','Completed')->get();
+            $datas = Order::where('payment_status','=','Completed')->orderBy('id','desc')->get();
         }
         elseif($status == 'completed') {
-            $datas = Order::where('status','=','completed')->get();
+            $datas = Order::where('status','=','completed')->orderBy('id','desc')->get();
         }
         elseif($status == 'declined') {
-            $datas = Order::where('status','=','declined')->get();
+            $datas = Order::where('status','=','declined')->orderBy('id','desc')->get();
         }
         else{
           $datas = Order::orderBy('id','desc')->get();  
@@ -82,6 +83,21 @@ class OrderController extends Controller
         $data = Order::findOrFail($id);
 
         $input = $request->all();
+        if($data->payment_status == "Completed"&&$input['payment_status'] != "Completed"){
+            $t=Transaction::where('order_id','=',$data->id)->first();
+            if($t){
+                $t->delete();
+            }
+        }
+        if($data->payment_status != "Completed"&&$input['payment_status'] == "Completed"){
+            Transaction::create([
+                "amount"=>$data->pay_amount,
+                "order_id"=>$data->id,
+                "type"=>"Order Payment",
+                "collected"=>1
+            ]);
+
+        }
         if ($data->status == "completed" &&$data->payment_status == "Completed"){
 
         // Then Save Without Changing it.

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Vendor;
 
+use App\BoostAdditional;
+use App\BoostExtraCharge;
+use App\BoostPaymentVerification;
+use App\ExtraChargeRule;
 use App\Http\Controllers\Controller;
 use App\Models\Area;
 use App\Models\Category;
@@ -18,7 +22,15 @@ use App\Models\BoostCategory;
 use App\Models\Brand;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\PaymentGateway;
 use App\Models\SubDistrict;
+use App\Models\Transaction;
+use App\Models\User;
+use App\TopAd;
+use App\TopAdAdditional;
+use App\TopAdCategory;
+use App\TopAdExtraCharge;
+use App\TopAdPaymentVerification;
 use Auth;
 use Carbon\Carbon;
 use DB;
@@ -53,16 +65,134 @@ class ProductController extends Controller
 
     }
     public function boostProductInsert(Request $request,Product $product){
-        Boost::create([
+        $boostCategory=BoostCategory::find($request->boost_category_id);
+        $total=$boostCategory->price;
+        $paid=0;
+       if($request->method==0){
+           if($total>auth()->user()->current_balance){
+
+               return redirect()->back()->withErrors(["msg"=>"insufficient balance"]);
+           }
+           else{
+               $paid=1;
+               $user=User::find(auth()->user()->id);
+               $user->current_balance-=$total;
+               $user->save();
+               $boost= Boost::create([
+                "boost_category_id"=>$request->boost_category_id,
+                "payment_gateway_id"=>$request->method,
+                "product_id"=>$product->id,
+                "status"=>0,
+                "paid"=>$paid
+            ]);
+            Transaction::create([
+                "amount"=>$boost->boostCategory->price,
+                "type"=>"Product Boosting",
+                "top_ad_id"=>$boost->id,
+                "collected"=>1
+            ]);
+               return redirect()->route('my-boost');
+           }
+       }
+       $boost= Boost::create([
             "boost_category_id"=>$request->boost_category_id,
+            "payment_gateway_id"=>$request->method,
             "product_id"=>$product->id,
             "status"=>0,
-            "paid"=>1
+            "paid"=>$paid
         ]);
-        //return redirect()->route();
+
+        for($i=0;$i<count(array_keys($request->verification));$i++){
+            if($request->verification[array_keys($request->verification)[$i]])
+            {
+                BoostPaymentVerification::create([
+                    "boost_id"=>$boost->id,
+                    "payment_verification_id"=>array_keys($request->verification)[$i],
+                    "value"=>$request->verification[array_keys($request->verification)[$i]]
+                ]);
+            }
+        }
+      
+        $payment=PaymentGateway::find($request->method);
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$payment->id)->get(); 
+        foreach($extraCharges as $extraCharge){
+            if($total>=$extraCharge->from&&$total<=$extraCharge->to){
+                BoostExtraCharge::create([
+                    "boost_id"=>$boost->id,
+                    "extra_charge_rule_id"=>$extraCharge->id,
+                    "charge"=>$extraCharge->fixed==1?$extraCharge->charge:$extraCharge->charge*$total*0.01
+                ]);
+            }
+        }
+        return redirect()->route('my-boost');
+    }
+    public function topAdProductInsert(Request $request,Product $product){
+        $boostCategory=TopAdCategory::find($request->boost_category_id);
+        $total=$boostCategory->price;
+        $paid=0;
+       if($request->method==0){
+           if($total>auth()->user()->current_balance){
+
+               return redirect()->back()->withErrors(["msg"=>"insufficient balance"]);
+           }
+           else{
+               $paid=1;
+               $user=User::find(auth()->user()->id);
+               $user->current_balance-=$total;
+               $user->save();
+               $boost= TopAd::create([
+                "top_ad_category_id"=>$request->boost_category_id,
+                "payment_gateway_id"=>$request->method,
+                "product_id"=>$product->id,
+                "status"=>0,
+                "paid"=>$paid
+            ]);
+            Transaction::create([
+                "amount"=>$boost->topAdCategory->price,
+                "type"=>"Product Top Ad",
+                "top_ad_id"=>$boost->id,
+                "collected"=>1
+            ]);
+               return redirect()->route('my-top-ad');
+           }
+       }
+       $boost= TopAd::create([
+            "top_ad_category_id"=>$request->boost_category_id,
+            "payment_gateway_id"=>$request->method,
+            "product_id"=>$product->id,
+            "status"=>0,
+            "paid"=>$paid
+        ]);
+
+        for($i=0;$i<count(array_keys($request->verification));$i++){
+            if($request->verification[array_keys($request->verification)[$i]])
+            {
+                TopAdPaymentVerification::create([
+                    "top_ad_id"=>$boost->id,
+                    "payment_verification_id"=>array_keys($request->verification)[$i],
+                    "value"=>$request->verification[array_keys($request->verification)[$i]]
+                ]);
+            }
+        }
+      
+        $payment=PaymentGateway::find($request->method);
+        $extraCharges=ExtraChargeRule::where('payment_gateway_id','=',$payment->id)->get(); 
+        foreach($extraCharges as $extraCharge){
+            if($total>=$extraCharge->from&&$total<=$extraCharge->to){
+                TopAdExtraCharge::create([
+                    "top_ad_id"=>$boost->id,
+                    "extra_charge_rule_id"=>$extraCharge->id,
+                    "charge"=>$extraCharge->fixed==1?$extraCharge->charge:$extraCharge->charge*$total*0.01
+                ]);
+            }
+        }
+        return redirect()->route('my-top-ad');
     }
     public function myBoost(){
-        return view('vendor.product.myboost');
+        return view('vendor.product.myboost'); 
+    }
+    public function myTopAd(){
+        return view('vendor.product.myTopAd');
     }
     public function boostDataTable(){
         $datas = Boost::whereHas('product', function($query) {
@@ -71,15 +201,35 @@ class ProductController extends Controller
  
          //--- Integrating This Collection Into Datatables
          return Datatables::of($datas)
+                            ->addColumn('method', function(Boost $data) {
+                                if($data->paymentGateway)
+                                {
+                                    return $data->paymentGateway->title;
+                                }
+                                else{
+                                    return "from balance";
+                                }
+                            })
                             ->editColumn('id',function($data){
                                 return '#00'.$data->id;
                             })
                             ->editColumn('status',function($data){
+                                if($data->status == 1)
+                                {
+                                    return '<span class="badge badge-success">Aproved</span>';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    return '<span class="badge badge-danger">Pending</span>';
+                                }
+                                
+                            })
+                            ->editColumn('paid',function($data){
                                 if($data->paid == 1)
                                 {
                                     return '<span class="badge badge-success">Paid</span>';
                                 }
-                                else if($data->status == 0)
+                                else if($data->paid == 0)
                                 {
                                     return '<span class="badge badge-danger">Unpaid</span>';
                                 }
@@ -111,16 +261,94 @@ class ProductController extends Controller
                                 //
                                 return $data->product->boost_expired->diff(Carbon::now())->format('%d day %h hour  %i min');
                             })
-                            ->rawColumns(['status','action'])
+                            ->rawColumns(['status','action','paid'])
                             ->toJson();
     }
-    public function boostProduct(Product $product){
+
+
+    public function topAdDataTable(){
+        $datas = TopAd::whereHas('product', function($query) {
+            $query->where('user_id','=', auth()->user()->id);
+         })->orderBy('id','desc')->with('product.user')->with('topadcategory')->get();
+ 
+         //--- Integrating This Collection Into Datatables
+         return Datatables::of($datas)
+                            ->addColumn('method', function(TopAd $data) {
+                                if($data->paymentGateway)
+                                {
+                                    return $data->paymentGateway->title;
+                                }
+                                else{
+                                    return "from balance";
+                                }
+                            })
+                            ->editColumn('id',function($data){
+                                return '#00'.$data->id;
+                            })
+                            ->editColumn('status',function($data){
+                                if($data->status == 1)
+                                {
+                                    return '<span class="badge badge-success">Aproved</span>';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    return '<span class="badge badge-danger">Pending</span>';
+                                }
+                                
+                            })
+                            ->editColumn('paid',function($data){
+                                if($data->paid == 1)
+                                {
+                                    return '<span class="badge badge-success">Paid</span>';
+                                }
+                                else if($data->paid == 0)
+                                {
+                                    return '<span class="badge badge-danger">Unpaid</span>';
+                                }
+                                
+                            })
+                            ->addColumn('action', function( $data) { 
+                                if($data->status == 1)
+                                {
+                                    $class =   'drop-success';
+                                }
+                                else if($data->status == 0)
+                                {
+                                    $class =   'drop-warning';
+                                }
+                                else{
+                                    $class =   'drop-danger';
+                                }
+                                
+
+                                $s = $data->status == 1 ? 'selected' : '';
+                                $ns = $data->status == 0 ? 'selected' : '';
+                                $cs = $data->status == 2 ? 'selected' : '';
+                                return '<div class="action-list"><select onchange="changed(this.value,'.$data->id.')" class="process select droplinks '.$class.'"><option data-val="1" value="1" '.$s.'>Confirm</option><option data-val="0" value="0" '.$ns.'>Pending</option><option data-val="2" value="2" '.$cs.'>Cancel</option>/select></div>';
+                            })
+                            ->addColumn('applied', function( $data) {
+                                return $data->created_at->diffForHumans();
+                            })
+                            ->addColumn('valid', function( $data) {
+                                //
+                                return $data->product->boost_expired->diff(Carbon::now())->format('%d day %h hour  %i min');
+                            })
+                            ->rawColumns(['status','action','paid'])
+                            ->toJson();
+    }
+    public function boostProduct(Product $product){  
         $boostCategories=BoostCategory::where('status','=','1')->get();
-        return view('vendor.product.boost',compact('product','boostCategories'));
+        $gateways=PaymentGateway::all(); 
+        return view('vendor.product.boost',compact('product','gateways','boostCategories'));
+    } 
+    public function topProduct(Product $product){
+        $boostCategories=TopAdCategory::where('status','=','1')->get(); 
+        $gateways=PaymentGateway::all();
+        return view('vendor.product.topAd',compact('product','gateways','boostCategories'));
     } 
     //*** JSON Request
     public function datatables()
-    {
+    { 
     	 $user = Auth::user();
          $datas = $user->products()->where('product_type','normal')->orderBy('id','desc')->get();
 
@@ -151,8 +379,13 @@ class ProductController extends Controller
                                 
                             })
                             ->addColumn('promotion', function(Product $data) {
-                                return $data->status==1? '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>':'<span class="badge badge-danger">Not Eligible</span>';
-                                 
+                                return $data->status == 1?'<div class="action-list"><select onchange="window.location.href=this.value" class="process select  drop-success">
+                                <option  >Promote Now</option>
+                                <option   value="'. route('vendor-prod-boost',$data->id).'" >Boost </option>
+                                <option  value="'. route('vendor-prod-top',$data->id).'" >Top Ad</option>
+                                /select></div>':'<span class="badge badge-danger">Ineligible</span>';
+                                // return $data->status==1? '<a class="btn btn-sm btn-success" href="'.route('vendor-prod-boost',$data->id).'">Boost Now</a>':'<span class="badge badge-danger">Not Eligible</span>';
+                                  
                              })
                             ->addColumn('action', function(Product $data) {
                                 return '<div class="action-list"><a href="' . route('vendor-prod-edit',$data->id) . '"> <i class="fas fa-edit"></i>'.$this->vendor_language->lang715.'</a><a href="javascript" class="set-gallery" data-toggle="modal" data-target="#setgallery"><input type="hidden" value="'.$data->id.'"><i class="fas fa-eye"></i> '.$this->vendor_language->lang716.'</a><a href="javascript:;" data-href="' . route('vendor-prod-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
@@ -192,7 +425,7 @@ class ProductController extends Controller
 
     //*** GET Request
     public function index()
-    {  
+    {   
         return view('vendor.product.index');
     }
 
@@ -221,7 +454,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $sign = Currency::where('is_default','=',1)->first();
         $divisions=Division::all();
-        $districts=District::orderBy('dis_serial')->limit(5)->get();
+        $districts=District::orderBy('dis_serial')->limit(8)->get();
         $categories=Category::all();
       
         //every category has many subs. every subs has many childs
@@ -475,7 +708,7 @@ if (!Product::where('sku',$line[0])->exists()){
 
         //--- Validation Section
         $rules = [
-               'photo'      => 'required',
+               'pht'      => 'required',
                'file'       => 'mimes:zip'
                 ];
 
@@ -498,14 +731,15 @@ if (!Product::where('sku',$line[0])->exists()){
                 $input['file'] = $name;
             }
 
-            $image = $request->photo;
-            list($type, $image) = explode(';', $image);
-            list(, $image)      = explode(',', $image);
-            $image = base64_decode($image);
-            $image_name = time().str_random(8).'.png';
-            $path = 'assets/images/products/'.$image_name;
-            file_put_contents($path, $image);
-            $input['photo'] = $image_name;
+
+
+            if ($file = $request->file('pht')) 
+            {              
+                $name = time().str_random(8).$file->getClientOriginalName();
+                $file->move('assets/images/products/',$name);
+                           
+            $input['photo'] = $name;
+            } 
 
             // Check Physical
             if($request->type == "Physical")
@@ -708,8 +942,8 @@ if (!Product::where('sku',$line[0])->exists()){
              $jsonAttr = json_encode($attrArr);
              $input['attributes'] = $jsonAttr;
            }
-
-           if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id){
+           $input['sub_district_id']=$request["subdistrict_id"];
+           if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id&&!$request->district_id){
             $input['subdistrict_id']=$user->subdistrict_id;
             $input['sub_district_id']=$user->subdistrict_id;
             $input['district_id']=$user->district_id;
@@ -721,6 +955,7 @@ if (!Product::where('sku',$line[0])->exists()){
                 if(!$request->division_id){
                     $input['division_id']=District::find($request->district_id)->division_id; 
                 }
+                
             }
             if(!$request->brand_id){
                 $input['brand_id']=0;
@@ -784,18 +1019,21 @@ if (!Product::where('sku',$line[0])->exists()){
     //*** GET Request
     public function edit($id)
     {
+
         $cats = Category::all();
         $data = Product::findOrFail($id);
         $sign = Currency::where('is_default','=',1)->first();
-
-
+        $brands = Brand::all();
+        $divisions=Division::all();
+        $districts=District::orderBy('dis_serial')->limit(5)->get();
+        $categories=Category::all();
         if($data->type == 'Digital')
             return view('vendor.product.edit.digital',compact('cats','data','sign'));
         elseif($data->type == 'License')
             return view('vendor.product.edit.license',compact('cats','data','sign'));
-        else
-            return view('vendor.product.edit.physical',compact('cats','data','sign'));
-
+        else 
+            return view('vendor.product.edit.physical',compact('divisions','districts','categories','brands','cats','data','sign'));
+ 
     }
 
 
@@ -823,9 +1061,9 @@ if (!Product::where('sku',$line[0])->exists()){
         $rules = [
                'file'       => 'mimes:zip'
                 ];
-
+                
         $validator = Validator::make(Input::all(), $rules);
-
+$user=auth()->user();
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
@@ -1086,8 +1324,34 @@ if (!Product::where('sku',$line[0])->exists()){
             else {
                 $data->slug = str_slug($data->name,'-').'-'.strtolower($data->sku);
             }
-
-         $data->update($input);
+            $input['sub_district_id']=$request["subdistrict_id"];
+            if(!$request->subdistrict_id&&!$request->division_id&&!$request->subdistrict_id&&!$request->district_id){
+                $input['subdistrict_id']=$user->subdistrict_id;
+                $input['sub_district_id']=$user->subdistrict_id;
+                $input['district_id']=$user->district_id;
+                
+                $input['division_id']=$user->division_id;
+                }
+                else{
+                    $input['area_id']=0;
+                    
+                    if(!$request->division_id){
+                        $input['division_id']=District::find($request->district_id)->division_id; 
+                    }
+                }
+                if(!$request->brand_id){
+                    $input['brand_id']=0;
+                }
+                
+            if ($file = $request->file('pht')) 
+            {              
+                $name = time().str_random(8).$file->getClientOriginalName();
+                $file->move('assets/images/thumbnails/',$name);
+                           
+            $input['thumbnail'] = $name;
+            
+            } 
+         $data->update($input); 
         //-- Logic Section Ends
 
         //--- Redirect Section

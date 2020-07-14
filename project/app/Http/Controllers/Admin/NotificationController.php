@@ -102,7 +102,7 @@ class NotificationController extends Controller
 
     public function conv_notf_show()
     {
-        $datas = Notification::where('conversation_id','!=',null)->get();
+        $datas = Notification::where('conversation_id','!=',null)->orderBy('id','desc')->get();
         if($datas->count() > 0){
           foreach($datas as $data){
             $data->is_read = 1;

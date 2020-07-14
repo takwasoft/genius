@@ -10,6 +10,21 @@
 
                                     <div class="table-responsive show-table">
                                         <table class="table">
+                                        @if($subs->userSubscriptionPaymentVerifications->count()>0)
+                                                <tr>
+                                                    <th>Payment Details</th>
+                                                </tr>
+                                        @endif
+                                        @foreach($subs->userSubscriptionPaymentVerifications as $ver)
+                                            <tr>
+                                                <th>
+                                                {{$ver->paymentVerification->title}}
+                                                </th>
+                                                 <td>
+                                                {{$ver->value}}
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                             <tr>
                                                 <th width="50%">{{ __("Customer ID#") }}</th>
                                                 <td>{{ $subs->user->id }}</td>

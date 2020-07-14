@@ -5,6 +5,16 @@
 }
 }
 
+
+
+
+
+
+
+
+
+
+
 @media only screen and (max-width: 991px) {
     .category-page .bg-white .sub-category-menu ul li {
         flex: 50%;
@@ -108,24 +118,36 @@
     }
 
 }
+@media only screen and (max-width: 540px){
+    .logo-header .search-box {
+        width: 84%;
+    }
+}
 @media only screen and (max-width: 491px){
-    .cart-text {
-        width: 60% !important;
-      }
+    .logo-header .search-box {
+        width: 86%;
+    }
    
 }
 
-@media only screen and (max-width: 448px){
+@media only screen and (max-width: 476px){
+    .logo-header .search-box {
+        width: 79%;
+    }
     .cart-text {
-        width: 55% !important;
+        width: 40% !important;
       }
 }
 
-@media only screen and (max-width: 414px) {
-    .logo-header .search-box .search-form button {
-        font-size: 12px;
-        width: 79px;
+@media only screen and (max-width: 433px){
+    .logo-header .search-box {
+        width: 82%;
     }
+   
+
+
+@media only screen and (max-width: 414px) {
+    
     .logo-header .search-box .search-form input {
         padding: 0px 3px 0px 4px;
     }
@@ -175,10 +197,15 @@
 }
 @media only screen and (max-width: 401px){
     .cart-text {
-        width:48% !important;
+        width:36% !important;
       }
 }
 
+@media only screen and (max-width: 375px){
+    .cart-text {
+        width:34% !important;
+      }
+}
 
 @media only screen and (max-width: 360px) {
 
@@ -191,4 +218,9 @@
         line-height: 33px;
     }
 
+}
+@media only screen and (max-width: 350px){
+    .cart-text {
+        width:30% !important;
+      }
 }

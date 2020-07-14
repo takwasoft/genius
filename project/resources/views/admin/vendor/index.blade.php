@@ -47,6 +47,7 @@
 		                                                  <th>{{ __("Store Name") }}</th>
 		                                                  <th>{{ __("Vendor Email") }}</th>
 		                                                  <th>{{ __("Shop Number") }}</th>
+														  <th>{{ __("Balance") }}</th>
 		                                                  <th>{{ __("Status") }}</th>
 		                                                  <th>{{ __("Options") }}</th>
 														</tr>
@@ -233,7 +234,7 @@
     <script type="text/javascript">
 
 		var table = $('#geniustable').DataTable({
-			   ordering: false,
+			   ordering: true,
                processing: true,
                serverSide: true,
                ajax: '{{ route('admin-vendor-datatables') }}',
@@ -241,6 +242,7 @@
                         { data: 'shop_name', name: 'shop_name' },
                         { data: 'email', name: 'email' },
                         { data: 'shop_number', name: 'shop_number' },
+						{ data: 'current_balance', name: 'current_balance' },
                         { data: 'status', searchable: false, orderable: false},
             			{ data: 'action', searchable: false, orderable: false }
                      ],

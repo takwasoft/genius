@@ -103,7 +103,7 @@
             <div class="mycard bg6">
                 <div class="left">
                     <h5 class="title">Current Balance!</h5>
-                    <span class="number">{{ $user->current_balance}}</span>
+                    <span class="number">{{ round($user->current_balance,2)}}</span>
                 </div>
                 <div class="right d-flex align-self-center">
                     <div class="icon">

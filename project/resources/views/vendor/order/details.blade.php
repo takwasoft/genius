@@ -50,7 +50,7 @@
                                     * $order->tax; $price += $tax; } @endphp
 
 
-                                    <td width="45%">{{$order->currency_sign}}{{ round($price * $order->currency_value , 2) }}</td>
+                                    <td width="45%">{{$order->currency_sign}}{{ $price}}  </td>
                                 </tr>
                                 <tr>
                                     <th width="45%">{{ $langg->lang554 }}</th>
@@ -59,26 +59,9 @@
                                 </tr>
 
 
-                                <tr>
-                                    <th width="45%">{{ $langg->lang795 }}</th>
-                                    <td width="10%">:</td>
-                                    <td width="45%">{{$order->method}}</td>
-                                </tr>
+                                
 
-                                @if($order->method != "Cash On Delivery") @if($order->method=="Stripe")
-                                <tr>
-                                    <th width="45%">{{$order->method}} {{ $langg->lang796 }}</th>
-                                    <td width="10%">:</td>
-                                    <td width="45%">{{$order->charge_id}}</td>
-                                </tr>
-                                @endif
-                                <tr>
-                                    <th width="45%">{{$order->method}} {{ $langg->lang797 }}</th>
-                                    <td width="10%">:</td>
-                                    <td width="45%">{{$order->txnid}}</td>
-                                </tr>
-                                @endif
-
+                               
 
                                 <th width="45%">{{ $langg->lang798 }}</th>
                                 <th width="10%">:</th>

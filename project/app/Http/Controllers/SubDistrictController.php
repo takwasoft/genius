@@ -28,7 +28,7 @@ class SubDistrictController extends Controller
                         ->addIndexColumn()
                         ->addColumn('action', function($row){
 
-                               $btn = '<div class="btn-group"><a href="'.URL::to('/').'/admin/subDistricts/'.$row->id.'/edit" class="btn btn-sm btn-outline-primary">Edit</a>
+                               $btn = '<div class="btn-group"><a href="'.URL::to('/').'/admin/subdistricts/'.$row->id.'/edit" class="btn btn-sm btn-outline-primary">Edit</a>
                                <button onclick="deleteData('.$row->id.')" class="btn btn-sm btn-outline-danger">Delete</button></div>';
 
                                 return $btn;
@@ -109,17 +109,17 @@ class SubDistrictController extends Controller
      * @param  \App\SubDistrict  $var
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubDistrict $subDistrict)
+    public function edit(SubDistrict $subdistrict)
     {
-        $action="/admin/subdistricts/$subDistrict->id";
+        $action="/admin/subdistricts/$subdistrict->id";
         $name="SubDistrict";
         $fields=[
             [
-                "name"=>"division_id",
-                "label"=>"Division",
+                "name"=>"district_id",
+                "label"=>"District",
                 "type"=>"select",
                 "required"=>true,
-                "value"=>$subDistrict->district_id,
+                "value"=>$subdistrict->district_id,
                 "options"=>District::all(),
                 "optionlabel"=>"name"
             ],
@@ -128,7 +128,7 @@ class SubDistrictController extends Controller
                 "label"=>"Name",
                 "type"=>"text",
                 "required"=>true,
-                "value"=>$subDistrict->name
+                "value"=>$subdistrict->name
             ],
             ];
 
@@ -142,9 +142,9 @@ class SubDistrictController extends Controller
      * @param  \App\SubDistrict  $var
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubDistrict $subDistrict)
+    public function update(Request $request, SubDistrict $subdistrict)
     {
-        $subDistrict->update($request->all());
+        $subdistrict->update($request->all());
         return redirect('/admin/subdistricts');
     }
 
@@ -154,9 +154,9 @@ class SubDistrictController extends Controller
      * @param  \App\SubDistrict  $var
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubDistrict $subDistrict)
+    public function destroy(SubDistrict $subdistrict)
     {
-        $subDistrict->delete();
-        return redirect('/admin/subDistricts');
+        $subdistrict->delete();
+        return redirect('/admin/subdistricts');
     }
 }

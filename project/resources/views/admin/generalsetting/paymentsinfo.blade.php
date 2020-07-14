@@ -577,17 +577,6 @@
                           </div>
                         </div>
 
-                        <div class="row justify-content-center">
-                          <div class="col-lg-3">
-                            <div class="left-area">
-                                <h4 class="heading">{{ __('Withdraw Fee') }} *
-                                  </h4>
-                            </div>
-                          </div>
-                          <div class="col-lg-6">
-                            <input type="text" class="input-field" placeholder="{{ __('Withdraw Fee') }}" name="withdraw_fee" value="{{ $gs->withdraw_fee }}" required="">
-                          </div>
-                        </div>
 
                         <div class="row justify-content-center">
                           <div class="col-lg-3">

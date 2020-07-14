@@ -62,6 +62,25 @@
                                   </div>
                               </div>
                             </div>
+                            <div class="row justify-content-center">
+                              <div class="col-lg-3">
+                                <div class="left-area">
+                                  <h4 class="heading">
+                                      {{ __('Footer Image') }} *
+                                  </h4>
+                                </div>
+                              </div>
+                              <div class="col-lg-6">
+                                  <div class="tawk-area">
+                                    <div class="currrent-logo">
+                                      <img src="{{ $gs->footer_image ? asset('assets/images/'.$gs->footer_image):asset('assets/images/noimage.png')}}" alt="">
+                                    </div>
+                                    <div class="set-logo">
+                                      <input class="img-upload1" type="file" name="footer_image">
+                                    </div>
+                                  </div>
+                              </div>
+                            </div>
 
 
                         <div class="row justify-content-center">

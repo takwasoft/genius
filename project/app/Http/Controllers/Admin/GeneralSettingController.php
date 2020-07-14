@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Models\Generalsetting;
 use Artisan;
 use Illuminate\Http\Request;
@@ -33,7 +34,7 @@ class GeneralSettingController extends Controller
     }
 
 
-    private function setEnv($key, $value,$prev)
+    private function setEnv($key, $value, $prev)
     {
         file_put_contents(app()->environmentFilePath(), str_replace(
             $key . '=' . $prev,
@@ -49,89 +50,85 @@ class GeneralSettingController extends Controller
         $validator = Validator::make(Input::all(), $this->rules);
 
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
+
         //--- Validation Section Ends
 
         //--- Logic Section
         else {
-        $input = $request->all();
-        $data = Generalsetting::findOrFail(1);
-            if ($file = $request->file('logo'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->logo);
+            $input = $request->all();
+            $data = Generalsetting::findOrFail(1);
+            if ($file = $request->file('logo')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->logo);
                 $input['logo'] = $name;
             }
-            if ($file = $request->file('favicon'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->favicon);
+            if ($file = $request->file('footer_image')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->footer_image);
+                $input['footer_image'] = $name;
+            }
+            if ($file = $request->file('favicon')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->favicon);
                 $input['favicon'] = $name;
             }
-            if ($file = $request->file('loader'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->loader);
+            if ($file = $request->file('loader')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->loader);
                 $input['loader'] = $name;
             }
-            if ($file = $request->file('admin_loader'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->admin_loader);
+            if ($file = $request->file('admin_loader')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->admin_loader);
                 $input['admin_loader'] = $name;
             }
-            if ($file = $request->file('affilate_banner'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->affilate_banner);
+            if ($file = $request->file('affilate_banner')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->affilate_banner);
                 $input['affilate_banner'] = $name;
             }
-             if ($file = $request->file('error_banner'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->error_banner);
+            if ($file = $request->file('error_banner')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->error_banner);
                 $input['error_banner'] = $name;
             }
-            if ($file = $request->file('popup_background'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->popup_background);
+            if ($file = $request->file('popup_background')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->popup_background);
                 $input['popup_background'] = $name;
             }
-            if ($file = $request->file('invoice_logo'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->invoice_logo);
+            if ($file = $request->file('invoice_logo')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->invoice_logo);
                 $input['invoice_logo'] = $name;
             }
-            if ($file = $request->file('user_image'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->user_image);
+            if ($file = $request->file('user_image')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->user_image);
                 $input['user_image'] = $name;
             }
 
-            if ($file = $request->file('footer_logo'))
-            {
-                $name = time().$file->getClientOriginalName();
-                $data->upload($name,$file,$data->footer_logo);
+            if ($file = $request->file('footer_logo')) {
+                $name = time() . $file->getClientOriginalName();
+                $data->upload($name, $file, $data->footer_logo);
                 $input['footer_logo'] = $name;
             }
 
-        $data->update($input);
-        //--- Logic Section Ends
+            $data->update($input);
+            //--- Logic Section Ends
 
 
-        Artisan::call('cache:clear');
-        Artisan::call('config:clear');
-        Artisan::call('route:clear');
-        Artisan::call('view:clear');
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
+            Artisan::call('route:clear');
+            Artisan::call('view:clear');
 
-        //--- Redirect Section
-        $msg = 'Data Updated Successfully.';
-        return response()->json($msg);
-        //--- Redirect Section Ends
+            //--- Redirect Section
+            $msg = 'Data Updated Successfully.';
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
     }
 
@@ -141,49 +138,47 @@ class GeneralSettingController extends Controller
         $validator = Validator::make(Input::all(), $this->rules);
 
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
 
         //--- Logic Section
         else {
-        $input = $request->all();
-        $data = Generalsetting::findOrFail(1);
-        $prev = $data->molly_key;  
-        
-        if ($request->vendor_ship_info == ""){
-            $input['vendor_ship_info'] = 0;
-        }
+            $input = $request->all();
+            $data = Generalsetting::findOrFail(1);
+            $prev = $data->molly_key;
 
-        if ($request->instamojo_sandbox == ""){
-            $input['instamojo_sandbox'] = 0;
-        }
+            if ($request->vendor_ship_info == "") {
+                $input['vendor_ship_info'] = 0;
+            }
 
-        if ($request->paypal_mode == ""){
-            $input['paypal_mode'] = 'live';
-        }
-        else {
-            $input['paypal_mode'] = 'sandbox';
-        }
+            if ($request->instamojo_sandbox == "") {
+                $input['instamojo_sandbox'] = 0;
+            }
 
-        if ($request->paytm_mode == ""){
-            $input['paytm_mode'] = 'live';
-        }
-        else {
-            $input['paytm_mode'] = 'sandbox';
-        }
-        $data->update($input);
+            if ($request->paypal_mode == "") {
+                $input['paypal_mode'] = 'live';
+            } else {
+                $input['paypal_mode'] = 'sandbox';
+            }
+
+            if ($request->paytm_mode == "") {
+                $input['paytm_mode'] = 'live';
+            } else {
+                $input['paytm_mode'] = 'sandbox';
+            }
+            $data->update($input);
 
 
-        $this->setEnv('MOLLIE_KEY',$data->molly_key,$prev);
-        // Set Molly ENV
+            $this->setEnv('MOLLIE_KEY', $data->molly_key, $prev);
+            // Set Molly ENV
 
-        //--- Logic Section Ends
+            //--- Logic Section Ends
 
-        //--- Redirect Section
-        $msg = 'Data Updated Successfully.';
-        return response()->json($msg);
-        //--- Redirect Section Ends
+            //--- Redirect Section
+            $msg = 'Data Updated Successfully.';
+            return response()->json($msg);
+            //--- Redirect Section Ends
         }
     }
 
@@ -202,22 +197,22 @@ class GeneralSettingController extends Controller
         return view('admin.generalsetting.favicon');
     }
 
-     public function load()
+    public function load()
     {
         return view('admin.generalsetting.loader');
     }
 
-     public function contents()
+    public function contents()
     {
         return view('admin.generalsetting.websitecontent');
     }
 
-     public function header()
+    public function header()
     {
         return view('admin.generalsetting.header');
     }
 
-     public function footer()
+    public function footer()
     {
         return view('admin.generalsetting.footer');
     }
@@ -246,7 +241,7 @@ class GeneralSettingController extends Controller
     {
         return view('admin.generalsetting.maintain');
     }
-    
+
     public function ispopup($status)
     {
 
@@ -490,5 +485,4 @@ class GeneralSettingController extends Controller
         $data->is_maintain = $status;
         $data->update();
     }
-
 }

@@ -44,6 +44,9 @@
 	#home-menu-item li a:hover, #home-menu-item a.active {
     background: #024c0b;
 	}
+	 .mainmenu-bb .mainmenu-area-innner {
+        height:52px;
+    }
 	}
 	@media(max-width:991px){
 	#mg-menu{
@@ -55,7 +58,29 @@
 @endsection
 
 @section('content')
+<div class="modal" id="notice">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Notice</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        {!!$homeNotice!!}
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 	@if($ps->slider == 1)
 
 		@if(count($sliders))
@@ -189,17 +214,17 @@
 
 			@endif
 			<div class="row"style="background:#024c0b;margin:0;border-top:1px solid white">
-				<div class="col-md-4 col-sm-4 text-center slider-content" >
-					<h4 class="text-light mt-2">UP TO 70% OFF</h4>
-					<p class="text-light">On House Hold Items</p>
+				<div class="col-4 text-center slider-content" >
+					<h4 class="text-light mt-2  slide-d-head">UP TO 70% OFF</h4>
+					<p class="text-light slide-d-text">On House Hold Items</p>
 				</div>
-				<div class="col-md-4 col-sm-4 text-center slider-content ">
-					<h4 class="text-light mt-2">BUY ONE GET ONE</h4>
-					<p class="text-light">All Formal Shows</p>
+				<div class=" col-4 text-center slider-content ">
+					<h4 class="text-light mt-2 slide-d-head">BUY ONE GET ONE</h4>
+					<p class="text-light slide-d-text">All Formal Shows</p>
 				</div>
-				<div class="col-md-4 col-sm-4 text-center slider-content ">
-					<h4 class="text-light mt-2">UP TO 70% OFF</h4>
-					<p class="text-light">On Smart Phones</p>
+				<div class=" col-4 text-center slider-content ">
+					<h4 class="text-light mt-2 slide-d-head">UP TO 70% OFF</h4>
+					<p class="text-light slide-d-text">On Smart Phones</p>
 				</div>
 			</div>
 					</div>
@@ -353,66 +378,24 @@
                     <div class="col-lg-12">
                         <div class="info-big-box">
                             <div class="row">
+							@foreach($services as $service)
                                 <div class="col-6 col-xl-3 p-0">
                                     <div class="info-box">
                                         <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288944s1.png">
+                                            <img src="{{$service->photo ?url('assets/images/services/'.$service->photo):url('assets/images/noimage.png')}}"> 
                                         </div>
                                         <div class="info">
                                             <div class="details text-dark">
-                                                <h4 class="title">FREE SHIPPING</h4>
+                                                <h4 class="title">{{$service->title}}</h4>
                                                 <p class="text">
-                                                    Free Shipping All Order
+                                                    {{$service->details}}
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6 col-xl-3 p-0">
-                                    <div class="info-box">
-                                        <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288950s2.png">
-                                        </div>
-                                        <div class="info">
-                                            <div class="details">
-                                                <h4 class="title">PAYMENT METHOD</h4>
-                                                <p class="text">
-                                                    Secure Payment
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-xl-3 p-0">
-                                    <div class="info-box">
-                                        <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288955s3.png">
-                                        </div>
-                                        <div class="info">
-                                            <div class="details">
-                                                <h4 class="title">30 DAY RETURNS</h4>
-                                                <p class="text">
-                                                    30-Day Return Policy
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-xl-3 p-0">
-                                    <div class="info-box">
-                                        <div class="icon">
-                                            <img src="https://geniusocean.com/demo/marketplace/assets/images/services/1571288959s4.png">
-                                        </div>
-                                        <div class="info">
-                                            <div class="details">
-                                                <h4 class="title">HELP CENTER</h4>
-                                                <p class="text">
-                                                    24/7 Support System
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
+								@endforeach
                             </div>
                         </div>
                     </div>
@@ -445,12 +428,12 @@
 						<h3>New Products</h3>
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
-						<p><a href="{{route('front.new')}}">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+						<p><a href="{{route('front.category')}}"">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div>
 				</div>
 		</div>
-
+ 
 		<div class="">
 			<div class="product-slide">
 
@@ -468,15 +451,11 @@
 		</div>
 	</div>
 	<!-- end thum-product section  --->
-	@php
-								$j=1;
-								@endphp
+
 
 	{{--  best product  --}}
 	@foreach ($feature_categories as $feature_category)
-@php
-								$j++;
-								@endphp
+
 			<div class="container">
 		<div id="top-heading">
 				<div class="row">
@@ -500,28 +479,7 @@
 			</div>
 		</div>
 	</div>
-	@if($j%2==0)
-	<section class="banner-section">
-		<div class="container">
-								<div class="row">
-												<div class="col-lg-6 d-none d-md-block" style="padding:10px">
-							<div class="left">
-								<a class="banner-effect" href="https://www.google.com/" target="_blank">
-									<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889151top2.jpg" alt="">
-								</a>
-							</div>
-						</div>
-												<div class="col-lg-6 d-none d-md-block"  style="padding:10px">
-							<div class="left">
-								<a class="banner-effect" href="" target="_blank">
-									<img src="https://geniusocean.com/demo/marketplace/assets/images/banners/1568889146top1.jpg" alt="">
-								</a>
-							</div>
-						</div>
-										</div>
-						</div>
-	</section>
-	@endif
+	
 	@endforeach
 
 	<!-- end thum-product section  --->
@@ -538,55 +496,9 @@
 		{{--  about section  --}}
 
 		
-        <div id="about" class="mt-5 d-none d-sm-block">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <iframe width="540" height="315"
-							src="{{$gs->home_youtube}}">
-						</iframe>
-                    </div>
-                    <div class="col-md-6">
-                        <h2 style="font-size:30px">WHAT IS TMIWEB.CO </h2>
-                        <p style="font-size:15px;line-height:1.4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                            et tortor quis massa rutrum eleifend non nec dui. Praesent luctus convallis urna. Phasellus non tempor odio, sed faucibus arcu. Duis id convallis odio. Proin sit amet enim scelerisque, convallis metus mollis, varius turpis.
-                        </p>
-                        <button class="btn btn-success" type="button"style="font-size:13px" > Click Here</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row padding mt-4">
-                    <div class="col-md-6  d-none d-md-block">
-                        <div class="col-sm-12">
-                            <div class="icon-wrapper">
-                                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-center"> HOW TO BUY ? </h3>
-                            <p style="font-size:15px;line-height:1.4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                                et tortor quis massa rutrum eleifend non nec dui. Etiam egestas gravida lorem at varius. Suspendisse et tortor quis massa rutrum eleifend non nec dui.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-6  d-none d-md-block">
-                        <div class="col-sm-12">
-                            <div class="icon-wrapper">
-                                <i class="fa fa-search fa-2x" aria-hidden="true"></i>
-                            </div>
-                            <h3 class="text-center"> HOW TO BUY ? </h3>
-                            <p style="font-size:15px;line-height:1.4">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed justo massa, venenatis sit amet lorem sit amet, dignissim laoreet tortor. Nunc iaculis ligula non dolor vulputate, a vulputate diam viverra. Etiam egestas gravida lorem at varius. Suspendisse
-                                et tortor quis massa rutrum eleifend non nec dui. Etiam egestas gravida lorem at varius. Suspendisse et tortor quis massa rutrum eleifend non nec dui.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                    <hr class="bottom-hr" />
-                </div>
-            </div>
+        <div id="about" class="mt-5 d-none d-sm-block"> 
+			
+            
         </div>
 		<!-- end about  --->
 		
@@ -595,7 +507,7 @@
 	<div class="full-width-ad my-4">
 		<div class="container">
 			<div class="col-md-12 text-center">
-				<img src="{{ asset('assets/images/brand/gp2.gif')}}" alt="" width="100%" />
+				<img class="lazy" data-src="{{ asset('assets/images/brand/gp2.gif')}}" alt="" width="100%" />
 			</div>
 		</div>
 	</div>
@@ -615,9 +527,12 @@
 @endsection
 
 @section('scripts')
-	@if($homeNotice!='0')
+<script>
+    
+</script>
+	@if(count(explode("00",$homeNotice))<2)
 		<script>
-		alert('{{$homeNotice}}')
+		$('#notice').modal('show');
 		</script>
 	@endif
 	<script>
@@ -625,7 +540,7 @@
 
             setTimeout(function(){
 
-                $('#extraData').load('{{route('front.extraIndex')}}');
+                $('#about').load('{{route('front.extraIndex')}}');
 
             }, 500);
         });

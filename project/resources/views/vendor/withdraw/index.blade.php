@@ -26,20 +26,20 @@
 								<div class="col-lg-12">
 									<div class="mr-table allproduct">
 										@include('includes.admin.form-success') 
-									<form method="post" action="{{route('filter-vendor-withdraw')}}">
+									<form method="post" action="{{route('filter-vendor-withdraw')}}"> 
 									 {{ csrf_field() }}  
 										<center>
 										<b>From</b>
 										<input
-										@if($from)
+										@isset($from)
 											value="{{$from}}"
-										@endif
+										@endisset
 										 name="start" type="date" >
 										<b>To</b>
 										<input
-										@if($from)
+										@isset($to)
 											value="{{$to}}"
-										@endif
+										@endisset
 										 name="end" type="date" >
 										</center>
 										<br>
@@ -49,9 +49,11 @@
 												<option value="0">Select</option>
 													@foreach($gateways as $gateway)
 															<option 
+															@isset($method)
 															@if($gateway->id==$method)
 																selected
 															@endif
+															@endisset
 															value="{{$gateway->id}}">{{$gateway->title}}</option>
 													@endforeach
 												</select>
@@ -95,14 +97,14 @@
                                   <td>
 								    <ul class="list-group">
 									@foreach($withdraw->additionalFields as $field)
-                                                <li class="list-group-item">
-                                                <span>
-                                                    @if($field->additionalField)
-                                                    {{$field->additionalField->title}}
-                                                    @endif</span>
-                                                <span>{{$field->value}}</span>
-                                            </li>
-                                            @endforeach
+											<li class="list-group-item">
+											<span>
+												@if($field->additionalField)
+												{{$field->additionalField->title}}
+												@endif</span>
+											<span>{{$field->value}}</span>
+										</li>
+										@endforeach
 									</ul>
 								  </td>
                                     <td>{{$sign->sign}}{{ round($withdraw->amount * $sign->value , 2) }}</td>

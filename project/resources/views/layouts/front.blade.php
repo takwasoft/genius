@@ -10,6 +10,7 @@
         <meta name="keywords" content="{{ $page->meta_tag }}">
         <meta name="description" content="{{ $page->meta_description }}">
 		<title>{{$gs->title}}</title>
+		  <meta property="og:title" content="{{$gs->title}}">
     @elseif(isset($blog->meta_tag) && isset($blog->meta_description))
         <meta name="keywords" content="{{ $blog->meta_tag }}">
         <meta name="description" content="{{ $blog->meta_description }}">
@@ -20,11 +21,11 @@
 	    <meta property="og:title" content="{{$productt->name}}" />
 	    <meta property="og:description" content="{{ $productt->meta_description != null ? $productt->meta_description : strip_tags($productt->description) }}" />
 	    <meta property="og:image" content="{{asset('assets/images/'.$productt->photo)}}" />
-	    <meta name="author" content="GeniusOcean">
+	    <meta name="author" content="TakwaSoft">
     	<title>{{substr($productt->name, 0,11)."-"}}{{$gs->title}}</title>
     @else
 	    <meta name="keywords" content="{{ $seo->meta_keys }}">
-	    <meta name="author" content="GeniusOcean">
+	    <meta name="author" content="TakwaSoft">
 		<title>{{$gs->title}}</title>
     @endif
 	<!-- favicon -->
@@ -41,20 +42,7 @@
 	<link rel="stylesheet" href="{{asset('assets/front/jquery-ui/jquery-ui.min.css')}}">
 	<link rel="stylesheet" href="{{asset('assets/front/jquery-ui/jquery-ui.structure.min.css')}}">
 
-@if($langg->rtl == "1")
 
-	<!-- stylesheet -->
-	<link rel="stylesheet" href="{{asset('assets/front/css/rtl/style.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/front/css/rtl/custom.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/front/css/common.css')}}">
-	<!-- responsive -->
-	<link rel="stylesheet" href="{{asset('assets/front/css/rtl/responsive.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/front/css/common-responsive.css')}}">
-
-    <!--Updated CSS-->
- <link rel="stylesheet" href="{{ asset('assets/front/css/rtl/styles.php?color='.str_replace('#','',$gs->colors).'&amp;'.'header_color='.str_replace('#','',$gs->header_color).'&amp;'.'footer_color='.str_replace('#','',$gs->footer_color).'&amp;'.'copyright_color='.str_replace('#','',$gs->copyright_color).'&amp;'.'menu_color='.str_replace('#','',$gs->menu_color).'&amp;'.'menu_hover_color='.str_replace('#','',$gs->menu_hover_color)) }}">
-
-@else
 
 	<!-- stylesheet -->
 	<link rel="stylesheet" href="{{asset('assets/front/css/style.css')}}">
@@ -67,7 +55,7 @@
     <!--Updated CSS-->
  <link rel="stylesheet" href="{{ asset('assets/front/css/styles.php?color='.str_replace('#','',$gs->colors).'&amp;'.'header_color='.str_replace('#','',$gs->header_color).'&amp;'.'footer_color='.str_replace('#','',$gs->footer_color).'&amp;'.'copyright_color='.str_replace('#','',$gs->copyright_color).'&amp;'.'menu_color='.str_replace('#','',$gs->menu_color).'&amp;'.'menu_hover_color='.str_replace('#','',$gs->menu_hover_color)) }}">
 
-@endif
+
 
 
  
@@ -82,9 +70,9 @@
     <!--End of messenger Script-->
   @endif
 
-@if($gs->is_loader == 1)
-	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>
-@endif
+<!--@if($gs->is_loader == 1)-->
+<!--	<div class="preloader" id="preloader" style="background: url({{asset('assets/images/'.$gs->loader)}}) no-repeat scroll center center #FFF;"></div>-->
+<!--@endif-->
 
 @if($gs->is_popup== 1)
 
@@ -92,7 +80,7 @@
     <div style="display:none">
         <img src="{{asset('assets/images/'.$gs->popup_background)}}">
     </div>
-
+  
     <!--  Starting of subscribe-pre-loader Area   -->
     <div class="subscribe-preloader-wrap" id="subscriptionForm" style="display: none;">
         <div class="subscribePreloader__thumb" style="background-image: url({{asset('assets/images/'.$gs->popup_background)}});">
@@ -124,7 +112,7 @@
 					<div class="content">
 						<div class="left-content">
 							<div class="list text-light"style="font-size:14px;padding-top: 2px;">
-								<span>Need help?</span> call us <span class="number">+8801860-130003</span>
+								<span>Need help?</span> call us <span class="number">{{$ps->phone}}</span>
 							</div>
 						</div>
 						<div class="right-content">
@@ -226,13 +214,13 @@
 								  <div id="myInputautocomplete-list" class="autocomplete-items">
 								  </div>
 								</div>
-								<button type="submit" style='background: #e2dede;'><i class="icofont-search-1"></i> Search</button>
+								<button type="submit" style='background: #e2dede;'><i class="icofont-search-1"></i> <span class="d-none d-sm-inline-block">Search</span></button>
 							</form>
 						</div>
 					</div>
 				</div>
 				<div class="col-xl-4 col-md-5 col-12 mt-3 mt-md-0 remove-padding">
-				<div class="input-group" id="d-cart">
+				<div class="input-group cart-sm-item" id="d-cart">
 					<span class="input-group-btn"style=" border-radius: 50px;border-top-right-radius: 0; border-bottom-right-radius: 0;background: #e2dede;">
 						<button class="btn " type="button">
 							<a href="{{route('front.cart')}}"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
@@ -273,10 +261,10 @@
 					<div class="col-md-4">
                     <a href="{{route('front.index')}}"><img src="{{ asset('assets/images/'.$gs->logo)}}"  alt="" width="90%" /></a>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-none d-block-sm">
                     <img src="{{ asset('assets/images/brand/ad1.jpg')}}" alt="" width="100%" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 d-none d-block-sm">
                     <img src="{{ asset('assets/images/brand/ad2.jpg')}}" alt="" width="100%" />
                 </div>
 				</div>
@@ -416,12 +404,10 @@
 			<div class="row">
 				<div class="col-md-6 col-lg-4">
 					
-						<h3 class="text-light">tmiweb.co</h3>
+						<h3 class="text-light">{{$gs->title}}</h3>
 						<p class="text-light">Our Address | The Rules Of Order</p>
 						<hr>
-						<h3 class="text-light">Payment Method</h3>
-						<img src="{{ asset('assets/images/brand/bkash.png')}}" alt="" width="25%">
-						<img src="{{ asset('assets/images/brand/cash_on_delivery.png')}}" alt="" width="25%">
+						<img src="{{ $gs->footer_image ? asset('assets/images/'.$gs->footer_image):asset('assets/images/noimage.png')}}" alt="">
 				</div>
 				<div class="col-md-6 col-lg-4 ">
 					<h3 class="text-light">Website Views</h3>
@@ -495,7 +481,7 @@
 					<div class="col-lg-12">
 							<div class="content">
 								<div class="content">
-									<p>&copy; All rights Reseverd | Design by takwasoft.com</p>
+									<p>&copy; All rights Reseverd | Design by <a href="https://www.takwasoft.com">takwasoft.com</a></p>
 							</div>
 						</div>
 					</div>
@@ -1023,6 +1009,8 @@
 	<script src="{{asset('assets/front/js/main.js')}}"></script>
 	<!-- custom -->
 	<script src="{{asset('assets/front/js/custom.js')}}"></script>
+	    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script
 
     {!! $seo->google_analytics !!}
 
@@ -1035,7 +1023,13 @@
 	@yield('scripts')
 
 </body>
-	<script>
+<script>
+    $(function() {
+        $('.lazy').Lazy();
+    });
+           
+</script>
+	{{-- <script>
 	
             setInterval(function(){
 				$.ajax({url: "{{route('dynamic.cart')}}", success: function(result){
@@ -1043,5 +1037,5 @@
   }});
 			},3000)
 
-	</script>
+	</script> --}}
 </html>

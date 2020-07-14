@@ -23,7 +23,12 @@
 											</ul>
 									</div>
 								</div>
-							</div>
+							</div> 
+                            @foreach ($errors->all() as $error)
+
+  <div class="alert alert-danger">{{ $error }}</div>
+
+@endforeach
                              <table class='table'>
                                     <tr>
                                         <th>Product</th>
@@ -31,7 +36,7 @@
                                     </tr>
                               </table>      
                             <form method="post" action="{{route('vendor-product-boost',$product->id)}}" >
-
+ 
                             {{csrf_field()}}
 
                             <h5>Choose Boost Type </h5>
@@ -54,16 +59,43 @@
                                             </td>
                                         @endforeach
                                 </table>
-                                 <div class="row">
-                                    <div class="col-lg-4">
-                                                    <div class="left-area">
-						                                <h4 class="heading">Payment Gategway *</h4>
-						                            </div>
-                                    </div>
-                                    <div class="col-lg-7 text-center">
-                                        
-                                    </div>
+                                
+                                  <div class="item form-group">
+                                <label class="control-label col-sm-4" for="name">{{ $langg->lang481 }} *
+
+                                    </label>
+                                <div class="col-sm-12">
+                                    <select onchange="getAdditional(this.value)" class="form-control" name="method" id="withmethod" required>
+                                        <option value="">Select Payment Method</option>
+                                                <option value="0">From Balance</option>
+                                            @foreach($gateways as $gateway)
+                                                <option value="{{$gateway->id}}">{{$gateway->title}}</option>
+                                            @endforeach 
+                                        </select>
                                 </div>
+                            </div>
+                            <div id="ad-field">
+
+                            </div>
+                            <script>
+                                getAdditional = (id) => {
+                                    if(id==0){
+                                        document.getElementById("ad-field").innerHTML="";
+                                    }
+                                    var xhttp = new XMLHttpRequest();
+                                    xhttp.onreadystatechange = function() {
+                                        if (this.readyState == 4 && this.status == 200) {
+                                            document.getElementById("ad-field").innerHTML = this.responseText;
+                                        }
+                                    };
+                                    xhttp.open("GET", "{{URL::to('/checkout/payments/other/')}}/"+id, true);
+                                    xhttp.send();
+                                }
+                            </script>
+                                  <script>
+                                  
+                                  
+                                  </script>
                                 <div class="row">
                                 <div class="col-lg-4">
                                     <div class="left-area">

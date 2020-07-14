@@ -14,11 +14,19 @@ class Category extends Model
     	return $this->hasMany('App\Models\Subcategory')->where('status','=',1);
     }
 
+    public function boostProducts()
+    {
+        return $this->hasMany('App\Models\Product')->where('boost','=','1')->where('boost_expired','>',\Carbon\Carbon::now())->orderBy('id','desc');
+    }
+    public function topAdProducts()
+    {
+        return $this->hasMany('App\Models\Product')->where('top_ad','=','1')->where('top_ad_expired','>',\Carbon\Carbon::now())->orderBy('id','desc');
+    }
     public function products()
     {
-        return $this->hasMany('App\Models\Product')->orderBy('id','desc');;
+        return $this->hasMany('App\Models\Product')->orderBy('boost','desc')->orderBy('id','desc');
     }
-
+ 
     public function setSlugAttribute($value)
     {
         $this->attributes['slug'] = str_replace(' ', '-', $value);
