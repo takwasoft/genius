@@ -194,7 +194,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 							<div class="mr-breadcrumb">
 								<div class="row">
 									<div class="col-lg-12">
-											<h4 class="heading">{{ $langg->lang629 }} <a class="add-btn" href="{{ route('select-area') }}"><i class="fas fa-arrow-left"></i> {{ $langg->lang550 }}</a></h4>
+											<h4 class="heading">{{ $langg->lang629 }} <a class="add-btn" href="{{ route('vendor-dashboard') }}"><i class="fas fa-arrow-left"></i> {{ $langg->lang550 }}</a></h4>
 											<ul class="links">
                       <li>
                         <a href="{{ route('vendor-dashboard') }}">{{ $langg->lang441 }}</a>
@@ -339,20 +339,19 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 							                        <div class="col-lg-7">
 	<div class="row">
 	<div class="panel panel-body">
-		<div class="span4 cropme text-center" id="landscape" style="width: 400px; height: 400px; border: 1px dashed black;">
-		</div>
+		  {{--  <div class="span4 cropme text-center" id="landscape" style="width: 400px; height: 400px; border: 1px dashed black;"> 
+		</div>   --}}
+			<input required class="form-control-file upload" type="file" id="feature_photo" name="pht" value="">
+ 
 		</div>
 	</div>
 
-			<a href="javascript:;" id="crop-image" class="d-inline-block mybtn1">
-				<i class="icofont-upload-alt"></i> {{ $langg->lang643 }}
-			</a>
 
 
 							                        </div>
 							                      </div>
 
-							                      <input type="hidden" id="feature_photo" name="photo" value="">
+							                      
 
 
 
@@ -813,7 +812,7 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                         <div class="categories-list model-item main-cate-item ">
                             <ul>
                                 @foreach($districts as $district)
-
+ 
                                     <li class="brn">
                                     <a onclick="showItem('sub-dis',{{$district->id}},'.dis','district_id',{{$district->id}},['division_id','subdistrict_id'],'area_name','{{$district->name}}')" href="#" class="clearfix">
                                         <span class="dnn float-left">{{$district->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
@@ -829,8 +828,8 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                                                 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
-    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
                                                     <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
@@ -882,8 +881,8 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
-    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+    <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv(this)"><i class="div fas fa-angle-down ">
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
@@ -920,8 +919,9 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 </div>
 
 <script>
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function myFunction(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdown").classList.toggle("show");
   if($(".dist.fa-angle-up").length>0)
   {
     $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
@@ -931,14 +931,14 @@ function myFunction() {
   }
 }
 
-function filterFunction() {
-  if(document.getElementById("myDropdown").classList.length==1){
-    document.getElementById("myDropdown").classList.add("show")
+function filterFunction(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -949,8 +949,9 @@ function filterFunction() {
     }
   }
 }
-function myFunctionDiv() {
-  document.getElementById("myDropdownDiv").classList.toggle("show");
+function myFunctionDiv(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdownDiv").classList.toggle("show");
   if($(".fa-angle-up.div").length>0)
   {
     $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
@@ -959,14 +960,14 @@ function myFunctionDiv() {
     $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
   }
 }
-function filterFunctionDiv() {
-  if(document.getElementById("myDropdownDiv").classList.length==1){
-    document.getElementById("myDropdownDiv").classList.add("show")
+function filterFunctionDiv(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInputDiv");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdownDiv");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -977,7 +978,6 @@ function filterFunctionDiv() {
     }
   }
 }
-
 dModal=()=>{
   if(screen.width<576){
         
@@ -986,11 +986,39 @@ dModal=()=>{
 
          $(".brn").css("border-top","1px solid rgba(0, 0, 0, .125)");
         $(".brn:first-child").css("border","none");
+		$(".brn1").css("border-top","1px solid rgba(0, 0, 0, .125)");
+        $(".brn1:first-child").css("border","none");
         
-
+ 
       }
 }
 	showItem=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
+		if(cm){
+
+		$(cm).modal('toggle');
+		}
+		toastr.success(hval+" selected");
+		document.getElementById(hid).innerHTML=hval;
+		console.log(r)
+		r.forEach(ri=>{
+			document.getElementById(ri).value="";
+		})
+		document.getElementById(sid).value=svalue;
+		$(cls2).hide();
+		id="#"+cls+id;
+		cls="."+cls;
+		$(cls).hide();
+		$(id).show();
+
+		 if(screen.width<576){
+        $(".brn").css("border","none");
+		$(".brn1").css("border","none");
+        $(".dnn").css("display","none");
+        $(".lft").css("left","18px");
+
+      }
+	}
+	showItem1=(cls,id,cls2,sid,svalue,r,hid,hval,cm=null)=>{
 		if(cm){
 
 		$(cm).modal('toggle');
@@ -1018,7 +1046,7 @@ dModal=()=>{
 </script>
 						{{-- End Area model --}}
 
-							{{-- Start category modal  --}}
+							{{-- Start category modal  --}} 
 <div class="modal fade" id="my-modal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="overflow: scroll;height:90vh">
@@ -1043,10 +1071,12 @@ dModal=()=>{
                         <div class="categories-list model-item main-cate-item model-item1">
                             <ul> 
 							@foreach($cats as $cat)
-                                <li>
+                                <li class="brn1">
                                     <a onclick="showItem('sub-cat',{{$cat->id}},'.aos','category_id',{{$cat->id}},['subcategory_id'],'cat_name','{{$cat->name}}')" href="#" class="clearfix">
-                                        <span class="float-left">{{$cat->name}}</span><span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
-                                    <div id="sub-cat{{$cat->id}}" class="categories-list sub-cat sub-cate-item" style="">
+                                        <span class="dnn float-left">{{$cat->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                    <div id="sub-cat{{$cat->id}}" class="lft categories-list sub-cat sub-cate-item" style="">
+                                        <ul class="sub-menu1 text-muted">
+										<button class="d-sm-none btn-back" onclick="dModal()"><i class="fas fa-chevron-left"></i>Back</button>
                                         <ul class="sub-menu1 text-muted">
 										@foreach($cat->subs as $sub)
                                             <li><a
@@ -1168,4 +1198,23 @@ $('.cropme').click();
 
 
 <script src="{{asset('assets/admin/js/product.js')}}"></script>
+<script>
+ $(".upload").on("change", function() {
+            var imgpath = $(this).parent().parent().prev().find('img');
+            var file = $(this);
+
+            readURL(this, imgpath);
+        });
+
+        function readURL(input, imgpath) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $("#landscape").attr('src', e.target.result);
+					//document.getElementById('feature_photo').value=e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+		</script>
 @endsection

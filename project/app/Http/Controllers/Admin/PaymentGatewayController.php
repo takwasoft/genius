@@ -43,6 +43,85 @@ class PaymentGatewayController extends Controller
         ]);
         return redirect()->route('admin-payment-rule',$request->fid);
     }
+    public function editAdditional($id){
+               $field=AdditionalField::find($id);
+       return view('admin.payment.editAdditional',compact('field'));
+    }
+     public function updateAdditional(Request $request)
+    {
+        if ($request->required) {
+            $r = 1;
+        } else {
+            $r = 0;
+        }
+        $field=AdditionalField::find($request->id);
+        $field->update([
+            "title"=>$request->title,
+            "description"=>$request->description,
+            "required"=>$r
+        ]);
+        return redirect()->route('admin-payment-additional-edit',$request->id);
+    }
+    
+    
+    
+     public function editExtra(Request $request)
+    {
+        $field = ExtrachargeRule::find($request->id);
+        return view('admin.payment.editExtra',compact('field'));
+    }
+    public function updateExtra(Request $request)
+    {
+        if ($request->fixed) {
+            $f = 1;
+        } else {
+            $f = 0;
+        }
+        if ($request->cs) {
+            $cs = 1;
+        } else {
+            $cs = 0;
+        }
+        if ($request->cr) {
+            $cr = 1;
+        } else {
+            $cr = 0;
+        }
+        $field=ExtrachargeRule::find($request->id);
+        $field->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'fixed' => $f,
+            'cs' => $cs,
+            'cr' => $cr,
+            'charge' => $request->charge,
+            'from' => $request->from,
+            'to' => $request->to,
+
+        ]);
+
+         return redirect()->route('admin-payment-extra-edit',$request->id);
+    }
+    
+    public function editPayment($id){
+               $field=PaymentVerification::find($id);
+       return view('admin.payment.editVerification',compact('field'));
+    }
+     public function updatePayment(Request $request)
+    {
+        if ($request->required) {
+            $r = 1;
+        } else {
+            $r = 0;
+        }
+        $field=PaymentVerification::find($request->id);
+        $field->update([
+            "title"=>$request->title,
+            "description"=>$request->description,
+            "required"=>$r
+        ]);
+        return redirect()->route('admin-payment-payment-edit',$request->id);
+    }
     public function deleteAdditional($id){
         $p=AdditionalField::find($id);
         $pid=$p->payment_gateway_id;

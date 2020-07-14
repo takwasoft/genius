@@ -86,7 +86,7 @@ class ProductController extends Controller
                 "paid"=>$paid
             ]);
             Transaction::create([
-                "amount"=>$boost->topAdCategory->price,
+                "amount"=>$boost->boostCategory->price,
                 "type"=>"Product Boosting",
                 "top_ad_id"=>$boost->id,
                 "collected"=>1
@@ -708,7 +708,7 @@ if (!Product::where('sku',$line[0])->exists()){
 
         //--- Validation Section
         $rules = [
-               'photo'      => 'required',
+               'pht'      => 'required',
                'file'       => 'mimes:zip'
                 ];
 
@@ -731,14 +731,15 @@ if (!Product::where('sku',$line[0])->exists()){
                 $input['file'] = $name;
             }
 
-            $image = $request->photo;
-            list($type, $image) = explode(';', $image);
-            list(, $image)      = explode(',', $image);
-            $image = base64_decode($image);
-            $image_name = time().str_random(8).'.png';
-            $path = 'assets/images/products/'.$image_name;
-            file_put_contents($path, $image);
-            $input['photo'] = $image_name;
+
+
+            if ($file = $request->file('pht')) 
+            {              
+                $name = time().str_random(8).$file->getClientOriginalName();
+                $file->move('assets/images/products/',$name);
+                           
+            $input['photo'] = $name;
+            } 
 
             // Check Physical
             if($request->type == "Physical")
@@ -1018,6 +1019,7 @@ if (!Product::where('sku',$line[0])->exists()){
     //*** GET Request
     public function edit($id)
     {
+
         $cats = Category::all();
         $data = Product::findOrFail($id);
         $sign = Currency::where('is_default','=',1)->first();
@@ -1340,6 +1342,15 @@ $user=auth()->user();
                 if(!$request->brand_id){
                     $input['brand_id']=0;
                 }
+                
+            if ($file = $request->file('pht')) 
+            {              
+                $name = time().str_random(8).$file->getClientOriginalName();
+                $file->move('assets/images/thumbnails/',$name);
+                           
+            $input['thumbnail'] = $name;
+            
+            } 
          $data->update($input); 
         //-- Logic Section Ends
 

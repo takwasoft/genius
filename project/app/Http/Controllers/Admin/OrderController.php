@@ -25,23 +25,23 @@ class OrderController extends Controller
     {
 
         if($status == 'pending'){
-            $datas = Order::where('status','=','pending')->get();
+            $datas = Order::where('status','=','pending')->orderBy('id','desc')->get();
            
         }
         elseif($status == 'processing') {
-            $datas = Order::where('status','=','processing')->get();
+            $datas = Order::where('status','=','processing')->orderBy('id','desc')->get();
         }
         elseif($status == 'delivery') {
-            $datas = Order::where('status','=','on delivery')->get();
+            $datas = Order::where('status','=','on delivery')->orderBy('id','desc')->get();
         }
         elseif($status == 'paid') {
-            $datas = Order::where('payment_status','=','Completed')->get();
+            $datas = Order::where('payment_status','=','Completed')->orderBy('id','desc')->get();
         }
         elseif($status == 'completed') {
-            $datas = Order::where('status','=','completed')->get();
+            $datas = Order::where('status','=','completed')->orderBy('id','desc')->get();
         }
         elseif($status == 'declined') {
-            $datas = Order::where('status','=','declined')->get();
+            $datas = Order::where('status','=','declined')->orderBy('id','desc')->get();
         }
         else{
           $datas = Order::orderBy('id','desc')->get();  

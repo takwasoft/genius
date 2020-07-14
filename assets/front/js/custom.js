@@ -5,7 +5,7 @@ $(function($) {
     $(document).ready(function() {
 
 
-        //**************************** CUSTOM JS SECTION ****************************************
+        //****************************   CUSTOM JS SECTION ****************************************
 
         // LOADER
         if (gs.is_loader == 1) {

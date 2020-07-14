@@ -2,6 +2,12 @@
 
 // ************************************ ADMIN SECTION **********************************************
 
+use Illuminate\Support\Facades\DB;
+Route::get('app-list',function(){
+    $apps = DB::table('apps')->orderBy('serial')->get();
+    return $apps;
+});
+
 Route::prefix('admin')->group(function() {
 
   //------------ ADMIN LOGIN SECTION ------------
@@ -756,6 +762,20 @@ Route::prefix('admin')->group(function() {
   Route::get('delete-verification/{id}', 'Admin\PaymentGatewayController@deleteVerification')->name('admin-payment-verification-delete');
   Route::get('delete-extra/{id}', 'Admin\PaymentGatewayController@deleteExtra')->name('admin-payment-extra-delete');
   Route::get('delete-additional/{id}', 'Admin\PaymentGatewayController@deleteAdditional')->name('admin-payment-additional-delete');
+    Route::get('edit-additional/{id}', 'Admin\PaymentGatewayController@editAdditional')->name('admin-payment-additional-edit');
+     Route::post('edit-additional', 'Admin\PaymentGatewayController@updateAdditional')->name('admin-payment-additional-update');
+     
+     
+     
+         Route::get('edit-payment/{id}', 'Admin\PaymentGatewayController@editPayment')->name('admin-payment-payment-edit');
+     Route::post('edit-payment', 'Admin\PaymentGatewayController@updatePayment')->name('admin-payment-payment-update');
+     
+     
+     Route::get('edit-extra/{id}', 'Admin\PaymentGatewayController@editExtra')->name('admin-payment-extra-edit');
+     Route::post('edit-extra', 'Admin\PaymentGatewayController@updateExtra')->name('admin-payment-extra-update');
+     
+     
+     
   Route::get('/paymentgateway/rule/{id}', 'Admin\PaymentGatewayController@rule')->name('admin-payment-rule');
 
   Route::post('/paymentgateway/update/{id}', 'Admin\PaymentGatewayController@update')->name('admin-payment-update');

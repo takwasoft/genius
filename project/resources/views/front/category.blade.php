@@ -223,7 +223,9 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                             <div id="slider-range" class="price-filter-range" name="rangeInput"></div>
                             <div class="livecount">
                               <input type="number" min=0  name="min"  id="min_price" class="price-range-field" />
+                              <br>
                               <span>{{$langg->lang62}}</span>
+                              <br>
                               <input type="number" min=0  name="max" id="max_price" class="price-range-field" />
                             </div>
                           </div>
@@ -244,23 +246,23 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                @include('includes.filter')
                <div class="categori-item-area category-slide">
                     <div class="col" style="padding-left:10px;padding-right:10px;">
-                        <div class="product-slide4 mb-4">
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="{{ asset('assets/images/brand/cropped.jpg')}}" alt="" />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="{{ asset('assets/images/brand/cropped1.jpg')}}" alt="" />
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="">
-                                    <img class="" src="{{ asset('assets/images/brand/cropped3.jpg')}}" alt="" />
-                                </div>
-                            </div>
-                        </div>
+                        <!--<div class="product-slide4 mb-4">-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="{{ asset('assets/images/brand/cropped.jpg')}}" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="{{ asset('assets/images/brand/cropped1.jpg')}}" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--    <div class="">-->
+                        <!--        <div class="">-->
+                        <!--            <img class="" src="{{ asset('assets/images/brand/cropped3.jpg')}}" alt="" />-->
+                        <!--        </div>-->
+                        <!--    </div>-->
+                        <!--</div>-->
                             <div class="product-slide2">
                                 	@foreach ($topAdProducts as $product)
 					@include('includes.product.sell')
@@ -322,14 +324,14 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
                                                 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunction()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction()" >
-    <button class="btn all_sub_category_btn" onclick="myFunction()"><i class="dist fas  fa-angle-down">
+    <input onclick="myFunction(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunction(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunction(this)"><i class="dist fas  fa-angle-down">
     </i></button>
   <div id="myDropdown" class="dropdown-content ">
                                                     <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
                                                 
                                                 @else
-                                                    <a class="text-muted" href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
+                                                    <a class="text-muted " href="javascript:void(0)" onclick="showItem('sub-dis','','.dis','subdistrict_id',{{$subdistrict->id}},[],'area_name','{{$subdistrict->name}}','#my-modal')">{{$subdistrict->name}}</a>
                                                 @endif
                                                 @if($i>=6&&$i==$district->subdistricts->count())
                                                    
@@ -375,8 +377,8 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 @elseif($i==6)
                                                     <div class="dropdown mt-4" id="all_sub_category">
   
-    <input onclick="myFunctionDiv()" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv()" >
-    <button class="btn all_sub_category_btn" onclick="myFunctionDiv()"><i class="div fas fa-angle-down ">
+    <input onclick="myFunctionDiv(this)" type="text" placeholder="অন্যান্য এলাকা (A-Z)" id="myInput" onkeyup="filterFunctionDiv(this)" >
+    <button class="btn all_sub_category_btn" onclick="myFunctionDiv(this)"><i class="div fas fa-angle-down ">
     </i></button>
   <div id="myDropdownDiv" class="dropdown-content ">
                                                     <a class="text-muted" href="#"
@@ -416,6 +418,9 @@ box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);}
 
 
 @section('scripts')
+<script>
+
+</script>
 <script>
 closeModal=()=>{
   $("#my-modal").modal('toggle');
@@ -458,11 +463,9 @@ dModal=()=>{
 
       }
 	} 
-</script>
-<script>
-
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function myFunction(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdown").classList.toggle("show");
   if($(".dist.fa-angle-up").length>0)
   {
     $(".dist.fa-angle-up").attr("class","dist fas fa-angle-down")
@@ -472,14 +475,14 @@ function myFunction() {
   }
 }
 
-function filterFunction() {
-  if(document.getElementById("myDropdown").classList.length==1){
-    document.getElementById("myDropdown").classList.add("show")
+function filterFunction(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdown");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -490,8 +493,9 @@ function filterFunction() {
     }
   }
 }
-function myFunctionDiv() {
-  document.getElementById("myDropdownDiv").classList.toggle("show");
+function myFunctionDiv(el) {
+    el.parentElement.children[2].classList.toggle("show")
+  //document.getElementById("myDropdownDiv").classList.toggle("show");
   if($(".fa-angle-up.div").length>0)
   {
     $(".fa-angle-up.div").attr("class","fas div fa-angle-down")
@@ -500,14 +504,14 @@ function myFunctionDiv() {
     $(".fa-angle-down.div").attr("class","fas div fa-angle-up")
   }
 }
-function filterFunctionDiv() {
-  if(document.getElementById("myDropdownDiv").classList.length==1){
-    document.getElementById("myDropdownDiv").classList.add("show")
+function filterFunctionDiv(el) {
+  if(el.parentElement.children[2].classList.length==1){
+    el.parentElement.children[2].classList.add("show")
   }
   var input, filter, ul, li, a, i;
-  input = document.getElementById("myInputDiv");
+  input = el;
   filter = input.value.toUpperCase();
-  div = document.getElementById("myDropdownDiv");
+  div = el.parentElement.children[2];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -652,8 +656,8 @@ function filterFunctionDiv() {
       range: true,
       orientation: "horizontal",
       min: 0,
-      max: 50000,
-      values: [{{ isset($_GET['min']) ? $_GET['min'] : '10000' }}, {{ isset($_GET['max']) ? $_GET['max'] : '40000' }}],
+      max: 10000000,
+      values: [{{ isset($_GET['min']) ? $_GET['min'] : '0' }}, {{ isset($_GET['max']) ? $_GET['max'] : '10000000' }}],
       step: 5,
 
       slide: function (event, ui) {

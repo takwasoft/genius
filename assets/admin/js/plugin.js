@@ -6,6 +6,9 @@ All JS Plugin :
 2. imageupload
 3. LineControl
 4. DataTables
+
+
+
 5. magnific popup
 ======================================*/
 

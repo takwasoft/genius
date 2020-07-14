@@ -27,7 +27,11 @@ $(function($) {
 
         });
 
-        /*------addClass/removeClass categories-------*/
+        /*------a
+        
+        
+        
+        ddClass/removeClass categories-------*/
         var w = window.innerWidth;
 
         if (w > 991) {

@@ -307,7 +307,9 @@
 @endsection
 
 @section('scripts')
-
+<script>
+    
+</script>
 <script type="text/javascript">
 sendEmail = () => {
           if(!$("#name").val()){
@@ -349,8 +351,8 @@ sendEmail = () => {
     range: true,
     orientation: "horizontal",
     min: 0,
-    max: 50000,
-    values: [{{ isset($_GET['min']) ? $_GET['min'] : '10000' }}, {{ isset($_GET['max']) ? $_GET['max'] : '40000' }}],
+    max: 10000000,
+    values: [{{ isset($_GET['min']) ? $_GET['min'] : '0' }}, {{ isset($_GET['max']) ? $_GET['max'] : '10000000' }}],
     step: 5,
 
     slide: function (event, ui) {

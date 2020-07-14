@@ -10,6 +10,7 @@
         <meta name="keywords" content="{{ $page->meta_tag }}">
         <meta name="description" content="{{ $page->meta_description }}">
 		<title>{{$gs->title}}</title>
+		  <meta property="og:title" content="{{$gs->title}}">
     @elseif(isset($blog->meta_tag) && isset($blog->meta_description))
         <meta name="keywords" content="{{ $blog->meta_tag }}">
         <meta name="description" content="{{ $blog->meta_description }}">
@@ -20,11 +21,11 @@
 	    <meta property="og:title" content="{{$productt->name}}" />
 	    <meta property="og:description" content="{{ $productt->meta_description != null ? $productt->meta_description : strip_tags($productt->description) }}" />
 	    <meta property="og:image" content="{{asset('assets/images/'.$productt->photo)}}" />
-	    <meta name="author" content="GeniusOcean">
+	    <meta name="author" content="TakwaSoft">
     	<title>{{substr($productt->name, 0,11)."-"}}{{$gs->title}}</title>
     @else
 	    <meta name="keywords" content="{{ $seo->meta_keys }}">
-	    <meta name="author" content="GeniusOcean">
+	    <meta name="author" content="TakwaSoft">
 		<title>{{$gs->title}}</title>
     @endif
 	<!-- favicon -->
@@ -406,9 +407,7 @@
 						<h3 class="text-light">{{$gs->title}}</h3>
 						<p class="text-light">Our Address | The Rules Of Order</p>
 						<hr>
-						<h3 class="text-light">Payment Method</h3>
-						<img src="{{ asset('assets/images/brand/bkash.png')}}" alt="" width="25%">
-						<img src="{{ asset('assets/images/brand/cash_on_delivery.png')}}" alt="" width="25%">
+						<img src="{{ $gs->footer_image ? asset('assets/images/'.$gs->footer_image):asset('assets/images/noimage.png')}}" alt="">
 				</div>
 				<div class="col-md-6 col-lg-4 ">
 					<h3 class="text-light">Website Views</h3>
@@ -482,7 +481,7 @@
 					<div class="col-lg-12">
 							<div class="content">
 								<div class="content">
-									<p>&copy; All rights Reseverd | Design by takwasoft.com</p>
+									<p>&copy; All rights Reseverd | Design by <a href="https://www.takwasoft.com">takwasoft.com</a></p>
 							</div>
 						</div>
 					</div>

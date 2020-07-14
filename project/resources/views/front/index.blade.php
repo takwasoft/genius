@@ -184,7 +184,7 @@
 						<div class="slide-progress"></div>
 						<div class="intro-carousel">
 							@foreach($sliders as $data)
-								<div class="lazy intro-content {{$data->position}}" data-src=" {{asset('assets/images/sliders/'.$data->photo)}}">
+								<div class="intro-content {{$data->position}}" style="background-image: url({{asset('assets/images/sliders/'.$data->photo)}})">
 									<div class="container">
 										<div class="row">
 											<div class="col-lg-12">
@@ -527,10 +527,12 @@
 @endsection
 
 @section('scripts')
+<script>
+    
+</script>
 	@if(count(explode("00",$homeNotice))<2)
 		<script>
 		$('#notice').modal('show');
-		
 		</script>
 	@endif
 	<script>
