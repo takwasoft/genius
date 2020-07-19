@@ -267,6 +267,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    
+                                    <div class="special-box">
+                                        <div class="heading-area">
+                                            <h4 class="title">
+                                            {{ __('Order Updates') }}
+                                            </h4>
+                                        </div>
+                                        <div class="table-responsive-sm">
+                                                <table class="table table-bordered table-striped">
+                                                @foreach($order->tracks as $track)
+                                                   <tr>
+                                                   <td> <b>{{$track->title}}</b></td>
+                                                   <td> {{$track->text}}</td>
+                                                   <td> {{$track->admin?$track->admin->name:""}}</td>
+                                                   <td> {{$track->created_at->format('h:i a d-m-y')}}</td>
+                                                   </tr>
+                                                @endforeach
+                                                </table>
+                                        </div>
+                                    </div>
+
+                                </div>
                                 @endif
                                  <div class="content-area">
 

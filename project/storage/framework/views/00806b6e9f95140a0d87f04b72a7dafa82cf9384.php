@@ -29,6 +29,8 @@
 														<tr>
 									                        <th><?php echo e(__("Name")); ?></th>
 									                        <th><?php echo e(__("Email")); ?></th>
+															<th><?php echo e(__("Phone")); ?></th>
+															<th><?php echo e(__("Address")); ?></th>
 									                        <th><?php echo e(__("Options")); ?></th>
 														</tr>
 													</thead>
@@ -158,6 +160,8 @@
                columns: [
                         { data: 'name', name: 'name' },
                         { data: 'email', name: 'email' },
+                        { data: 'phone', name: 'phone' },
+                        { data: 'address', name: 'address' },
             			{ data: 'action', searchable: false, orderable: false }
                      ],
                language : {

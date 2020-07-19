@@ -27,6 +27,18 @@
                         <div class="product-area">
                             <div class="row">
                                 <div class="col-lg-12">
+                                <center>
+                                    <div class="justify-content-center align-items-center" style="align-item:center">
+                                      
+                                        <a href="{{route('admin-order-pending')}}" class="btn btn-warning">Pending<span class="badge badge-light ml-2">{{$pending}}</span></a>
+                                        <a href="{{route('admin-order-processing')}}" class="btn btn-info">Processing<span class="badge badge-light ml-2">{{$processing}}</span></a>
+                                        <a href="{{route('admin-order-delivery')}}" class="btn btn-primary">On Delivery<span class="badge badge-light ml-2">{{$delivery}}</span></a>
+                                        <a href="{{route('admin-order-completed')}}" class="btn btn-success">Completed<span class="badge badge-light ml-2">{{$completed}}</span></a>
+                                        <a href="{{route('admin-order-declined')}}" class="btn btn-danger">Declined<span class="badge badge-light ml-2">{{$declined}}</span></a>
+                                        <a href="{{route('admin-order-paid')}}" class="btn btn-success">Paid<span class="badge badge-light ml-2">{{$paid}}</span></a>
+                                        
+                                    </div>
+                                    </center>
                                     <div class="mr-table allproduct">
                                         @include('includes.admin.form-success') 
                                         <div class="table-responsiv">

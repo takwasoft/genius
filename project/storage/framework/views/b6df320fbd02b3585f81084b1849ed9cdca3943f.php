@@ -26,6 +26,8 @@
 
 		<link href="<?php echo e(asset('assets/admin/css/jquery.tagit.css')); ?>" rel="stylesheet" />
     	<link rel="stylesheet" href="<?php echo e(asset('assets/admin/css/bootstrap-coloroicker.css')); ?>">
+		<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/toastr.css')); ?>">
+	<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/toastr.css')); ?>">
 		<!-- Main Css -->
 
 		<!-- stylesheet -->
@@ -209,7 +211,7 @@
 		<!-- AJAX Js-->
 		<script src="<?php echo e(asset('assets/admin/js/myscript.js')); ?>"></script>
 
-
+<script src="<?php echo e(asset('assets/front/js/toastr.js')); ?>"></script>
 
 		<?php echo $__env->yieldContent('scripts'); ?>
 

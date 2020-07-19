@@ -2,26 +2,9 @@
     <a href="#order" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-hand-holding-usd"></i><?php echo e(__('Orders')); ?></a>
     <ul class="collapse list-unstyled" id="order" data-parent="#accordion">
         <li>
-            <a href="<?php echo e(route('admin-order-index')); ?>"> <?php echo e(__('All Orders')); ?></a>
+            <a href="<?php echo e(route('admin-order-index')); ?>"> <?php echo e(__('Orders')); ?></a>
         </li>
-        <li>
-            <a href="<?php echo e(route('admin-order-pending')); ?>"> <?php echo e(__('Pending Orders')); ?></a>
-        </li>
-        <li>
-            <a href="<?php echo e(route('admin-order-processing')); ?>"> <?php echo e(__('Processing Orders')); ?></a>
-        </li>
-        <li>
-            <a href="<?php echo e(route('admin-order-delivery')); ?>"> <?php echo e(__('On Delivery')); ?></a>
-        </li>
-        <li>
-            <a href="<?php echo e(route('admin-order-completed')); ?>"> <?php echo e(__('Completed Orders')); ?></a>
-        </li>
-        <li>
-            <a href="<?php echo e(route('admin-order-declined')); ?>"> <?php echo e(__('Declined Orders')); ?></a>
-        </li>
-        <li>
-            <a href="<?php echo e(route('admin-order-paid')); ?>"> <?php echo e(__('Paid Orders')); ?></a>
-        </li>
+        
 
     </ul>
 </li>

@@ -1,23 +1,23 @@
-@extends('layouts.admin') 
+ 
 
-@section('content') 
+<?php $__env->startSection('content'); ?> 
 
-<input type="hidden" id="headerdata" value="{{ __('ORDER') }}">
+<input type="hidden" id="headerdata" value="<?php echo e(__('ORDER')); ?>">
  
                     <div class="content-area">
                         <div class="mr-breadcrumb">
                             <div class="row">
                                 <div class="col-lg-12">
-                                        <h4 class="heading">{{ __('Paid Orders') }}</h4>
+                                        <h4 class="heading"><?php echo e(__('On Delivery Orders')); ?></h4>
                                         <ul class="links">
                                             <li>
-                                                <a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }} </a>
+                                                <a href="<?php echo e(route('admin.dashboard')); ?>"><?php echo e(__('Dashboard')); ?> </a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;">{{ __('Orders') }}</a>
+                                                <a href="javascript:;"><?php echo e(__('Orders')); ?></a>
                                             </li>
                                             <li>
-                                                <a href="{{ route('admin-order-pending') }}">{{ __('Pending Orders') }}</a>
+                                                <a href="<?php echo e(route('admin-order-pending')); ?>"><?php echo e(__('Pending Orders')); ?></a>
                                             </li>
                                         </ul>
                                 </div>
@@ -29,27 +29,27 @@
                                 <center>
                                     <div class="justify-content-center align-items-center" style="align-item:center">
                                       
-                                        <a href="{{route('admin-order-pending')}}" class="btn btn-warning">Pending<span class="badge badge-light ml-2">{{$pending}}</span></a>
-                                        <a href="{{route('admin-order-processing')}}" class="btn btn-info">Processing<span class="badge badge-light ml-2">{{$processing}}</span></a>
-                                        <a href="{{route('admin-order-delivery')}}" class="btn btn-primary">On Delivery<span class="badge badge-light ml-2">{{$delivery}}</span></a>
-                                        <a href="{{route('admin-order-completed')}}" class="btn btn-success">Completed<span class="badge badge-light ml-2">{{$completed}}</span></a>
-                                        <a href="{{route('admin-order-declined')}}" class="btn btn-danger">Declined<span class="badge badge-light ml-2">{{$declined}}</span></a>
-                                        <a href="{{route('admin-order-paid')}}" class="btn btn-success">Paid<span class="badge badge-light ml-2">{{$paid}}</span></a>
+                                        <a href="<?php echo e(route('admin-order-pending')); ?>" class="btn btn-warning">Pending<span class="badge badge-light ml-2"><?php echo e($pending); ?></span></a>
+                                        <a href="<?php echo e(route('admin-order-processing')); ?>" class="btn btn-info">Processing<span class="badge badge-light ml-2"><?php echo e($processing); ?></span></a>
+                                        <a href="<?php echo e(route('admin-order-delivery')); ?>" class="btn btn-primary">On Delivery<span class="badge badge-light ml-2"><?php echo e($delivery); ?></span></a>
+                                        <a href="<?php echo e(route('admin-order-completed')); ?>" class="btn btn-success">Completed<span class="badge badge-light ml-2"><?php echo e($completed); ?></span></a>
+                                        <a href="<?php echo e(route('admin-order-declined')); ?>" class="btn btn-danger">Declined<span class="badge badge-light ml-2"><?php echo e($declined); ?></span></a>
+                                        <a href="<?php echo e(route('admin-order-paid')); ?>" class="btn btn-success">Paid<span class="badge badge-light ml-2"><?php echo e($paid); ?></span></a>
                                         
                                     </div>
                                     </center>
                                     <div class="mr-table allproduct">
-                                        @include('includes.admin.form-success') 
+                                        <?php echo $__env->make('includes.admin.form-success', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> 
                                         <div class="table-responsiv">
-                                        <div class="gocover" style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
+                                        <div class="gocover" style="background: url(<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
                                                 <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th>{{ __('Customer Email') }}</th>
-                                                            <th>{{ __('Order Number') }}</th>
-                                                            <th>{{ __('Total Qty') }}</th>
-                                                            <th>{{ __('Total Cost') }}</th>
-                                                            <th>{{ __('Options') }}</th>
+                                                            <th><?php echo e(__('Customer Email')); ?></th>
+                                                            <th><?php echo e(__('Order Number')); ?></th>
+                                                            <th><?php echo e(__('Total Qty')); ?></th>
+                                                            <th><?php echo e(__('Total Cost')); ?></th>
+                                                            <th><?php echo e(__('Options')); ?></th>
                                                         </tr>
                                                     </thead>
                                                 </table>
@@ -61,16 +61,16 @@
                     </div>
 
 
-{{-- ORDER MODAL --}}
+
 
 <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
                                                 <div class="submit-loader">
-                                                        <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+                                                        <img  src="<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>" alt="">
                                                 </div>
     <div class="modal-header d-block text-center">
-        <h4 class="modal-title d-inline-block">{{ __('Update Status') }}</h4>
+        <h4 class="modal-title d-inline-block"><?php echo e(__('Update Status')); ?></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -78,31 +78,31 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        <p class="text-center">{{ __("You are about to update the order's Status.") }}</p>
-        <p class="text-center">{{ __('Do you want to proceed?') }}</p>
+        <p class="text-center"><?php echo e(__("You are about to update the order's Status.")); ?></p>
+        <p class="text-center"><?php echo e(__('Do you want to proceed?')); ?></p>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer justify-content-center">
-            <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('Cancel') }}</button>
-            <a class="btn btn-success btn-ok order-btn">{{ __('Proceed') }}</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo e(__('Cancel')); ?></button>
+            <a class="btn btn-success btn-ok order-btn"><?php echo e(__('Proceed')); ?></a>
       </div>
 
     </div>
   </div>
 </div>
 
-{{-- ORDER MODAL ENDS --}}
 
 
 
-{{-- MESSAGE MODAL --}}
+
+
 <div class="sub-categori">
     <div class="modal" id="vendorform" tabindex="-1" role="dialog" aria-labelledby="vendorformLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="vendorformLabel">{{ __('Send Email') }}</h5>
+                    <h5 class="modal-title" id="vendorformLabel"><?php echo e(__('Send Email')); ?></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -113,19 +113,20 @@
                         <div class="col-md-12">
                             <div class="contact-form">
                                 <form id="emailreply">
-                                    {{csrf_field()}}
+                                    <?php echo e(csrf_field()); ?>
+
                                     <ul>
                                         <li>
-                                            <input type="email" class="input-field eml-val" id="eml" name="to" placeholder="{{ __('Email') }} *" value="" required="">
+                                            <input type="email" class="input-field eml-val" id="eml" name="to" placeholder="<?php echo e(__('Email')); ?> *" value="" required="">
                                         </li>
                                         <li>
-                                            <input type="text" class="input-field" id="subj" name="subject" placeholder="{{ __('Subject') }} *" required="">
+                                            <input type="text" class="input-field" id="subj" name="subject" placeholder="<?php echo e(__('Subject')); ?> *" required="">
                                         </li>
                                         <li>
-                                            <textarea class="input-field textarea" name="message" id="msg" placeholder="{{ __('Your Message') }} *" required=""></textarea>
+                                            <textarea class="input-field textarea" name="message" id="msg" placeholder="<?php echo e(__('Your Message')); ?> *" required=""></textarea>
                                         </li>
                                     </ul>
-                                    <button class="submit-btn" id="emlsub" type="submit">{{ __('Send Email') }}</button>
+                                    <button class="submit-btn" id="emlsub" type="submit"><?php echo e(__('Send Email')); ?></button>
                                 </form>
                             </div>
                         </div>
@@ -137,16 +138,16 @@
     </div>
 </div>
 
-{{-- MESSAGE MODAL ENDS --}}
 
-{{-- ADD / EDIT MODAL --}}
+
+
 
                 <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
                                         
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                                                 <div class="submit-loader">
-                                                        <img  src="{{asset('assets/images/'.$gs->admin_loader)}}" alt="">
+                                                        <img  src="<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>" alt="">
                                                 </div>
                                             <div class="modal-header">
                                             <h5 class="modal-title"></h5>
@@ -158,20 +159,20 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo e(__('Close')); ?></button>
                                             </div>
                         </div>
                     </div>
 
                 </div>
 
-{{-- ADD / EDIT MODAL ENDS --}}
 
-@endsection    
 
-@section('scripts')
+<?php $__env->stopSection(); ?>    
 
-{{-- DATA TABLE --}}
+<?php $__env->startSection('scripts'); ?>
+
+
 
     <script type="text/javascript">
 
@@ -179,7 +180,7 @@
                ordering: false,
                processing: true,
                serverSide: true,
-               ajax: '{{ route('admin-order-datatables','paid') }}',
+               ajax: '<?php echo e(route('admin-order-datatables','delivery')); ?>',
                columns: [
                         { data: 'customer_email', name: 'customer_email' },
                         { data: 'id', name: 'id' },
@@ -188,7 +189,7 @@
                         { data: 'action', searchable: false, orderable: false }
                      ],
                language : {
-                    processing: '<img src="{{asset('assets/images/'.$gs->admin_loader)}}">'
+                    processing: '<img src="<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>">'
                 },
                 drawCallback : function( settings ) {
                         $('.select').niceSelect();  
@@ -197,6 +198,7 @@
                                                                 
     </script>
 
-{{-- DATA TABLE --}}
+
     
-@endsection   
+<?php $__env->stopSection(); ?>   
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

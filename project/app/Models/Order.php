@@ -10,18 +10,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-	protected $fillable = ['user_id', 'cart', 'method','shipping', 'pickup_location', 'totalQty', 'pay_amount', 'txnid', 'charge_id', 'order_number', 'payment_status', 'customer_email', 'customer_name', 'customer_phone', 'customer_address', 'customer_city', 'customer_zip','shipping_name', 'shipping_email', 'shipping_phone', 'shipping_address', 'shipping_city', 'shipping_zip', 'order_note', 'status'];
+    protected $fillable = ['user_id', 'cart', 'method', 'shipping', 'pickup_location', 'totalQty', 'pay_amount', 'txnid', 'charge_id', 'order_number', 'payment_status', 'customer_email', 'customer_name', 'customer_phone', 'customer_address', 'customer_city', 'customer_zip', 'shipping_name', 'shipping_email', 'shipping_phone', 'shipping_address', 'shipping_city', 'shipping_zip', 'order_note', 'status', 'paid_by', 'paid_at'];
+    protected $dates = [
+        'paid_at',
+    ];
+    public function payer()
+    {
+        return $this->belongsTo('App\Models\Admin', 'paid_by');
+    }
     public function paymentGateway()
     {
-        return $this->belongsTo('App\Models\PaymentGateway','method');
+        return $this->belongsTo('App\Models\PaymentGateway', 'method');
     }
-    public function additionalFields(){
+    public function additionalFields()
+    {
         return $this->hasMany(OrderAdditional::class);
     }
-    public function extraCharges(){
+    public function extraCharges()
+    {
         return $this->hasMany(OrderExtraCharge::class);
     }
-    public function paymentVerifications(){
+    public function paymentVerifications()
+    {
         return $this->hasMany(OrderPaymentVerification::class);
     }
     public function vendororders()
@@ -31,7 +41,6 @@ class Order extends Model
 
     public function tracks()
     {
-        return $this->hasMany('App\Models\OrderTrack','order_id');
+        return $this->hasMany('App\Models\OrderTrack', 'order_id');
     }
-
 }

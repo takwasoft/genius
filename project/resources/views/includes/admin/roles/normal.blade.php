@@ -6,9 +6,9 @@
         <a href="#order" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false"><i class="fas fa-hand-holding-usd"></i>{{ __('Orders') }}</a>
         <ul class="collapse list-unstyled" id="order" data-parent="#accordion" >
                 <li>
-            <a href="{{route('admin-order-index')}}"> {{ __('All Orders') }}</a>
+            <a href="{{route('admin-order-index')}}"> {{ __('Orders') }}</a>
         </li>
-        <li>
+        {{--  <li>
             <a href="{{route('admin-order-pending')}}"> {{ __('Pending Orders') }}</a>
         </li>
         <li>
@@ -25,7 +25,7 @@
         </li>
         <li>
             <a href="{{route('admin-order-paid')}}"> {{ __('Paid Orders') }}</a>
-        </li>
+        </li>  --}}
 
         </ul>
     </li>

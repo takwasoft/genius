@@ -29,6 +29,8 @@
 														<tr>
 									                        <th>{{ __("Name") }}</th>
 									                        <th>{{ __("Email") }}</th>
+															<th>{{ __("Phone") }}</th>
+															<th>{{ __("Address") }}</th>
 									                        <th>{{ __("Options") }}</th>
 														</tr>
 													</thead>
@@ -157,6 +159,8 @@
                columns: [
                         { data: 'name', name: 'name' },
                         { data: 'email', name: 'email' },
+                        { data: 'phone', name: 'phone' },
+                        { data: 'address', name: 'address' },
             			{ data: 'action', searchable: false, orderable: false }
                      ],
                language : {
