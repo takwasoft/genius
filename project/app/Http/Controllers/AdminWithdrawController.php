@@ -20,118 +20,119 @@ class AdminWithdrawController extends Controller
     {
         if (request()->ajax()) {
             $data = AdminWithdraw::latest()->get();
-                return Datatables::of($data)
-                        ->addIndexColumn()
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->editColumn('created_at', function ($row) {
+                    return $row->created_at->format('h:i a d/m/y');
+                })
+                ->addColumn('action', function ($row) {
 
-                        ->addColumn('action', function($row){
+                    $btn = '<div class="btn-group"><a href="' . URL::to('/') . '/admin/adminwithdraws/' . $row->id . '/edit" class="btn btn-sm btn-outline-primary">Edit</a>
+                               <button onclick="deleteData(' . $row->id . ')" class="btn btn-sm btn-outline-danger">Delete</button></div>';
 
-                               $btn = '<div class="btn-group"><a href="'.URL::to('/').'/admin/adminwithdraws/'.$row->id.'/edit" class="btn btn-sm btn-outline-primary">Edit</a>
-                               <button onclick="deleteData('.$row->id.')" class="btn btn-sm btn-outline-danger">Delete</button></div>';
-
-                                return $btn;
-                        })
-                        ->rawColumns(['action'])
-                        ->escapeColumns([])
-                        ->make(true);
-
-                    }
-                    $thead='<th>ID</th>
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->escapeColumns([])
+                ->make(true);
+        }
+        $thead = '<th>ID</th>
                     <th>Amount</th>
                     <th>Note</th>
                     ';
-                    $columns="{data: 'id', name: 'id'},
+        $columns = "{data: 'id', name: 'id'},
                     {data: 'amount', name: 'amount'},
                     {data: 'note', name: 'note'}, ";
-                    return view('table.data',["columns"=>$columns,"thead"=>$thead,"layout"=>'admin.master','ajax'=>'adminwithdraws','title'=>'Admin Withdraws']);
+        return view('table.data', ["columns" => $columns, "thead" => $thead, "layout" => 'admin.master', 'ajax' => 'adminwithdraws', 'title' => 'Admin Withdraws']);
     }
     public function create()
     {
-        $action="admin/adminwithdraws";
-        $name="Admin Withdraw";
-        $fields=[
+        $action = "admin/adminwithdraws";
+        $name = "Admin Withdraw";
+        $fields = [
             [
-                "name"=>"amount",
-                "label"=>"Amount",
-                "type"=>"text",
-                "required"=>true 
+                "name" => "amount",
+                "label" => "Amount",
+                "type" => "text",
+                "required" => true
             ],
             [
-                "name"=>"note",
-                "label"=>"Note",
-                "type"=>"textarea",
-                "required"=>true 
+                "name" => "note",
+                "label" => "Note",
+                "type" => "textarea",
+                "required" => true
             ],
-            ];
+        ];
 
-        return view('admin.form.create',["action"=>$action,"name"=>$name,"fields"=>$fields]);
+        return view('admin.form.create', ["action" => $action, "name" => $name, "fields" => $fields]);
     }
     public function store(Request $request)
     {
-       $w= AdminWithdraw::create(
+        $w = AdminWithdraw::create(
             $request->all()
         );
         Transaction::create([
-            "amount"=>$request->amount,
-            "withdraw_id"=>$w->id,
-            "type"=>"Admin Withdraw",
-            "collected"=>0
+            "amount" => $request->amount,
+            "withdraw_id" => $w->id,
+            "type" => "Admin Withdraw",
+            "collected" => 0
         ]);
         return redirect('/admin/adminwithdraws');
     }
-  
- 
-   public function edit(AdminWithdraw $adminwithdraw)
-   {
-       $action="admin/adminwithdraws/$adminwithdraw->id";
-       $name="Division";
-       $fields=[
-           [
-               "name"=>"amount",
-               "label"=>"Amount",
-               "type"=>"text",
-               "required"=>true,
-               "value"=>$adminwithdraw->amount
-           ],
-           [
-            "name"=>"note",
-            "label"=>"Note",
-            "type"=>"textarea",
-            "required"=>true,
-            "value"=>$adminwithdraw->note
-        ],
 
-           ];
 
-       return view('admin.form.edit',["action"=>$action,"name"=>$name,"fields"=>$fields]);
-   }
+    public function edit(AdminWithdraw $adminwithdraw)
+    {
+        $action = "admin/adminwithdraws/$adminwithdraw->id";
+        $name = "Division";
+        $fields = [
+            [
+                "name" => "amount",
+                "label" => "Amount",
+                "type" => "text",
+                "required" => true,
+                "value" => $adminwithdraw->amount
+            ],
+            [
+                "name" => "note",
+                "label" => "Note",
+                "type" => "textarea",
+                "required" => true,
+                "value" => $adminwithdraw->note
+            ],
 
-   /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  \App\Division  $var
-    * @return \Illuminate\Http\Response
-    */
-   public function update(Request $request, AdminWithdraw $adminwithdraw)
-   {
-       $adminwithdraw->update($request->all());
-       $t=Transaction::where('withdraw_id','=',$adminwithdraw->id)->first();
-       $t->amount=$adminwithdraw->amount;
-       $t->update();
-       return redirect('/admin/adminwithdraws');
-   }
+        ];
 
-   /**
-    * Remove the specified resource from storage.
-    *
-    * @param  \App\Division  $var
-    * @return \Illuminate\Http\Response
-    */
-   public function destroy(AdminWithdraw  $adminwithdraw)
-   {
-    $t=Transaction::where('withdraw_id','=',$adminwithdraw->id)->first();
-    $t->delete();
-       $adminwithdraw->delete();
-       return redirect('/admin/adminwithdraws');
-   }
+        return view('admin.form.edit', ["action" => $action, "name" => $name, "fields" => $fields]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Division  $var
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, AdminWithdraw $adminwithdraw)
+    {
+        $adminwithdraw->update($request->all());
+        $t = Transaction::where('withdraw_id', '=', $adminwithdraw->id)->first();
+        $t->amount = $adminwithdraw->amount;
+        $t->update();
+        return redirect('/admin/adminwithdraws');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Division  $var
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(AdminWithdraw  $adminwithdraw)
+    {
+        $t = Transaction::where('withdraw_id', '=', $adminwithdraw->id)->first();
+        $t->delete();
+        $adminwithdraw->delete();
+        return redirect('/admin/adminwithdraws');
+    }
 }

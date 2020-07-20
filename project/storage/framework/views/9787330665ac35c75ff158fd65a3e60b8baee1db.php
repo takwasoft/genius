@@ -1,14 +1,15 @@
- @extends('layouts.admin')
+ 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
  <div class="content-area">
 <div class="card card-info">
                 <div class="card-header">
                     <div class="card-title">
-                        {{$title}}
+                        <?php echo e($title); ?>
+
                     </div>
                     <div class="card-tools">
-                        <a class="btn btn-warning" href="{{URL::to('/admin/'.$ajax.'/create')}}">Add New</a>
+                        <a class="btn btn-warning" href="<?php echo e(URL::to('/admin/'.$ajax.'/create')); ?>">Add New</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -16,7 +17,8 @@
                                 <table class="table table-bordered data-table">
                                         <thead>
                                             <tr>
-                                               {!!$thead!!}
+                                               <?php echo $thead; ?>
+
                                                <th>Time</th>
                                                 <th width="100px">Action</th>
                                             </tr>
@@ -32,24 +34,25 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
  <script type="text/javascript">
  
     deleteData=(id)=>{
-      url=`{{URL::to('/admin/'.$ajax.'/${id}')}}`;
-        $('<form action="'+url+'" method="post">   {{csrf_field()}}<input type="hidden" name="_method" value="DELETE"></form>').appendTo('body').submit();
+      url=`<?php echo e(URL::to('/admin/'.$ajax.'/${id}')); ?>`;
+        $('<form action="'+url+'" method="post">   <?php echo e(csrf_field()); ?><input type="hidden" name="_method" value="DELETE"></form>').appendTo('body').submit();
     }
     $(function () {
       
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{$ajax}}",
+          ajax: "<?php echo e($ajax); ?>",
           columns: [
-              {!!$columns!!}
+              <?php echo $columns; ?>
+
               {data: 'created_at', name: 'created_at'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ]
@@ -57,4 +60,5 @@
       
     });
   </script>                       
-  @endsection
+  <?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

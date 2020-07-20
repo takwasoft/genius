@@ -59,6 +59,7 @@
                                                         <tr>
                                                             <th><?php echo e(__('Order ID')); ?></th>
                                                             <th><?php echo e(__('Customer Email')); ?></th>
+                                                            <th>Products</th>
                                                             <th><?php echo e(__('Total Qty')); ?></th>
                                                             <th><?php echo e(__('Total Cost')); ?></th>
                                                             <th><?php echo e(__('Order At')); ?></th>
@@ -69,10 +70,12 @@
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
+                                                            <th><?php echo e(__('Order ID')); ?></th>
                                                             <th><?php echo e(__('Customer Email')); ?></th>
-                                                            <th><?php echo e(__('Order Number')); ?></th>
+                                                            <th>Products</th>
                                                             <th><?php echo e(__('Total Qty')); ?></th>
                                                             <th><?php echo e(__('Total Cost')); ?></th>
+                                                            <th><?php echo e(__('Order At')); ?></th>
                                                             <th><?php echo e(__('Status')); ?></th>
                                                             <th><?php echo e(__('Payment')); ?></th>
                                                             <th><?php echo e(__('Options')); ?></th>
@@ -217,11 +220,12 @@
                columns: [
                         { data: 'id', name: 'id' },
                         { data: 'customer_email', name: 'customer_email' },
+                        { data: 'products', name: 'products' },
                         { data: 'totalQty', name: 'totalQty' },
                         { data: 'pay_amount', name: 'pay_amount' },
                          { data: 'created_at', name: 'created_at' },
                         { data: 'status', name: 'status' },
-                        { data: 'payment_status', name: 'payment_status' },
+                        { data: 'payment_status', name: 'payment_status' }, 
                         { data: 'action', searchable: false, orderable: false }
                      ],
                language : {
@@ -242,9 +246,7 @@
         }
       });
     });
-    $('tfoot').each(function () {
-      $(this).insertAfter($(this).siblings('thead'));
-    });   
+    $('#geniustable tfoot tr').appendTo('#geniustable thead');   
                                                                 
     </script>
 

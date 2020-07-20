@@ -220,9 +220,7 @@
         }
       });
     });
-    $('tfoot').each(function () {
-      $(this).insertAfter($(this).siblings('thead'));
-    });          
+    $('#geniustable tfoot tr').appendTo('#geniustable thead');          
         $('#confirm-delete1').on('show.bs.modal', function(e) {
             $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
         });

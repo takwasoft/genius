@@ -873,6 +873,7 @@ Route::prefix('admin')->group(function () {
   Route::group(['middleware' => 'permissions:manage_staffs'], function () {
 
     Route::get('/staff/datatables', 'Admin\StaffController@datatables')->name('admin-staff-datatables');
+    Route::get('/staff/status/{id1}/{id2}', 'Admin\StaffController@status')->name('admin-prod-status');
     Route::get('/staff', 'Admin\StaffController@index')->name('admin-staff-index');
     Route::get('/staff/create', 'Admin\StaffController@create')->name('admin-staff-create');
     Route::post('/staff/create', 'Admin\StaffController@store')->name('admin-staff-store');
@@ -901,6 +902,7 @@ Route::prefix('admin')->group(function () {
 
   // STATUS SECTION
   Route::get('/products/status/{id1}/{id2}/{reason}', 'Admin\ProductController@status')->name('admin-prod-status');
+
   Route::get('/boost/status/{id1}/{id2}/{reason}', 'Admin\ProductController@boostStatus')->name('admin-boost-status');
   Route::get('/boost/paid-status/{id1}/{id2}', 'Admin\ProductController@boostPaidStatus')->name('admin-boost-paid-status');
 

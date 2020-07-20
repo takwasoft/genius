@@ -1,14 +1,26 @@
  
 
-<?php $__env->startSection('content'); ?> 
+<?php $__env->startSection('styles'); ?>
 
-<input type="hidden" id="headerdata" value="<?php echo e(__('ORDER')); ?>">
+<style type="text/css">
+    
+.input-field { 
+    padding: 15px 20px; 
+}
+
+</style>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>  
  
+<input type="hidden" id="headerdata" value="<?php echo e(__('ORDER')); ?>">
+
                     <div class="content-area">
                         <div class="mr-breadcrumb">
                             <div class="row">
                                 <div class="col-lg-12">
-                                        <h4 class="heading"><?php echo e(__('On Delivery Orders')); ?></h4>
+                                        <h4 class="heading"><?php echo e(__('All Orders')); ?></h4>
                                         <ul class="links">
                                             <li>
                                                 <a href="<?php echo e(route('admin.dashboard')); ?>"><?php echo e(__('Dashboard')); ?> </a>
@@ -17,16 +29,16 @@
                                                 <a href="javascript:;"><?php echo e(__('Orders')); ?></a>
                                             </li>
                                             <li>
-                                                <a href="<?php echo e(route('admin-order-pending')); ?>"><?php echo e(__('Pending Orders')); ?></a>
+                                                <a href="<?php echo e(route('admin-order-index')); ?>"><?php echo e(__('All Orders')); ?></a>
                                             </li>
                                         </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="product-area">
+                        <div class="">
                             <div class="row">
                                 <div class="col-lg-12">
-                                <center>
+                                    <center>
                                     <div class="justify-content-center align-items-center" style="align-item:center">
                                       
                                         <a href="<?php echo e(route('admin-order-pending')); ?>" class="btn btn-warning">Pending<span class="badge badge-light ml-2"><?php echo e($pending); ?></span></a>
@@ -40,18 +52,35 @@
                                     </center>
                                     <div class="mr-table allproduct">
                                         <?php echo $__env->make('includes.admin.form-success', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?> 
-                                        <div class="table-responsiv">
+                                        <div class="table-responsive">
                                         <div class="gocover" style="background: url(<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
-                                                <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                                                <table id="geniustable" class="table table-hover " cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
+                                                            <th><?php echo e(__('Order ID')); ?></th>
                                                             <th><?php echo e(__('Customer Email')); ?></th>
-                                                            <th><?php echo e(__('Order Number')); ?></th>
+                                                            <th>Products</th>
                                                             <th><?php echo e(__('Total Qty')); ?></th>
                                                             <th><?php echo e(__('Total Cost')); ?></th>
+                                                            <th><?php echo e(__('Order At')); ?></th>
+                                                            <th><?php echo e(__('Status')); ?></th>
+                                                            <th><?php echo e(__('Payment')); ?></th>
                                                             <th><?php echo e(__('Options')); ?></th>
                                                         </tr>
                                                     </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th><?php echo e(__('Order ID')); ?></th>
+                                                            <th><?php echo e(__('Customer Email')); ?></th>
+                                                            <th>Products</th>
+                                                            <th><?php echo e(__('Total Qty')); ?></th>
+                                                            <th><?php echo e(__('Total Cost')); ?></th>
+                                                            <th><?php echo e(__('Order At')); ?></th>
+                                                            <th><?php echo e(__('Status')); ?></th>
+                                                            <th><?php echo e(__('Payment')); ?></th>
+                                                            <th><?php echo e(__('Options')); ?></th>
+                                                        </tr>
+                                                    </tfoot>
                                                 </table>
                                         </div>
                                     </div>
@@ -62,13 +91,12 @@
 
 
 
-
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
+<div class="modal fade" id="confirm-delete1" tabindex="-1" role="dialog" aria-labelledby="modal1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-                                                <div class="submit-loader">
-                                                        <img  src="<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>" alt="">
-                                                </div>
+        <div class="submit-loader">
+            <img  src="<?php echo e(asset('assets/images/'.$gs->admin_loader)); ?>" alt="">
+        </div>
     <div class="modal-header d-block text-center">
         <h4 class="modal-title d-inline-block"><?php echo e(__('Update Status')); ?></h4>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -80,6 +108,10 @@
       <div class="modal-body">
         <p class="text-center"><?php echo e(__("You are about to update the order's Status.")); ?></p>
         <p class="text-center"><?php echo e(__('Do you want to proceed?')); ?></p>
+        <input type="hidden" id="t-add" value="<?php echo e(route('admin-order-track-add')); ?>">
+        <input type="hidden" id="t-id" value="">
+        <input type="hidden" id="t-title" value="">
+        <textarea class="input-field" placeholder="Enter Your Tracking Note (Optional)" id="t-txt"></textarea>
       </div>
 
       <!-- Modal footer -->
@@ -175,17 +207,25 @@
 
 
     <script type="text/javascript">
-
+ $('#geniustable tfoot th').each(function () {
+    
+      var title = $(this).text();
+      $(this).html('<input style="width:70px" type="text" placeholder="Search ' + title + '" />');
+    });
         var table = $('#geniustable').DataTable({
-               ordering: false,
+
                processing: true,
-               serverSide: true,
+               serverSide: true, 
                ajax: '<?php echo e(route('admin-order-datatables','delivery')); ?>',
                columns: [
-                        { data: 'customer_email', name: 'customer_email' },
                         { data: 'id', name: 'id' },
+                        { data: 'customer_email', name: 'customer_email' },
+                        { data: 'products', name: 'products' },
                         { data: 'totalQty', name: 'totalQty' },
                         { data: 'pay_amount', name: 'pay_amount' },
+                         { data: 'created_at', name: 'created_at' },
+                        { data: 'status', name: 'status' },
+                        { data: 'payment_status', name: 'payment_status' }, 
                         { data: 'action', searchable: false, orderable: false }
                      ],
                language : {
@@ -195,6 +235,18 @@
                         $('.select').niceSelect();  
                 }
             });
+             table.columns().every(function () {
+      var that = this;
+      
+      $('input', this.footer()).on('keyup change clear', function () {
+        if (that.search() !== this.value) {
+           that
+                    .search( this.value.split(",").join("|"), true, false )
+                    .draw();
+        }
+      });
+    });
+    $('#geniustable tfoot tr').appendTo('#geniustable thead');   
                                                                 
     </script>
 

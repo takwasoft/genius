@@ -59,6 +59,7 @@
                                                         <tr>
                                                             <th>{{ __('Order ID') }}</th>
                                                             <th>{{ __('Customer Email') }}</th>
+                                                            <th>Products</th>
                                                             <th>{{ __('Total Qty') }}</th>
                                                             <th>{{ __('Total Cost') }}</th>
                                                             <th>{{ __('Order At') }}</th>
@@ -69,10 +70,12 @@
                                                     </thead>
                                                     <tfoot>
                                                         <tr>
+                                                            <th>{{ __('Order ID') }}</th>
                                                             <th>{{ __('Customer Email') }}</th>
-                                                            <th>{{ __('Order Number') }}</th>
+                                                            <th>Products</th>
                                                             <th>{{ __('Total Qty') }}</th>
                                                             <th>{{ __('Total Cost') }}</th>
+                                                            <th>{{ __('Order At') }}</th>
                                                             <th>{{ __('Status') }}</th>
                                                             <th>{{ __('Payment') }}</th>
                                                             <th>{{ __('Options') }}</th>
@@ -218,6 +221,7 @@
                columns: [
                         { data: 'id', name: 'id' },
                         { data: 'customer_email', name: 'customer_email' },
+                        { data: 'products', name: 'products' },
                         { data: 'totalQty', name: 'totalQty' },
                         { data: 'pay_amount', name: 'pay_amount' },
                          { data: 'created_at', name: 'created_at' },
@@ -243,9 +247,7 @@
         }
       });
     });
-    $('tfoot').each(function () {
-      $(this).insertAfter($(this).siblings('thead'));
-    });   
+    $('#geniustable tfoot tr').appendTo('#geniustable thead');   
                                                                 
     </script>
 

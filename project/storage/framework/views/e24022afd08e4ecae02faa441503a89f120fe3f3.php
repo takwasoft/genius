@@ -36,7 +36,7 @@
 	<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/plugin.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/animate.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/toastr.css')); ?>">
-	<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/toastr.css')); ?>">
+	<link rel="stylesheet" href="<?php echo e(asset('assets/front/css/toastr.css')); ?>"> 
 
 	<!-- jQuery Ui Css-->
 	<link rel="stylesheet" href="<?php echo e(asset('assets/front/jquery-ui/jquery-ui.min.css')); ?>">

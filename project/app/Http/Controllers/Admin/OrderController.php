@@ -48,6 +48,14 @@ class OrderController extends Controller
                 $id = '<a href="' . route('admin-order-invoice', $data->id) . '">' . $data->order_number . '</a>';
                 return $id;
             })
+            ->addColumn('products', function (Order $data) {
+                $cart = unserialize(bzdecompress(utf8_decode($data->cart)));
+                $products = '<ul class="list-group">';
+                foreach ($cart->items as $key => $product) {
+                    $products = $products . '<li class="list-group-item "><a target="_blank" href="' . route('front.product', $product['item']['slug']) . '">' . $product['item']['name'] . '<span class="badge badge-success">' . $product['qty'] . '</span></a></li>';
+                }
+                return $products . '</ul>';
+            })
             ->editColumn('payment_status', function (Order $data) {
                 $payer = "";
                 if ($data->paid_by != 0) {
@@ -68,7 +76,7 @@ class OrderController extends Controller
                 $orders = '<a href="javascript:;" data-href="' . route('admin-order-edit', $data->id) . '" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> Delivery Status</a>';
                 return '<div class="godropdown"><button class="go-dropdown-toggle"> Actions<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show', $data->id) . '" > <i class="fas fa-eye"></i> Details</a><a href="javascript:;" class="send" data-email="' . $data->customer_email . '" data-toggle="modal" data-target="#vendorform"><i class="fas fa-envelope"></i> Send</a><a href="javascript:;" data-href="' . route('admin-order-track', $data->id) . '" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> Track Order</a>' . $orders . '</div></div>';
             })
-            ->rawColumns(['id', 'action', 'customer_email', 'payment_status'])
+            ->rawColumns(['id', 'products', 'action', 'customer_email', 'payment_status'])
             ->toJson();  //--- Returning Json Data To Client Side
     }
     public function index()
@@ -308,7 +316,7 @@ class OrderController extends Controller
         // $order->update([
         //     "cart"=>utf8_encode(bzcompress(serialize($cart), 9))
         // ]);
-        
+
         return view('admin.order.details', compact('order', 'cart'));
     }
     public function invoice($id)
