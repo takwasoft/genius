@@ -272,8 +272,8 @@
         </div>
         <!-- end brand area  --->
 
-	<!--Main-Menu Area Start-->
-	<div class="mainmenu-area mainmenu-bb">
+	<!--tab Main-Menu Area Start-->
+	<div class="mainmenu-area mainmenu-bb d-lg-none">
 		<div class="container">
 			<div class="row align-items-center mainmenu-area-innner" style="">
 				<div id="mg-menu" class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
@@ -396,6 +396,145 @@
 	</div>
 	<!--Main-Menu Area End-->
 
+
+	<!--desktop Main-Menu Area Start-->
+	<div class="mainmenu-area mainmenu-bb d-none d-lg-block">
+		<div class="container">
+			<div class="row align-items-center mainmenu-area-innner" style="">
+				<div class="col-lg-9 col-md-6 mainmenu-wrapper remove-padding" >
+					<nav hidden>
+						<div class="nav-header">
+							<button class="toggle-bar"><span class="fa fa-bars"></span></button>
+						</div>
+						<ul class="menu" id="home-menu-item">
+							@if($gs->is_home == 1)
+							<li><a href="{{ route('front.index') }}">{{ $langg->lang17 }}</a></li>
+							@endif
+							{{-- <li><a href="{{ route('front.blog') }}">{{ $langg->lang18 }}</a></li> --}}
+
+							<li><a href="{{ route('front.index') }}">Home</a></li>
+							{{-- <li><a href="{{ route('front.add_product') }}">Add Product</a></li> --}}
+
+
+							
+							@foreach(DB::table('pages')->where('header','=',1)->get() as $data)
+								<li><a href="{{ route('front.page',$data->slug) }}">{{ $data->title }}</a></li>
+							@endforeach
+							@if($gs->is_contact == 1)
+							<li><a href="{{ route('front.contact') }}">{{ $langg->lang20 }}</a></li>
+							@endif
+
+							@if($gs->is_faq == 1)
+							<li><a href="{{ route('front.faq') }}">{{ $langg->lang19 }}</a></li>
+							@endif
+							{{-- <li>
+								<a href="javascript:;" data-toggle="modal" data-target="#track-order-modal" class="track-btn">{{ $langg->lang16 }}</a>
+							</li> --}}
+						</ul>
+
+					</nav>
+				</div>
+			</div>
+		</div>
+	
+	<!--desktop Main-Menu Area End-->
+	<div class="container">
+	<div class="my-3 row bedge-section">
+		<div class="col-md-1">
+			<button class="btn-category btn-lg btn-bedge categories_title" data-toggle="dropdown" type="button" aria-expanded="false">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+			</button>
+
+			<!--categorie menu start-->
+					<div class="categories_menu">
+						
+						<div class="categories_menu_inner stay_home_desk" style="width:260px;margin-top:2px;border-top: 5px solid #B81D22;border-radius: 5px;">
+							<ul>
+								@php
+								$i=1;
+								@endphp
+								@foreach($categories as $category)
+
+								<li class="{{count($category->subs) > 0 ? 'dropdown_list':''}} {{ $i >= 15 ? 'rx-child' : '' }}">
+								@if(count($category->subs) > 0)
+									<div class="img">
+										<img src="{{ asset('assets/images/categories/'.$category->photo) }}" alt="">
+									</div>
+									<div class="link-area">
+										<span><a href="{{ route('front.category',$category->slug) }}">{{ $category->name }}</a></span>
+										@if(count($category->subs) > 0)
+										<a href="javascript:;">
+											<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+										@endif
+									</div>
+
+								@else
+									<a href="{{ route('front.category',$category->slug) }}"><img src="{{ asset('assets/images/categories/'.$category->photo) }}"> {{ $category->name }}</a>
+
+								@endif
+									@if(count($category->subs) > 0)
+
+									@php
+									$ck = 0;
+									foreach($category->subs as $subcat) {
+										if(count($subcat->childs) > 0) {
+											$ck = 1;
+											break;
+										}
+									}
+									@endphp
+									<ul class="{{ $ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1' }} stay_home_5">
+										@foreach($category->subs as $subcat)
+											<li>
+												<a href="{{ route('front.subcat',['slug1' => $subcat->category->slug, 'slug2' => $subcat->slug]) }}">{{$subcat->name}}</a>
+												@if(count($subcat->childs) > 0)
+													<div class="categorie_sub_menu">
+														<ul>
+															@foreach($subcat->childs as $childcat)
+															<li><a href="{{ route('front.childcat',['slug1' => $childcat->subcategory->category->slug, 'slug2' => $childcat->subcategory->slug, 'slug3' => $childcat->slug]) }}">{{$childcat->name}}</a></li>
+															@endforeach
+														</ul>
+													</div>
+												@endif
+											</li>
+										@endforeach
+									</ul>
+
+									@endif
+
+									</li>
+
+									@php
+									$i++;
+									@endphp
+
+									@if($i == 15)
+						                <li>
+						                <a href="{{ route('front.categories') }}"><i class="fas fa-plus"></i> {{ $langg->lang15 }} </a>
+						                </li>
+						                @break
+									@endif
+
+
+									@endforeach
+
+							</ul>
+						</div>
+					</div>
+					<!--categorie menu end-->
+		</div>
+		
+		<div class="col-md-11">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item"><a href="#">Home</a></li>
+			  <li class="breadcrumb-item"><a href="#">Library</a></li>
+			  <li class="breadcrumb-item active">Data</li>
+			</ol>
+		</div>
+	</div>
+	</div>
+</div>
 @yield('content')
 
 	<!-- Footer Area Start -->

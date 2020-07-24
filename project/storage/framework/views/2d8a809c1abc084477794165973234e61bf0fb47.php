@@ -275,8 +275,8 @@
         </div>
         <!-- end brand area  --->
 
-	<!--Main-Menu Area Start-->
-	<div class="mainmenu-area mainmenu-bb">
+	<!--tab Main-Menu Area Start-->
+	<div class="mainmenu-area mainmenu-bb d-lg-none">
 		<div class="container">
 			<div class="row align-items-center mainmenu-area-innner" style="">
 				<div id="mg-menu" class="col-lg-3 col-md-6 categorimenu-wrapper remove-padding">
@@ -397,6 +397,143 @@
 	</div>
 	<!--Main-Menu Area End-->
 
+
+	<!--desktop Main-Menu Area Start-->
+	<div class="mainmenu-area mainmenu-bb d-none d-lg-block">
+		<div class="container">
+			<div class="row align-items-center mainmenu-area-innner" style="">
+				<div class="col-lg-9 col-md-6 mainmenu-wrapper remove-padding" >
+					<nav hidden>
+						<div class="nav-header">
+							<button class="toggle-bar"><span class="fa fa-bars"></span></button>
+						</div>
+						<ul class="menu" id="home-menu-item">
+							<?php if($gs->is_home == 1): ?>
+							<li><a href="<?php echo e(route('front.index')); ?>"><?php echo e($langg->lang17); ?></a></li>
+							<?php endif; ?>
+							
+
+							<li><a href="<?php echo e(route('front.index')); ?>">Home</a></li>
+							
+
+
+							
+							<?php $__currentLoopData = DB::table('pages')->where('header','=',1)->get(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+								<li><a href="<?php echo e(route('front.page',$data->slug)); ?>"><?php echo e($data->title); ?></a></li>
+							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							<?php if($gs->is_contact == 1): ?>
+							<li><a href="<?php echo e(route('front.contact')); ?>"><?php echo e($langg->lang20); ?></a></li>
+							<?php endif; ?>
+
+							<?php if($gs->is_faq == 1): ?>
+							<li><a href="<?php echo e(route('front.faq')); ?>"><?php echo e($langg->lang19); ?></a></li>
+							<?php endif; ?>
+							
+						</ul>
+
+					</nav>
+				</div>
+			</div>
+		</div>
+	
+	<!--desktop Main-Menu Area End-->
+	<div class="container">
+	<div class="my-3 row bedge-section">
+		<div class="col-md-1">
+			<button class="btn-category btn-lg btn-bedge categories_title" data-toggle="dropdown" type="button" aria-expanded="false">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+			</button>
+
+			<!--categorie menu start-->
+					<div class="categories_menu">
+						
+						<div class="categories_menu_inner stay_home_desk" style="width:260px;margin-top:2px;border-top: 5px solid #B81D22;border-radius: 5px;">
+							<ul>
+								<?php
+								$i=1;
+								?>
+								<?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+								<li class="<?php echo e(count($category->subs) > 0 ? 'dropdown_list':''); ?> <?php echo e($i >= 15 ? 'rx-child' : ''); ?>">
+								<?php if(count($category->subs) > 0): ?>
+									<div class="img">
+										<img src="<?php echo e(asset('assets/images/categories/'.$category->photo)); ?>" alt="">
+									</div>
+									<div class="link-area">
+										<span><a href="<?php echo e(route('front.category',$category->slug)); ?>"><?php echo e($category->name); ?></a></span>
+										<?php if(count($category->subs) > 0): ?>
+										<a href="javascript:;">
+											<i class="fa fa-angle-right" aria-hidden="true"></i>
+										</a>
+										<?php endif; ?>
+									</div>
+
+								<?php else: ?>
+									<a href="<?php echo e(route('front.category',$category->slug)); ?>"><img src="<?php echo e(asset('assets/images/categories/'.$category->photo)); ?>"> <?php echo e($category->name); ?></a>
+
+								<?php endif; ?>
+									<?php if(count($category->subs) > 0): ?>
+
+									<?php
+									$ck = 0;
+									foreach($category->subs as $subcat) {
+										if(count($subcat->childs) > 0) {
+											$ck = 1;
+											break;
+										}
+									}
+									?>
+									<ul class="<?php echo e($ck == 1 ? 'categories_mega_menu' : 'categories_mega_menu column_1'); ?> stay_home_5">
+										<?php $__currentLoopData = $category->subs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+											<li>
+												<a href="<?php echo e(route('front.subcat',['slug1' => $subcat->category->slug, 'slug2' => $subcat->slug])); ?>"><?php echo e($subcat->name); ?></a>
+												<?php if(count($subcat->childs) > 0): ?>
+													<div class="categorie_sub_menu">
+														<ul>
+															<?php $__currentLoopData = $subcat->childs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $childcat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+															<li><a href="<?php echo e(route('front.childcat',['slug1' => $childcat->subcategory->category->slug, 'slug2' => $childcat->subcategory->slug, 'slug3' => $childcat->slug])); ?>"><?php echo e($childcat->name); ?></a></li>
+															<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+														</ul>
+													</div>
+												<?php endif; ?>
+											</li>
+										<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+									</ul>
+
+									<?php endif; ?>
+
+									</li>
+
+									<?php
+									$i++;
+									?>
+
+									<?php if($i == 15): ?>
+						                <li>
+						                <a href="<?php echo e(route('front.categories')); ?>"><i class="fas fa-plus"></i> <?php echo e($langg->lang15); ?> </a>
+						                </li>
+						                <?php break; ?>
+									<?php endif; ?>
+
+
+									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+							</ul>
+						</div>
+					</div>
+					<!--categorie menu end-->
+		</div>
+		
+		<div class="col-md-11">
+			<ol class="breadcrumb">
+			  <li class="breadcrumb-item"><a href="#">Home</a></li>
+			  <li class="breadcrumb-item"><a href="#">Library</a></li>
+			  <li class="breadcrumb-item active">Data</li>
+			</ol>
+		</div>
+	</div>
+	</div>
+</div>
 <?php echo $__env->yieldContent('content'); ?>
 
 	<!-- Footer Area Start -->

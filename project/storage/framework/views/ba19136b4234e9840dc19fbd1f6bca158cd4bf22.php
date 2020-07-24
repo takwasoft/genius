@@ -45,6 +45,9 @@
 	 .mainmenu-bb .mainmenu-area-innner {
         height:52px;
     }
+	.bedge-section{
+		display:none;
+	}
 	}
 	@media(max-width:991px){
 	#mg-menu{
@@ -90,7 +93,7 @@
 	
 	<?php if($ps->slider == 1): ?>
 		<!-- Hero Area Start -->
-		<section class="hero-area mt-4" >
+		<section class="mt-4 hero-area" >
 			<div class="container">
 				<div class="row">
 					<div id="mg-menu" class="col-lg-3 categorimenu-wrapper remove-padding d-none d-lg-block">
@@ -213,16 +216,16 @@
 
 			<?php endif; ?>
 			<div class="row"style="background:#024c0b;margin:0;border-top:1px solid white">
-				<div class="col-4 text-center slider-content" >
-					<h4 class="text-light mt-2  slide-d-head">UP TO 70% OFF</h4>
+				<div class="text-center col-4 slider-content" >
+					<h4 class="mt-2 text-light slide-d-head">UP TO 70% OFF</h4>
 					<p class="text-light slide-d-text">On House Hold Items</p>
 				</div>
-				<div class=" col-4 text-center slider-content ">
-					<h4 class="text-light mt-2 slide-d-head">BUY ONE GET ONE</h4>
+				<div class="text-center  col-4 slider-content">
+					<h4 class="mt-2 text-light slide-d-head">BUY ONE GET ONE</h4>
 					<p class="text-light slide-d-text">All Formal Shows</p>
 				</div>
-				<div class=" col-4 text-center slider-content ">
-					<h4 class="text-light mt-2 slide-d-head">UP TO 70% OFF</h4>
+				<div class="text-center  col-4 slider-content">
+					<h4 class="mt-2 text-light slide-d-head">UP TO 70% OFF</h4>
 					<p class="text-light slide-d-text">On Smart Phones</p>
 				</div>
 			</div>
@@ -246,7 +249,7 @@
 
 	<div id="brand-ad">
 		<div class="container">
-			<div class="row mt-4">
+			<div class="mt-4 row">
 				<div class="col-md-4 col-lg-3 d-none d-md-block">
 					<div class="card">
 						<div class="card-header">
@@ -270,9 +273,9 @@
 						<div id="home" class="tab-pane show active">
 	
 	
-							<div class="row text-center ">
+							<div class="text-center row ">
 								<?php $__currentLoopData = $weekBrands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $weekBrand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<div class="col-sm-3 py-4">
+								<div class="py-4 col-sm-3">
 								<a href="<?php echo e(route('front.brand',$weekBrand->name)); ?>">
 								<img src="<?php echo e(URL::to('/images/'.$weekBrand->image)); ?>" alt="" width="80%" />
 								</a>
@@ -291,9 +294,9 @@
 						<!-- End home tab content  -->
 			<?php $__currentLoopData = $brandCategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brandCategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 						<div id="menu<?php echo e($brandCategory->id); ?>" class="tab-pane fade">
-							<div class="row text-center ">
+							<div class="text-center row ">
 								<?php $__currentLoopData = $brandCategory->brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<div class="col-sm-3 py-4">
+								<div class="py-4 col-sm-3">
 								<a href="<?php echo e(route('front.brand',$brand->name)); ?>">
 								<img src="<?php echo e(URL::to('/images/'.$brand->image)); ?>" alt="" width="80%" />
 								</a>
@@ -319,7 +322,7 @@
 
 
 	<!-- offer ad -->
-        <section class="slider_bottom_banner mt-4 d-none d-sm-block">
+        <section class="mt-4 slider_bottom_banner d-none d-sm-block">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-6">
@@ -332,12 +335,12 @@
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287047feature2.jpg" alt="">
                         </a>
                     </div>
-                    <div class="col-lg-3 col-6 mt-3 mt-lg-0">
+                    <div class="mt-3 col-lg-3 col-6 mt-lg-0">
                         <a href="https://www.google.com/" target="_blank" class="banner-effect">
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287054feature3.jpg" alt="">
                         </a>
                     </div>
-                    <div class="col-lg-3 col-6 mt-3 mt-lg-0">
+                    <div class="mt-3 col-lg-3 col-6 mt-lg-0">
                         <a href="https://www.google.com/" target="_blank" class="banner-effect">
                             <img src="https://geniusocean.com/demo/marketplace/assets/images/featuredbanner/1571287106feature4.jpg" alt="">
                         </a>
@@ -356,7 +359,7 @@
                         <div class="info-big-box">
                             <div class="row">
 							<?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <div class="col-6 col-xl-3 p-0">
+                                <div class="p-0 col-6 col-xl-3">
                                     <div class="info-box">
                                         <div class="icon">
                                             <img src="<?php echo e($service->photo ?url('assets/images/services/'.$service->photo):url('assets/images/noimage.png')); ?>"> 
@@ -383,10 +386,10 @@
         <!-- end info are -->
 
 	
-	<div class="full-width-ad mt-4">
+	<div class="mt-4 full-width-ad">
 		<div class="container">
 			<div class='row'>
-				<div class="col-md-12 text-center">
+				<div class="text-center col-md-12">
 					<img src="<?php echo e(asset('assets/images/brand/gp.gif')); ?>" alt="" width="100%" />
 				</div>
 			</div>
@@ -405,7 +408,7 @@
 					<div class="col-md-6 col-sm-6 col-xs-6">
 						<h3>New Products</h3>
 					</div>
-					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
+					<div class="text-right col-md-6 col-sm-6 col-xs-6 see-all">
 						<p><a href="<?php echo e(route('front.category')); ?>"">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div>
@@ -440,7 +443,7 @@
 					<div class="col-md-6 col-sm-6 col-xs-6">
 						<h3><?php echo e($feature_category->name); ?></h3>
 					</div>
-					<div class="col-md-6 col-sm-6 col-xs-6 see-all text-right">
+					<div class="text-right col-md-6 col-sm-6 col-xs-6 see-all">
 						<p><a href="<?php echo e(route('front.category',$feature_category->slug)); ?>">See all Products <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
 					</div>
 					<div class="clearfix"></div>
@@ -482,9 +485,9 @@
 		
 
 		
-	<div class="full-width-ad my-4">
+	<div class="my-4 full-width-ad">
 		<div class="container">
-			<div class="col-md-12 text-center">
+			<div class="text-center col-md-12">
 				<img class="lazy" data-src="<?php echo e(asset('assets/images/brand/gp2.gif')); ?>" alt="" width="100%" />
 			</div>
 		</div>
