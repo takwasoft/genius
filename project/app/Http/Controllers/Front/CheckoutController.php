@@ -764,9 +764,9 @@ class CheckoutController extends Controller
             $val = $request->total / 100;
             $sub = $val * $gs->affilate_charge;
             $user = User::findOrFail(Session::get('affilate'));
-            $user->affilate_income += $sub;
-            $user->update();
-            $order['affilate_user'] = $user->name;
+            // $user->affilate_income += $sub;
+            // $user->update();
+            $order['affilate_user'] = $user->id;
             $order['affilate_charge'] = $sub;
         }
         $order->save();

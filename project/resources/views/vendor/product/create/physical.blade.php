@@ -1072,7 +1072,7 @@ dModal=()=>{
                             <ul> 
 							@foreach($cats as $cat)
                                 <li class="brn1">
-                                    <a onclick="showItem('sub-cat',{{$cat->id}},'.aos','category_id',{{$cat->id}},['subcategory_id'],'cat_name','{{$cat->name}}')" href="#" class="clearfix">
+                                    <a onclick="showItem('sub-cat',{{$cat->id}},'.aos','category_id',{{$cat->id}},['subcategory_id'],'cat_name',`{{$cat->name}}`)" href="#" class="clearfix">
                                         <span class="dnn float-left">{{$cat->name}}</span><span class="dnn float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
                                     <div id="sub-cat{{$cat->id}}" class="lft categories-list sub-cat sub-cate-item" style="">
                                         <ul class="sub-menu1 text-muted">
@@ -1080,7 +1080,7 @@ dModal=()=>{
                                         <ul class="sub-menu1 text-muted">
 										@foreach($cat->subs as $sub)
                                             <li><a
-											onclick="showItem('','','.aos','subcategory_id',{{$sub->id}},[],'cat_name','{{$sub->name}}','#my-modal2')"
+											onclick="showItem('','','.aos','subcategory_id',{{$sub->id}},[],'cat_name',`{{$sub->name}}`,'#my-modal2')"
 											 class="text-muted" href="#">{{$sub->name}}</a></li>
 											{{--  @foreach($sub->childs as $child)
                                             <li><a class="text-muted" href="http://google.com">{{$child->name}}</a></li>

@@ -59,9 +59,19 @@ class OrderController extends Controller
             ->editColumn('payment_status', function (Order $data) {
                 $payer = "";
                 if ($data->paid_by != 0) {
-                    $payer = $data->payer->name . " <br>" . $data->paid_at->format("h.i a d-m-y");
+                    $payer = "<span class='badge badge-warning'>" . $data->payer->name . "</span> <br>" . $data->paid_at->format("h.i a d-m-y");
                 }
                 return $data->payment_status . "<br>" . $payer;
+            })
+            ->editColumn('status', function (Order $data) {
+                $updater = "";
+                if ($data->tracks->last()) {
+                    if ($data->tracks->last()->admin) {
+
+                        $updater = "<span class='badge badge-warning'>" . $data->tracks->last()->admin->name . "</span>" . "<br>" . $data->updated_at->format("h.i a d-m-y");
+                    }
+                }
+                return $data->status . $updater;
             })
             ->editColumn('pay_amount', function (Order $data) {
                 return $data->currency_sign . round($data->pay_amount * $data->currency_value + $data->extraCharges->sum('charge'), 2) . "(" . $data->method . ")";
@@ -73,10 +83,11 @@ class OrderController extends Controller
                 return $data->customer_name . "<br>" . $data->customer_email;
             })
             ->addColumn('action', function (Order $data) {
+
                 $orders = '<a href="javascript:;" data-href="' . route('admin-order-edit', $data->id) . '" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> Delivery Status</a>';
                 return '<div class="godropdown"><button class="go-dropdown-toggle"> Actions<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show', $data->id) . '" > <i class="fas fa-eye"></i> Details</a><a href="javascript:;" class="send" data-email="' . $data->customer_email . '" data-toggle="modal" data-target="#vendorform"><i class="fas fa-envelope"></i> Send</a><a href="javascript:;" data-href="' . route('admin-order-track', $data->id) . '" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> Track Order</a>' . $orders . '</div></div>';
             })
-            ->rawColumns(['id', 'products', 'action', 'customer_email', 'payment_status'])
+            ->rawColumns(['id', 'products', 'action', 'customer_email', 'payment_status', 'status'])
             ->toJson();  //--- Returning Json Data To Client Side
     }
     public function index()
@@ -103,6 +114,7 @@ class OrderController extends Controller
     {
 
 
+
         //--- Logic Section
         $data = Order::findOrFail($id);
         $admin_id = Auth::guard('admin')->user()->id;
@@ -114,7 +126,11 @@ class OrderController extends Controller
             }
         }
         $current_timestamp = Carbon::now()->timestamp;
+
         if ($data->payment_status != "Completed" && $input['payment_status'] == "Completed") {
+            $user = User::findOrFail($data['affilate_user']);
+            $user->affilate_income += $data['affilate_charge'];
+            $user->update();
             $input["paid_by"] = $admin_id;
             $input["paid_at"] = now();
             Transaction::create([

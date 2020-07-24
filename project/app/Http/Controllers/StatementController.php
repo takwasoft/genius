@@ -13,41 +13,43 @@ class StatementController extends Controller
     {
         $this->middleware('auth:admin');
     }
-    public function index(){
-        $transactions = Transaction::orderBy('created_at')
-        ->get()
-        ->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('d-m-y');
-        });
+    public function index()
+    {
+        $transactions = Transaction::orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('d-m-y');
+            });
         $ntransactions = Transaction::orderBy('created_at')
-        ->get();
-        return view('admin.statement.index',compact('transactions','ntransactions')); 
+            ->get();
+        return view('admin.statement.index', compact('transactions', 'ntransactions'));
     }
-    public function filter(Request $request){
-        $start=$request->start;
-        $end=$request->end;
+    public function filter(Request $request)
+    {
+        $start = $request->start;
+        $end = $request->end;
         $transactions = Transaction::orderBy('created_at')
-        ->when($end, function ($query, $end) {
-            return $query->where('created_at','<=', $end);
-        })
-        ->when($start, function ($query, $start) {
-            return $query->where('created_at','>=', $start);
-        })
-        ->get()
-        ->groupBy(function ($val) {
-            return Carbon::parse($val->created_at)->format('d-m-y');
-        });
+            ->when($end, function ($query, $end) {
+                return $query->where('created_at', '<=', $end);
+            })
+            ->when($start, function ($query, $start) {
+                return $query->where('created_at', '>=', $start);
+            })
+            ->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('d-m-y');
+            });
         $ntransactions = Transaction::orderBy('created_at')
-        ->when($end, function ($query, $end) {
-            return $query->where('created_at','<=', $end);
-        })
-        ->when($start, function ($query, $start) {
-            return $query->where('created_at','>=', $start);
-        })
-        ->get();
-        return view('admin.statement.index',compact('transactions','start','end','ntransactions')); 
+            ->when($end, function ($query, $end) {
+                return $query->where('created_at', '<=', $end);
+            })
+            ->when($start, function ($query, $start) {
+                return $query->where('created_at', '>=', $start);
+            })
+            ->get();
+        return view('admin.statement.index', compact('transactions', 'start', 'end', 'ntransactions'));
     }
-    public function datatable(){
-        
+    public function datatable()
+    {
     }
 }

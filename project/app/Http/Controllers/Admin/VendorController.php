@@ -98,7 +98,7 @@ class VendorController extends Controller
         return Datatables::of($datas)
             ->addColumn('name', function (UserSubscription $data) {
                 $name = isset($data->user->owner_name) ? $data->user->owner_name : 'Removed';
-                return  $name;
+                return  $name . "<span class='badge badge-info'>" . $data->user->subscribes->count() . "</span>";
             })
 
             ->editColumn('txnid', function (UserSubscription $data) {
@@ -114,7 +114,7 @@ class VendorController extends Controller
                                 <a href="' . route('admin-activate-sub', $data->id) . '" class="view details-width" > <i class="fas fa-eye"></i>Activate</a>
                                 </div>';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'name'])
             ->toJson(); //--- Returning Json Data To Client Side
 
 

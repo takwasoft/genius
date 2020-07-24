@@ -45,9 +45,10 @@
     $(function () {
       
       var table = $('.data-table').DataTable({
+          "aaSorting": [],
           processing: true,
           serverSide: true,
-          ajax: "{{$ajax}}",
+          ajax: "{{$ajax}}", 
           columns: [
               {!!$columns!!}
               {data: 'created_at', name: 'created_at'},

@@ -60,6 +60,30 @@
                             <input type="text" class="input-field" placeholder="{{ __('Write Your Site Title Here') }}" name="affilate_charge" value="{{ $gs->affilate_charge }}" required="">
                           </div>
                         </div>
+<div class="row justify-content-center">
+                <div class="col-lg-3">
+                  <div class="left-area">
+                    <h4 class="heading">Reference Sign up Bonus</h4>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <input type="text" class="input-field" placeholder="Affilate signup" name="affilate_signup"
+                    value="{{ $gs->affilate_signup }}" required="">
+                </div>
+              </div>
+
+
+              <div class="row justify-content-center">
+                <div class="col-lg-3">
+                  <div class="left-area">
+                    <h4 class="heading">Reference Bonus(Referer)</h4>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <input type="text" class="input-field" placeholder="Reference Bonus" name="affilate_signup"
+                    value="{{ $gs->signup_ref_bonus }}" required="">
+                </div>
+              </div>
 
                         <div class="row justify-content-center">
                             <div class="col-lg-3">
